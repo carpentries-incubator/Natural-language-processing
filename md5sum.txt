@@ -12,4 +12,3 @@
 "instructors/instructor-notes.md" "cae72b6712578d74a49fea7513099f8c" "site/built/instructor-notes.md" "2025-05-06"
 "learners/setup.md" "1f9b5e7071354a08a42407df4ffb6d59" "site/built/setup.md" "2025-05-06"
 "profiles/learner-profiles.md" "7cf2c1bec32069388ea395a4914bad46" "site/built/learner-profiles.md" "2025-05-06"
-"renv/profiles/lesson-requirements/renv.lock" "1e5e381aa5b369d411520187ab442b03" "site/built/renv.lock" "2025-05-06"
