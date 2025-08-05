@@ -1,109 +1,217 @@
 ---
 title: "Introduction"
-teaching: 50
-exercises: 10
+teaching: 30
+exercises: 30
 ---
 
-:::::: questions
-- What is NLP?
-- What are real-world applications of NLP?
-- Which problems NLP solves best?
-- What is language from a NLP perspective?
-- How does NLP relates to Deep Learning and Machine Learning?
-::::::
+::: questions
+-   What is NLP?
+-   Why not just learn LLMs?
+-   What are some common applications of NLP?
+-   How does NLP relates to Linguistics?
+-   How does NLP relates to Deep Learning and Machine Learning?
+:::
 
-:::::: objectives
-- Define Natural Language Processing
-- Detailing classic NLP tasks and applications in practice
-- Describe the theoretical perspectives that the field of NLP draws upon, including linguistics (syntax, semantics, and pragmatics), Deep Learning and Machine Learning
-::::::
+::: objectives
+-   Define Natural Language Processing
+-   Show the most relevant NLP tasks and applications in practice
+-   Describe the theoretical perspectives of NLP (from linguistics and machine learning)
+:::
 
 ## What is NLP?
-Natural language processing (NLP) is an area of research and application that focuses on making natural (i.e., human) language accessible to computers so that they can be used to perform useful tasks. Research in NLP is highly interdisciplinary, drawing on concepts from computer science, linguistics, logic, mathematics, psychology, etc. In the past decade, NLP has evolved significantly with advances in technology, especially in the field of deep learning, to the point that it has become embedded in our daily lives. 
 
-Let's start by looking at some popular applications you use in everyday life that have some form of NLP component. 
+Natural language processing (NLP) is an area of research and application that focuses on making natural (i.e., human) language accessible to computers, so that they can perform useful tasks. The term "natural language" is used as opposed to "artificial language", such as programming languages, which are by design constructed to be easily understood by machines. On the contrary, natural languages are complex, ambiguous, and heavily context-dependent, making them challenging for computers to process. To complicate it more, there is not only a single **human language**, there are offically more than 7000 languages spoken around the world, each with its own grammar, vocabulary, and cultural context. In this course we will focus on English (we will sometimes see other languages in some specific examples as well), however this is only a convenience so we can focus on the technical aspects. While ideally most of the concepts from NLP apply to most languages, one should always be ware that certain languages require different approaches to solve seemingly similar problems.
 
-:::::::::::: challenge 
+::: callout
+Even the most basic task of processing human language, such as tokenization (i.e., splitting a text into word units), can already be challenging when dealing with different languages.
+
+Take the following example of the same sentence in English and Chinese:
+
+``` python
+english_sentence = "Tokenization isn't always trivial."
+chinese_sentence = "标记化并不总是那么简单" # Translation: "Tokenization is not always simple"
+
+english_words = english_sentence.split(" ")
+print(english_words)
+print(len(english_words))  # Output: 4
+
+chinese_words = chinese_sentence.split(" ")
+print(chinese_words)
+print(len(chinese_words))  # Output: 1
+```
+
+While it is true that there are some errors in the English sentence, at least we got a rough count of the words present in the sentence. The same example however did not work in Chinese, because Chinese does not use spaces to separate words. We need to use a Chinese tokenizer to properly split the words:
+
+``` python
+import jieba  # A popular Chinese text segmentation library
+chinese_sentence = "标记化并不总是那么简单"
+chinese_words = jieba.lcut(chinese_sentence)
+print(chinese_words)
+print(len(chinese_words))  # Output: 7
+```
+
+Eventhough we don't speak chinese, because we are using a verified library, in this case we can trust that the output is a valid way to tokenize the sentence. Note that the Chinese sentence has more words than the English one, even though they convey the same meaning. We can also debate about how is the best approach to count the words in the English sentence, as it is not clear whether "isn't" should be counted as one or two words.
+:::
+
+NLP deals with the challenge of correctly processing and generating, this can be as simple as counting word frequencies to detect different writing styles, using statistical methods to classify texts into different categories based on pre-defined features, or using deep neural networks to generate human-like text by exploiting word co-occurrences in large amounts of texts.\
+In the past decade, NLP has evolved significantly, especially in the field of deep learning, to the point that it has become embedded in our daily lives, one just needs to look at the term Large Language Models (LLMs), the latest generation of NLP models, which is now ubiquitous in news media and tech products we use on a daily basis.
+
+## Why not just learn LLMs?
+
+The term LLM now is often (and wrongly) used as a synonym of Artificial Intelligence. We could therefore think that we *just* need to learn how to manipulate LLMs in order to fullfil our research goals involving textual data. Language Modeling has always been part of the core tasks of NLP, therefore, by learning NLP you will understand better where are the core ideas behind LLMs coming from.
+
+![NLP is an interdisciplinary field, and LLMs are just a subset of it](fig/intro_cs_nlp.png)
+
+LLMs are nothing but an assembly of large neural networks that are trained on vast amounts of text data (nowadays some of them have even seen a snapshot of the whole Internet!) with the objective of generating human-like text. The surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answer questions, translate languages, solve math problems, generate narratives that emulate reasoning, and many more with a single tool.
+
+It is important, however, to undestand what is happening behind the scenes in order to **trace back sources of errors and biases** that get hidden in such complex models. The purpose of this course is precisely to take a step back, and understand that we also have a wide variety of tools at hand, beyond LLMs, that we can choose to solve our own problems, sometimes a much simpler and easier solution is enough to fulfill our purposes, instead of always using a black-box model and expecting nothing goes wrong with our use case.
+
+The fact that LLMs can seemingly solve complex tasks in "just one step" hides the complexity of the underlying technology that is behind them in order to make them work. Moreover, because the content generate by this models are so good at imitating correct information, we need to know what is happening behind the scenes in order to understand the limitations and design **evaluation metrics** that give us a better understanding of the quality of the generated content.
+
+For example, here is how ChatGPT will approach the tokenization example we just discussed:
+
+![ChatGPT Just Works! Does it...?](fig/intro1.png)
+
+We got what sounds like a straightforward confident answer. However, it is not clear how the model arrived at this solution. Second, we do not know whether the solution is correct or not. In this case ChatGPT made some assumptions for us, such as choosing a specific kind of tokenizer to give the answer, and since we do not speak the language, we do not know if this is indeed the best approach to tokenize Chinese text. If we understand the concept of Token (which we will today!), then we can be more informed about the quality of the answer, whether it is useful to us, and therefore make a better use of the model.
+
+And by the way, ChatGPT was **almost** correct, in the specific case of the gpt-4 tokenizer, the model will return 12 tokens (not 11!) for the given Chinese sentence.
+
+![GPT-4 Tokenization Example](fig/intro1b.png)
+
+We can also argue if the statement "Chinese is generally tokenized character by character" is an overstatement. In any case the real question here is: Are we ok with *almost correct answers*?
+
+## NLP tasks
+
+TODO: These are no exhaustive! Give a curated list and be clear these are only prototypical tasks
+
+HINT: Language Modeling has always been a specific NLP Task (so LLMs are subset of NLP and not the other way around)
+
+-   Language modeling: Given a sequence of words, the model predicts the next word. For example, in the sentence "The cat is on the \_\_\_\_\_", the model might predict "mat" based on the context. This task is useful for building solutions that require speech and optical character recognition (even handwriting), language translation and spelling correction
+
+-   Text classification: Given a set of items (e.g., emails), assign a label (e.g., spam/not-spam). It is the task of assigning predefined categories or labels to a given text. Text classification is extremely popular in NLP applications, from spam filtering to movies ratings based on reviews.
+
+-   Information extraction: This is the task of extracting relevant information from the text. "Eva Viviani, a Research Software Engineer at the eScience Center, attended the 17th Conference of the European Chapter of ACL on May 2nd, 2023". Person: Eva Viviani, Job title: RSE, Event: 17th Conference of the European Chapter of ACL, Date: May 2nd, 2023, etc.
+
+-   Information retrieval: This is the task of finding relevant information or documents from a large collection of unstructured data based on user's query, e.g., "What's the best restaurant near me?".
+
+-   Conversational agent (also known as ChatBot): Building a system that interacts with a user via natural language, e.g., "What's the weather today, Siri?". These agents are widely used to improve user experience in customer service, personal assistance and many other domains.
+
+-   Topic modelling: Automatically identify abstract "topics" that occur in a set of documents, where each topic is represented as a cluster of words that frequently appear together. This task is used in a variety of domains, from literature to bioinformatics as a common text-mining tool.
+
+:::: challenge
 ## NLP in the real world
 
 Name three to five tools/products that you use on a daily basis and that you think leverage NLP techniques. To solve this exercise you can get some help from the web.
 
-:::::: solution
+::: solution
 These are some of the most popular NLP-based products that we use on a daily basis:
 
-- Voice-based assistants (e.g., Alexa, Siri, Cortana)
-- Machine translation (e.g., Google translate, Amazon translate)
-- Search engines (e.g., Google, Bing, DuckDuckGo)
-- Keyboard autocompletion on smartphones
-- Spam filtering
-- Spell and grammar checking apps
-::::::
-::::::::::::
+-   Voice-based assistants (e.g., Alexa, Siri, Cortana)
+-   Machine translation (e.g., Google translate, Amazon translate)
+-   Search engines (e.g., Google, Bing, DuckDuckGo)
+-   Keyboard autocompletion on smartphones
+-   Spam filtering
+-   Spell and grammar checking apps
+-   Customer care chatbots
+-   Text summarization tools (e.g., news aggregators)
+-   Sentiment analysis tools (e.g., social media monitoring)
+:::
+::::
 
 The exercise above tells us that a great deal of NLP techniques is embedded in our daily life. Indeed NLP is an important component in a wide range of software applications that we use in our daily lives.
 
-## Core applications
+## Some Relevant Linguistic Aspects
 
-- Email providers use NLP in several ways: automatically detect and filter-out spam emails, classify important emails (e.g., Priority inbox), recognise dates and events to automatically add them to your calendar and suggesting you phrases while you're typing
+Natural language exhibits a set fo properties that make it more challenging to process than other types of data such as tables, spreadsheets or databases. Language is discrete, ambiguous, compositional and sparse. The basic elements of written languages are characters, a sequence of characters form words, and words in turn denote objects objects, concepts, events, actions and ideas (Goldberg, 2016). Subsequently words form phrases and sentences which are used in communication and depend on the context in which they are used. We as humans derive the meaning of utterances from interpreting contextual information that is present at different levels at the same time:
 
-- Voice-based assistants use NLP to recognise speech, interpret requests (e.g., "Set alarm for 8 AM tomorrow") and perform it accurately, translate spoken language in real time and store individual preferences and history to tailor responses based on the past activities with the user
+![Levels of Language](fig/intro2_levels_lang.svg)
 
-- Search engines use NLP to interpret the meaning behind user queries (e.g., "What's the best restaurant near me?"), pull and highlight key information directly from a webpage to answer your query and personalise results based on user history
-
-### Other types of applications
-
-- Customer care services use NLP to summarise and understand user reviews to provide actionable insights to their companies
-
-- Spelling and grammar correction tools use NLP to highlight typos or errors and suggest the most valid alternative
-
-- The [Historical Archives of the European Parliament](https://historicalarchives.europarl.europa.eu/en/sites/historicalarchive/home/cultural-heritage-collections/news/ai-dashboard.html) have used NLP to instantly search, retrieve and understand decades of legislative documents and parliamentary proceedings in multiple languages
-
-## NLP tasks
-
-- Language modeling: Given a sequence of words, the model predicts the next word. For example, in the sentence "The cat is on the _____", the model might predict "mat" based on the context. This task is useful for building solutions that require speech and optical character recognition (even handwriting), language translation and spelling correction
-
-- Text classification: Given a set of items (e.g., emails), assign a label (e.g., spam/not-spam). It is the task of assigning predefined categories or labels to a given text. Text classification is extremely popular in NLP applications, from spam filtering to movies ratings based on reviews.
-
-- Information extraction: This is the task of extracting relevant information from the text. "Eva Viviani, a Research Software Engineer at the eScience Center, attended the 17th Conference of the European Chapter of ACL on May 2nd, 2023". Person: Eva Viviani, Job title: RSE, Event: 17th Conference of the European Chapter of ACL, Date: May 2nd, 2023, etc. 
-
-- Information retrieval: This is the task of finding relevant information or documents from a large collection of unstructured data based on user's query, e.g., "What's the best restaurant near me?".
-
-- Conversational agent (also known as ChatBot): Building a system that interacts with a user via natural language, e.g., "What's the weather today, Siri?". These agents are widely used to improve user experience in customer service, personal assistance and many other domains.
-
-- Topic modelling: Automatically identify abstract "topics" that occur in a set of documents, where each topic is represented as a cluster of words that frequently appear together. This task is used in a variety of domains, from literature to bioinformatics as a common text-mining tool.
-
-## Natural vs Artificial Language
-
-Why does NLP have "natural" in its name? A [Language](https://en.wikipedia.org/wiki/Language) is a structured system of communication that consists of grammar and vocabulary. Within this definition, in NLP we refer to human language as [*Natural*](https://en.wikipedia.org/wiki/Natural_language) to contrast it to *artificial* languages which are [formal languages](https://en.wikipedia.org/wiki/Formal_language). The reason for this is that many experts believe that *natural* languages have emerged *naturally* tens of thousands of years ago and have evolved ever since. Formal languages, on the other hand, are languages that have been engineered by humans and have rigid and explicitly defined rules.
-
-To understand this perspective, let's consider for instance Python or R. These are [programming languages](https://en.wikipedia.org/wiki/Programming_language) that have explicit, clear grammatical and syntactic rules. This means that within the realm of those programming languages, there is no room for ambiguity, otherwise your code would allow for different behaviours depending on the situation, or the machine. This is not the case for human languages. 
+The first two levels refer to spoken language only, and the other four levels are present also in text. Thus, because machines do not have access to the same levels of information that we do (they can only have independent audio, textual or visual inputs), we need to come up with clever methods to overcome this significant limitation. Knowing these levels of language is important to understand how we can use NLP to solve our problems. Let's see some of the properties of language that make it challenging to process.
 
 ### Ambiguity
-Natural language is highly creative and often ambiguous, among many other complex traits. A sentence of the type "I saw a bat" may mean many things depending on who is hearing/saying it, where  and when it is pronounced. The disambiguation of meaning is usually a by-product of the context in which sentences are pronounced and the historic accumulation of interactions which are transmitted across generations (think for instance to idioms -- these are usually meaningless phrases that acquire meaning only if situated within their historical and societal context). These characteristics make NLP a particularly challenging field to work in. 
 
-We cannot expect a machine to process human language and simply understand it as it is. We need a systematic, scientific approach to deal with it. It's within this premise that the field of NLP is born, primarily interested in converting the building blocks of human/natural language into something that a machine can understand. We'll see what does this mean in the next episode.
+As mentioned, the disambiguation of meaning is usually a by-product of the context in which utterances are expressed and also the historic accumulation of interactions which are transmitted across generations (think for instance to idioms -- these are usually meaningless phrases that acquire meaning only if situated within their historical and societal context). These characteristics make NLP a particularly challenging field to work in.
 
-The image below shows you the building blocks of language and a few NLP applications that leverage this type of information.
+We cannot expect a machine to process human language and simply understand it as it is. We need a systematic, scientific approach to deal with it. It's within this premise that the field of NLP is born, primarily interested in converting the building blocks of human/natural language into something that a machine can understand.
 
-![Diagram showing building blocks of language](fig/intro.pdf)
+The image below shows how the levels of language relate to a few NLP applications:
 
-Each building block of human language carries a large amount of information, which we process quickly and effortlessly. Some of this information is still being studied by scientists because it’s unclear how to measure it, whether the human brain uses it at all to aid understanding, and, if so, to what extent. A lot of research effort is spent on this problem in academia, and it's important to keep in mind that we are still far from solving it.
+![Diagram showing building blocks of language](fig/intro3_levels_nlp.png)
 
-How do we make language then understandable for machines? How do we expose and exploit the statistical information within the human language? The field of NLP focuses exactly on these challenges. The ultimate goal is to make this information available to computers, so that they can use it to understand language as closely as possible to the way we (humans) do. 
+:::: challenge
+## Levels of ambiguity
+
+Discuss what do the following sentences mean. What level of ambiguity do they represent?:
+
+-   "The door is unlockable from the inside." vs "Unfortunately, the cabinet is unlockable, so we can't secure it"
+-   "I saw the *cat with the stripes*" vs "I saw the cat *with the telescope*"
+-   "Colorless green ideas sleep furiously"
+-   "I NEVER said she stole my money." vs "I never said she stole MY money."
+
+::: solution
+This is why the previous statements were difficult:
+
+| Example | Type of Ambiguity | Explanation |
+|:------------------------|:-----------------|:----------------------------|
+| "Un-lockable vs Unlock-able" | **Morphological** | Same word form, two possible meanings |
+| "I saw the cat with the telescope" | **Syntactic** | Same sentence structure, different properties |
+| "Colorless green ideas sleep furiously" | **Semantic** | Grammatical but meaningless |
+| "I never said she stole my money." | **Pragmatic** | Meaning relies on word emphasis |
+
+:::
+::::
 
 ### Discreteness
-NLP is a subfield of Artificial Intelligence that intersects with [Deep Learning](https://carpentries-incubator.github.io/deep-learning-intro/1-introduction.html) and more broadly with [Machine Learning](https://en.wikipedia.org/wiki/Machine_learning). There are many concepts in NLP that indeed draw upon those fields. For instance the task of categorising text as positive or negative, is a classification [problem](https://carpentries-incubator.github.io/deep-learning-intro/2-keras.html#formulateoutline-the-problem-penguin-classification) that has been formulated and solved also in the Deep Learning realm. What's the difference then between classifying which species a penguin belongs to (based on their pictures) and understand the difference between "cat" and "sat"?
 
-If you take an image of a penguin and change a pixel it will still be recognised as the same penguin as before. This tiny change has resulted in a small change that did not affect the whole picture. If you change one letter of a word, however, as in cat vs sat, then even if the difference for the computer is a single bit, the two things in the human language are two separate, *discrete* concepts. They just happen (for historical reasons or just by chance) to have similar spellings. 
+There is no inherent relationship between the form of a word and its meaning. For the same reason, by textual means alone, there is no way of knowing if two words are similar or how do they relate to each other. Take the word "pizza" and "hamburger", how can we know that they share more properties than "car" and "cat"? We can only know this by looking at the context in which these words are used, and how they are related to each other. This is why we need to look at the statistical properties of language, such as word co-occurrences, to understand how words relate to each other.
 
-The reason why NLP is a distinct field is that, unlike images and sounds (which are typically handled in Deep Learning and are continuous data), words are discrete units. This characteristic of human language demands a completely different approach because, while computers excel at processing continuous variables, they struggle with the discrete nature of language. In the next episode, we’ll explore how a solution to this challenge has only recently been developed.
+Let's do a simple exercise:
 
+``` python
 
-:::::: keypoints 
-- NLP is embedded in numerous daily-use products
-- Key tasks include language modeling, text classification, information extraction, information retrieval, conversational agents, and topic modeling, each supporting various real-world applications.
-- NLP is a subfield of Artificial Intelligence (AI) that deals with approaches to process, understand and generate natural language
-- Deep learning has significantly advanced NLP, but the challenge remains in processing the discrete and ambiguous nature of language
-- The ultimate goal of NLP is to enable machines to understand and process language as humans do, but challenges in measuring and interpreting linguistic information still exist.
-::::::
+from collections import Counter
 
+# A mini-corpus where our target words appear
+text = """
+I am hungry . Should I eat delicious pizza ?
+Or maybe I should eat a juicy hamburger instead .
+Many people like to eat pizza because is tasty , they think pizza is delicious as hell !
+My friend prefers to eat a hamburger and I agree with him .
+We will drive our car to the restaurant to get the succulent hamburger .
+Right now , our cat sleeps on the mat so we won't take him .
+I did not wash my car , but at least the car has gasoline .
+Perhaps when we come back we will take out the cat for a walk .
+The cat will be happy to see us when we come back .
+"""
+
+words = [token.lower() for token in text.split()]
+
+target_words = ["pizza", "hamburger", "car", "cat"] # words we want to analyze
+stop_words = ["i", "am", "my", "to", "the", "a", "and", "is", "as", "at", "we", "will", "not", "our", "but", "least", "has", ".", ","] # words to ignore
+co_occurrence = {word: [] for word in target_words}
+window_size = 3 # How many words to look at on each side
+
+# Find the context for each target word
+for i, word in enumerate(words):
+    if word in target_words:
+        start = max(0, i - window_size)
+        end = min(len(words), i + 1 + window_size)
+        context = words[start:i] + words[i+1:end] # Exclude the target word itself
+        context = [w for w in context if w not in stop_words] # Filter out stop words from context
+        co_occurrence[word].extend(context)
+
+# Print the most common context words for each target word
+print("Contextual Fingerprints:\n")
+for word, context_list in co_occurrence.items():
+    # We use Counter to get a frequency count of context words
+    fingerprint = Counter(context_list).most_common(5)
+    print(f"'{word}': {fingerprint}")
+```
+
+::: keypoints
+-   NLP is embedded in numerous daily-use products
+-   Key tasks include language modeling, text classification, information extraction, information retrieval, conversational agents, and topic modeling, each supporting various real-world applications.
+-   NLP is a subfield of Artificial Intelligence (AI) that deals with approaches to process, understand and generate natural language
+-   Deep learning has significantly advanced NLP, but the challenge remains in processing the discrete and ambiguous nature of language
+-   The ultimate goal of NLP is to enable machines to understand and process language as humans do, but challenges in measuring and interpreting linguistic information still exist.
+:::
