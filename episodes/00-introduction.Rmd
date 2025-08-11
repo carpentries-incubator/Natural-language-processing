@@ -40,7 +40,7 @@ print(chinese_words)
 print(len(chinese_words))  # Output: 1
 ```
 
-While it is true that there are some errors in the English sentence, at least we got a rough count of the words present in the sentence. The same example however did not work in Chinese, because Chinese does not use spaces to separate words. We need to use a Chinese tokenizer to properly split the words:
+While it is true that the English sentence words are not fully "clean", at least we get a rough count of the words present in the sentence. The same example however did not work in Chinese, because Chinese does not use spaces to separate words. We need to use a Chinese tokenizer to properly split the words:
 
 ``` python
 import jieba  # A popular Chinese text segmentation library
@@ -56,11 +56,84 @@ Eventhough we don't speak chinese, because we are using a verified library, in t
 NLP deals with the challenge of correctly processing and generating, this can be as simple as counting word frequencies to detect different writing styles, using statistical methods to classify texts into different categories based on pre-defined features, or using deep neural networks to generate human-like text by exploiting word co-occurrences in large amounts of texts.\
 In the past decade, NLP has evolved significantly, especially in the field of deep learning, to the point that it has become embedded in our daily lives, one just needs to look at the term Large Language Models (LLMs), the latest generation of NLP models, which is now ubiquitous in news media and tech products we use on a daily basis.
 
+### What is a word?
+
+We just attempted to segment an English sentence into "words" and realized that splitting by spaces is not enough. Without going too deeply into what makes up a word, often in NLP we prefer to use the concept of "token" as the basic working unit. Originally the concept of token comprised both dictionary words, numeric symbols and punctuation. Nowadays, tokenization has also become an optimization task on it's own (How can we segment text in a way that neural networks learn optimally from text?) and a token might refer to a single character, or even a seemingly random substring that is only statistically meaningful to the model that uses such tokenizer (this is the source of the confusion in the previous exercise).  
+
+::: callout
+## Token vs Word
+For simplicity, in the rest of the course we will use the terms "word" and "token" interchangeably, but have in mind that they do not always have the same granularity. Tokenizers always allow to "reconstruct back" to human-readable words even if internally they split the text differently, hence we can afford to use them as synonyms. We can visualize better different tokenizers [here](https://tiktokenizer.vercel.app/)   
+:::
+
+We will learn more advanced tokenizers in future lessons, for now we will use this opportunity to introduce the [spaCy]((https://github.com/explosion/spaCy) library and use it to obtain human-readable tokens. Let's first take a look at the text file. 
+Note that the file contains a lot of new lines to improve "readability" that actually does not give any textual information. Therefore now we will first clean the new line characters so everything is separated by a single whitespace:
+
+
+```python
+import spacy
+import re
+
+with open("text1.txt") as f:
+  text = f.read()
+
+clean_text = re.sub(r'\s+', ' ', text) # Replace multiple whitespace and newline characters with a single space
+
+print(clean_text[:100])
+print("Length:", len(clean_text))
+```
+
+```output
+Letter 1 St. Petersburgh, Dec. 11th, 17-- TO Mrs. Saville, England You will rejoice to hear that no 
+Length: 6832
+```
+
+As we have seen already, splitting by white space still does not completely separate tokens from each other, for this we use spaCy to properly tokenize the text:
+
+```python
+
+print("\nProto-Tokens:")
+proto_tokens = clean_text.split()
+print(proto_tokens[:50])
+print(len(proto_tokens))
+
+nlp = spacy.load("en_core_web_sm")
+doc = nlp(clean_text)
+
+print("\nSpaCy-Tokens:")
+tokens = [token.text for token in doc] # Note that spacy tokens are objects 
+print(tokens[:50])
+print(len(tokens))
+```
+
+```output
+Proto-Tokens:
+['Letter', '1', 'St.', 'Petersburgh,', 'Dec.', '11th,', '17--', 'TO', 'Mrs.', 'Saville,', 'England', 'You', 'will', 'rejoice', 'to', 'hear', 'that', 'no', 'disaster', 'has', 'accompanied', 'the', 'commencement', 'of', 'an', 'enterprise', 'which', 'you', 'have', 'regarded', 'with', 'such', 'evil', 'forebodings.', 'I', 'arrived', 'here', 'yesterday,', 'and', 'my', 'first', 'task', 'is', 'to', 'assure', 'my', 'dear', 'sister', 'of', 'my']
+1198
+
+SpaCy-Tokens:
+[Letter, 1, St., Petersburgh, ,, Dec., 11th, ,, 17, -, -, TO, Mrs., Saville, ,, England, You, will, rejoice, to, hear, that, no, disaster, has, accompanied, the, commencement, of, an, enterprise, which, you, have, regarded, with, such, evil, forebodings, ., I, arrived, here, yesterday, ,, and, my, first, task, is]
+1353
+```
+
+When we compare the split() approach with the spaCy tokenizer, we can see the advantages of using a proper tokenizer. There are also a bunch of properties that spaCy provides us with, for example we can get only symbols or only alphanumerical tokens, and more advanced linguistic properties that we will epxlore later.
+
+```python
+only_words = [token for token in doc if token.is_alpha]  # Only alphanumerical tokens
+print(only_words[:50])
+print(len(only_words))
+```
+
+```output
+[Letter, Petersburgh, TO, Saville, England, You, will, rejoice, to, hear, that, no, disaster, has, accompanied, the, commencement, of, an, enterprise, which, you, have, regarded, with, such, evil, forebodings, I, arrived, here, yesterday, and, my, first, task, is, to, assure, my, dear, sister, of, my, welfare, and, increasing, confidence, in, the]
+1199
+```
+
+
 ## Why not just learn LLMs?
 
 The term LLM now is often (and wrongly) used as a synonym of Artificial Intelligence. We could therefore think that we *just* need to learn how to manipulate LLMs in order to fullfil our research goals involving textual data. Language Modeling has always been part of the core tasks of NLP, therefore, by learning NLP you will understand better where are the core ideas behind LLMs coming from.
 
-![NLP is an interdisciplinary field, and LLMs are just a subset of it](fig/intro_cs_nlp.png)
+![NLP is an interdisciplinary field, and LLMs are just a subset of it](fig/intro0_cs_nlp.png)
 
 LLMs are nothing but an assembly of large neural networks that are trained on vast amounts of text data (nowadays some of them have even seen a snapshot of the whole Internet!) with the objective of generating human-like text. The surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answer questions, translate languages, solve math problems, generate narratives that emulate reasoning, and many more with a single tool.
 
@@ -81,22 +154,6 @@ And by the way, ChatGPT was **almost** correct, in the specific case of the gpt-
 We can also argue if the statement "Chinese is generally tokenized character by character" is an overstatement. In any case the real question here is: Are we ok with *almost correct answers*?
 
 ## NLP tasks
-
-TODO: These are no exhaustive! Give a curated list and be clear these are only prototypical tasks
-
-HINT: Language Modeling has always been a specific NLP Task (so LLMs are subset of NLP and not the other way around)
-
--   Language modeling: Given a sequence of words, the model predicts the next word. For example, in the sentence "The cat is on the \_\_\_\_\_", the model might predict "mat" based on the context. This task is useful for building solutions that require speech and optical character recognition (even handwriting), language translation and spelling correction
-
--   Text classification: Given a set of items (e.g., emails), assign a label (e.g., spam/not-spam). It is the task of assigning predefined categories or labels to a given text. Text classification is extremely popular in NLP applications, from spam filtering to movies ratings based on reviews.
-
--   Information extraction: This is the task of extracting relevant information from the text. "Eva Viviani, a Research Software Engineer at the eScience Center, attended the 17th Conference of the European Chapter of ACL on May 2nd, 2023". Person: Eva Viviani, Job title: RSE, Event: 17th Conference of the European Chapter of ACL, Date: May 2nd, 2023, etc.
-
--   Information retrieval: This is the task of finding relevant information or documents from a large collection of unstructured data based on user's query, e.g., "What's the best restaurant near me?".
-
--   Conversational agent (also known as ChatBot): Building a system that interacts with a user via natural language, e.g., "What's the weather today, Siri?". These agents are widely used to improve user experience in customer service, personal assistance and many other domains.
-
--   Topic modelling: Automatically identify abstract "topics" that occur in a set of documents, where each topic is represented as a cluster of words that frequently appear together. This task is used in a variety of domains, from literature to bioinformatics as a common text-mining tool.
 
 :::: challenge
 ## NLP in the real world
@@ -119,6 +176,55 @@ These are some of the most popular NLP-based products that we use on a daily bas
 ::::
 
 The exercise above tells us that a great deal of NLP techniques is embedded in our daily life. Indeed NLP is an important component in a wide range of software applications that we use in our daily lives.
+
+There are several ways to describe the tasks that NLP solves. From the Machine Learning perspective we have supervised (learning to classify given a labeled set of examples) and unsupervised tasks (exploiting existing patterns from large amounts of text). From the Deep Learning perspective we have different neural network architectures that help us solve tasks, such as Recurrent Neural Networks, LSTM's and Transformers. It is usually helpful to know these tasks because we can many times formulate our own research questions in similar terms and solve it using similar techniques as the prototypical tasks. Here we show one possible general NLP task taxonomy, together with some of their most prominent examples (this is definitely a non-exhaustive list, as in reality there are hundreds of them):
+
+-   **Language Modeling**: Given a sequence of words, the model predicts the next word. For example, in the sentence "The capital of France is \_\_\_\_\_", the model might predict "Paris" based on the context. This task was initially useful for building solutions that require speech and optical character recognition (even handwriting), language translation and spelling correction. Nowadays this has scaled to the LLMs that we know today.
+
+-   **Text Classification**: Assign one or more labels to a "Documents". A document in our context can mean a sentence, a paragraph, a book chapter, etc...
+
+    -   **Language Identification**: determining the language of a given text.
+    -   **Spam Filtering**: classifiying emails into spam or not spam based on their content.
+    -   **Authorship Attribution**: detemrining the author of a text based on its style and content (based on the assumption that each author has a unique writing style).
+    -   **Sentiment Analysis**: classifying text into positive, negative or neutral sentiment. For example, in the sentence "I love this product!", the model would classify it as positive sentiment.
+
+-   **Token Classification**: The task of assigning label to words individually. Because words do not occur in isolation, their meaning depend on the sequence of words to the left or the right of them, this is also called Word-In-Context Classification or Sequence Labeling and usually involves syntactic and semantic analysis.
+    -   **Part-Of-Speech Tagging**: is the task of assigning a part-of-speech label (e.g., noun, verb, adjective) to each word in a sentence.
+    -   **Chunking**: splitting a running text into "chunks" of words that together represent a meaningful unit: phrases, sentences, paragraphs, etc.
+    -   **Word Sense Disambiguation**: based on the context what does a word mean (think of "book" in "I read a book." vs "I want to book a flight.")
+    -   **Named Entity Recognition**: recognize world entities in text, e.g. Persons, Locations, Book Titles, etc...
+    -   **Semantic Role Labeling**: the task if finding out "Who did what to whom?" in a sentence: information from events such as agents, participants, circumstances, etc.
+    -   **Relation Extraction**: the task of identifying named relationships between entities in a text, e.g. "Apple is based in California" has the relation (Apple, based_in, California).
+    -   **Co-reference Resolution**: the task of determining which words refer to the same entity in a text, e.g. "Mary is a doctor. She works at the hospital." Here "She" refers to "Mary".
+
+-   **Text Similarity**: The task of determining how similar two pieces of text are.
+
+    -   **Plagiarism detection**: determining whether a piece of TextB is close enough to another known piece of TextA, which increments the likelihood that it was copied from it.
+    -   **Document clustering**: grouping similar texts together based on their content.
+    -   **Topic modelling**: A specific instance of clustering, here we automatically identify abstract "topics" that occur in a set of documents, where each topic is represented as a cluster of words that frequently appear together.
+    -   **Information Retrieval**: This is the task of finding relevant information or documents from a large collection of unstructured data based on user's query, e.g., "What's the best restaurant near me?".
+
+-   **Text Generation**: The task of generating text based on a given input. This can
+
+    -   **Machine Translation**: translating text from one language to another, e.g., "Hello" in English to "Que tal" in Spanish.
+    -   **Summarization**: generating a concise summary of a longer text. It can be abstractive (generating new sentences that capture the main ideas of the original text) but also extractive (selecting important sentences from the original text).
+    -   **Paraphrasing**: generating a new sentence that conveys the same meaning as the original sentence, e.g., "The cat is on the mat." to "The mat has a cat on it.".
+    -   **Question Answering**: Given a question and a context, the model generates an answer. For example, given the question "What is the capital of France?" and the Wikipedia article about France as the context, the model should answer "Paris". This task can be approached as a text classification problem (where the answer is one of the predefined options) or as a generative task (where the model generates the answer from scratch).
+    -   **Conversational Agent (ChatBot)**: Building a system that interacts with a user via natural language, e.g., "What's the weather today, Siri?". These agents are widely used to improve user experience in customer service, personal assistance and many other domains.
+
+::: callout
+## NLP Libraries
+
+Related to the need of shaping our problems into a known task, there are several existing NLP libraries which we can use out-of-the-box. We already used SpaCy for English and jieba for Chinese. Again, as a non-exhaustive list, we mention here some of the most used NLP libraries in python:
+
+-   [NLTK](https://github.com/nltk/nltk)
+-   [spaCy](https://github.com/explosion/spaCy)
+-   [Gensim](https://github.com/RaRe-Technologies/gensim)
+-   [Stanza](https://github.com/stanfordnlp/stanza)
+-   [Flair](https://github.com/flairNLP/flair)
+-   [FastText](https://github.com/facebookresearch/fastText)
+-   [HuggingFace Transformers](https://github.com/huggingface/transformers)
+:::
 
 ## Some Relevant Linguistic Aspects
 
@@ -157,9 +263,10 @@ This is why the previous statements were difficult:
 | "I saw the cat with the telescope" | **Syntactic** | Same sentence structure, different properties |
 | "Colorless green ideas sleep furiously" | **Semantic** | Grammatical but meaningless |
 | "I never said she stole my money." | **Pragmatic** | Meaning relies on word emphasis |
-
 :::
 ::::
+
+Understanding the levels of languages is crucial for evaluation, whenever you are solving a specific task, you should ask yourself what kind of ambiguity can affect your results? At what level are your assumptions operating when defining your research questions? Having the answers to this kinds of questions can save you a lot of time when debugging your models. Sometimes the most innocent assumptions (for example using the wrong tokenizer) can create enormous performance drops even when the higher level assumptions were correct.
 
 ### Discreteness
 
@@ -206,6 +313,49 @@ for word, context_list in co_occurrence.items():
     # We use Counter to get a frequency count of context words
     fingerprint = Counter(context_list).most_common(5)
     print(f"'{word}': {fingerprint}")
+```
+
+::: callout
+## Stop Words
+
+Depending on the use case you will always perform some preprocessing steps in order to have the data as normalized and clean as possible before making any computations. These steps are not exhaustive and are task-dependent. In this case, we introduced the concept of "stop_words" (extremely common words that do not provide relevant information for our use case and, given their high frequency, they tend to obscure the results we are interested in). Of course, our list could have been much bigger, but it served the purpose for this toy example.
+
+Spacy has a pre-defined list of stopwords per language. To explicitly load the English stop words we can do
+
+```python
+from spacy.lang.en.stop_words import STOP_WORDS
+print(STOP_WORDS)  # a set of common stopwords
+print(len(STOP_WORDS)) # There are 326 words considered in this list
+```
+
+Alternatively you can filter out stop words when iterating your tokens (remember the spacy token properties!) like this:
+
+```python
+doc = nlp(text)
+content_words = [token.lower_ for token in doc if token.is_alpha and not token.is_stop]  # Filter out stop words and punctuation
+print(content_words)
+```
+:::
+
+### Sparsity
+
+Another key property of linguistic data is its sparsity. This means that if we are hunting for a specific phenomenon we will realize it barely occurs inside a vast amount of text. Take the example of pizzas and hamburgers, it worked for us because our experiment was run in an extremely hand-crafted text for the purpose. However, if we want to scale this up, we would have to crawl across thousands of food reviews (for example) and filter the ones that are about hamburgers and pizzas so we will probably just get a dozen of examples out of the thousands of reviews.
+
+## NLP = Linguistics + Machine Learning
+
+introduce the link to ML and DL, describe what a model is in NLP, training data (input, output) pairs, what is domain-specific data/models
+
+### Preprocessing Text
+
+Some of the most common pre-processing steps might include: 
+- Tokenization (splitting strings into meaningful/useful units) 
+- Lowercasing (removing uppercases to e.g. avoid treating "Dog" and "dog" as two different words) 
+- Stop Word Removal (removing semantically irrelevant words for our purposes) 
+- Punctuation and Special Character Removal (keeping only alphanumerical content) 
+- Lemmatization (a linguistic operation that normalizes the word into a single "dictionary entry". Think how "eating", "ate", "eaten" are all a variation of the verb "eat")
+
+``` python
+ "Here my python code using spacy..."
 ```
 
 ::: keypoints
