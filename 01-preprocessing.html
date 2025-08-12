@@ -314,7 +314,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Episode 1: From text to vectors</h1>
-        <p>Last updated on 2025-08-05 |
+        <p>Last updated on 2025-08-12 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/01-preprocessing.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -405,6 +405,7 @@ context they occur, over decades.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
+<span class="callout-header">Callout</span>
 <div id="goal" class="callout-inner">
 <h3 class="callout-title">Goal</h3>
 <div class="callout-content">
@@ -442,6 +443,7 @@ steps we cover next into one code, to do all these steps at once.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
+<span class="callout-header">Callout</span>
 <div id="dataset-size-in-training" class="callout-inner">
 <h3 class="callout-title">Dataset size in training</h3>
 <div class="callout-content">
@@ -471,6 +473,7 @@ our task.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
+<span class="callout-header">Challenge</span>
 <div id="exploring-delpher" class="callout-inner">
 <h3 class="callout-title">Exploring Delpher</h3>
 <div class="callout-content">
@@ -487,7 +490,7 @@ sports club, or an historic event?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Few examples. </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: decimal"><li><p>The 20th of July 1969 marks an important event. The First Moon
 landing! Look at what the <a href="https://resolver.kb.nl/resolve?urn=KBPERS01:003319021:mpeg21:pdf" class="external-link">Tubantia
@@ -520,8 +523,8 @@ called <code>corpus</code>.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
+<span class="callout-header">Callout</span>
 <div class="callout-inner">
-<h3 class="callout-title">Callout</h3>
 <div class="callout-content">
 <p>The <code>txt</code> file provides the text without formatting and
 images, and is the product of a technique called Optical Character
@@ -600,8 +603,8 @@ role of a word, e.g. nouns and verbs.</li>
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
+<span class="callout-header">Callout</span>
 <div class="callout-inner">
-<h3 class="callout-title">Callout</h3>
 <div class="callout-content">
 <ul><li><p>Preprocessing approaches affect significantly the quality of the
 training when working with word embeddings. For example, [Rahimi &amp;
@@ -684,8 +687,8 @@ start of a sentence for example - we can lowercase the full text.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
+<span class="callout-header">Callout</span>
 <div class="callout-inner">
-<h3 class="callout-title">Callout</h3>
 <div class="callout-content">
 <p>It is important to keep in mind that in doing this, some information
 is lost. As mentioned before, models that are trained to identify named
@@ -715,8 +718,8 @@ fine-tuned for the target language. In our case, this is
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
+<span class="callout-header">Callout</span>
 <div class="callout-inner">
-<h3 class="callout-title">Callout</h3>
 <div class="callout-content">
 <p>A good word tokeniser for example, does not simply break up a text
 based on spaces and punctuation, but it should be able to
@@ -816,6 +819,7 @@ and many low frequency words.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
+<span class="callout-header">Challenge</span>
 <div class="callout-inner">
 <h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
@@ -831,7 +835,7 @@ be removed?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <ul><li>Laura left the solution here missing – could this be considered an
 exercise without a solution?</li>
@@ -852,6 +856,7 @@ words to process.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
+<span class="callout-header">Callout</span>
 <div id="tasks-where-stop-word-removal-is-useful" class="callout-inner">
 <h3 class="callout-title">Tasks where stop word removal is useful</h3>
 <div class="callout-content">
@@ -908,8 +913,8 @@ language.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>
+<span class="callout-header">Key Points</span>
 <div class="callout-inner">
-<h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
 <ul><li>Preprocessing involves a number of steps that one can apply to their
 text to prepare it for further processing.</li>
@@ -976,8 +981,8 @@ between two vectors.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
+<span class="callout-header">Callout</span>
 <div class="callout-inner">
-<h3 class="callout-title">Callout</h3>
 <div class="callout-content">
 <p><a href="https://en.wikipedia.org/wiki/Cosine_similarity" class="external-link">cosine
 similarity</a> ranges between [<code>-1</code> and <code>1</code>]. It
@@ -1015,6 +1020,7 @@ nuances.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
+<span class="callout-header">Challenge</span>
 <div class="callout-inner">
 <h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
@@ -1031,7 +1037,7 @@ couple that is the least similar and the most similar</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <ol style="list-style-type: decimal"><li>Add one of two other dimensions</li>
 </ol><p>We could add the dimension of “velocity” or “speed” that goes from 0
@@ -1101,8 +1107,8 @@ more nuances of their meanings or characteristics.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>
+<span class="callout-header">Key Points</span>
 <div class="callout-inner">
-<h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
 <ul><li>We can represent text as vectors of numbers (which makes it
 interpretable for machines)</li>
@@ -1121,6 +1127,7 @@ word acquires a new meaning.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
+<span class="callout-header">Callout</span>
 <div id="you-shall-know-a-word-by-the-company-it-keeps---j.-r.-firth-1957" class="callout-inner">
 <h3 class="callout-title">
 <strong>You shall know a word by the company
@@ -1163,8 +1170,8 @@ prediction tasks that CBOW and Skip-gram try to solve</div>
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
+<span class="callout-header">Callout</span>
 <div class="callout-inner">
-<h3 class="callout-title">Callout</h3>
 <div class="callout-content">
 <p>CBOW is faster to train, while Skip-Gram is more effective for
 infrequent words. Increasing context size improves embeddings but
@@ -1340,6 +1347,7 @@ societal well-being and communication.</p>
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
+<span class="callout-header">Discussion</span>
 <div class="callout-inner">
 <h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
@@ -1388,7 +1396,7 @@ meaning related to the Cold War e.g. <a href="https://en.wikipedia.org/wiki/Iro
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.12" class="external-link">sandpaper (0.16.12)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.6" class="external-link">varnish (1.0.6)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.17.1" class="external-link">sandpaper (0.17.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.7" class="external-link">varnish (1.0.7)</a></p>
 			</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -1410,8 +1418,8 @@ meaning related to the Cold War e.g. <a href="https://en.wikipedia.org/wiki/Iro
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/01-preprocessing.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/01-preprocessing.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-08-05",
-  "datePublished": "2025-08-05"
+  "dateModified": "2025-08-12",
+  "datePublished": "2025-08-12"
 }
 
   </script><script>
