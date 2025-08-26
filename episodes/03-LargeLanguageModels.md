@@ -1,7 +1,7 @@
 ---
 title: "Episode 3: Using large language models"
-teaching: 
-exercises: 
+teaching: 30
+exercises: 30
 ---
 
 :::::: questions 
