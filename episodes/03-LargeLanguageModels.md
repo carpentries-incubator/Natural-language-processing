@@ -5,57 +5,228 @@ exercises:
 ---
 
 :::::: questions 
-- What is a Large Language Model (LLM)?
-- How do LLMs differ from traditional NLP models?
-- What is the Transformer architecture, and why is it important for LLMs?
-- How does prompt engineering influence LLM outputs?
-- What are some real-world applications of LLMs?
-- How can LLMs generate, classify, and summarise text?
+1. What is the relation between Transformers and "LLM's"? [**partially**]
+
+2. Relation between BERT and LLMs? [**partially**]
+
+3. What kinds of tasks can LLMs solve? How can NLP help? [**partially**]
+
+4.  What are the criteria for selecting LLMs to use? What aspects to consider? [**draft**]
+
+5. What are some common prompt strategies? [**Not yet**]
+
+6. How to use HuggingFace to use local LLMs for inference? [**TODO**]
+
+7. How to use LLMs Responsibly? (drawbacks, errors and biases) [**Not yet**]
+
+8. How to build a simple "Chatbot"? -> try to use command input in Jupyter itself instead of command line [**TODO**]
+
+9. How can we evaluate the responses that we get? [**Not yet**]
+
+10. Could mention Ethics and sustainability of training models? [**Not yet**]
 
 ::::::
 
 :::::: objectives
 After following this lesson, learners will be able to:
 
-- Understand what Large Language Models (LLMs) are and their role in NLP
-- Explain the Transformer architecture and why it is foundational for LLMs
-- Use prompt engineering to generate high-quality text responses
-- Apply LLMs to real-world tasks like news article analysis
-- Explore pre-trained LLMs and experiment with custom tasks
-- Set up a chatbot and a simple RAG
-- Understand the impact of LLMs in modern AI and language processing
+1. Explain the relation between Transformer architecture and LLMs
+2. Judge which LLMs are most suitable for a particular task
+3. Explain how LLMs can be used to solve established NLP tasks
+4. Evaluate the efficacy of LLMs to solve common NLP tasks
+5. Use Python and HuggingFace to load and employ LLMs to perform basic inference
+6. Explain what Retrieval Augmented Generation (RAG) is and its relation to LLMs
+7. Understand the impact of LLMs in modern AI and language processing
 
-::::::
+**To do:**
 
-Large Language Models (LLMs) are a hot and a big topic these days, and are continuously in the news. Everybody heard of ChatGPT, many tried it out for a variety of purposes, or even incorporated these tools in their daily work. But what are these models exactly, how do they work 'under the hood', and how can you make use of them in the best possible way?
+1. Diagram transformers vs. LLMs (post-training step)
+2. BERT diagram showing different between BERT and LLMs [easy]
+3. Input in Jupyter notebooks for chat style interaction [easy]
 
-In this episode, we will:
 
-- Explore LLMs, which represent a significant advancement in natural language processing (NLP). We will begin by defining what LLMs are and touching on their foundational architecture, particularly the Transformer model, which allows the LLM to understand and generate human-like text. 
-- Through practical examples, you will discover how to work with these models for specific tasks with content generation.
-- We'll also discuss real-world applications of LLMs, such as analyzing news articles and generating insights from large amounts of text data. 
+## Background
 
-This episode aims to equip you with both theoretical knowledge and practical skills, preparing you to harness the power of LLMs in your own projects and applications.
+Chat assistants like [ChatGPT](https://chatgpt.com/) and [Claude](http://claude.ai), which are based on Large Language Models (LLMs) are widely used today for tasks such as content generation, question answering, research and software development. The rapid rise of such models has had quite a disruptive and strong impact. But what are these models exactly? How do they work 'under the hood'? And how can one use them programmatically, in a responsible and effective way?
 
-## What are Large Language Models?
-Large language models (LLMs) represent a significant advancement in artificial intelligence, designed to process and interpret large-scale natural language data to generate responses to user queries. By being trained on extensive datasets through advanced machine learning algorithms, these models learn the intricate patterns, structures and nuances of human language. This enables them to produce coherent and natural-sounding language outputs across various inputs. As a result, large language models are becoming increasingly essential in a range of tasks such as text generation, text summarisation, rewriting, question answering, and language translation.
+This episode is a gentle introduction to LLMs which aims to equip you with knowledge of the underpinnings of LLMs based on transformers architecture, as well as practical skills to programmatically work with LLMs in your own projects.
 
-The emergence of *ChatGPT*, powered by OpenAI's advanced LLMs, has brought these capabilities into the mainstream. With ChatGPT, users interact through natural language, enabling seamless conversations and performing complex tasks across various sectors, like customer service, education, and content creation. Models like GPT-4, BERT, and LLaMA are also used across various applications; from chatbots, virtual assistants, text analysis, translation, summarisation, and more.
+<img src="fig/llm-logos/anthropic.png" alt="Company A" width="80"/> <img src="fig/llm-logos/alibaba.png" alt="Company B" width="80"/> <img src="fig/llm-logos/xai.jpg" alt="Company C" width="80"/> <img src="fig/llm-logos/zhipu.png" alt="Company C" width="150"/> <img src="fig/llm-logos/google.png" alt="Company C" width="80"/> <img src="fig/llm-logos/openai.jpg" alt="Company C" width="150"/>
 
-Notably, the success of ChatGPT and other LLM-driven applications highlights their versatility and potential to transform how humans interact with digital systems. These models continue to push the boundaries of what's possible in human-computer interaction, offering a glimpse into a future where machines and humans communicate more naturally and effectively.
+<img src="fig/llm-logos/nvidia.png" alt="Company D" width="80"/> <img src="fig/llm-logos/deepseek.png" alt="Company E" width="80"/> <img src="fig/llm-logos/huggingface.png" alt="Company F" width="80"/> <img src="fig/llm-logos/meta.png" alt="Company C" width="150"/>
 
-### Timeline
-The journey of large language models over the past decade highlights the rapid evolution and growing impact of AI in language processing:
+## 1. What are Large Language Models (LLMs)?
+Large language models (LLMs) are transformer-based language models that are specialised to interpret and generate text, and to converse in a conversational-like manner with humans. The text that they generate are mostly natural language but can, in theory, constitute any character or symbol sequence such as software code. They represent a significant advancement in AI and NLP. and are trained on vast amounts of textual data mostly obtained from the internet.
 
-- **2012**: Significant advancements in deep learning architectures and access to larger datasets lead to the creation of the GPT (Generative Pre-trained Transformer) framework, marking a pivotal point in AI development.
+### 1.1 Examples of LLMs 
 
-- **2018**: Google unveils BERT (Bidirectional Encoder Representations from Transformers), introducing a groundbreaking architecture that sets the stage for the next generation of large language models.
+Many different LLMs have been, and continue to be, developed. There are both proprietary and open-source varieties. Open-source varieties often make the data that their LLMs are trained on free, open and accessible online. Some even make the code they use to train these models open-source as well. Below is a summary of some current LLMs together with their creators, chat assistant interfaces, and proprietary status:
 
-- **2020**: OpenAI releases GPT-3, which, with its remarkable 175 billion parameters, establishes a new standard for performance in language-related tasks.
+![LLMs table](fig/llm_table2.png)
 
-- **2022**: The launch of ChatGPT marks a turning point by making GPT-3 and similar models easily accessible to the public via a web interface, significantly raising public awareness and interest in LLMs and generative AI.
+### 1.2 Applications of LLMs
 
-- **2023**: Open-source LLMs begin to deliver impressive outcomes with the introduction of models like Dolly 2.0, LLaMA, Alpaca, and Vicuna. Meanwhile, the release of GPT-4 pushes the envelope by setting new records for both parameter scale and overall performance.
+LLMs can be used for many different helpful tasks. Some common tasks include:
+
+1. **Question answering:** 
+    - answering general knowledge questions
+    ```
+    Human: What is the longest river in the world?
+    LLM: The Nile River in Africa is traditionally considered the longest river in the world, stretching about 6,650 km (4,130 miles) through 11 countries before emptying into the Mediterranean Sea.
+    ```
+    - expert advice in a particular domain or scientific field
+    ```
+    Human: What are good strategies for film-making on a budget in Night conditions?
+    LLM: Night filmmaking can be both creatively rewarding and technically challenging, especially on a budget. Here are some strategies that indie filmmakers often use to maximize image quality and mood without expensive gear:...
+    ```
+2. **Text generation:**
+    - Writing essays, business plans and other documents
+    ```
+    Human: Write a template cover letter for a mid-level software engineering position at a large AI startup.
+    LLM: Dear [Hiring Manager’s Name], I am excited to apply for the Software Engineer position at [Company Name]...
+    ```
+    - Creative writing (slogans, poems, fiction, jokes)
+    ```
+    Human: Write a two sentence comedy sketch.
+    LLM: [Scene: A man sits in a job interview.] Interviewer: "Your resume says you’re fluent in Python?" Candidate: pulls out a snake from his briefcase "She does most of the talking."
+    ```
+3. **Text summarisation**
+```
+Human: Shorten: "Amsterdam, the capital of the Netherlands, is a city celebrated for its rich history, cultural diversity, and iconic canals. Known as the “Venice of the North,” it is home to a vast network of waterways lined with elegant 17th-century houses, giving the city its distinct charm. Amsterdam seamlessly blends old-world character with modern vibrancy, attracting millions of visitors each year."
+LLM: Amsterdam, the capital of the Netherlands, is known for its history, canals, and 17th-century houses, combining old charm with modern vibrancy that attracts millions each year.
+```
+4. **Sentiment or text classification**
+```
+Sentiment analysis
+Human: Is this a positive, neutral or negative statement about the movie: "Incredible and not in a good way."
+LLM: That’s a negative statement about the movie. The phrase “Incredible” usually suggests something impressive, but the qualifier “not in a good way” makes it clear the speaker means the film was bad or shockingly poor.
+```
+```
+Text classification
+Human: Categorise this statement into either sports, business, or science: "Lionel Messi scored twice to lead Argentina to victory in the World Cup qualifier."
+LLM: This statement falls under Sports. It talks about a soccer player and a match result, which clearly relates to athletic competition.
+```
+5. Language translation
+```
+Human: Translate "I have recently naturalised as a Dutch citizen" into Dutch.
+LLM: Ik ben onlangs genaturaliseerd als Nederlands staatsburger.
+```
+6. Generating software code
+```
+Human: Write a short Python function to demonstrate bubble sort
+LLM: ...
+```
+```python
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        # Last i elements are already in place
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                # Swap if the element is greater than the next
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+# Example usage
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = bubble_sort(numbers)
+print(sorted_numbers)
+```
+
+### 1.3 LLM selection criteria
+
+- Open-source vs. Proprietary?
+- Available compute: do you have a modern GPU or not?
+- Multilingual performance? https://mmluprox.github.io/
+- Other task performances? https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/
+- Do you have a scientific, commercial or personal purpose for using an LLM?
+- Do you want to integrate an LLM into a software application? 
+- Do you have resources to host or serve an LLM?
+
+
+### 1.4 General transformer-based LMs vs. LLMs
+LLMs are also trained using the transformer neural network architecture, making use of the self-attention mechanism discussion in Lesson 02. This means that an LLM is also a transformer-based language model. However, they are distinct from _general_ transformer-based language models in three main characteristics:
+
+1. **Scale:** there are two dimensions in which current LLMs exceed general transformer language models in terms of scale. The most important one is the number of _training parameters_ (weights) that are used for training models. In current models there are hundreds of billions of parameters up to trillions. The second factor is the _amount of training data_ (raw text sequences) used for training. Current LLMs use snapshots of the internet (upwards of hundreds of terabytes in size) as a base for training and possibly augment this with additional manually curated data. The sheer scale characteristic of LLMs mean that such models require extremely resource-intensive computation to train. State-of-the-art LLMs require multiple dedicated Graphical Processing Units (GPUs) with tens or hundreds of gigabytes of memory to load and train in reasonable time. GPUs offer high parallelisability in their architecture for data processing which makes them more efficient for training these models.
+
+2. **Post-training:** After training a base language model on textual data, there is an additional step of fine-tuning for enabling conversation in a prompt style of interaction with users, which current LLMs are known for. After the pre-training and neural network training stages we end up with what is called a _base_ model. The base model is a language model which is essentially a token sequence generator. This model by itself is not suitable for the interaction style we see with current LLMs, which can do things like answer questions, interpret instructions from the user, and incorporate feedback to improve responses in conversations.
+
+3. **Generalization:** LLMs can be applied across a wide range of NLP tasks such as summarization, translation, question answering, etc., without necessarily the need for fine-tuning or training separate models for different NLP tasks.
+
+![](fig/llm_analogy2.png)
+
+### 2. How are LLMs trained?
+
+Training LLMs involves a series of steps. There are two main phases: pretraining and post training. Pretraining generally involves the following substeps:
+
+#### 2.1 Obtaining and pre-processing textual data for training
+
+- _Downloading and pre-processing text:_ State-of-the-art LLMs include entire snapshots of the internet as the core textual data for training. This data can be sourced from efforts such as [CommonCrawl](https://commoncrawl.org/). Proprietary LLMs may augment or supplement this training data with additional licensed or proprietary textual data (e.g., books) from other sources or companies. The raw web pages are not usable by themselves, we need to extract the raw text from those HTML pages. This requires a preprocessing or data cleaning step.
+- _Tokenization:_  As we saw in Lesson 01, the raw text itself cannot be used in the training step, we need a way to tokenize and encode the text for processing by the neural network. 
+
+#### 2.2 Neural network training
+With LLMs the training goal is to predict the next token in a one-dimensional sequence of tokens. This is different from BERT where the goal is to predict masked tokens in the input sequence. BERT is therefore not natively developed for generating text, whereas LLMs are. In the internals of the transformer architecture, this is illustrated by the fact that BERT only makes use of the Encoder component to create its contextualised word embeddings. It does not use the Decoder component to generate new tokens for the input sequence.
+
+After training we obtain a _base_ LLM which is predicts or generates token sequences that resemble its training data. However, a post training step is required in order 
+
+3. **Post training**
+    - _Creating and processing conversation data_
+    - _Tokenization or encoding of data_
+    - _Training_ or _fine-tuning_
+
+Difference with BERT?
+
+After training a base LLM model, an additional post training step is required to fine-tune LLMs for conversational style interaction with users. Why is such a step necessary? They are trained on such What would happen if you skip this post training step and just use the base model for inference? You may encounter conversations like this:
+
+#### Not Following Instructions
+
+```
+Human: Summarize this paragraph in one sentence: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.
+Raw LLM: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.
+```
+
+The model was trained to predict text, not to follow instructions, and so it might not give expected or correct responses (although statistically the next most likely tokens would be the one's it gives).
+
+#### Regurgitation
+
+```
+Human: Donald John Trump (born June 14, 1946) is an American politician,
+Raw LLM: media personality, and businessman who is the 47th president of the United States. A member of the Republican Party, he served as the 45th president from 2017 to 2021...
+```
+
+![](fig/trump.png)
+
+Here the model just "regurgitates" verbatim a response from Wikipedia (part of it's training data), instead of creatively formulating a response in its own words.
+
+Therefore, to avoid issues like this and to be useful as conversational assistants, LLMs generally have to be fine-tuned on additional unseen conversation datasets (containing on the order of hundreds of thousands of conversations). These datasets are manually created and validated by humans. For proprietary models, these humans are hired professionally to contribute to this dataset from platforms such as Upwork and ScaleAI. There are also open-source efforts to create such datasets such as [OpenAssistant](https://huggingface.co/datasets/OpenAssistant/oasst2).
+
+Once such a dataset is obtained, the conversations need to be represented as a one-dimensional token sequence. Conversations therefore have to be encoded into such representations before being used as input for training. The encoding method for these conversations currently differ among LLMs. The figure below shows how GPT-4 tokenizes and encodes input conversations as one dimensional token sequences ([TikTokenizer](https://tiktokenizer.f2api.com/) is a page for visualizing and experimenting with tokenization approaches used by OpenAI LLMs).
+
+![](fig/tokenize_conversations.png)
+
+After encoding or tokenization, the conversational data is supplied as input for fine-tuning the base model (replacing the original training data). I.e., the base model's weights or parameters are updated.
+
+Some examples of conversational data that one might use to fine-tune an LLM (in general, you want multi-turn conversations where each participant in the conversation gets the opportunity to respond multiple times):
+
+```
+**Conversation 1 (Travel Planning):**
+Human: Can you suggest a weekend getaway near Amsterdam?
+LLM: Sure! Giethoorn – Known as the “Venice of the North,” this village has canals, thatched-roof houses, and a peaceful atmosphere. Utrecht, a charming city with medieval streets, beautiful canals, and cozy cafés.
+Human: Which one would be better for a quiet, relaxing trip?
+LLM: Giethoorn would be the quieter option. Unlike Utrecht, which is a bustling city, Giethoorn is a small village with a calm, serene atmosphere, ideal for a peaceful getaway.
+
+**Conversation 2 (Math Help):**
+Human: What's the derivative of 3𝑥^2 + 5𝑥 − 7?
+LLM: The derivative is 6𝑥 + 5.
+Human: Great, and what about the second derivative?
+LLM: The second derivative is 6.
+
+**Conversation 3 (Creative Writing):**
+Human: Give me a one-line horror story.
+LLM: The reflection in the mirror smiled back before I did.
+Human: Can you make it even creepier?
+LLM: The reflection winked, though I was alone in the room.
+```
 
 ### Starting up a simple chat 
 Let's explore how these LLMs work by doing a simple chat demonstration.
@@ -80,34 +251,17 @@ This example shows how LLMs can maintain context across multiple questions. Noti
 
 This quick chat example introduces you to the conversational abilities of LLMs, demonstrating their ability to respond contextually, provide coherent answers, and follow up on earlier parts of the conversation.
 
-## How are LLMs different from other NLP techniques?
-LLMs stand apart from traditional NLP techniques due to their scale, versatility, and reliance on deep learning models, especially Transformers. Here’s a breakdown of how they differ:
-
-### Scale of training data and parameters
-- LLMs: Trained on massive datasets (trillions of words) and use billions of parameters, allowing them to learn language patterns, facts, and relationships at an unprecedented depth.
-- Traditional NLP: Techniques like rule-based systems or smaller machine learning models rely on much smaller datasets, often requiring domain-specific training for each task (e.g., sentiment analysis or named entity recognition).
-
 ### Model architecture
 - LLMs: Use the Transformer architecture, particularly self-attention, to analyze relationships between words regardless of position. This allows them to capture long-range dependencies and context better than traditional models.
 - Traditional NLP: Often use simpler models like bag-of-words, TF-IDF (term frequency-inverse document frequency), RNNs (recurrent neural networks), and LSTMs (long-short-term memory models),  which treat words independently or consider only local context, missing the complex, global relationships.
-
-### Generalization vs. task-specific models
-- LLMs: Can be applied across a wide range of tasks—summarization, translation, question answering, etc.—without the need for separate models for each. Fine-tuning makes them even more adaptable to specific needs.
-- Traditional NLP: Typically requires developing or training a separate model for each task. For example, separate models for sentiment analysis, translation, and entity recognition.
 
 ### Learning from unlabeled data
 - LLMs: Leverage unsupervised or self-supervised learning during pretraining, enabling them to learn language patterns from raw text without human-labeled data.
 - Traditional NLP: are often supervised models, relying on labeled data for training (e.g., labeled sentiment or part-of-speech tags), which can be costly and time-consuming to create at scale.
 
-### Context and language nuance
-- LLMs: Excel at understanding context, tone, and nuance, due to their ability to weigh word relationships dynamically. This enables better handling of idioms, sarcasm, and ambiguous phrases.
-- Traditional NLP: Struggles with complex language nuances, often producing more rigid or literal interpretations. Contextual understanding is limited, especially for longer sentences or paragraphs.
-
 ### Adaptability and fine-tuning
 - LLMs: Easily adaptable to new tasks or domains with fine-tuning, making them versatile across different applications.
 - Traditional NLP: Less flexible, often requiring retraining from scratch or heavy feature engineering to adapt to new domains or tasks.
-
-In short, LLMs represent a leap forward by combining scale, flexibility, and deep learning power, allowing for more accurate, nuanced, and versatile language processing compared to traditional NLP techniques.
 
 ## What LLMs are good at
 - *Language generation*: Creating coherent and contextually appropriate text, making them ideal for creative writing, chatbots, and automated responses.
@@ -120,13 +274,6 @@ In short, LLMs represent a leap forward by combining scale, flexibility, and dee
 - *Understanding context over long passages*: LLMs can struggle with context over very long texts and may lose track of earlier details, affecting coherence.
 - *Mathematical reasoning and logic*: Though improving, LLMs often find complex problem-solving and detailed logical reasoning challenging without direct guidance.
 - *Ethical and sensitive issues*: LLMs may produce biased or offensive text based on biases present in the training data, making content moderation necessary in sensitive applications.
-
-## How do LLMs work?
-So, how is it that you can chat with a model and receive responses that seem almost human? The answer lies in the architecture and training of Large Language Models (LLMs), which are powered by advanced neural networks that understand, generate, and even translate human language with surprising accuracy.
-
-At the core of LLMs lies a framework known as the **transformer**; a concept already encountered in the previous episode. Transformers allow these models to process vast amounts of text and learn the structure and nuances of language. This setup enables LLMs not only to answer questions but also to predict, complete, and even generate coherent text based on the patterns they've learned.
-
-LLMs are trained on large text datasets and later fine-tuned on specific tasks, which helps them adapt to a wide range of applications, from conversation to text classification. The result? A model that can chat, summarize, translate, and much more—all by leveraging these core mechanisms. LLM's rely on the following key concepts:
 
 - *Transformers and self-attention*: The transformer architecture, especially the self-attention mechanism, is at the heart of LLMs. Self-attention enables these models to understand the importance of each word in relation to others in a sequence, regardless of their position.
 - *Pretraining and fine-tuning*: LLMs are first pre-trained on large text datasets using tasks like predicting the next word in a sentence, learning language patterns. They are then fine-tuned on specific tasks (e.g., translation, summarization) to enhance performance for targeted applications.
@@ -145,17 +292,6 @@ In practice, this attention mechanism helps LLMs produce coherent responses by e
 - *Structuring responses*. As each word is generated, the model assesses how each new token impacts the entire sentence, ensuring that responses are relevant, logically sound, and grammatically correct. This ability to “structure” language is why LLMs can produce responses that are contextually meaningful and well-organized.
   
 
-
-## A zoo of Large Language Models
-The era of Large Language Models gained momentum in 2018 with the release of Google’s BERT. Since then, many companies have rapidly developed newer and more powerful models. Among these are GPT (OpenAI), Llama (Meta), Mistral (Mistral AI), Gemini (Google DeepMind), Claude (Anthropic), and Grok (xAI). Some are open-source or more transparent than others, revealing their architectures, parameter counts, or training data and the collection thereof.
-
-A list of LLMs:
-- GPT - OpenAI
-- Llama  - Meta 
-- Mistral / Mixtral - Mistral AI (founded by former engineers from Google DeepMind and Meta)
-- Gemini - Google DeepMind
-- Claude - Anthropic - (founded by former OpenAI employees)
-- Grok - xAI (Elon Musk)
 
 Training a large language model is extremely resource intensive. For example, llama's model Llama 3.1 405B is a model that has 405 billion parameters. It was trained on 15 trillion tokens, uses 31 million GPU hours (H100 gpus), and emitted almost 9000 tons of CO_2 (for the training process only).
 
@@ -521,10 +657,16 @@ While LLMs are very powerful and provide us with many great possibilities and op
 
 ## Key points to remember
 
-- *Transformer models power LLMs*: The Transformer architecture and its self-attention mechanism allow LLMs to handle long-range dependencies in text effectively.
-- *LLMs excel at multiple tasks*: From text generation to classification and summarisation, LLMs like Llama are versatile and perform well on various NLP tasks.
-- *Prompt engineering is crucial*: Designing effective prompts can significantly improve the quality of outputs from LLMs, especially for creative tasks like text generation and translation.
-- *Real-world use cases*: LLMs can be applied to real-world problems like news classification, summarisation, and headline generation, improving efficiency in content management and delivery.
 
+# References
+
+Comprehensive overview of LLMs:
+https://dl.acm.org/doi/abs/10.1145/3744746
+
+Andrej Karpathy deep dive into LLMs:
+https://www.youtube.com/watch?v=7xTGNNLPyMI
+
+Multilingual benchmark for LLMs:
+https://mmluprox.github.io/
 
 :::::::::::::::::::::::::::::::::::::
