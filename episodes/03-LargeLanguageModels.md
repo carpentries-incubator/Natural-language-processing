@@ -176,7 +176,7 @@ LLMs are also trained using the transformer neural network architecture, making 
 
 3. **Generalization:** LLMs can be applied across a wide range of NLP tasks such as summarization, translation, question answering, etc., without necessarily the need for fine-tuning or training separate models for different NLP tasks.
 
-<img src="fig/llm_analogy2.png" alt="llm engine analogy" width="1000" />
+<img src="fig/llm_analogy3.png" alt="llm engine analogy" width="1000" />
 
 What about the relation between BERT, which we learned about in Lesson 02, and LLMs? Apart from the differences described above, BERT only makes use of the encoder layer of the transformers architecture because the goal is on creating token representations preserving contextual meaning. There is no generative component to do something with those representations.
 <br>
@@ -258,28 +258,115 @@ Human: Can you make it even creepier?
 LLM: The reflection winked, though I was alone in the room.
 ```
 
-### Starting up a simple chat 
-Let's explore how these LLMs work by doing a simple chat demonstration.
+### 3. Creating your own chat assistant
+Let's interact with LLM models through Python code and create our own basic chat assistant. We are going to use existing pre-trained models from [HuggingFace](https://huggingface.co/).
 
-Imagine asking a computer a question and getting a human-like response. An LLM, like GPT-4, can generate responses that feel natural, informative, and tailored to your question by analyzing the context and meaning of your input. In the demonstration below, you'll see how an LLM responds to a prompt and how it builds upon previous information to maintain the conversation.
+Lets first setup code to load the LLMs using the [transformers](https://github.com/huggingface/transformers)
 
-### Example Chat
+```python
+# Import required libraries
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+# just so we ignore annoying messages in the console from Jupyter
+import warnings 
+warnings.filterwarnings("ignore")
 
-- *User*: "What's the tallest mountain in the world?"
+# Pick a model
+model_id = "HuggingFaceTB/SmolLM2-135M" # base model
+# model_id = "HuggingFaceTB/SmolLM2-135M-Instruct" # fine-tuned assistant model
+# model_id = "HuggingFaceTB/SmolLM3-3B-Base" # base model
+# model_id = "HuggingFaceTB/SmolLM3-3B" # fine-tuned assistant model
+# model_id = "meta-llama/Llama-3.2-3B-Instruct" # fine-tuned assistant model
 
-- *LLM*: "The tallest mountain in the world is Mount Everest, which stands at 8,848 meters (29,029 feet)."
+# Load tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id)
+```
 
-- *User*: "How long does it take to climb it?"
+Lets also add some code to disable more warning messages which can clutter the console:
 
-- *LLM*: "Climbing Mount Everest typically takes around two months, due to the acclimatization process needed to adjust to high altitudes. Expeditions often start from Base Camp in Nepal, where climbers spend several weeks preparing."
+```python
+# Set pad_token_id to eos_token_id to avoid warnings
+if tokenizer.pad_token_id is None:
+    tokenizer.pad_token = tokenizer.eos_token
+    model.config.pad_token_id = tokenizer.eos_token_id
+```
 
-- *User*: "Could someone with no climbing experience try it?"
+Let's now create and initialise our chat assistant with the model and tokenizer:
 
-- *LLM*: "Climbing Mount Everest is extremely challenging and requires significant training and experience due to the harsh conditions, high altitudes, and technical aspects of the climb. Most climbers spend years training and gaining experience on other mountains before attempting Everest."
+```python
+# Build pipeline
+chatbot = pipeline("text-generation", model=model, tokenizer=tokenizer)
+```
 
-This example shows how LLMs can maintain context across multiple questions. Notice how the model connects information across each question, keeping the conversation relevant and informed.
+We will now define a convenience function for creating a chat prompt (input):
 
-This quick chat example introduces you to the conversational abilities of LLMs, demonstrating their ability to respond contextually, provide coherent answers, and follow up on earlier parts of the conversation.
+```python
+# This variable will store our conversation history with the chat assistant
+history = []
+
+def chat(user_input):
+    global history
+    history.append(f"User: {user_input}")
+    prompt = "\n".join(history) + "\nAssistant:"
+    
+    response = chatbot(prompt, max_new_tokens=100, do_sample=True, top_k=50, temperature=0.7)[0]["generated_text"]
+    
+    # Extract assistant’s reply after the last "Assistant:"
+    reply = response.split("Assistant:")[-1].strip()
+    history.append(f"Assistant: {reply}")
+    return reply
+```
+
+Now let us actually run our chat assistant! We create a loop to ensure that the conversation continues:
+
+```python
+# Call chatbot interaction
+while True:
+    user_input = input("You: ")
+    if user_input.lower() in ["quit", "exit"]:
+        break
+    print("Bot:", chat(user_input))
+
+```
+#### 3.1 Comparing different LLMs
+...
+
+#### 3.2 Prompt strategies
+...
+
+#### 3.3 Drawbacks, Errors and Biases
+LLMs have strengths and weaknesses (although the weaknesses are improving rapidly). If not intentionally addressed during training, LLMs can display the following examples of undesirable behavior:
+
+**Hallucination**
+
+Load and initialise the ``HuggingFaceTB/SmolLM3-3B`` model in your notebook. Run the following code directly after (create a new cell if necessary):
+
+```python
+halluc_prompt = "Who is Railen Ackerby?"
+infengine = pipeline("text-generation", model=model, tokenizer=tokenizer)
+response = infengine(halluc_prompt, max_new_tokens=100, do_sample=True, top_k=50, temperature=0.7)[0]["generated_text"]
+print(response.strip())
+```
+
+You may get a response like: "Who is Railen Ackerby? How did he get his name? Railen Ackerby is an English musician and composer. He was born in Birmingham, England in 1992. Railen Ackerby’s name is a combination of Railen, his mother’s maiden name, and Ackerby, the last name of his paternal grandfather. Railen’s paternal grandfather was an English composer and musicologist who played the violin and studied at Oxford University. Railen was named after his grandfather."
+
+However, this person does not actually **exist**. So the model is "hallucinating" or "seeing something that is not there" i.e., making something up.
+
+**Biases or stereotypes**
+
+LLMs may produce biased or offensive text based on biases present in the training data, making content moderation necessary in sensitive applications.
+
+```python
+bias_prompt = "Write a two paragraph story where a nurse, a pilot, and a CEO are having lunch together."
+response = infengine(bias_prompt, max_new_tokens=500, do_sample=True, top_k=50, temperature=0.7)[0]["generated_text"]
+print(response.strip())
+```
+
+You may get a response similar to (you may not get exactly the same output due to the stochastic processes which define how these models work):
+
+"In a bustling city, amidst the hum of traffic and the chatter of pedestrians, three individuals gathered for lunch in a cozy café. Dr. Emma Taylor, a dedicated nurse with a heart full of compassion, sipped _**her**_ green tea, _**her**_ eyes gleaming with warmth as she observed the world around _**her**_"
+
+This is of course reinforcing gender stereotypes for the nurse profession. Even the most advanced models are susceptible to these biases and stereotypes.
 
 ### Model architecture
 - LLMs: Use the Transformer architecture, particularly self-attention, to analyze relationships between words regardless of position. This allows them to capture long-range dependencies and context better than traditional models.
