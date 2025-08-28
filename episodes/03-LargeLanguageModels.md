@@ -62,7 +62,7 @@ Large language models (LLMs) are transformer-based language models that are spec
 
 Many different LLMs have been, and continue to be, developed. There are both proprietary and open-source varieties. Open-source varieties often make the data that their LLMs are trained on free, open and accessible online. Some even make the code they use to train these models open-source as well. Below is a summary of some current LLMs together with their creators, chat assistant interfaces, and proprietary status:
 
-![LLMs table](fig/llm_table2.png)
+<img src="fig/llm_table2.png" alt="LLMs table" width="1000" />
 
 ### 1.2 Applications of LLMs
 
@@ -70,48 +70,71 @@ LLMs can be used for many different helpful tasks. Some common tasks include:
 
 1. **Question answering:** 
     - answering general knowledge questions
+    <br>
     ```
     Human: What is the longest river in the world?
     LLM: The Nile River in Africa is traditionally considered the longest river in the world, stretching about 6,650 km (4,130 miles) through 11 countries before emptying into the Mediterranean Sea.
     ```
+    <br>
+
     - expert advice in a particular domain or scientific field
+    <br>
     ```
     Human: What are good strategies for film-making on a budget in Night conditions?
     LLM: Night filmmaking can be both creatively rewarding and technically challenging, especially on a budget. Here are some strategies that indie filmmakers often use to maximize image quality and mood without expensive gear:...
     ```
+    <br>
+
 2. **Text generation:**
     - Writing essays, business plans and other documents
+    <br>
     ```
     Human: Write a template cover letter for a mid-level software engineering position at a large AI startup.
     LLM: Dear [Hiring Manager’s Name], I am excited to apply for the Software Engineer position at [Company Name]...
     ```
+    <br>
+
     - Creative writing (slogans, poems, fiction, jokes)
+    <br>
     ```
     Human: Write a two sentence comedy sketch.
     LLM: [Scene: A man sits in a job interview.] Interviewer: "Your resume says you’re fluent in Python?" Candidate: pulls out a snake from his briefcase "She does most of the talking."
     ```
+    <br>
+
 3. **Text summarisation**
+
 ```
 Human: Shorten: "Amsterdam, the capital of the Netherlands, is a city celebrated for its rich history, cultural diversity, and iconic canals. Known as the “Venice of the North,” it is home to a vast network of waterways lined with elegant 17th-century houses, giving the city its distinct charm. Amsterdam seamlessly blends old-world character with modern vibrancy, attracting millions of visitors each year."
 LLM: Amsterdam, the capital of the Netherlands, is known for its history, canals, and 17th-century houses, combining old charm with modern vibrancy that attracts millions each year.
 ```
+<br>
+
 4. **Sentiment or text classification**
+
 ```
 Sentiment analysis
 Human: Is this a positive, neutral or negative statement about the movie: "Incredible and not in a good way."
 LLM: That’s a negative statement about the movie. The phrase “Incredible” usually suggests something impressive, but the qualifier “not in a good way” makes it clear the speaker means the film was bad or shockingly poor.
 ```
+<br>
+
 ```
 Text classification
 Human: Categorise this statement into either sports, business, or science: "Lionel Messi scored twice to lead Argentina to victory in the World Cup qualifier."
 LLM: This statement falls under Sports. It talks about a soccer player and a match result, which clearly relates to athletic competition.
 ```
-5. Language translation
+<br>
+
+5. **Language translation**
+
 ```
 Human: Translate "I have recently naturalised as a Dutch citizen" into Dutch.
 LLM: Ik ben onlangs genaturaliseerd als Nederlands staatsburger.
 ```
-6. Generating software code
+<br>
+
+6. **Generating software code**
 ```
 Human: Write a short Python function to demonstrate bubble sort
 LLM: ...
@@ -153,7 +176,12 @@ LLMs are also trained using the transformer neural network architecture, making 
 
 3. **Generalization:** LLMs can be applied across a wide range of NLP tasks such as summarization, translation, question answering, etc., without necessarily the need for fine-tuning or training separate models for different NLP tasks.
 
-![](fig/llm_analogy2.png)
+<img src="fig/llm_analogy2.png" alt="llm engine analogy" width="1000" />
+
+What about the relation between BERT, which we learned about in Lesson 02, and LLMs? Apart from the differences described above, BERT only makes use of the encoder layer of the transformers architecture because the goal is on creating token representations preserving contextual meaning. There is no generative component to do something with those representations.
+<br>
+
+<img src="fig/llms_vs_bert2.png" alt="llms vs bert" width="800" />
 
 ### 2. How are LLMs trained?
 
@@ -162,51 +190,53 @@ Training LLMs involves a series of steps. There are two main phases: pretraining
 #### 2.1 Obtaining and pre-processing textual data for training
 
 - _Downloading and pre-processing text:_ State-of-the-art LLMs include entire snapshots of the internet as the core textual data for training. This data can be sourced from efforts such as [CommonCrawl](https://commoncrawl.org/). Proprietary LLMs may augment or supplement this training data with additional licensed or proprietary textual data (e.g., books) from other sources or companies. The raw web pages are not usable by themselves, we need to extract the raw text from those HTML pages. This requires a preprocessing or data cleaning step.
-- _Tokenization:_  As we saw in Lesson 01, the raw text itself cannot be used in the training step, we need a way to tokenize and encode the text for processing by the neural network. 
+
+<img src="fig/html_to_text.png" alt="html to text processing" width="800" />
+
+- _Tokenization:_  As we saw in Lesson 01, the raw text itself cannot be used in the training step, we need a way to tokenize and encode the text for processing by the neural network. As an example of what these encodings look like for OpenAI models like GPT, you can visit [TikTokenizer](https://tiktokenizer.f2api.com/).
+
+<img src="fig/text_to_tokenids.png" alt="tokenization" width="800" />
 
 #### 2.2 Neural network training
 With LLMs the training goal is to predict the next token in a one-dimensional sequence of tokens. This is different from BERT where the goal is to predict masked tokens in the input sequence. BERT is therefore not natively developed for generating text, whereas LLMs are. In the internals of the transformer architecture, this is illustrated by the fact that BERT only makes use of the Encoder component to create its contextualised word embeddings. It does not use the Decoder component to generate new tokens for the input sequence.
 
-After training we obtain a _base_ LLM which is predicts or generates token sequences that resemble its training data. However, a post training step is required in order 
+<img src="fig/llm_training_goal.png" alt="training goal llms" width="800" />
 
-3. **Post training**
-    - _Creating and processing conversation data_
-    - _Tokenization or encoding of data_
-    - _Training_ or _fine-tuning_
+After training we obtain a _base_ LLM which is predicts or generates token sequences that resemble its training data. However, a post training step is required in order to fine-tune the model to accept instructions, answer questions in a conversational style and to have behavior that is more suitable for interaction with humans.
 
-Difference with BERT?
+#### 2.3 Post training
+What does post training for LLMs look like? Why is this step necessary? What would happen if you skip this step and just use the base model trained in Step 2.2 for inference? The answer is that the base model is just a token sequence predictor. It just predicts the most likely next token for an input sequence of tokens. It does not understand how to deal with conversations or to interpret instructions (the intentions and tone behind written communication).
 
-After training a base LLM model, an additional post training step is required to fine-tune LLMs for conversational style interaction with users. Why is such a step necessary? They are trained on such What would happen if you skip this post training step and just use the base model for inference? You may encounter conversations like this:
+Therefore, you may encounter unexpected conversations like this if interacting with a base LLM:
 
-#### Not Following Instructions
+**Not Following Instructions**
 
 ```
 Human: Summarize this paragraph in one sentence: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.
 Raw LLM: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.
 ```
 
-The model was trained to predict text, not to follow instructions, and so it might not give expected or correct responses (although statistically the next most likely tokens would be the one's it gives).
+In this example interaction, the model was trained to predict text, not to follow instructions. So it might not give expected or correct responses although, statistically, these response tokens are indeed the next most likely tokens.
 
-#### Regurgitation
+**Regurgitation**
 
 ```
 Human: Donald John Trump (born June 14, 1946) is an American politician,
 Raw LLM: media personality, and businessman who is the 47th president of the United States. A member of the Republican Party, he served as the 45th president from 2017 to 2021...
 ```
+<img src="fig/trump.png" alt="tokenization" width="800" />
 
-![](fig/trump.png)
+In this interaction, the model just "regurgitates" verbatim a response from Wikipedia (part of it's training data), instead of creatively formulating a response in its own words. These are just a few examples of the kind of undesirable behavior one might encounter when doing inference with the base model without post training.
 
-Here the model just "regurgitates" verbatim a response from Wikipedia (part of it's training data), instead of creatively formulating a response in its own words.
+Therefore, to avoid issues like this, and to be useful as conversational assistants, LLMs generally have to be fine-tuned on additional unseen conversation datasets (containing on the order of hundreds of thousands of conversations). These datasets are manually created and validated by humans. For proprietary models, these humans are hired professionally to contribute to this dataset from platforms such as Upwork and ScaleAI. There are also open-source efforts to create such datasets such as [OpenAssistant](https://huggingface.co/datasets/OpenAssistant/oasst2).
 
-Therefore, to avoid issues like this and to be useful as conversational assistants, LLMs generally have to be fine-tuned on additional unseen conversation datasets (containing on the order of hundreds of thousands of conversations). These datasets are manually created and validated by humans. For proprietary models, these humans are hired professionally to contribute to this dataset from platforms such as Upwork and ScaleAI. There are also open-source efforts to create such datasets such as [OpenAssistant](https://huggingface.co/datasets/OpenAssistant/oasst2).
+Once such a dataset is obtained, the conversations need to be represented as a one-dimensional token sequence. Conversations therefore have to be encoded into such representations before being used as input for training. The encoding method for conversations currently differ among LLMs. The figure below shows how GPT-4 tokenizes and encodes input conversations as one dimensional token sequences ([TikTokenizer](https://tiktokenizer.f2api.com/) is a page for visualizing and experimenting with tokenization approaches used by OpenAI LLMs).
 
-Once such a dataset is obtained, the conversations need to be represented as a one-dimensional token sequence. Conversations therefore have to be encoded into such representations before being used as input for training. The encoding method for these conversations currently differ among LLMs. The figure below shows how GPT-4 tokenizes and encodes input conversations as one dimensional token sequences ([TikTokenizer](https://tiktokenizer.f2api.com/) is a page for visualizing and experimenting with tokenization approaches used by OpenAI LLMs).
+<img src="fig/tokenize_conversations.png" alt="tokenization for conversation data" width="800" />
 
-![](fig/tokenize_conversations.png)
+After encoding or tokenization, the conversational data is supplied as input for fine-tuning the base model (replacing the original training data). I.e., the base model's weights or parameters are updated through this process.
 
-After encoding or tokenization, the conversational data is supplied as input for fine-tuning the base model (replacing the original training data). I.e., the base model's weights or parameters are updated.
-
-Some examples of conversational data that one might use to fine-tune an LLM (in general, you want multi-turn conversations where each participant in the conversation gets the opportunity to respond multiple times):
+Below are some examples of conversational data that one might use to fine-tune an LLM. In general, you want multi-turn conversations where each participant in the conversation gets the opportunity to respond multiple times. Because this is the likely mode of interaction that will take place between humans and LLM-based chat assistants:
 
 ```
 **Conversation 1 (Travel Planning):**
