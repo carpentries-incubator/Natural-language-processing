@@ -1,14 +1,15 @@
 ---
 title: 'Episode 2: BERT and Transformers'
-teaching: 10
-exercises: 0
+teaching: 60
+exercises: 60
 ---
 :::::::::::::::::::::::::::::::::::::::::::::::: questions
-
+- What are some drawbacks of static word embeddings?
 - What are Transformers?
 - What is BERT and how does it work?
-- How can I use BERT as a text classifier?
-- How should I evaluate my classifiers? 
+- How can I use BERT to solve NLP tasks?
+- How should I evaluate my classifiers?
+- Which other Transformer variants are available?
 
 :::::::::::::::::::::::::::::::::::::::::::::::: 
 
@@ -18,20 +19,20 @@ After following this lesson, learners will be able to:
 
 - Understand how a Transformer works and recognize their different use cases.
 - Use pre-trained transformers language models (e.g. BERT) to classify texts.
-- Use a pre-trained transformer Named Entity Recognizer.
+- Use a pre-trained transformer as a Named Entity Recognizer.
 - Understand assumptions and basic evaluation for NLP outputs.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-In the previous lesson we learned how Word2Vec can be used to represent words as vectors. Having these representations allows us to apply operations directly on the vectors that have numerical properties that can be mapped to some syntactic and semantic properties of words; such as the cases of analogies or finding synonyms. Once we transform words into vectors, these can also be used as **features** for classifiers that can be trained predict any supervised NLP task. 
+Static word embeddings such as Word2Vec can be used to represent words as vectors. Having these representations allows us to apply operations directly on the vectors that have numerical properties which can be mapped to some syntactic and semantic properties of words, such as the cases of analogies or finding synonyms. Once we transform words into vectors, these can also be used as **features** for classifiers that can be trained predict any supervised NLP task. 
 
-The main drawback of Word2Vec is that each word is represented in isolation, and unfortunately that is not how language works. Words get their meanings based on the specific context in which they are used (take for example polysemy, the cases where the same word can have very different meanings depending on the context); therefore, we would like to have richer vector representations of words that also integrate context into account in order to obtain more powerful representations. 
+The main drawback of Word2Vec is that **each word is represented in isolation**, and unfortunately that is not how language works. Words get their meanings based on the specific context in which they are used (take for example polysemy, the cases where the same word can have very different meanings depending on the context); therefore, we would like to have richer vector representations of words that also integrate context into account in order to obtain more powerful representations. 
 
 In 2019, the BERT language model was introduced using a novel architecture called Transformer (2017), which allowed precisely to integrate words' context into representations. To understand BERT, we will first look at what a transformer is and we will then directly use some code to make use of BERT.
 
 # Transformers
 
-Every text can be seen as a sequence of sentences and likewise each sentence can be seen as a sequence of tokens (we use the term _token_ instead of _word_ because it is more general: tokens can be words, punctuation symbols, numbers, or even sub-words). Traditionally Recurrent Neural Networks (RNNs; and later their fancy version, LSTMs) were used to tackle token and sentence classification problems to account for the interdependencies inherent to sequences of symbols (i.e. sentences). RNNs were in theory powerful enough to capture these dependencies, something that is very valuable when dealing with language, but in practice they were resource consuming (both in training time and computational resources) and also the longer the sequences got, the harder it was to capture long-distance dependencies succesfully.
+Every piece of text can be seen as a sequence of sentences and likewise each sentence can be seen as a sequence of tokens. Traditionally Recurrent Neural Networks (RNNs; and later their fancy version, LSTMs) were used to tackle token and sentence classification problems to account for the interdependencies inherent to sequences of symbols (i.e. sentences). RNNs were in theory powerful enough to capture these dependencies, something that is very valuable when dealing with language, but in practice they were resource consuming (both in training time and computational resources) and also the longer the sequences got, the harder it was to capture long-distance dependencies succesfully.
 
 The Transformer is a neural network architecture proposed by Google researchers [in 2017](https://arxiv.org/pdf/1706.03762) to address these and other limitations of RNNs and LSTMs. In their paper, *Attention is all you Need*, they tackled specifically the problem of Machine Translation (MT), which in NLP terms is stated as: how to generate a sentence (sequence of words) in target language B given a sentence in source language A? In order to translate, first one neural network needs to _encode_ the meaning of the source language A into vector representations, and then a second neural network needs to _decode_ that representation into tokens that are understandable in language B. Therefore translation is modeling language B _conditioned_ on what language A originally said.
 
@@ -135,6 +136,79 @@ print("TOKENS:", string_tokens)
 `TOKENS: ['[CLS]', 'Maria', 'loves', 'G', '##ron', '##ingen', '[SEP]']`
 
 These show us the WordPieces that the BERT Encoder will receive and process. We will look more in detail into the tokenization and special tokens later. For now, you just need to know that the encoder uses this token IDs to retrieve the corresponding embedding vector from its vocabulary, the string representations are just for the human reader.
+
+::: callout
+
+In the case of wanting to obtain a single vector for *enchanting*, you can average the three vectors that belong to the token pieces that ultimately form that word. For example:
+
+```python
+import numpy as np
+tok_en = output.last_hidden_state[0][15].detach().numpy()
+tok_chan = output.last_hidden_state[0][16].detach().numpy()
+tok_ting = output.last_hidden_state[0][17].detach().numpy()
+
+tok_enchanting = np.mean([tok_en, tok_chan, tok_ting], axis=0)
+tok_enchanting.shape
+```
+We use the functions `detach().numpy()` to bring the values from the Pytorch execution environment (for example a GPU) into the main python thread and treat it as a numpy vector for convenvience. Then, since we are dealing with three numpy vectors we can average the three of them and end op with a single `enchanting` vector of 768-dimensions representing the average of `'en', '##chan', '##ting'`.
+
+:::
+
+### Polysemy in BERT
+We can encode two sentences containing the word *note* to see how BERT actually handles polysemy (*note* means something very different in each sentence) thanks to the representation of each word now being contextualized instead of isolated as was the case with word2vec.
+
+
+```python
+# Search for the index of 'note' and obtain its vector from the sequence
+note_index_1 = string_tokens.index("note")
+note_vector_1 = output.last_hidden_state[0][note_index_1].detach().numpy()
+note_token_id_1 = token_ids[note_index_1]
+
+print(note_index_1, note_token_id_1, string_tokens)
+print(note_vector_1[:5])
+```
+We are basically printing the tokenized sentence from the previous example and showing the index of the token `note` in the list of tokens. We are also printing the tokenID assigned to this token and the list of tokens. Finally, the last print shows the first five dimensions of the vector representing the token `note`.
+```
+12 3805 ['[CLS]', 'Maria', "'", 's', 'passion', 'for', 'music', 'is', 'clearly', 'heard', 'in', 'every', 'note', 'and', 'every', 'en', '##chan', '##ting', 'melody', '.', '[SEP]']
+[0.15780845 0.38866335 0.41498923 0.03389652 0.40278202]
+```
+
+Let's encode now another sentence, also containing the word `note`, and confirm that the same token string, with the same assigned tokenID holds a vector with different weights:
+
+```python
+# Encode and then take the 'note' token from the second sentence
+note_text_2 = "I could not buy milk in the supermarket because the bank note I wanted to use was fake."
+encoded_note_2 = tokenizer(note_text_2, return_tensors="pt")
+token_ids = list(encoded_note_2.input_ids[0].detach().numpy())
+string_tokens_2 = tokenizer.convert_ids_to_tokens(token_ids)
+
+note_index_2 = string_tokens_2.index("note")
+note_vector_2 = model(**encoded_note_2).last_hidden_state[0][note_index_2].detach().numpy()
+note_token_id_2 = token_ids[note_index_2]
+
+print(note_index_2, note_token_id_2, string_tokens_2)
+print(note_vector_2[:5])
+```
+
+```
+12 3805 ['[CLS]', 'I', 'could', 'not', 'buy', 'milk', 'in', 'the', 'supermarket', 'because', 'the', 'bank', 'note', 'I', 'wanted', 'to', 'use', 'was', 'fake', '.', '[SEP]']
+[ 0.5003222   0.653664    0.22919582 -0.32637975  0.52929205]
+```
+
+To be sure, we can compute the cosine similarity of the word *note* in the first sentence and the word *note* in the second sentence confirming that they are indeed two different representations, even when in both cases they have the same token-id and they are the 12th token of the sentence:
+
+```python
+from sklearn.metrics.pairwise import cosine_similarity
+
+vector1 = np.array(note_vector_1).reshape(1, -1)
+vector2 = np.array(note_vector_2).reshape(1, -1)
+
+similarity = cosine_similarity(vector1, vector2)
+print(f"Cosine Similarity 'note' vs 'note': {similarity[0][0]}")
+```
+
+With this small experiment, we have confirmed that the Encoder produces context-dependent word representations, as opposed to Word2Vec, where *note* would always have the same vector no matter where it appeared.
+
 
 ## BERT Output Object
 
@@ -294,122 +368,6 @@ Finetunning BERT is very cheap, because we only need to train the _classifier_ l
 ![BERT as an Emotion Classifier](fig/bert4b.png)
 
 
-# Understanding BERT Architecture
-
-This will help to understand some of the strengths and weaknesses of using BERT-based classifiers.
-
-## Tokenizer and Embedder
-
-Let's revisit the tokenizer to better grasp how it is working. The tokenization step might seem trivial but in reality models' tokenizers make a big difference in the final results of your classifiers, depending on the task you are trying to solve. Understanding the tokenizer of each model (as well as the model type!) can save us a lot of debugging when we work with our custom problem.
-
-We will feed again a sentence into the tokenizer to observe how it outputs a sequence of vectors (also called a *tensor*: by convention, a vector is a sequence of scalar numbers, a matrix is a 2-dimensional sequence and a tensor is a N-dimensional sequence of numbers), each one of them representing a wordPiece:
-
-```python
-
-# Feed text into the tokenizer 
-text = "Maria's passion for music is clearly heard in every note and every enchanting melody."
-encoded_input = tokenizer(text, return_tensors='pt')
-token_ids = list(encoded_input.input_ids[0].detach().numpy())
-string_tokens = tokenizer.convert_ids_to_tokens(token_ids)
-print(string_tokens)
-```
-
-`['[CLS]', 'Maria', "'", 's', 'passion', 'for', 'music', 'is', 'clearly', 'heard', 'in', 'every', 'note', 'and', 'every', 'en', '##chan', '##ting', 'melody', '.', '[SEP]']`
-
-This shows a list of token IDs, as we saw with our first example, this time the list consists of 21 BERT tokens. 
-
-When inspecting the string tokens, we see that most "words" were converted into a single token, however *enchanting* was splitted into three sub-tokens: `'en', '##chan', '##ting'` the hashtags indicate wether a sub-token was part of a bigger word or not, this is useful to recover the human-readable strings later. The `[CLS]` token was added at a beginning and is intended to represent the meaning of the whole sequence, likewise the `[SEP]` token was added to indicate that it is where the sentence ends.
-
-The next step is to give the sequence of tokens to the Encoder which processes it through the transformer layers and outputs a sequence of dense vectors:
-
-```python
-with torch.no_grad():
-    output = model(**encoded_input)
-    print(output.last_hidden_state.shape)
-    print(output.last_hidden_state[0][0])
-```
-`torch.Size([1, 21, 768])`
-
-```
-tensor([-5.3755e-02, -1.1100e-01, -8.8204e-02, -1.1233e-01,  8.1979e-02,
-        -7.2656e-03,  2.5323e-01, -3.0361e-01,  1.7344e-01, -1.1212e+00, ...    
-```
-
-We chose to print here the vector representation of `[CLS]`: by indexing the `last_hidden_state[0]` we access to the first batch (21 vectors of 768-dimensionality), and by again indexing `last_hidden_state[0][0]` we access the first of the last_hidden_vectors, which as we saw in the token strings, belong to `[CLS]` and is there to represent the whole sequence. We only see a lot of fine-tuned weights which are not very informative in their own, but the full-vectors are meaningful within the embedding space, which emulates some aspects of linguistic meaning. 
-
-::: callout
-
-In the case of wanting to obtain a single vector for *enchanting*, you can average the three vectors that belong to the token pieces that ultimately form that word. For example:
-
-```python
-import numpy as np
-tok_en = output.last_hidden_state[0][15].detach().numpy()
-tok_chan = output.last_hidden_state[0][16].detach().numpy()
-tok_ting = output.last_hidden_state[0][17].detach().numpy()
-
-tok_enchanting = np.mean([tok_en, tok_chan, tok_ting], axis=0)
-tok_enchanting.shape
-```
-We use the functions `detach().numpy()` to bring the values from the Pytorch execution environment (for example a GPU) into the main python thread and treat it as a numpy vector for convenvience. Then, since we are dealing with three numpy vectors we can average the three of them and end op with a single `enchanting` vector of 768-dimensions representing the average of `'en', '##chan', '##ting'`.
-
-:::
-
-We can use the same method to encode two other sentences containing the word *note* to see how BERT actually handles polysemy (*note* means something very different in each sentence) thanks to the representation of each word now being contextualized instead of isolated as was the case with word2vec.
-
-
-```python
-# Search for the index of 'note' and obtain its vector from the sequence
-note_index_1 = string_tokens.index("note")
-note_vector_1 = output.last_hidden_state[0][note_index_1].detach().numpy()
-note_token_id_1 = token_ids[note_index_1]
-
-print(note_index_1, note_token_id_1, string_tokens)
-print(note_vector_1[:5])
-```
-We are basically printing the tokenized sentence from the previous example and showing the index of the token `note` in the list of tokens. We are also printing the tokenID assigned to this token and the list of tokens. Finally, the last print shows the first five dimensions of the vector representing the token `note`.
-```
-12 3805 ['[CLS]', 'Maria', "'", 's', 'passion', 'for', 'music', 'is', 'clearly', 'heard', 'in', 'every', 'note', 'and', 'every', 'en', '##chan', '##ting', 'melody', '.', '[SEP]']
-[0.15780845 0.38866335 0.41498923 0.03389652 0.40278202]
-```
-
-Let's encode now another sentence, also containing the word `note`, and confirm that the same token string, with the same assigned tokenID holds a vector with different weights:
-
-```python
-# Encode and then take the 'note' token from the second sentence
-note_text_2 = "I could not buy milk in the supermarket because the bank note I wanted to use was fake."
-encoded_note_2 = tokenizer(note_text_2, return_tensors="pt")
-token_ids = list(encoded_note_2.input_ids[0].detach().numpy())
-string_tokens_2 = tokenizer.convert_ids_to_tokens(token_ids)
-
-note_index_2 = string_tokens_2.index("note")
-note_vector_2 = model(**encoded_note_2).last_hidden_state[0][note_index_2].detach().numpy()
-note_token_id_2 = token_ids[note_index_2]
-
-print(note_index_2, note_token_id_2, string_tokens_2)
-print(note_vector_2[:5])
-```
-
-```
-12 3805 ['[CLS]', 'I', 'could', 'not', 'buy', 'milk', 'in', 'the', 'supermarket', 'because', 'the', 'bank', 'note', 'I', 'wanted', 'to', 'use', 'was', 'fake', '.', '[SEP]']
-[ 0.5003222   0.653664    0.22919582 -0.32637975  0.52929205]
-```
-
-
-To be sure, we can compute the cosine similarity of the word *note* in the first sentence and the word *note* in the second sentence confirming that they are indeed two different representations, even when in both cases they have the same token-id and they are the 12th token of the sentence:
-
-```python
-from sklearn.metrics.pairwise import cosine_similarity
-
-vector1 = np.array(note_vector_1).reshape(1, -1)
-vector2 = np.array(note_vector_2).reshape(1, -1)
-
-similarity = cosine_similarity(vector1, vector2)
-print(f"Cosine Similarity 'note' vs 'note': {similarity[0][0]}")
-```
-
-With this small experiment, we have confirmed that the Encoder produces context-dependent word representations, ass opposed to Word2Vec, where *note* would always have the same vector no matter where it appeared.
-
-
 ## The Attention Mechanism
 
 The original attention mechanism (remember this was developed for language translation) is a component in between the Encoder and the Decoder that helps the model to _align_ the important information from the input sequence in order to generate a more accurate token in the output sequence:
@@ -493,248 +451,6 @@ The next step is crucial: evaluate how does the pre-trained model actually perfo
 
 To observe this, we can first see the performance on the test portion of the dataset in which this classifier was trained, and then evaluate the same pre-trained classifier on a NER dataset form a different domain.
 
-# ---------- END HERE ??? ----------
-
-
-The rest is more advanced content (still I leave it here just in case for now).
-
-## Testing on CoNLL-03 Benchmark
-
-This model was trained on the CoNLL-03 dataset, therefore we can corroborate how it performs using the test portion of this dataset. To get the data we can use the `datasets` library which is also part of theHuggingFace landscape
-
-```python
-from datasets import load_dataset
-
-conll03_data = load_dataset("eriktks/conll2003", split="test", trust_remote_code=True)
-conll03_data
-```
-This shows the features and number of records of the CoNLL-03 Dataset. Next we can observe which labels we have in the data
-
-```python
-conll03_data.features['ner_tags']
-```
-
-As expected, the labels are in IOB notation, where each label corresponds to one word in the dataset, however the dataset contains the labelIDs and we need to map them to their string representations. We can double check this by looking at one of the records of the dataset:
-
-```python
-def labelid2str(label_int):
-    d = conll03_data.features['ner_tags'].feature._int2str
-    return d[label_int]
-
-example_id = 10
-
-print(conll03_data['tokens'][example_id])
-print(conll03_data['ner_tags'][example_id])
-print([labelid2str(tag) for tag in conll03_data['ner_tags'][example_id]])
-```
-
-These are the Gold Labels of the dataset. We can use our pre-trained BERT model to predict the labels for each example and compare the outputs to the gold labels provided in the data. 
-
-### Predictions using Pipeline
-
-This could be done using the pipeline as we have been doing so far, example by example:
-
-```python
-
-from transformers import AutoTokenizer, AutoModelForTokenClassification
-from transformers import pipeline
-
-def get_gold_labels(label_ids):
-    return [labelid2str(tag) for tag in label_ids]
-
-
-def token_to_spans(tokens):
-    token2spans = {}
-    char_start = 0
-    for i, tok in enumerate(tokens):
-        tok_end = char_start + len(tok)
-        token2spans[i] = (char_start, tok_end)
-        char_start = tok_end + 1
-    return token2spans
-
-def get_iob_from_aggregated(tokenized_sentence, entities):
-    # Initialize all labels empty
-    iob_labels = ['O'] * len(tokenized_sentence)
-    # Get Token <-> Chars Mapping
-    tok2spans = token_to_spans(tokenized_sentence)
-    start2tok = {v[0]:k for k, v in tok2spans.items()}
-    end2tok = {v[1]:k for k, v in tok2spans.items()}
-    # Iterate over each entity to populate labels
-    for entity in entities:
-        label = entity['entity_group']
-        token_start = start2tok.get(entity['start'])
-        token_end = end2tok.get(entity['end'])
-        
-        if token_start is not None:
-            iob_labels[token_start] = f'B-{label}'
-            if token_end is not None:
-                for i in range(token_start+1, token_end+1):
-                    iob_labels[i] = f'I-{label}'
-    
-    return iob_labels
-
-tokenizer = AutoTokenizer.from_pretrained("dslim/bert-base-NER")
-model = AutoModelForTokenClassification.from_pretrained("dslim/bert-base-NER")
-
-example = conll03_data['tokens'][example_id]
-example_str = " ".join(example)
-
-ner_classifier = pipeline("ner", model=model, tokenizer=tokenizer, aggregation_strategy="first")
-predictions = ner_classifier(example_str)
-print("SENTENCE:", example_str)
-print("PREDICTED:", get_iob_from_aggregated(example, predictions))
-print("GOLD:", get_gold_labels(conll03_data['ner_tags'][example_id]))
-
-```
-
-Now that we understand how to get a list of Predicted labels for one example we can run the model for the whole test data:
-
-
-```python
-all_predictions = []
-for example in conll03_data['tokens']:
-    output = ner_classifier(" ".join(example))
-    predictions = get_iob_from_aggregated_simple(example, output)
-    all_predictions.append(predictions)
-
-gold_labels = [get_gold_labels(lbl) for lbl in conll03_data['ner_tags']]
-
-```
-
-We can use the `seqeval` package to directly evaluate the outputs:
-
-
-```python
-from seqeval.metrics import classification_report
-
-report = classification_report(gold_labels, all_predictions)
-print(report)
-```
-
-The three most basic metrics for NLP classifiers are traditionally Precision, Recall and F1 score. They come from the Information Extraction field and roughly they aim to measure the following:
-- **Precision (P):** From the predicted entities, how many of them are correct (i.e. match the gold labels)?
-- **Recall (R):** From the known gold entities, how many of them were predicted by the model?
-- **F1 Score (F1):** the harmonic mean of precison and recall, which aims to provide a balance between both metrics. It has two variants: the Micro-F1 which treats all errors equally, being the same as measuring Accuracy; and Macro-F1, which aims to show the model performance taking into account the label distribution, this is normally the score reported through main benchmarks as it shows better the model's weaknesses across classes. 
-
-
-## Using a Pre-trained Model on LitBank
-
-We can of course also use the pre-trained NER classifier with any **custom dataset**, it will just need come pre- and post-processing steps to make it work. For this example, we will use the [LitBank](https://github.com/dbamman/litbank) corpus, an annotated dataset of 100 works of English-language fiction to support tasks in natural language processing and the computational humanities. Specifically they have human annotations of entities on these books. We can measure how good is this pre-trained classifier by making the model predict the entities inside the text and them compare the outputs with the humam annotations. The NER portion of the dataset we will use is the tabulated data from [here](https://github.com/dbamman/litbank/tree/master/entities/tsv) and one example looks like this:
-
-| Index 	| Token    	| IOB-1 	| IOB-2 	| IOB-3 	| IOB-4 	|
-|-------	|----------	|-------	|-------	|-------	|-------	|
-| 1     	| CHAPTER  	| O     	| O     	| O     	| O     	|
-| 2     	| I        	| O     	| O     	| O     	| O     	|
-| 3     	| In       	| O     	| O     	| O     	| O     	|
-| 4     	| Chancery 	| B-FAC 	| O     	| O     	| O     	|
-| 5     	| London   	| B-GPE 	| O     	| O     	| O     	|
-| 6     	| .        	| O     	| O     	| O     	| O     	|
-
-It contains the information of 4 annotators, this is very useful interannotator agreement, a technique in computational linguistics for validating the correctness and consistency of the dataset. Yes! Humans are wrong too all the time when labeling! For simplicity, we will assume we only have the information from annotator 1  and take that as our ground truth. 
-
-The format of the dataset resembles the conll format, a widely used format in computational linguistics for token-based annotations. Another important aspect to observe is that they have other labels for entities. The pre-trained model we chose only labels PER, LOC, ORG and MISC. We can translate FAC and GPE to LOC label as they are only more fine-grained occurrences of locations which our model should recognize as such. To read the data we can use the following function:
-
-```python
-
-def quick_conll_reader(filepath):
-    all_sentences, all_labels = [], []
-    sent_txt, sent_lbl = [], []
-    label_vocab = {}
-    gold_label_column = 1
-    label_translator = {
-        "B-FAC": "O",
-        "I-FAC": "O",
-        "B-GPE": "B-LOC",
-        "I-GPE": "I-LOC",
-        "B-VEH": "O",
-        "I-VEH": "O"
-    }
-    with open(filepath) as f:
-        for line in f.readlines():
-            row = line.strip().split("\t")
-            if len(row) > 1:
-                sent_txt.append(row[0])
-                label = row[gold_label_column]
-                if label in label_translator:
-                    final_label = label_translator[label]
-                else:
-                    final_label = label
-                sent_lbl.append(final_label)
-                if final_label not in label_vocab:
-                    label_vocab[final_label] = len(label_vocab) 
-            else:
-                all_sentences.append(" ".join(sent_txt))
-                all_labels.append(sent_lbl)
-                sent_txt, sent_lbl = [], []
-    return all_sentences, all_labels, label_vocab
-
-
-sentences, gold_labels, label_vocab = quick_conll_reader("1023_bleak_house_brat.tsv")
-
-print(sentences[0].split(' '))
-print(gold_labels[0])
-
-```
-
-This code processes the *Bleak House* book and extracts a list of tokenized sentences (as strings) and a list of IOB Labels corresponding to each token in the sentence. You can see the first sentence and its corresponding list of *gold labels* on this example. Next, we load the NER pre-trained model again and process the sentences to obtain model predictions. The problem here is that the model predictions are lists of dictionaries and we need to post-process them so they are also on IOB-format. We use the get_iob_labels() function to do this conversion. 
-
-```python
-
-def token_to_spans(tokens):
-    token2spans = {}
-    char_start = 0
-    for i, tok in enumerate(tokens):
-        tok_end = char_start + len(tok)
-        token2spans[i] = (char_start, tok_end)
-        char_start = tok_end + 1
-    return token2spans
-
-
-def get_litbank_labels(tokenized_sentence, entities):
-    # Initialize all labels empty
-    iob_labels = ['O'] * len(tokenized_sentence)
-    # Get Token <-> Chars Mapping
-    tok2spans = token_to_spans(tokenized_sentence)
-    start2tok = {v[0]:k for k, v in tok2spans.items()}
-    end2tok = {v[1]:k for k, v in tok2spans.items()}
-    # Iterate over each entity to populate labels
-    for entity in entities:
-        label = entity['entity_group']
-        if label == "MISC":  # Design choice: Do NOT count MISC entities!
-            continue
-        token_start = start2tok.get(entity['start'])
-        token_end = end2tok.get(entity['end'])
-        
-        if token_start is not None:
-            iob_labels[token_start] = f'B-{label}'
-            if token_end is not None:
-                for i in range(token_start+1, token_end+1):
-                    iob_labels[i] = f'I-{label}'
-    
-    return iob_labels
-```
-
-And we finally apply the model to the sentences that we previously read:
-
-```python
-
-ner_results = ner_classifier(sentences)
-model_predictions = []
-for i, sentence_ner in enumerate(ner_results):
-    print(f"\n===== SENTENCE {i+1} =====")
-    print('Tokens:', sentences[i].split())
-    print('GOLD:', gold_labels[i])
-    # Get the IOB labels for the tokenized sentence
-    tokenized_sentence = sentences[i].split()
-    predicted_iob_labels = get_litbank_labels(tokenized_sentence, sentence_ner)
-    model_predictions.append(predicted_iob_labels)
-    print('MODEL:', predicted_iob_labels)
-    for nr in sentence_ner:
-        print(f'\t{nr}')
-
-```
-
-For each model prediction we are printing the sentence tokens, the IOB gold labels and the IOB predicitons. Now that the data is in this shape we can perform evaluation.
 
 ##  Model Evaluation
 
