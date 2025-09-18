@@ -1,7 +1,7 @@
 ---
 title: "Introduction"
-teaching: 90
-exercises: 30
+teaching: 60
+exercises: 60
 ---
 
 ::: questions
@@ -68,7 +68,7 @@ print(len(chinese_words))  # Output: 7
 We can trust that the output valid, because we are using a verified library, even though we don't speak Chinese. Another interesting aspect is that the Chinese sentence has more words than the English one, even though they convey the same meaning. This shows the complexity of dealing with more than one language at a time, like in Machine Translation.
 
 ::: callout
-### Pre-trained and Fine-tunning Models
+### Pre-trained Models and Fine-tunning
 
 These two terms will appear very frequently when talking about NLP. The term *pre-trained* is taken from Machine Learning and refers to a model that has been already optimized using relevant data to perform a task. It is possible to directly load and use the model out-of-the-box to apply it to our own dataset. Ideally, released pre-trained models have already been tested for generalization and quality of outputs, but it is always important to double check the evaluation process they were subjected to before using them.
 
@@ -106,11 +106,25 @@ These are some of the most popular NLP-based products that we use on a daily bas
 
 The exercise above tells us that a great deal of NLP techniques is embedded in our daily life. Indeed NLP is an important component in a wide range of software applications that we use in our daily lives.
 
-There are several ways to describe the tasks that NLP solves. From the Machine Learning perspective, we have supervised tasks (learning to classify texts given a labeled set of examples) and unsupervised tasks (exploiting existing patterns from large amounts of text). From the Deep Learning perspective we have different neural network architectures that we can use to solve different tasks, such as Recurrent Neural Networks, Convolutional Neural Networks, LSTM's, Transformers, etcetera.
+There are several ways to describe the tasks that NLP solves. From the Machine Learning perspective, we have:
 
-We can also group tasks in terms of problem definition. It is useful to have a general taxonomy of NLP tasks in this manner, so we can identify if the problem we want to solve fits with one of the existing tasks and use the knowledge available in those paradigms.
+-   Supervised tasks: learning to classify texts given a labeled set of examples
 
-Below we show one possible taxonomy of NLP tasks, grouped together with some of their most prominent applications (this is definitely a non-exhaustive list, as in reality there are hundreds of them):
+-   Unsupervised tasks: exploiting existing patterns from large amounts of text.
+
+From the Deep Learning perspective we can consider different neural network architectures to tackle an NLP task, such as:
+
+-   Multi-layer Perceptron
+
+-   Recurrent Neural Network
+
+-   Convolutional Neural Network
+
+-   LSTM's
+
+-   Transformer
+
+Below we show one possible taxonomy of NLP tasks, where we instead focus on the problem formulation aspect. The tasks are grouped together with some of their most prominent applications. This is definitely a non-exhaustive list, as in reality there are hundreds of them, but it is a good start:
 
 -   **Language Modeling**: Given a sequence of words, the model predicts the next word. For example, in the sentence "The capital of France is \_\_\_\_\_", the model should predict "Paris" based on the context. This task was initially useful for building solutions that require speech and optical character recognition (even handwriting), language translation and spelling correction. Nowadays this has scaled up to the LLMs that we know.
 
@@ -118,7 +132,7 @@ Below we show one possible taxonomy of NLP tasks, grouped together with some of 
 
     -   **Language Identification**: determining the language of a given text.
     -   **Spam Filtering**: classifiying emails into spam or not spam based on their content.
-    -   **Authorship Attribution**: detemrining the author of a text based on its style and content (based on the assumption that each author has a unique writing style).
+    -   **Authorship Attribution**: determining the author of a text based on its style and content (based on the assumption that each author has a unique writing style).
     -   **Sentiment Analysis**: classifying text into positive, negative or neutral sentiment. For example, in the sentence "I love this product!", the model would classify it as positive sentiment.
 
 -   **Token Classification**: The task of assigning label to words individually. Because words do not occur in isolation, their meaning depend on the sequence of words to the left or the right of them, this is also called Word-In-Context Classification or Sequence Labeling and usually involves syntactic and semantic analysis.
@@ -235,7 +249,7 @@ print(len(only_verbs))
 SpaCy also predicts the sentences under the hood for us. We can access them like this:
 
 ``` python
-sentences = [sent.text for sent in doc.sents] \# Sentences are also python objects print(sentences[:5]) print(len(sentences))
+sentences = [sent.text for sent in doc.sents] # Sentences are also python objects
 print(sentences[:5])
 print(len(sentences))
 ```
@@ -411,7 +425,7 @@ for word, context_list in co_occurrence.items():
     print(f"'{word}': {fingerprint}")
 ```
 
-```ouptut
+``` ouptut
 Contextual Fingerprints:
 
 'pizza': [('eat', 2), ('delicious', 2), ('?', 1), ('or', 1), ('maybe', 1)]
@@ -461,12 +475,12 @@ Use what you have learned so far to search inside the Frankenstein book how many
 4.  Lowercase all the tokens to merge the instances of "Love" and "love" into a single one.
 5.  Iterate the tokens and count how many of them are exactly "love"
 6.  Iterate the tokens and count how many of them are exactly "hate"
-7.  compute the percentage of hate + love compared to all content words. For example with: (len(hate_words) + len(love_words)) / len(content_words) * 100
+7.  compute the percentage of hate + love compared to all content words. For example with: (len(hate_words) + len(love_words)) / len(content_words) \* 100
 
 ::: solution
-Following our preprocessing procedure, there are **30,500 content words**. The word **love appears 59 times** and the word **hate appears only 9 times**. These are 0.22% of the total words in the text. Even though intuitively these words should be quite common, in reality they occur only a handful of times. So if we are interested in studying the occurrences of love/hate in the novel, we can only rely on those occurrences.
-Code:
-```python
+Following our preprocessing procedure, there are **30,500 content words**. The word **love appears 59 times** and the word **hate appears only 9 times**. These are 0.22% of the total words in the text. Even though intuitively these words should be quite common, in reality they occur only a handful of times. So if we are interested in studying the occurrences of love/hate in the novel, we can only rely on those occurrences. Code:
+
+``` python
 with open("84_frankenstein_clean.txt") as f:
   text = f.read()
 
@@ -482,7 +496,7 @@ print("Love and Hate percentage:", (len(love_words) + len(hate_words)) / len(wor
 :::
 ::::
 
-## NLP = Linguistics + Machine Learning
+## NLP = Machine Learning + Linguistics
 
 So far we saw how important it is to consider the linguistic properties of our data. We now recall that NLP is also built on top of ideas from Machine Learning, Deep Learning. A general workflow for solving an NLP task therefore looks quite close to the general Machine Learning Workflow:
 

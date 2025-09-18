@@ -60,10 +60,10 @@ contact: 'team@carpentries.org'
 
 # Order of episodes in your lesson
 episodes:
-- 00-introduction.Rmd
-- 01-preprocessing.Rmd
-- 02-transformers.md
-- 03-LargeLanguageModels.md
+- 01-introduction.md
+- 02-preprocessing.md
+- 03-transformers.md
+- 04-LargeLanguageModels.md
 
 
 # Information for Learners
