@@ -14,39 +14,72 @@ exercises: 60
 :::::::::::::::::::::::::::::::::::::::::::::::: 
 
 :::::::::::::::::::::::::::::::::::::::::::::::: objectives
-
-After following this lesson, learners will be able to:
-
 - Understand how a Transformer works and recognize their different use cases.
-- Use pre-trained transformers language models (e.g. BERT) to classify texts.
-- Use a pre-trained transformer as a Named Entity Recognizer.
+- Understand how to use pre-trained tranfromers (Use Case: BERT)
+- Use BERT to classify texts.
+- Use BERT as a Named Entity Recognizer.
 - Understand assumptions and basic evaluation for NLP outputs.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-Static word embeddings such as Word2Vec can be used to represent words as vectors. Having these representations allows us to apply operations directly on the vectors that have numerical properties which can be mapped to some syntactic and semantic properties of words, such as the cases of analogies or finding synonyms. Once we transform words into vectors, these can also be used as **features** for classifiers that can be trained predict any supervised NLP task. 
+Static word embeddings such as Word2Vec can be used to represent each word as a unique vectors. Vector representations also allow us to apply numerical operations that can be mapped to some syntactic and semantic properties of words, such as the cases of analogies or finding synonyms. Once we transform words into vectors, these can also be used as **features** for classifiers that can be trained predict any supervised NLP task.
 
-The main drawback of Word2Vec is that **each word is represented in isolation**, and unfortunately that is not how language works. Words get their meanings based on the specific context in which they are used (take for example polysemy, the cases where the same word can have very different meanings depending on the context); therefore, we would like to have richer vector representations of words that also integrate context into account in order to obtain more powerful representations. 
+However, a big drawback of Word2Vec is that **each word is represented in isolation**, and unfortunately that is not how language works. Words get their meanings based on the specific context in which they are used (take for example polysemy, the cases where the same word can have very different meanings depending on the context); therefore, we would like to have richer vector representations of words that also integrate context into account in order to obtain more powerful representations. 
 
-In 2019, the BERT language model was introduced using a novel architecture called Transformer (2017), which allowed precisely to integrate words' context into representations. To understand BERT, we will first look at what a transformer is and we will then directly use some code to make use of BERT.
+:::: challenge
+### Polysemy in Language
+
+Think of (at least 2) different words that can have more than one meaning depending on the context. Come up with one simple sentence per meaning and explain what they mean in each context. Discuss: How do you know what of the possible meanings does the word have when you use it?
+
+OPTIONAL: Why do you think Word2Vec can't caputure different meanings of words?
+
+::: solution
+
+Two possible examples can be the words 'fine' and 'run'
+
+Sentences for 'fine':
+- She has a fine watch (fine == high-quality)
+- He had to pay a fine (fine == penalty)
+- I am feeling fine (fine == not bad)
+
+Sentences for 'run':
+- I had to run to catch the bus (run == moving fast)
+- Stop talking, before you run out of ideas (run (out) == exhaust)
+
+Note how in the "run out" example we even have to understand that the meaning of run is not literal but goes accompained with a preposition that changes its meaning.
+
+:::
+::::
+
+
+In 2019, the BERT language model was introduced. Using a novel architecture called Transformer (2017), BERT can integrate context into word representations. To understand BERT, we will first look at what a transformer is and we will then directly use some code to make use of BERT.
 
 # Transformers
 
-Every piece of text can be seen as a sequence of sentences and likewise each sentence can be seen as a sequence of tokens. Traditionally Recurrent Neural Networks (RNNs; and later their fancy version, LSTMs) were used to tackle token and sentence classification problems to account for the interdependencies inherent to sequences of symbols (i.e. sentences). RNNs were in theory powerful enough to capture these dependencies, something that is very valuable when dealing with language, but in practice they were resource consuming (both in training time and computational resources) and also the longer the sequences got, the harder it was to capture long-distance dependencies succesfully.
-
-The Transformer is a neural network architecture proposed by Google researchers [in 2017](https://arxiv.org/pdf/1706.03762) to address these and other limitations of RNNs and LSTMs. In their paper, *Attention is all you Need*, they tackled specifically the problem of Machine Translation (MT), which in NLP terms is stated as: how to generate a sentence (sequence of words) in target language B given a sentence in source language A? In order to translate, first one neural network needs to _encode_ the meaning of the source language A into vector representations, and then a second neural network needs to _decode_ that representation into tokens that are understandable in language B. Therefore translation is modeling language B _conditioned_ on what language A originally said.
+The Transformer is a neural network architecture proposed by Google researchers [in 2017](https://arxiv.org/pdf/1706.03762) in a paper called *Attention is all you Need*. They tackled specifically the NLP task of Machine Translation (MT), which is stated as: how to generate a sentence (sequence of words) in target language B given a sentence in source language A? We all know that translation cannot be done word by word in isolations, therefore integrating the context from both the source language and the target language is necessary. In order to translate, first one neural network needs to _encode_ the whole meaning of the senetence in language A into a single vector representation, then a second neural network needs to _decode_ that representation into tokens that are both coherent with the meaning of language A and understandable in language B. Therefore we say that translation is modeling language B _conditioned_ on what language A originally said.
 
 
 ![Transformer Architecture](fig/trans1.png)
 
-As seen in the picture, the original Transformer is an Encoder-Decoder network that tackles translation. We first need a token embedder which converts the string of words into a sequence of vectors that the Transformer network can process. The first component, the __Encoder__, is optimized for creating rich representations of the source sequence (in this case an English sentence) while the second one, the __Decoder__ is a generative network that is conditioned on the encoded representation and, with the help of the attention mechanism, generates the most likely token in the target sequence (in this case Dutch words) based on both the tokens generated so far and the full initial English context. 
+As seen in the picture, the original Transformer is an Encoder-Decoder network that tackles translation. We first need a token embedder which converts the string of words into a sequence of vectors that the Transformer network can process. The first component, the __Encoder__, is optimized for creating **rich representations** of the source sequence (in this case an English sentence) while the second one, the __Decoder__ is a **generative network** that is conditioned on the encoded representation. The third component we see is the infamous attention mechanism, a third neural network what computes the correlation between source and target tokens (*Which word in Dutch should I pay attention to decide a better next English word?*) to generate the most likely token in the target sequence (in this case Dutch words). 
 
+:::: challenge
+### Emulate the Attention Mechanism
 
-Next, we will see how BERT exploits the idea of a Transformer Encoder to generate powerful word representations.
+Pair with a person who speaks a language different from English (we will cal it language B). This time you should think of 2 simple sentences in English and come up with their translations in the second language. In a piece of paper write down both sentences (one on top of the other) and try to:
+1. Draw a one to one mapping of words in English to language B. Is it always possible to do this?
+2. Think of each word in language B and draw as many lines as necessary to the relevant English words that can "help you" predict the word in language B. If you managed, congratulations, this is how attention works!
+
+::: solution
+Here an image of a bilingual "manual attention" example
+:::
+::::
+
+Next, we will see how BERT exploits the idea of a **Transformer Encoder** to perform the NLP Task we are interested in: generating powerful word representations.
 
 # BERT
 
-[BERT](https://aclanthology.org/N19-1423.pdf) is an acronym that stands for **B**idirectional **E**ncoder **R**epresentations from **T**ransformers. The name describes it all: the idea is to use the power of the Encoder component of the Transformer architecture to create powerful token representations that preserve the contextual meaning of the whole input segment. The BERT vector representations of each token take into account both the left context (what comes before the word) and the right context (what comes after the word). Another advantage of the transformer Encoder is that it is parallelizable, which made it posible for the first time to train these networks on millions of datapoints, dramatically improving model generalization. 
+[BERT](https://aclanthology.org/N19-1423.pdf) is an acronym that stands for **B**idirectional **E**ncoder **R**epresentations from **T**ransformers. The name describes it all: the idea is to use the power of the Encoder component of the Transformer architecture to create powerful token representations that preserve the contextual meaning of the whole input segment, instead of each word in isolation. The BERT vector representations of each token take into account both the left context (what comes before the word) and the right context (what comes after the word). Another advantage of the transformer Encoder is that it is parallelizable, which made it posible for the first time to train these networks on millions of datapoints, dramatically improving model generalization. 
 
 ::: callout
 ## Pretraining BERT
@@ -59,9 +92,7 @@ Already the second pre-training task gives us an idea of the power of BERT: afte
 
 # BERT Architecture
 
-Now that we used the BERT language model component we can dive into the architecture of BERT to understand it better.
-
-As in any basic NLP pipeline, the first step is to pre-process the raw text so it is ready to be fed into the Transformer. Tokenization in BERT does not happen at the word-level but rather splits texts into what they call WordPieces (the reason for this decision is complex, but in short, researchers found that splitting *human words* into *subtokens* exploits better the character sub-sequences inside words and helps the model converge faster). A word then sometimes is decomposed into one or several (sub) tokens.
+The BERT Architecture can be seen as a basic NLP pipeline on its own:
 
 1. **Tokenizer:** splits text into tokens that the model recognizes
 2. **Embedder:** converts each token into a fixed-sized vector that represents it. These vectors are the actual input for the Encoder.
@@ -71,7 +102,12 @@ As in any basic NLP pipeline, the first step is to pre-process the raw text so i
 
 ![BERT Architecture](fig/bert3.png)
 
-## BERT Code
+BERT uses (self-) attention, which is very useful to capture longer-range word dependencies such as correference, where, for example, a pronoun can be linked to the noun it refers to previously in the same sentence. See the following example:
+
+![The Encoder Self-Attention Mechanism](fig/trans5.png)
+
+
+## BERT for Word-Based Analysis
 
 Let's see how these components can be manipulated with code. For this we will be using the HugingFace's _transformers_ python library.
 The first two main components we need to initialize are the model and tokenizer. The HuggingFace hub contains thousands of models based on a Transformer architecture for dozens of tasks, data domains and also hundreds of languages. Here we will explore the vanilla English BERT which was how everything started. We can initialize this model with the next lines:
@@ -82,7 +118,7 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 model = BertModel.from_pretrained("bert-base-cased")
 ```
 
-## BERT Tokenizer
+### BERT Tokenizer
 
 We start with a string of text as written in any blog, book, newspaper etcetera. The `tokenizer` object is responsible of splitting the string into recognizable tokens for the model and embedding the tokens into their vector representations
 
@@ -114,14 +150,6 @@ Output:
 
 The output is a 2-dimensional tensor where the first dimention contains 1 element (this dimension represents the batch size), and the second dimension contains 7 elements which are equivalent to the 7 tokens that BERT generated with our string input.
 
-::: callout
-
-You noticed in the previous outputs the `tensor()` and `torch()` wrappers around the arrays of integers. This is showing that the `transformers` library uses `pytorch` underneath, one of the most popular libraries for Deep Learning in Python. Pytorch's basic unit is the Tensor.
-
-A *tensor* is a generalization of a multidimentional array of data. By convention, a vector is a 1-dimensional sequence of scalar numbers (or a 1-dim tensor), a matrix is a 2-dimensional sequence (2-dim tensor) and for N-dimensions where N > 2 we use the concept of tensor.
-
-:::
-
 In order to see what these Token IDs represent, we can _translate_ them into human readable strings. This includes converting the tensors into numpy arrays and converting each ID into its string representation:
 
 ```python
@@ -135,7 +163,6 @@ print("TOKENS:", string_tokens)
 
 `TOKENS: ['[CLS]', 'Maria', 'loves', 'G', '##ron', '##ingen', '[SEP]']`
 
-These show us the WordPieces that the BERT Encoder will receive and process. We will look more in detail into the tokenization and special tokens later. For now, you just need to know that the encoder uses this token IDs to retrieve the corresponding embedding vector from its vocabulary, the string representations are just for the human reader.
 
 ::: callout
 
@@ -209,42 +236,6 @@ print(f"Cosine Similarity 'note' vs 'note': {similarity[0][0]}")
 
 With this small experiment, we have confirmed that the Encoder produces context-dependent word representations, as opposed to Word2Vec, where *note* would always have the same vector no matter where it appeared.
 
-
-## BERT Output Object
-
-To give a forward pass of the Encoder and obtain the vector representations, we pass the `encoded_input` object generated by the tokenizer.
-
-```python
-output = model(**encoded_input)
-print(output)
-```
-The `output` variable in this case stores an ModelOutput object, which contains a handful of values:
-
-```
-BaseModelOutputWithPoolingAndCrossAttentions(
-    last_hidden_state=tensor([[
-        [6.3959e-02, -4.8466e-03, -8.4682e-02,  ..., -2.8042e-02, 4.3824e-01,  2.0693e-02],
-        [-3.7276e-04, -2.0076e-01,  2.5096e-01,  ...,  9.9699e-01, -5.4226e-01,  1.7926e-01],
-        ...
-        [ 7.1929e-01, -1.1457e-01,  1.4804e-01,  ...,  5.3051e-01, 7.4839e-01,  7.8224e-02]
-    ]]),
-    pooler_output=tensor([[-0.6889,  0.4869,  0.9998, -0.9888,  0.9296,  0.8637, ...,  1.0000, -0.7488,  0.9860]]),
-    hidden_states=None, 
-    past_key_values=None, 
-    attentions=None, 
-    cross_attentions=None
-)
-```
-
-We must focus for now on the `last_hidden_state` field, which contains the last layer vector of weights for each token, arguably the best contextualized representation of the token. 
-
-```python
-print(output.last_hidden_state.shape)
-```
-`torch.Size([1, 7, 768])`
-
-When we print the shape of this field, we obtain again a Pytorch Tensor: `torch.Size([1, 7, 768])`. This time, the first dimension is the batch size, the second is the number of tokens (we have 7 tokens for this example as seen before), and the third, the dimensionality of the vectors. In the case of BERT-base each token vector always has a shape of 768. As opposed to the previous tensor, each of the 7 tokens are not just one integer anymore, but a whole vector of weights, hence the 3-dimensionality of the tensor.
-
 ::: callout
 
 When running examples in a BERT pre-trained model, it is advisable to wrap your code inside a `torch.no_grad():` context. This is linked to the fact that BERT is a Neural Network that has been trained (and can be further finetuned) with the Backpropagation algorithm. Essentially, this wrapper tells the model that we are not in training mode, and we are not interested in _updating_ the weights (as it would happen when training any neural network), because the weights are already optimal enough. By using this wrapper, we make the model more efficient as it does not need to calculate the gradients for an eventual backpropagation step, since we are only interested in what _comes out_ of the Encoder. So the previous code can be made more efficient like this:
@@ -263,13 +254,15 @@ with torch.no_grad():
 
 # BERT as a Language Model
 
-Now that we know how to embedd and run the model to obtain the representations, we can test the code for our first NLP Task: Language Modelling (LM). As mentioned before, the main pre-training task of BERT is LM: calculating the probability of a word based on the known neighboring words (yes, Word2Vec was also a kind of LM). Obtaining training data for this task is very cheap, as all we need is millions of sentences from existing texts, without any labels. In this setting, BERT encodes a sequence of words, and predicts from a set of English tokens, what is the most likely token that could be inserted in the `[MASK]` position
+As mentioned before, the main pre-training task of BERT is Language Modelling (LM): calculating the probability of a word based on the known neighboring words (yes, Word2Vec was also a kind of LM!). Obtaining training data for this task is very cheap, as all we need is millions of sentences from existing texts, without any labels. In this setting, BERT encodes a sequence of words, and predicts from a set of English tokens, what is the most likely token that could be inserted in the `[MASK]` position
 
 
 ![BERT Language Modeling](fig/bert1b.png)
 
 
-We can therefore start using BERT as a predictor for word completion, and the word can be in any position inside the sentence. We will also learn here how to use the `pipeline` object, this is very useful when we only want to use a pre-trained model for predictions (no need to fine-tune). The `pipeline` will internally initialize both model and tokenizer for us. In this case again we use `bert-base-cased`, which refers to the vanilla BERT English model. Once we declared a pipeline, we can feed it with sentences that contain one masked token at a time (beware that BERT can only predict one word at a time, since that was its training scheme). For example:
+We can therefore start using BERT as a predictor for word completion. From now own, we will learn how to use the `pipeline` object, this is very useful when we only want to use a pre-trained model for predictions (no need to fine-tune or do word-specific analysis). The `pipeline` will internally initialize both model and tokenizer for us and also merge back word pieces into complete words. 
+
+In this case again we use `bert-base-cased`, which refers to the vanilla BERT English model. Once we declared a pipeline, we can feed it with sentences that contain one masked token at a time (beware that BERT can only predict one word at a time, since that was its training scheme). For example:
 
 
 ```python
@@ -367,24 +360,6 @@ Finetunning BERT is very cheap, because we only need to train the _classifier_ l
 
 ![BERT as an Emotion Classifier](fig/bert4b.png)
 
-
-## The Attention Mechanism
-
-The original attention mechanism (remember this was developed for language translation) is a component in between the Encoder and the Decoder that helps the model to _align_ the important information from the input sequence in order to generate a more accurate token in the output sequence:
-
-
-![The Encoder-Decoder Attention Mechanism](fig/trans3.png)
-
-In the example above, the attention puts more weight in the input _Groningen_, so the decoder uses that information to _know_ that is should generate _Groningen_. Note that if the decoder based it's next word probability just on the sequence "Maria houdt van ...", it could basically generate any word and still sound natural. However, it is thanks to the attention mechanism that it preserves the meaning of the input sequence.
-
-Attention is a neural layer, therefore it can also be plugged-in within the Encoder, this is called **self-attention** since the mechanism will look at the interactions between the input sequence itself (measure inportance between input sequence tokens vs input sequence tokens). This is how BERT uses (self-) attention, which is very useful to capture longer-range word dependencies such as correference, where, for example, a pronoun can be linked to the noun it refers to previously in the same sentence. See the following example:
-
-
-![The Encoder Self-Attention Mechanism](fig/trans5.png)
-
-There are two sentences, in each one the pronoun "it" refers to a different noun, "animal" or "street", and this is completely depending on the sentence context. Thanks to the self-attention BERT relates the pronoun to its relevant correferent.
-
-For this reason BERT is not only useful as a text classifier but also for individual token classification tasks.
 
 # BERT for Token Classification
 
