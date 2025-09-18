@@ -11,10 +11,10 @@
 carpentry: 'incubator'
 
 # Overall title for pages.
-title: 'Lesson Title' # FIXME
+title: 'Fundamentals of Natural Language Processing (NLP) in Python'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
-created: 2023-11-16 # FIXME
+created: 2024-04-24
 
 # Comma-separated list of keywords for the lesson
 keywords: 'software, data, lesson, The Carpentries, NLP, English,
@@ -34,7 +34,7 @@ source: 'https://github.com/esciencecenter-digital-skills/Natural-language-proce
 branch: 'main'
 
 # Who to contact if there are any issues
-contact: 'l . ootes at esciencecenter.nl'
+contact: 'team@carpentries.org'
 
 # Navigation ------------------------------------------------
 #
@@ -60,13 +60,15 @@ contact: 'l . ootes at esciencecenter.nl'
 
 # Order of episodes in your lesson
 episodes:
-- 00-welcome.md
 - 01-introduction.md
 - 02-preprocessing.md
-- 03-embeddings.md
+- 03-transformers.md
+- 04-LargeLanguageModels.md
+
 
 # Information for Learners
 learners:
+- setup.md
 
 # Information for Instructors
 instructors:

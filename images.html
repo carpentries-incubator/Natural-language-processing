@@ -241,7 +241,7 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="00-introduction.html">1. Introduction</a>
+        <a href="01-introduction.html">1. Introduction</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -253,7 +253,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="01-preprocessing.html">2. Episode 1: From text to vectors</a>
+        <a href="02-preprocessing.html">2. Episode 1: From text to vectors</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -265,7 +265,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="02-transformers.html">3. Episode 2: BERT and Transformers</a>
+        <a href="03-transformers.html">3. Episode 2: BERT and Transformers</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -277,7 +277,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="03-LargeLanguageModels.html">4. Episode 3: Using large language models</a>
+        <a href="04-LargeLanguageModels.html">4. Episode 3: Using large language models</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -340,90 +340,78 @@
     <main id="main-content" class="main-content"><div class="container lesson-content">
         
         
-<section id="00-introduction"><h2 class="section-heading"><a href="00-introduction.html">Introduction</a></h2>
+<section id="01-introduction"><h2 class="section-heading"><a href="01-introduction.html">Introduction</a></h2>
 <hr class="half-width">
-<h3 id="00-introduction-figure-1">Figure 1</h3>
+<h3 id="01-introduction-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘NLP is an interdisciplinary field, and LLMs are just a subset of it’</p>
 <figure><img src="fig/intro0_cs_nlp.png" alt="NLP is an interdisciplinary field, and LLMs are just a subset of it" class="figure mx-auto d-block"><div class="figcaption">NLP is an interdisciplinary field, and LLMs are
 just a subset of it</div>
 </figure><hr>
-<h3 id="00-introduction-figure-2">Figure 2</h3>
+<h3 id="01-introduction-figure-2">Figure 2</h3>
 <p aria-hidden="true">Image 1 of 1: ‘ChatGPT Just Works! Does it…?’</p>
 <figure><img src="fig/intro1.png" alt="ChatGPT Just Works! Does it…?" class="figure mx-auto d-block"><div class="figcaption">ChatGPT Just Works! Does it…?</div>
 </figure><hr>
-<h3 id="00-introduction-figure-3">Figure 3</h3>
+<h3 id="01-introduction-figure-3">Figure 3</h3>
 <p aria-hidden="true">Image 1 of 1: ‘GPT-4 Tokenization Example’</p>
 <figure><img src="fig/intro1b.png" alt="GPT-4 Tokenization Example" class="figure mx-auto d-block"><div class="figcaption">GPT-4 Tokenization Example</div>
 </figure><hr>
-<h3 id="00-introduction-figure-4">Figure 4</h3>
+<h3 id="01-introduction-figure-4">Figure 4</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Levels of Language’</p>
 <figure><img src="fig/intro2_levels_lang.svg" alt="Levels of Language" class="figure mx-auto d-block"><div class="figcaption">Levels of Language</div>
 </figure><hr>
-<h3 id="00-introduction-figure-5">Figure 5</h3>
+<h3 id="01-introduction-figure-5">Figure 5</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Diagram showing building blocks of language’</p>
 <figure><img src="fig/intro3_levels_nlp.png" alt="Diagram showing building blocks of language" class="figure mx-auto d-block"><div class="figcaption">Diagram showing building blocks of
 language</div>
-</figure><hr></section><section id="01-preprocessing"><h2 class="section-heading"><a href="01-preprocessing.html">Episode 1: From text to vectors</a></h2>
+</figure><hr></section><section id="02-preprocessing"><h2 class="section-heading"><a href="02-preprocessing.html">Episode 1: From text to vectors</a></h2>
 <hr class="half-width">
-<h3 id="01-preprocessing-figure-1">Figure 1</h3>
-<figure><img src="fig/emb3.png" class="figure mx-auto d-block"><div class="figcaption">Embedding of a cat - We have described it along
-two dimensions: furriness and number of legs</div>
-</figure><hr>
-<h3 id="01-preprocessing-figure-2">Figure 2</h3>
-<figure><img src="fig/emb5.png" class="figure mx-auto d-block"><div class="figcaption">Embeddings of a cat and a dog and a
-caterpillar</div>
-</figure><hr>
-<h3 id="01-preprocessing-figure-3">Figure 3</h3>
+<h3 id="02-preprocessing-figure-1">Figure 1</h3>
+<figure><img src="fig/emb3.png" class="figure mx-auto d-block"></figure><hr>
+<h3 id="02-preprocessing-figure-2">Figure 2</h3>
+<figure><img src="fig/emb5.png" class="figure mx-auto d-block"></figure><hr>
+<h3 id="02-preprocessing-figure-3">Figure 3</h3>
 <p aria-hidden="true">Image 1 of 1: ‘[decorative]’</p>
 <figure><img src="fig/emb12.png" alt="" class="figure mx-auto d-block"></figure><hr>
-<h3 id="01-preprocessing-figure-4">Figure 4</h3>
-<figure><img src="fig/emb6.png" class="figure mx-auto d-block"><div class="figcaption">Embeddings of a cat and a dog and a caterpillar
-- We can describe these animals in many dimensions!</div>
-</figure><hr>
-<h3 id="01-preprocessing-figure-5">Figure 5</h3>
-<figure><img src="fig/emb13.png" class="figure mx-auto d-block"><div class="figcaption">Schematic representations of the different
-prediction tasks that CBOW and Skip-gram try to solve</div>
-</figure><hr></section><section id="02-transformers"><h2 class="section-heading"><a href="02-transformers.html">Episode 2: BERT and TransformersTransformers<a class="anchor" aria-label="anchor" href="#transformers"></a>BERT<a class="anchor" aria-label="anchor" href="#bert"></a>BERT Architecture<a class="anchor" aria-label="anchor" href="#bert-architecture"></a>BERT as a Language Model<a class="anchor" aria-label="anchor" href="#bert-as-a-language-model"></a>BERT for Text Classification<a class="anchor" aria-label="anchor" href="#bert-for-text-classification"></a>Understanding BERT Architecture<a class="anchor" aria-label="anchor" href="#understanding-bert-architecture"></a>BERT for Token Classification<a class="anchor" aria-label="anchor" href="#bert-for-token-classification"></a>———- END HERE ??? ———-<a class="anchor" aria-label="anchor" href="#end-here--"></a></a></h2>
+<h3 id="02-preprocessing-figure-4">Figure 4</h3>
+<figure><img src="fig/emb6.png" class="figure mx-auto d-block"></figure><hr>
+<h3 id="02-preprocessing-figure-5">Figure 5</h3>
+<figure><img src="fig/emb13.png" class="figure mx-auto d-block"></figure><hr></section><section id="03-transformers"><h2 class="section-heading"><a href="03-transformers.html">Episode 2: BERT and TransformersTransformers<a class="anchor" aria-label="anchor" href="#transformers"></a>BERT<a class="anchor" aria-label="anchor" href="#bert"></a>BERT Architecture<a class="anchor" aria-label="anchor" href="#bert-architecture"></a>BERT as a Language Model<a class="anchor" aria-label="anchor" href="#bert-as-a-language-model"></a>BERT for Text Classification<a class="anchor" aria-label="anchor" href="#bert-for-text-classification"></a>BERT for Token Classification<a class="anchor" aria-label="anchor" href="#bert-for-token-classification"></a></a></h2>
 <hr class="half-width">
-<h3 id="02-transformers-figure-1">Figure 1</h3>
+<h3 id="03-transformers-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘Transformer Architecture’</p>
 <figure><img src="fig/trans1.png" alt="Transformer Architecture" class="figure mx-auto d-block"><div class="figcaption">Transformer Architecture</div>
 </figure><hr>
-<h3 id="02-transformers-figure-2">Figure 2</h3>
+<h3 id="03-transformers-figure-2">Figure 2</h3>
 <p aria-hidden="true">Image 1 of 1: ‘BERT Architecture’</p>
 <figure><img src="fig/bert3.png" alt="BERT Architecture" class="figure mx-auto d-block"><div class="figcaption">BERT Architecture</div>
 </figure><hr>
-<h3 id="02-transformers-figure-3">Figure 3</h3>
-<p aria-hidden="true">Image 1 of 1: ‘BERT Language Modeling’</p>
-<figure><img src="fig/bert1b.png" alt="BERT Language Modeling" class="figure mx-auto d-block"><div class="figcaption">BERT Language Modeling</div>
-</figure><hr>
-<h3 id="02-transformers-figure-4">Figure 4</h3>
-<p aria-hidden="true">Image 1 of 1: ‘BERT as an Emotion Classifier’</p>
-<figure><img src="fig/bert4.png" alt="BERT as an Emotion Classifier" class="figure mx-auto d-block"><div class="figcaption">BERT as an Emotion Classifier</div>
-</figure><hr>
-<h3 id="02-transformers-figure-5">Figure 5</h3>
-<p aria-hidden="true">Image 1 of 1: ‘BERT as an Emotion Classifier’</p>
-<figure><img src="fig/bert4b.png" alt="BERT as an Emotion Classifier" class="figure mx-auto d-block"><div class="figcaption">BERT as an Emotion Classifier</div>
-</figure><hr>
-<h3 id="02-transformers-figure-6">Figure 6</h3>
-<p aria-hidden="true">Image 1 of 1: ‘The Encoder-Decoder Attention Mechanism’</p>
-<figure><img src="fig/trans3.png" alt="The Encoder-Decoder Attention Mechanism" class="figure mx-auto d-block"><div class="figcaption">The Encoder-Decoder Attention Mechanism</div>
-</figure><hr>
-<h3 id="02-transformers-figure-7">Figure 7</h3>
+<h3 id="03-transformers-figure-3">Figure 3</h3>
 <p aria-hidden="true">Image 1 of 1: ‘The Encoder Self-Attention Mechanism’</p>
 <figure><img src="fig/trans5.png" alt="The Encoder Self-Attention Mechanism" class="figure mx-auto d-block"><div class="figcaption">The Encoder Self-Attention Mechanism</div>
 </figure><hr>
-<h3 id="02-transformers-figure-8">Figure 8</h3>
+<h3 id="03-transformers-figure-4">Figure 4</h3>
+<p aria-hidden="true">Image 1 of 1: ‘BERT Language Modeling’</p>
+<figure><img src="fig/bert1b.png" alt="BERT Language Modeling" class="figure mx-auto d-block"><div class="figcaption">BERT Language Modeling</div>
+</figure><hr>
+<h3 id="03-transformers-figure-5">Figure 5</h3>
+<p aria-hidden="true">Image 1 of 1: ‘BERT as an Emotion Classifier’</p>
+<figure><img src="fig/bert4.png" alt="BERT as an Emotion Classifier" class="figure mx-auto d-block"><div class="figcaption">BERT as an Emotion Classifier</div>
+</figure><hr>
+<h3 id="03-transformers-figure-6">Figure 6</h3>
+<p aria-hidden="true">Image 1 of 1: ‘BERT as an Emotion Classifier’</p>
+<figure><img src="fig/bert4b.png" alt="BERT as an Emotion Classifier" class="figure mx-auto d-block"><div class="figcaption">BERT as an Emotion Classifier</div>
+</figure><hr>
+<h3 id="03-transformers-figure-7">Figure 7</h3>
 <p aria-hidden="true">Image 1 of 1: ‘BERT as an NER Classifier’</p>
 <figure><img src="fig/bert5.png" alt="BERT as an NER Classifier" class="figure mx-auto d-block"><div class="figcaption">BERT as an NER Classifier</div>
-</figure><hr></section><section id="03-LargeLanguageModels"><h2 class="section-heading"><a href="03-LargeLanguageModels.html">Episode 3: Using large language modelsPitfalls, limitations, privacy<a class="anchor" aria-label="anchor" href="#pitfalls-limitations-privacy"></a></a></h2>
+</figure><hr></section><section id="04-LargeLanguageModels"><h2 class="section-heading"><a href="04-LargeLanguageModels.html">Episode 3: Using large language modelsPitfalls, limitations, privacy<a class="anchor" aria-label="anchor" href="#pitfalls-limitations-privacy"></a></a></h2>
 <hr class="half-width">
-<h3 id="03-LargeLanguageModels-figure-1">Figure 1</h3>
+<h3 id="04-LargeLanguageModels-figure-1">Figure 1</h3>
 <p aria-hidden="true">Image 1 of 1: ‘workflow’</p>
 <p><img src="./fig/workflow_llm.png" alt="workflow" class="figure"> Define a memory
 id for the current conservation.</p>
 <hr>
-<h3 id="03-LargeLanguageModels-figure-2">Figure 2</h3>
+<h3 id="04-LargeLanguageModels-figure-2">Figure 2</h3>
 <p aria-hidden="true">Image 1 of 1: ‘workflow’</p>
 <figure><img src="./fig/workflow_rag.png" alt="workflow" class="figure mx-auto d-block"><div class="figcaption">workflow</div>
 </figure><hr></section>
@@ -474,8 +462,8 @@ id for the current conservation.</p>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/images.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/images.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-09-16",
-  "datePublished": "2025-09-16"
+  "dateModified": "2025-09-18",
+  "datePublished": "2025-09-18"
 }
 
   </script><script>
