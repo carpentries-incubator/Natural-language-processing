@@ -25,6 +25,20 @@ exercises:
 
 10. Could mention Ethics and sustainability of training models? [**Not yet**]
 
+11. Make finer-grained distinction between open-source models (open-weights, open training data, open ...?)
+- Add AllenAI Olmo (full open-source) [**done**]
+- GPT-NL [**done**]
+
+12. For the application section can already start with coding (loading and doing inference in the notebook)
+- Can do the first two tasks and let them do as an exercise the remainder of the tasks? [**doneintro**]
+
+13. Too much detail in post training section. Angel will reduce detail in lesson 02. 
+
+14. Comparison of LLMs:
+    - Text classification tasks of increasing difficulty and see where small ones fail and large one solves them.
+
+
+
 ::::::
 
 :::::: objectives
@@ -62,11 +76,131 @@ Large language models (LLMs) are transformer-based language models that are spec
 
 Many different LLMs have been, and continue to be, developed. There are both proprietary and open-source varieties. Open-source varieties often make the data that their LLMs are trained on free, open and accessible online. Some even make the code they use to train these models open-source as well. Below is a summary of some current LLMs together with their creators, chat assistant interfaces, and proprietary status:
 
-<img src="fig/llm_table2.png" alt="LLMs table" width="1000" />
+<img src="fig/llm_table4.png" alt="LLMs table" width="1000" />
 
 ### 1.2 Applications of LLMs
 
 LLMs can be used for many different helpful tasks. Some common tasks include:
+
+- Question Answering
+- Text Generation
+- Text Summarisation
+- Sentiment Analysis
+- Machine Translation
+- Code Generation
+
+#### Exercise 1: Your first programmatic LLM interaction (30 minutes)
+
+Before exploring how we can invoke LLMs programmatically to solve the kinds of tasks abve, let us setup and load our first LLM.
+
+##### Step 1. Setup code
+Install required packages ``transformers`` and ``torch`` and import required libraries.
+```python
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+```
+
+##### Step 2: Load and setup an LLM
+
+Let's load a lightweight LLM.
+
+```python
+# We'll use SmolLM-135M - an open, small, fast model
+# model_name = "HuggingFaceTB/SmolLM2-135M" # base model
+model_name = "HuggingFaceTB/SmolLM2-135M-Instruct" # fine-tuned assistant model
+# model_name = "HuggingFaceTB/SmolLM3-3B-Base" # base model
+# model_name = "HuggingFaceTB/SmolLM3-3B" # fine-tuned assistant model
+
+# Load tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
+
+# Check if model is loaded correctly
+print(f"Model loaded! It has {model.num_parameters():,} parameters")
+```
+
+##### Step 3: Basic Text Generation
+
+Let's perform inference with the LLM to generate some text.
+
+```python
+# Set pad_token_id to eos_token_id to avoid warnings
+# if tokenizer.pad_token_id is None:
+#     tokenizer.pad_token = tokenizer.eos_token
+#     model.config.pad_token_id = tokenizer.eos_token_id
+    
+# Build pipeline
+llm = pipeline("text-generation", model=model, tokenizer=tokenizer)
+prompt = "{}"
+response = llm(prompt, max_new_tokens=100, do_sample=True, top_k=50, temperature=0.7)[0]["generated_text"]
+print(f"Prompt: {prompt}")
+print(f"Response: {response}")
+```
+**_max_new_tokens_:** sets maximum number of tokens (roughly words/word pieces) that the model will generate in total. It's a hard limit - generation stops when this limit is reached, even mid-sentence. Useful for controlling cost / time. The more tokens you need to generate for an answer the more time it takes. LLMs called through paid APIs often charge per a set number of tokens (e.g. $0.008 per 1000 tokens).
+
+**_temperature_:** positive float value that controls the randomness/creativity of the model's token selection during generation. The model predicts probabilities for each possible next token, temperature modifies these probabilities before making the final choice.
+
+0.0: Completely deterministic - always picks the most likely token
+1.0+: More random, and "creative", but potentially less coherent
+
+**_do_sample_:** when do_sample=True, the model generates text by sampling from the probability distribution of possible next tokens. If do_sample=False, the model uses [greedy decoding](https://huggingface.co/docs/transformers/generation_strategies) (always picking the most likely next token), which makes the output more deterministic but often repetitive.
+
+**_top_k_:** This is a sampling strategy called [Top-K sampling](https://arxiv.org/pdf/1805.04833). Instead of considering all possible next tokens, the model looks at the k most likely tokens (based on their probabilities) and samples only from that reduced set. If top_k=50, the model restricts its choices to the top 50 most probable words at each step.
+
+##### Step 5. Sentiment analysis
+Let us try a sentiment analysis task to see how well different models (with different number of parameters perform). Consider the following set of lines from product reviews:
+
+**Product reviews:**
+
+1. I love this movie! It was absolutely fantastic and made my day. [**positive**]
+2. This product is terrible. I hate everything about it. [**negative**]
+3. Nothing says quality like a phone that dies after 20 minutes. [**negative**]
+4. The movie was dark and depressing — exactly what I was hoping for. [**positive**]
+5. The food was delicious, but the service was painfully slow. [**mixed**]
+
+Set the prompt for this as (substitute the above sentences for ``{text}`` each time):
+
+``Classify the sentiment of the following text as either POSITIVE or NEGATIVE. Text: "{text}"``
+
+Examine the results afterwards to see which models correctly classified them and which didn't.
+
+```python
+sentiment_llm = pipeline("text-generation", model=model, tokenizer=tokenizer)
+sentiment_texts = [
+    "I love this movie! It was absolutely fantastic and made my day.",
+    "This product is terrible. I hate everything about it.",
+    "Nothing says quality like a phone that dies after 20 minutes.",
+    "The movie was dark and depressing — exactly what I was hoping for.",
+    "The food was delicious, but the service was painfully slow."
+]
+text = sentiment_texts[0]
+prompt = "Classify the sentiment of the following text as either POSITIVE or NEGATIVE. Text: "{text}""
+response = sentiment_llm(prompt, max_new_tokens=100, do_sample=True, top_k=50, temperature=0.7)[0]["generated_text"]
+print(f"Prompt: {prompt}")
+print(f"Response: {response}")
+```
+
+##### Discussion: Post-exercise questions
+
+1. **What did you notice about the models' responses?** 
+   - Were they always accurate? Always coherent?
+   - How did different prompts affect the quality?
+
+2. **Temperature Effects:**
+   - What happened when temperature was low (e.g. 0.0 or 0.1) vs. high (e.g. 1.2)?
+   - Under which circumstances would you want more random / creative responses vs. consistent responses?
+
+3. **Model Size:**
+   - What were the differences across different models?
+   - What trade-offs do you think exist between model size and performance?
+
+4. **Max Length Effects:**
+   - Did you notice a difference in speed of responses when adjusting the max_length parameter?
+
+#### Exercise 2: Other NLP tasks
+
+<!-- **Prompt Engineering Preview:**
+   - Which prompts gave better results? What made them effective? -->
 
 1. **Question answering:** 
     - answering general knowledge questions
@@ -156,6 +290,109 @@ sorted_numbers = bubble_sort(numbers)
 print(sorted_numbers)
 ```
 
+
+
+
+### Part 3: Experimenting with Different Prompts (5 minutes)
+
+```python
+# Let's try different types of tasks to see what our LLM can do
+prompts_to_try = [
+    "Write a haiku about coding:",
+    "Translate 'Hello, world!' to French:",
+    "Complete this code: def fibonacci(n):",
+    "What are the benefits of using Python?",
+    "Write a short story about a robot learning to code:",
+]
+
+print("=== Trying Different Prompts ===")
+for prompt in prompts_to_try:
+    response = generate_response(prompt, max_length=80)
+    print(f"\n🔸 Prompt: {prompt}")
+    print(f"📝 Response: {response[len(prompt):].strip()}")  # Remove the prompt from output
+    print("-" * 50)
+```
+
+### Part 4: Understanding Generation Parameters (5 minutes)
+
+```python
+# Let's see how different parameters affect the output
+test_prompt = "The best programming language is"
+
+print("=== Effect of Temperature on Generation ===")
+temperatures = [0.1, 0.7, 1.2]
+
+for temp in temperatures:
+    print(f"\n🌡️ Temperature: {temp}")
+    for i in range(3):  # Generate 3 examples for each temperature
+        response = generate_response(test_prompt, max_length=50, temperature=temp)
+        clean_response = response[len(test_prompt):].strip()
+        print(f"   {i+1}. {clean_response}")
+```
+
+### Part 5: Using Pipeline API (Bonus - 2 minutes)
+
+```python
+# Hugging Face also provides a simpler pipeline API
+print("\n=== Using Pipeline API ===")
+generator = pipeline(
+    "text-generation",
+    model=model_name,
+    tokenizer=model_name,
+    device=0 if device == "cuda" else -1
+)
+
+# This is often easier for simple use cases
+simple_response = generator(
+    "Python is a great language because",
+    max_length=60,
+    num_return_sequences=2,
+    temperature=0.8
+)
+
+for i, response in enumerate(simple_response, 1):
+    print(f"{i}. {response['generated_text']}")
+```
+
+## Discussion Questions (to be covered after coding)
+
+1. **What did you notice about the model's responses?** 
+   - Were they always accurate? Always coherent?
+   - How did different prompts affect the quality?
+
+2. **Temperature Effects:**
+   - What happened when temperature was low (0.1) vs high (1.2)?
+   - When might you want creative vs consistent responses?
+
+3. **Model Size:**
+   - We used a 135M parameter model. What trade-offs do you think exist between model size and performance?
+
+4. **Prompt Engineering Preview:**
+   - Which prompts gave better results? What made them effective?
+
+## Key Takeaways
+
+- **LLMs are generative models** - they predict the next most likely tokens
+- **Prompts matter** - the way you ask affects what you get
+- **Parameters control behavior** - temperature, max_length, etc. tune the output
+- **Models have limitations** - they can be wrong, inconsistent, or biased
+- **Size vs Speed trade-off** - smaller models are faster but less capable
+
+## What's Next?
+
+In the rest of our lesson, we'll explore:
+- How to craft better prompts (prompt engineering strategies)
+- How to choose the right model for your task
+- Methods for comparing and evaluating different LLMs
+- Real-world applications and best practices
+
+---
+
+**Troubleshooting:**
+- If you get memory errors, try using a smaller model like "microsoft/DialoGPT-small"
+- If generation is slow, reduce max_length or use CPU instead of trying GPU
+- If outputs seem repetitive, try adjusting temperature or adding `do_sample=True`
+
 ### 1.3 LLM selection criteria
 
 - Open-source vs. Proprietary?
@@ -165,9 +402,11 @@ print(sorted_numbers)
 - Do you have a scientific, commercial or personal purpose for using an LLM?
 - Do you want to integrate an LLM into a software application? 
 - Do you have resources to host or serve an LLM?
+- Fine-tuned models on different domains. Embedding models, buzzword list for fine-tuned models (e.g. thinking)
 
 
-### 1.4 General transformer-based LMs vs. LLMs
+### 1.4 Transformers and LLMs
+
 LLMs are also trained using the transformer neural network architecture, making use of the self-attention mechanism discussion in Lesson 02. This means that an LLM is also a transformer-based language model. However, they are distinct from _general_ transformer-based language models in three main characteristics:
 
 1. **Scale:** there are two dimensions in which current LLMs exceed general transformer language models in terms of scale. The most important one is the number of _training parameters_ (weights) that are used for training models. In current models there are hundreds of billions of parameters up to trillions. The second factor is the _amount of training data_ (raw text sequences) used for training. Current LLMs use snapshots of the internet (upwards of hundreds of terabytes in size) as a base for training and possibly augment this with additional manually curated data. The sheer scale characteristic of LLMs mean that such models require extremely resource-intensive computation to train. State-of-the-art LLMs require multiple dedicated Graphical Processing Units (GPUs) with tens or hundreds of gigabytes of memory to load and train in reasonable time. GPUs offer high parallelisability in their architecture for data processing which makes them more efficient for training these models.
