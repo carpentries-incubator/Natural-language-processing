@@ -23,6 +23,8 @@ Many different LLMs have been, and continue to be, developed. There are both pro
 
 <img src="fig/llm_table4.png" alt="LLMs table" width="1000" />
 
+---
+
 ### 1.2 Applications of LLMs
 
 LLMs can be used for many different helpful tasks. Some common tasks include:
@@ -144,8 +146,7 @@ print(f"Response: {response}")
 
 #### Exercise 2: Other NLP tasks
 
-<!-- **Prompt Engineering Preview:**
-   - Which prompts gave better results? What made them effective? -->
+Write and execute the following prompts in Python code within Jupyter notebook.
 
 1. **Question answering:** 
     - answering general knowledge questions
@@ -182,60 +183,64 @@ print(f"Response: {response}")
     <br>
 
 3. **Text summarisation**
+    <br>
 
-```
-Human: Shorten: "Amsterdam, the capital of the Netherlands, is a city celebrated for its rich history, cultural diversity, and iconic canals. Known as the “Venice of the North,” it is home to a vast network of waterways lined with elegant 17th-century houses, giving the city its distinct charm. Amsterdam seamlessly blends old-world character with modern vibrancy, attracting millions of visitors each year."
-LLM: Amsterdam, the capital of the Netherlands, is known for its history, canals, and 17th-century houses, combining old charm with modern vibrancy that attracts millions each year.
-```
-<br>
+    ```
+    Human: Shorten: "Amsterdam, the capital of the Netherlands, is a city celebrated for its rich history, cultural diversity, and iconic canals. Known as the “Venice of the North,” it is home to a vast network of waterways lined with elegant 17th-century houses, giving the city its distinct charm. Amsterdam seamlessly blends old-world character with modern vibrancy, attracting millions of visitors each year."
+    LLM: Amsterdam, the capital of the Netherlands, is known for its history, canals, and 17th-century houses, combining old charm with modern vibrancy that attracts millions each year.
+    ```
+    <br>
 
 4. **Sentiment or text classification**
-
-```
-Sentiment analysis
-Human: Is this a positive, neutral or negative statement about the movie: "Incredible and not in a good way."
-LLM: That’s a negative statement about the movie. The phrase “Incredible” usually suggests something impressive, but the qualifier “not in a good way” makes it clear the speaker means the film was bad or shockingly poor.
-```
 <br>
 
-```
-Text classification
-Human: Categorise this statement into either sports, business, or science: "Lionel Messi scored twice to lead Argentina to victory in the World Cup qualifier."
-LLM: This statement falls under Sports. It talks about a soccer player and a match result, which clearly relates to athletic competition.
-```
-<br>
+    ```
+    Sentiment analysis
+    Human: Is this a positive, neutral or negative statement about the movie: "Incredible and not in a good way."
+    LLM: That’s a negative statement about the movie. The phrase “Incredible” usually suggests something impressive, but the qualifier “not in a good way” makes it clear the speaker means the film was bad or shockingly poor.
+    ```
+    <br>
+
+    ```
+    Text classification
+    Human: Categorise this statement into either sports, business, or science: "Lionel Messi scored twice to lead Argentina to victory in the World Cup qualifier."
+    LLM: This statement falls under Sports. It talks about a soccer player and a match result, which clearly relates to athletic competition.
+    ```
+    <br>
 
 5. **Language translation**
-
-```
-Human: Translate "I have recently naturalised as a Dutch citizen" into Dutch.
-LLM: Ik ben onlangs genaturaliseerd als Nederlands staatsburger.
-```
 <br>
+    ```
+    Human: Translate "I have recently naturalised as a Dutch citizen" into Dutch.
+    LLM: Ik ben onlangs genaturaliseerd als Nederlands staatsburger.
+    ```
+    <br>
 
 6. **Generating software code**
-```
-Human: Write a short Python function to demonstrate bubble sort
-LLM: ...
-```
-```python
-def bubble_sort(arr):
-    n = len(arr)
-    for i in range(n):
-        # Last i elements are already in place
-        for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                # Swap if the element is greater than the next
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-    return arr
+<br>
 
-# Example usage
-numbers = [64, 34, 25, 12, 22, 11, 90]
-sorted_numbers = bubble_sort(numbers)
-print(sorted_numbers)
-```
+    ```
+    Human: Write a short Python function to demonstrate bubble sort
+    LLM: ...
+    ```
+    ```python
+    def bubble_sort(arr):
+        n = len(arr)
+        for i in range(n):
+            # Last i elements are already in place
+            for j in range(0, n - i - 1):
+                if arr[j] > arr[j + 1]:
+                    # Swap if the element is greater than the next
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
+        return arr
 
-## Key Takeaways
+    # Example usage
+    numbers = [64, 34, 25, 12, 22, 11, 90]
+    sorted_numbers = bubble_sort(numbers)
+    print(sorted_numbers)
+    ```
+
+#### Key Takeaways
 
 - **LLMs are generative models** - they predict the next most likely tokens
 - **Prompts matter** - the way you ask affects what you get
@@ -243,20 +248,7 @@ print(sorted_numbers)
 - **Models have limitations** - they can be wrong, inconsistent, or biased
 - **Size vs Speed trade-off** - smaller models are faster but less capable
 
-## What's Next?
-
-In the rest of our lesson, we'll explore:
-- How to craft better prompts (prompt engineering strategies)
-- How to choose the right model for your task
-- Methods for comparing and evaluating different LLMs
-- Real-world applications and best practices
-
 ---
-
-**Troubleshooting:**
-- If you get memory errors, try using a smaller model like "microsoft/DialoGPT-small"
-- If generation is slow, reduce max_length or use CPU instead of trying GPU
-- If outputs seem repetitive, try adjusting temperature or adding `do_sample=True`
 
 ### 1.3 LLM selection criteria
 
@@ -349,6 +341,7 @@ Many models have been fine-tuned for specific domains or tasks. For example:
 
 Remember that the LLM landscape evolves rapidly. New models are released frequently, and performance benchmarks should be regularly reassessed. Consider building your system with model-agnostic interfaces to facilitate future transitions between different LLMs as your needs evolve or better options become available.
 
+---
 
 ### 1.4 Transformers and LLMs
 
@@ -366,6 +359,8 @@ What about the relation between BERT, which we learned about in Lesson 02, and L
 <br>
 
 <img src="fig/llms_vs_bert2.png" alt="llms vs bert" width="800" />
+
+---
 
 ### 2. How are LLMs trained?
 
@@ -441,53 +436,29 @@ LLM: The reflection in the mirror smiled back before I did.
 Human: Can you make it even creepier?
 LLM: The reflection winked, though I was alone in the room.
 ```
+---
 
-### 3. Creating your own chat assistant
-Let's interact with LLM models through Python code and create our own basic chat assistant. We are going to use existing pre-trained models from [HuggingFace](https://huggingface.co/).
+### 3. LLM Prompting strategies
 
-Lets first setup code to load the LLMs using the [transformers](https://github.com/huggingface/transformers) library.
+See [notebooks/prompting.ipynb]()...
 
+---
 
-#### 3.1 Prompt strategies
-...
+### 4. Solving NLP tasks with LLMs
 
-#### 3.2 Drawbacks, Errors and Biases
-LLMs have strengths and weaknesses (although the weaknesses are improving rapidly). If not intentionally addressed during training, LLMs can display the following examples of undesirable behavior:
+See [notebooks/classifandeval.ipynb]()...
 
-**Hallucination**
+---
 
-Load and initialise the ``HuggingFaceTB/SmolLM3-3B`` model in your notebook. Run the following code directly after (create a new cell if necessary):
+### 5. Creating your own chat assistant
 
-```python
-halluc_prompt = "Who is Railen Ackerby?"
-infengine = pipeline("text-generation", model=model, tokenizer=tokenizer)
-response = infengine(halluc_prompt, max_new_tokens=100, do_sample=True, top_k=50, temperature=0.7)[0]["generated_text"]
-print(response.strip())
-```
+See [notebooks/chatbot.ipynb]()...
 
-You may get a response like: "Who is Railen Ackerby? How did he get his name? Railen Ackerby is an English musician and composer. He was born in Birmingham, England in 1992. Railen Ackerby’s name is a combination of Railen, his mother’s maiden name, and Ackerby, the last name of his paternal grandfather. Railen’s paternal grandfather was an English composer and musicologist who played the violin and studied at Oxford University. Railen was named after his grandfather."
+---
 
-However, this person does not actually **exist**. So the model is "hallucinating" or "seeing something that is not there" i.e., making something up.
+### 6. Drawbacks and Biases with LLMs
 
-**Biases or stereotypes**
-
-LLMs may produce biased or offensive text based on biases present in the training data, making content moderation necessary in sensitive applications.
-
-```python
-bias_prompt = "Write a two paragraph story where a nurse, a pilot, and a CEO are having lunch together."
-response = infengine(bias_prompt, max_new_tokens=500, do_sample=True, top_k=50, temperature=0.7)[0]["generated_text"]
-print(response.strip())
-```
-
-You may get a response similar to (you may not get exactly the same output due to the stochastic processes which define how these models work):
-
-"In a bustling city, amidst the hum of traffic and the chatter of pedestrians, three individuals gathered for lunch in a cozy café. Dr. Emma Taylor, a dedicated nurse with a heart full of compassion, sipped _**her**_ green tea, _**her**_ eyes gleaming with warmth as she observed the world around _**her**_"
-
-This is of course reinforcing gender stereotypes for the nurse profession. Even the most advanced models are susceptible to these biases and stereotypes.
-
-
-## Key points to remember
-
+See [notebooks/responsible.ipynb]()...
 
 # References
 

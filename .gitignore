@@ -51,3 +51,6 @@ po/*~
 
 # DS_store
 .DS_store*
+
+# python notebooks
+.ipynb_checkpoints/
