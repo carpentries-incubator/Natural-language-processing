@@ -1,9 +1,9 @@
 ---
-title: 'Episode 2: BERT and Transformers'
+title: '3. Transformers: BERT and Beyond'
 teaching: 60
 exercises: 60
 ---
-:::::::::::::::::::::::::::::::::::::::::::::::: questions
+::: questions
 - What are some drawbacks of static word embeddings?
 - What are Transformers?
 - What is BERT and how does it work?
@@ -11,16 +11,16 @@ exercises: 60
 - How should I evaluate my classifiers?
 - Which other Transformer variants are available?
 
-:::::::::::::::::::::::::::::::::::::::::::::::: 
+::: 
 
-:::::::::::::::::::::::::::::::::::::::::::::::: objectives
+::: objectives
 - Understand how a Transformer works and recognize their different use cases.
 - Understand how to use pre-trained tranfromers (Use Case: BERT)
 - Use BERT to classify texts.
 - Use BERT as a Named Entity Recognizer.
 - Understand assumptions and basic evaluation for NLP outputs.
 
-::::::::::::::::::::::::::::::::::::::::::::::::
+:::
 
 Static word embeddings such as Word2Vec can be used to represent each word as a unique vectors. Vector representations also allow us to apply numerical operations that can be mapped to some syntactic and semantic properties of words, such as the cases of analogies or finding synonyms. Once we transform words into vectors, these can also be used as **features** for classifiers that can be trained predict any supervised NLP task.
 
