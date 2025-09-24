@@ -1,5 +1,5 @@
 ---
-title: '3. Transformers: BERT and Beyond'
+title: 'Transformers: BERT and Beyond'
 teaching: 60
 exercises: 60
 ---

@@ -1,5 +1,5 @@
 ---
-title: "1. Introduction"
+title: "Introduction"
 teaching: 60
 exercises: 60
 ---
