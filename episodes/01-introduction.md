@@ -1,5 +1,5 @@
 ---
-title: "1. Introduction"
+title: "Introduction"
 teaching: 60
 exercises: 60
 ---
@@ -576,6 +576,7 @@ def populate_co_occurrence(words, target_words, window_size=3, most_common_words
 
 ::: solution
 Following our preprocessing procedure with the *frankenstein book*, there are **30,500 content words**. The word **love appears 59 times** and the word **hate appears only 9 times**. These are 0.22% of the total words in the text. Even though intuitively these words should be quite common, in reality they occur only a handful of times. Code:
+
 
 ``` python
 with open("84_frankenstein_clean.txt") as f:
