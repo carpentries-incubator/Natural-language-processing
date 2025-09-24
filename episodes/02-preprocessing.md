@@ -1,5 +1,5 @@
 ---
-title: '2. From words to vectors'
+title: 'From words to vectors'
 teaching: 60
 exercises: 60
 ---
