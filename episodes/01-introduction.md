@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "1. Introduction"
 teaching: 60
 exercises: 60
 ---
@@ -26,17 +26,27 @@ Natural language processing (NLP) is an area of research and application that fo
 
 The term "natural language" is used as opposed to "artificial language", such as programming languages, which are by design constructed to be easily formalized into machine-readable instructions. On the contrary, natural languages are complex, ambiguous, and heavily context-dependent, making them challenging for computers to process. To complicate it more, there is not only a single *human language*, nowadays more than 7000 languages are spoken around the world, each with its own grammar, vocabulary, and cultural context.
 
-In this course we will mainly focus on written English (and a few other languages in some specific examples as well), however this is only a convenience so we can concentrate on the technical aspects of processing textual data. While ideally most of the concepts from NLP apply to most languages, one should always be ware that certain languages require different approaches to solve seemingly similar problems.
+In this course we will mainly focus on written English (and a few other languages in some specific examples as well), however this is only a convenience so we can concentrate on the technical aspects of processing textual data. While ideally most of the concepts from NLP apply to most languages, one should always be ware that certain languages require different approaches to solve seemingly similar problems. We would however like to encourage the usage of NLP tehcniques in your own languages, expecially if it is a minority language. You can read more about this topic [here](https://www.ruder.io/nlp-beyond-english/).
 
-We can already find differences on the most basic step to processing text. Take the problem of segmenting text into meaningful units, most of the times these units are words, in NLP this is the task of **tokenization**. A naive approach is to split text by spaces, as it seems obvious that we always separate words with spaces. Let's see how can we segment the same sentence in English and Chinese:
+We can already find differences on the most basic step to processing text. Take the problem of segmenting text into meaningful units, most of the times these units are words, in NLP we call this task **tokenization**. A naive approach is to obtain individual words by splitting text by spaces, as it seems obvious that we always separate words with spaces. Let's see how can we segment a sentenc ein English and Chinese:
 
 ``` python
 english_sentence = "Tokenization isn't always trivial."
-chinese_sentence = "标记化并不总是那么简单" # Chinese Translation
-
 english_words = english_sentence.split(" ")
 print(english_words)
 print(len(english_words))
+```
+
+``` output
+['Tokenization', "isn't", 'always', 'trivial.']
+4
+```
+
+Words are mostly well separated, however we do not get fully "clean" words (we have punctuation and also special cases such as "isn't"), but at least we get a rough count of the words present in the sentence. Let's now look at the same example in Chinese:
+
+``` python
+# Chinese Translation of "Tokenization is not always trivial"
+chinese_sentence = "标记化并不总是那么简单" 
 
 chinese_words = chinese_sentence.split(" ")
 print(chinese_words)
@@ -44,13 +54,11 @@ print(len(chinese_words))
 ```
 
 ``` output
-['Tokenization', "isn't", 'always', 'trivial.']
-4
 ['标记化并不总是那么简单']
 1
 ```
 
-Let's look first at the English sentence. Words are mostly well separated, however we do not get fully "clean" words (we have punctuation and also special cases such as "isn't"), but at least we get a rough count of the words present in the sentence. The same example however did not work in Chinese, because Chinese does not use spaces to separate words. We need to use a Chinese pre-trained tokenizer, which uses a dictionary-based approach to properly split the words:
+The same example however did not work in Chinese, because Chinese does not use spaces to separate words. We need to use a Chinese pre-trained tokenizer, which uses a dictionary-based approach to properly split the words:
 
 ``` python
 import jieba  # A popular Chinese text segmentation library
@@ -65,7 +73,7 @@ print(len(chinese_words))  # Output: 7
 7
 ```
 
-We can trust that the output valid, because we are using a verified library, even though we don't speak Chinese. Another interesting aspect is that the Chinese sentence has more words than the English one, even though they convey the same meaning. This shows the complexity of dealing with more than one language at a time, like in Machine Translation.
+We can trust that the output is valid because we are using a verified library, even though we don't speak Chinese. Another interesting aspect is that the Chinese sentence has more words than the English one, even though they convey the same meaning. This shows the complexity of dealing with more than one language at a time, like in Machine Translation.
 
 ::: callout
 ### Pre-trained Models and Fine-tunning
@@ -75,95 +83,39 @@ These two terms will appear very frequently when talking about NLP. The term *pr
 Sometimes a pre-trained model is of good quality, but it does not fit the nuances of our specific dataset. For example, the model was trained on newspaper articles but you are interested in poetry. In this case, it is common to perform *fine-tunning*, this means that instead of training your own model from scratch, you start with the knowledge obtained in the pre-trained model and adjust it (fine-tune it) with your specific data. If this is done well it leads to increased performance in the specific task you are trying to solve. The advantage of fine-tunning is that you do not need a large amount of data to improve the results, hence the popularity of the technique.
 :::
 
-In more general terms, NLP deals with the challenges of correctly processing and generating text, this can be as simple as counting word frequencies to detect different writing styles, using statistical methods to classify texts into different categories, or using deep neural networks to generate human-like text by exploiting word co-occurrences in large amounts of texts.
+Natural Language Processing deals with the challenges of correctly processing and generating text in any language. This can be as simple as counting word frequencies to detect different writing styles, using statistical methods to classify texts into different categories, or using deep neural networks to generate human-like text by exploiting word co-occurrences in large amounts of texts.
+
+## Why should we learn NLP Fundamentals?
+
+In the past decade, NLP has evolved significantly, especially in the field of deep learning, to the point that it has become embedded in our daily lives, one just needs to look at the term Large Language Models (LLMs), the latest generation of NLP models, which is now ubiquitous in news media and tech products we use on a daily basis.
+
+The term LLM now is often (and wrongly) used as a synonym of Artificial Intelligence. We could therefore think that today we just need to learn how to manipulate LLMs in order to fulfill our research goals involving textual data. The truth is that Language Modeling has always been part of the core tasks of NLP, therefore, by learning NLP you will understand better where are the main ideas behind LLMs coming from.
+
+![NLP is an interdisciplinary field, and LLMs are just a subset of it](fig/intro0_cs_nlp.png)
+
+LLM is a blanket term for an assembly of large neural networks that are trained on vast amounts of text data with the objective of optimizing for language modeling. Once they are trained, they are used to generate human-like text or fine-tunned to perform much more advanced tasks. Indeed, the surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answer elaborate questions, translate languages, solve complex problems, generate narratives that emulate reasoning, and many more, all of this with a single tool.
+
+It is important, however, to pay attention to what is happening behind the scenes in order to be able **trace sources of errors and biases** that get hidden in the complexity of these models. The purpose of this course is precisely to take a step back, and understand that: - There is a wide variety of tools available, beyond LLMs, that do not require so much computing power. - Sometimes a much simpler and easier method is already available that can solve our problem at hand. - If we learn how previous approaches to solve linguistic problems were designed, we can better understand the limitations of LLMs and how to use them effectively. - LLMs excel at confidently delivering information, without any regards for correctness. This calls for a careful design of **evaluation metrics** that give us a better understanding of the quality of the generated content.
+
+Let's go back to our problem of segmenting text and see what ChatGPT has to say about tokenizing Chinese text:
+
+![ChatGPT Just Works! Does it...?](fig/intro1.png)
+
+We got what sounds like a straightforward confident answer. However, it is not clear how the model arrived at this solution. Second, we do not know whether the solution is correct or not. In this case ChatGPT made some assumptions for us, such as choosing a specific kind of tokenizer to give the answer, and since we do not speak the language, we do not know if this is indeed the best approach to tokenize Chinese text. If we understand the concept of Token (which we will today!), then we can be more informed about the quality of the answer, whether it is useful to us, and therefore make a better use of the model.
+
+And by the way, ChatGPT was **almost** correct, in the specific case of the gpt-4 tokenizer, the model will return 12 tokens (not 11!) for the given Chinese sentence.
+
+![GPT-4 Tokenization Example](fig/intro1b.png)
+
+We can also argue if the statement "Chinese is generally tokenized character by character" is an overstatement or not. In any case, the real question here is: Are we ok with *almost correct answers*? Please note that this is not a call to avoid using LLM's but a call for a careful consideration of usage and more importantly, an attempt to explain the mechanisms behind via NLP concepts.
 
 ## Language as Data
 
-From a more technical perspective, NLP focuses on applying Machine Learning techniques to linguistic data. This makes all the difference, since ML methods expect a structured dataset, with a well defined set of features that engineers can work with. Your first task as an NLP practitioner is to **understand what aspects of textual data are relevant for your application** and apply techniques to systematically extract meaningful features (if using ML) or appropriate neural architectures (if using DL) from unstructured data that can help solve our problem at hand.
-
-:::: challenge
-### NLP in the real world
-
-Name three to five tools/products that you use on a daily basis and that you think leverage NLP techniques. To solve this exercise you can get some help from the web.
-
-::: solution
-These are some of the most popular NLP-based products that we use on a daily basis:
-
--   Agentic Chatbots (ChatGPT, Perplexity)
--   Voice-based assistants (e.g., Alexa, Siri, Cortana)
--   Machine translation (e.g., Google translate, Amazon translate)
--   Search engines (e.g., Google, Bing, DuckDuckGo)
--   Keyboard autocompletion on smartphones
--   Spam filtering
--   Spell and grammar checking apps
--   Customer care chatbots
--   Text summarization tools (e.g., news aggregators)
--   Sentiment analysis tools (e.g., social media monitoring)
-:::
-::::
-
-### NLP tasks
-
-The exercise above tells us that a great deal of NLP techniques is embedded in our daily life. Indeed NLP is an important component in a wide range of software applications that we use in our daily lives.
-
-There are several ways to describe the tasks that NLP solves. From the Machine Learning perspective, we have:
-
--   Supervised tasks: learning to classify texts given a labeled set of examples
-
--   Unsupervised tasks: exploiting existing patterns from large amounts of text.
-
-From the Deep Learning perspective we can consider different neural network architectures to tackle an NLP task, such as:
-
--   Multi-layer Perceptron
-
--   Recurrent Neural Network
-
--   Convolutional Neural Network
-
--   LSTM's
-
--   Transformer
-
-Below we show one possible taxonomy of NLP tasks, where we instead focus on the problem formulation aspect. The tasks are grouped together with some of their most prominent applications. This is definitely a non-exhaustive list, as in reality there are hundreds of them, but it is a good start:
-
--   **Language Modeling**: Given a sequence of words, the model predicts the next word. For example, in the sentence "The capital of France is \_\_\_\_\_", the model should predict "Paris" based on the context. This task was initially useful for building solutions that require speech and optical character recognition (even handwriting), language translation and spelling correction. Nowadays this has scaled up to the LLMs that we know.
-
--   **Text Classification**: Assign one or more labels to a "Documents". A document in our context can mean a sentence, a paragraph, a book chapter, etc...
-
-    -   **Language Identification**: determining the language of a given text.
-    -   **Spam Filtering**: classifiying emails into spam or not spam based on their content.
-    -   **Authorship Attribution**: determining the author of a text based on its style and content (based on the assumption that each author has a unique writing style).
-    -   **Sentiment Analysis**: classifying text into positive, negative or neutral sentiment. For example, in the sentence "I love this product!", the model would classify it as positive sentiment.
-
--   **Token Classification**: The task of assigning label to words individually. Because words do not occur in isolation, their meaning depend on the sequence of words to the left or the right of them, this is also called Word-In-Context Classification or Sequence Labeling and usually involves syntactic and semantic analysis.
-
-    -   **Part-Of-Speech Tagging**: is the task of assigning a part-of-speech label (e.g., noun, verb, adjective) to each word in a sentence.
-    -   **Chunking**: splitting a running text into "chunks" of words that together represent a meaningful unit: phrases, sentences, paragraphs, etc.
-    -   **Word Sense Disambiguation**: based on the context what does a word mean (think of "book" in "I read a book." vs "I want to book a flight.")
-    -   **Named Entity Recognition**: recognize world entities in text, e.g. Persons, Locations, Book Titles, or many others. For example "Mary Shelley" is a person, "Frankenstein or the Modern Prometeus" is a book, etc.
-    -   **Semantic Role Labeling**: the task if finding out "Who did what to whom?" in a sentence: information from events such as agents, participants, circumstances, etc.
-    -   **Relation Extraction**: the task of identifying named relationships between entities in a text, e.g. "Apple is based in California" has the relation (Apple, based_in, California).
-    -   **Co-reference Resolution**: the task of determining which words refer to the same entity in a text, e.g. "Mary is a doctor. She works at the hospital." Here "She" refers to "Mary".
-    -   **Entity Linking**: the task of disambiguation of named entities in a text, linking them to their corresponding entries in a knowledge base, e.g. Mary Shelley's biogrpaphy in Wikipedia.
-
--   **Text Similarity**: The task of determining how similar two pieces of text are.
-
-    -   **Plagiarism detection**: determining whether a piece of TextB is close enough to another known piece of TextA, which increments the likelihood that it was copied from it.
-    -   **Document clustering**: grouping similar texts together based on their content.
-    -   **Topic modelling**: A specific instance of clustering, here we automatically identify abstract "topics" that occur in a set of documents, where each topic is represented as a cluster of words that frequently appear together.
-    -   **Information Retrieval**: This is the task of finding relevant information or documents from a large collection of unstructured data based on user's query, e.g., "What's the best restaurant near me?".
-
--   **Text Generation**: The task of generating text based on a given input. This can
-
-    -   **Machine Translation**: translating text from one language to another, e.g., "Hello" in English to "Que tal" in Spanish.
-    -   **Summarization**: generating a concise summary of a longer text. It can be abstractive (generating new sentences that capture the main ideas of the original text) but also extractive (selecting important sentences from the original text).
-    -   **Paraphrasing**: generating a new sentence that conveys the same meaning as the original sentence, e.g., "The cat is on the mat." to "The mat has a cat on it.".
-    -   **Question Answering**: Given a question and a context, the model generates an answer. For example, given the question "What is the capital of France?" and the Wikipedia article about France as the context, the model should answer "Paris". This task can be approached as a text classification problem (where the answer is one of the predefined options) or as a generative task (where the model generates the answer from scratch).
-    -   **Conversational Agent (ChatBot)**: Building a system that interacts with a user via natural language, e.g., "What's the weather today, Siri?". These agents are widely used to improve user experience in customer service, personal assistance and many other domains.
+From a more technical perspective, NLP focuses on applying advanced statistical techniques to linguistic data. This is a key factor, since we need a structured dataset with a well defined set of features in order to manipulate it numerically. Your first task as an NLP practitioner is to **understand what aspects of textual data are relevant for your application** and apply techniques to systematically extract meaningful features from unstructured data (if using statistics or Machine Learning) or choose an appropriate neural architecture (if using Deep Learning) that can help solve our problem at hand.
 
 ### What is a word?
 
-When dealing with language we deal with sequences of words and with how they relate to each other to generate meaning. Our first step to provide structure to text is therefore to split it into words.
+When dealing with language our basic data unit is usually a word. We deal with sequences of words and with how they relate to each other to generate meaning in text pieces. Thus, our first step to load a text file and provide it with structure by chunking it into valid words (tokenization!).
 
 ::: callout
 ### Token vs Word
@@ -171,7 +123,7 @@ When dealing with language we deal with sequences of words and with how they rel
 For simplicity, in the rest of the course we will use the terms "word" and "token" interchangeably, but as we just saw they do not always have the same granularity. Originally the concept of token comprised dictionary words, numeric symbols and punctuation. Nowadays, tokenization has also evolved and became an optimization task on its own (How can we segment text in a way that neural networks learn optimally from text?). Tokenizers always allow to "reconstruct back" tokens to human-readable words even if internally they split the text differently, hence we can afford to use them as synonyms. If you are curious, you can visualize how different state-of-the-art tokenizers work [here](https://tiktokenizer.vercel.app/)
 :::
 
-Finally, we will start to working with text data! Let's open a file, read it into a string and split it by spaces. We will print the original text and the list of "words" to see how they look:
+Let's open a file, read it into a string and split it by spaces. We will print the original text and the list of "words" to see how they look:
 
 ``` python
 with open("text1_clean.txt") as f:
@@ -194,7 +146,7 @@ Proto-Tokens:
 74942
 ```
 
-Splitting by white space is possible but needs several extra steps to do get the clean words and separate the punctuation appropriately. Instead, we will introduce the [spaCy]((<https://github.com/explosion/spaCy>) library to segment the text into human-readable tokens. First we will download the pre-trained model, in this case we only need the small English version:
+Splitting by white space is possible but needs several extra steps to do get the clean words and separate the punctuation appropriately. Instead, we will introduce the [spaCy](https://github.com/explosion/spaCy) library to segment the text into human-readable tokens. First we will download the pre-trained model, in this case we only need the small English version:
 
 ``` python
 ! python -m spacy download en_core_web_sm
@@ -255,12 +207,12 @@ print(len(sentences))
 ```
 
 ``` output
-48
 Letter 1 St. Petersburgh, Dec. 11th, 17-- TO Mrs. Saville, England You will rejoice to hear that no disaster has accompanied the commencement of an enterprise which you have regarded with such evil forebodings.
 I arrived here yesterday, and my first task is to assure my dear sister of my welfare and increasing confidence in the success of my undertaking.
 I am already far north of London, and as I walk in the streets of Petersburgh, I feel a cold northern breeze play upon my cheeks, which braces my nerves and fills me with delight.
 Do you understand this feeling?
 This breeze, which has travelled from the regions towards which I am advancing, gives me a foretaste of those icy climes.
+48
 ```
 
 We can also see what named entities the model predicted:
@@ -281,6 +233,109 @@ DATE yesterday
 ```
 
 This are just basic tests to show you how you can right away structure text using existing NLP libraries. Of course we used a simplified model so the more complex the task the more errors will appear. The biggest advantage of using these existing libraries is that they help you transform unstructured plain text files into structured data that you can manipulate later for your own goals.
+
+:::: challenge
+### NLP in the real world
+
+Name three to five tools/products that you use on a daily basis and that you think leverage NLP techniques. To solve this exercise you can get some help from the web.
+
+::: solution
+These are some of the most popular NLP-based products that we use on a daily basis:
+
+-   Agentic Chatbots (ChatGPT, Perplexity)
+-   Voice-based assistants (e.g., Alexa, Siri, Cortana)
+-   Machine translation (e.g., Google translate, Amazon translate)
+-   Search engines (e.g., Google, Bing, DuckDuckGo)
+-   Keyboard autocompletion on smartphones
+-   Spam filtering
+-   Spell and grammar checking apps
+-   Customer care chatbots
+-   Text summarization tools (e.g., news aggregators)
+-   Sentiment analysis tools (e.g., social media monitoring)
+:::
+::::
+
+### NLP tasks
+
+The previous exercise shows that a great deal of NLP techniques is embedded in our daily life. Indeed NLP is an important component in a wide range of software applications that we use in our day to day activities.
+
+There are several ways to describe the tasks that NLP solves. From the Machine Learning perspective, we have:
+
+-   Unsupervised tasks: exploiting existing patterns from large amounts of text.
+
+![Unsupervised Learning](fig/intro_unsupervised.png){width="582"}
+
+-   Supervised tasks: learning to classify texts given a labeled set of examples
+
+![Supervised Learning](fig/intro_supervised.png){width="605"}
+
+The Deep Learning perspective usually involves the selection of the right model among different neural network architectures to tackle an NLP task, such as:
+
+-   Multi-layer Perceptron
+
+-   Recurrent Neural Network
+
+-   Convolutional Neural Network
+
+-   LSTM
+
+-   Transformer (including LLMs!)
+
+Regardless of the chosen method, below we show one possible taxonomy of NLP tasks. The tasks are grouped together with some of their most prominent applications. This is definitely a non-exhaustive list, as in reality there are hundreds of them, but it is a good start:
+
+![A taxonomy of NLP Tasks](fig/intro_taxonomy.png){width="630"}
+
+-   **Text Classification**: Assign one or more labels to a given piece of text. This text is usually referred as *document* and in our context this can be a sentence, a paragraph, a book chapter, etc...
+
+    -   **Language Identification**: determining the language of a given text.
+    -   **Spam Filtering**: classifying emails into spam or not spam based on their content.
+    -   **Authorship Attribution**: determining the author of a text based on its style and content (based on the assumption that each author has a unique writing style).
+    -   **Sentiment Analysis**: classifying text into positive, negative or neutral sentiment. For example, in the sentence "I love this product!", the model would classify it as positive sentiment.
+
+-   **Token Classification**: The task of individually assigning one label to each word in a document. This is a one-to-one mapping; however, because words do not occur in isolation and their meaning depend on the sequence of words to the left or the right of them, this is also called Word-In-Context Classification or Sequence Labeling and usually involves syntactic and semantic analysis.
+
+    -   **Part-Of-Speech Tagging**: is the task of assigning a part-of-speech label (e.g., noun, verb, adjective) to each word in a sentence.
+    -   **Chunking**: splitting a running text into "chunks" of words that together represent a meaningful unit: phrases, sentences, paragraphs, etc.
+    -   **Word Sense Disambiguation**: based on the context what does a word mean (think of "book" in "I read a book." vs "I want to book a flight.")
+    -   **Named Entity Recognition**: recognize world entities in text, e.g. Persons, Locations, Book Titles, or many others. For example "Mary Shelley" is a person, "Frankenstein or the Modern Prometeus" is a book, etc.
+    -   **Semantic Role Labeling**: the task if finding out "Who did what to whom?" in a sentence: information from events such as agents, participants, circumstances, etc.
+    -   **Relation Extraction**: the task of identifying named relationships between entities in a text, e.g. "Apple is based in California" has the relation (Apple, based_in, California).
+    -   **Co-reference Resolution**: the task of determining which words refer to the same entity in a text, e.g. "Mary is a doctor. She works at the hospital." Here "She" refers to "Mary".
+    -   **Entity Linking**: the task of disambiguation of named entities in a text, linking them to their corresponding entries in a knowledge base, e.g. Mary Shelley's biogrpaphy in Wikipedia.
+
+-   **Language Modeling**: Given a sequence of words, the model predicts the next word. For example, in the sentence "The capital of France is \_\_\_\_\_", the model should predict "Paris" based on the context. This task was initially useful for building solutions that require speech and optical character recognition (even handwriting), language translation and spelling correction. Nowadays this has scaled up to the LLMs that we know. A byproduct of pre-trained Language Modeling is the vectorized representation of texts which allows to perform specific tasks such as:
+
+    -   **Text Similarity**: The task of determining how similar two pieces of text are.
+    -   **Plagiarism detection**: determining whether a piece of TextB is close enough to another known piece of TextA, which increments the likelihood that it was copied from it.
+    -   **Document clustering**: grouping similar texts together based on their content.
+    -   **Topic modelling**: A specific instance of clustering, here we automatically identify abstract "topics" that occur in a set of documents, where each topic is represented as a cluster of words that frequently appear together.
+    -   **Information Retrieval**: This is the task of finding relevant information or documents from a large collection of unstructured data based on user's query, e.g., "What's the best restaurant near me?".
+
+-   **Text Generation**: The task of generating text based on a given input. This is usually done by generating the output word by word, conditioned on both the input and the output so far. The difference with Language Modeling is that for generation there are higher-level generation objectives such as:
+
+    -   **Machine Translation**: translating text from one language to another, e.g., "Hello" in English to "Que tal" in Spanish.
+    -   **Summarization**: generating a concise summary of a longer text. It can be abstractive (generating new sentences that capture the main ideas of the original text) but also extractive (selecting important sentences from the original text).
+    -   **Paraphrasing**: generating a new sentence that conveys the same meaning as the original sentence, e.g., "The cat is on the mat." to "The mat has a cat on it.".
+    -   **Question Answering**: Given a question and a context, the model generates an answer. For example, given the question "What is the capital of France?" and the Wikipedia article about France as the context, the model should answer "Paris". This task can be approached as a text classification problem (where the answer is one of the predefined options) or as a generative task (where the model generates the answer from scratch).
+    -   **Conversational Agent (ChatBot)**: Building a system that interacts with a user via natural language, e.g., "What's the weather today, Siri?". These agents are widely used to improve user experience in customer service, personal assistance and many other domains.
+
+For the purposes of this episode, we will focus on **supervised learning** tasks and we will emphasize how the **Transformer architecture** is used to tackle some of them.
+
+:::: challenge
+## Inputs and Outputs
+
+Look at the NLP Task taxonomy described above and write down a couple of examples of (Input, Output) instance pairs that you would need in order to train a supervised model for your chosen task.
+
+::: solution
+Example: the task of Conversational agent. Here are 3 instances to provide supervision for a model:
+
+**Input:** "Hello, how are you?" **Output:** "I am fine thanks!"
+
+**Input:** "Do you know at what time is the Worldcup final today?" **Output:** "Yes, the Worldcup final will be at 6pm CET"
+
+**Input:** "What color is my shirt?" **Output:** "Sorry, I am unable to see what you are wearing."
+:::
+::::
 
 ::: callout
 ### NLP Libraries
@@ -310,30 +365,6 @@ There are also several curated resources that can help solve your NLP-related ta
 -   [Dolma](https://github.com/allenai/dolma): An open dataset of 3 trillion tokens from a diverse mix of clean web content, academic publications, code, books, and encyclopedic materials, used to train English large language models.
 :::
 
-## Why should we learn NLP Fundamentals?
-
-In the past decade, NLP has evolved significantly, especially in the field of deep learning, to the point that it has become embedded in our daily lives, one just needs to look at the term Large Language Models (LLMs), the latest generation of NLP models, which is now ubiquitous in news media and tech products we use on a daily basis.
-
-The term LLM now is often (and wrongly) used as a synonym of Artificial Intelligence. We could therefore think that today we just need to learn how to manipulate LLMs in order to fulfill our research goals involving textual data. The truth is that Language Modeling has always been part of the core tasks of NLP, therefore, by learning NLP you will understand better where are the main ideas behind LLMs coming from.
-
-![NLP is an interdisciplinary field, and LLMs are just a subset of it](fig/intro0_cs_nlp.png)
-
-LLM is a blanket term for an assembly of large neural networks that are trained on vast amounts of text data with the objective of optimizing for language modeling. Once they are trained, they are used to generate human-like text or fine-tunned to perform much more advanced tasks. Indeed, the surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answer elaborate questions, translate languages, solve complex problems, generate narratives that emulate reasoning, and many more, all of this with a single tool.
-
-It is important, however, to pay attention to what is happening behind the scenes in order to be able **trace sources of errors and biases** that get hidden in the complexity of these models. The purpose of this course is precisely to take a step back, and understand that: - There is a wide variety of tools available, beyond LLMs, that do not require so much computing power. - Sometimes a much simpler and easier method is already available that can solve our problem at hand. - If we learn how previous approaches to solve linguistic problems were designed, we can better understand the limitations of LLMs and how to use them effectively. - LLMs excel at confidently delivering information, without any regards for correctness. This calls for a careful design of **evaluation metrics** that give us a better understanding of the quality of the generated content.
-
-Let's go back to our problem of segmenting text and see what ChatGPT has to say about tokenizing Chinese text:
-
-![ChatGPT Just Works! Does it...?](fig/intro1.png)
-
-We got what sounds like a straightforward confident answer. However, it is not clear how the model arrived at this solution. Second, we do not know whether the solution is correct or not. In this case ChatGPT made some assumptions for us, such as choosing a specific kind of tokenizer to give the answer, and since we do not speak the language, we do not know if this is indeed the best approach to tokenize Chinese text. If we understand the concept of Token (which we will today!), then we can be more informed about the quality of the answer, whether it is useful to us, and therefore make a better use of the model.
-
-And by the way, ChatGPT was **almost** correct, in the specific case of the gpt-4 tokenizer, the model will return 12 tokens (not 11!) for the given Chinese sentence.
-
-![GPT-4 Tokenization Example](fig/intro1b.png)
-
-We can also argue if the statement "Chinese is generally tokenized character by character" is an overstatement or not. In any case, the real question here is: Are we ok with *almost correct answers*? Please note that this is not a call to avoid using LLM's but a call for a careful consideration of usage and more importantly, an attempt to explain the mechanisms behind via NLP concepts.
-
 ## Relevant Linguistic Aspects
 
 Natural language exhibits a set fo properties that make it more challenging to process than other types of data such as tables, spreadsheets or time series. **Language is hard to process because it is compositional, ambiguous, discrete and sparse**.
@@ -342,7 +373,7 @@ Natural language exhibits a set fo properties that make it more challenging to p
 
 The basic elements of written languages are characters, a sequence of characters form words, and words in turn denote objects, concepts, events, actions and ideas (Goldberg, 2016). Subsequently words form phrases and sentences which are used in communication and depend on the context in which they are used. We as humans derive the meaning of utterances from interpreting contextual information that is present at different levels at the same time:
 
-![Levels of Language](fig/intro2_levels_lang.svg)
+![Levels of Language](fig/intro2_levels_lang.svg){width="573"}
 
 The first two levels refer to spoken language only, and the other four levels are present in both speech and text. Because in principle machines do not have access to the same levels of information that we do (they can only have independent audio, textual or visual inputs), we need to come up with clever methods to overcome this significant limitation. Knowing the levels of language is important so we consider what kind of problems we are facing when attempting to solve our NLP task at hand.
 
@@ -378,66 +409,61 @@ This is why the previous statements were difficult:
 
 Whenever you are solving a specific task, you should ask yourself what kind of ambiguity can affect your results? At what level are your assumptions operating when defining your research questions? Having the answers to this can save you a lot of time when debugging your models. Sometimes the most innocent assumptions (for example using the wrong tokenizer) can create enormous performance drops even when the higher level assumptions were correct.
 
-### Discreteness
+### Sparsity
 
-There is no inherent relationship between the form of a word and its meaning. For the same reason, by textual means alone, there is no way of knowing if two words are similar or how do they relate to each other. Take the word "pizza" and "hamburger", how can we automatically know that they share more properties than "car" and "cat"? One way is by looking at the context in which these words are used, and how they are related to each other. This idea is the principle behind **distributional semantics**, and aims to look at the statistical properties of language, such as word co-occurrences, to understand how words relate to each other.
-
-Let's do a simple exercise:
+Another key property of linguistic data is its sparsity. This means that if we are hunting for a specific phenomenon, we will realize it barely occurs inside a enormous amount of text. Imagine we have the following brief text and we are interested in *pizzas* and *hamburgers*:
 
 ``` python
-
-from collections import Counter
-
 # A mini-corpus where our target words appear
 text = """
-I am hungry . Should I eat delicious pizza ?
-Or maybe I should eat a juicy hamburger instead .
-Many people like to eat pizza because is tasty , they think pizza is delicious as hell !
-My friend prefers to eat a hamburger and I agree with him .
-We will drive our car to the restaurant to get the succulent hamburger .
-Right now , our cat sleeps on the mat so we won't take him .
-I did not wash my car , but at least the car has gasoline .
-Perhaps when we come back we will take out the cat for a walk .
-The cat will be happy to see us when we come back .
+I am hungry. Should I eat delicious pizza?
+Or maybe I should eat a juicy hamburger instead.
+Many people like to eat pizza because is tasty, they think pizza is delicious as hell!
+My friend prefers to eat a hamburger and I agree with him.
+We will drive our car to the restaurant to get the succulent hamburger.
+Right now, our cat sleeps on the mat so we won't take him.
+I did not wash my car, but at least the car has gasoline.
+Perhaps when we come back we will take out the cat for a walk.
+The cat will be happy then.
 """
-
-words = [token.lower() for token in text.split()]
-
-target_words = ["pizza", "hamburger", "car", "cat"] # words we want to analyze
-stop_words = ["i", "am", "my", "to", "the", "a", "and", "is", "as", "at", "we", "will", "not", "our", "but", "least", "has", ".", ","] # words to ignore
-co_occurrence = {word: [] for word in target_words}
-window_size = 3 # How many words to look at on each side
-
-# Find the context for each target word
-for i, word in enumerate(words):
-    if word in target_words:
-        start = max(0, i - window_size)
-        end = min(len(words), i + 1 + window_size)
-        context = words[start:i] + words[i+1:end] # Exclude the target word itself
-        context = [w for w in context if w not in stop_words] # Filter out stop words from context
-        co_occurrence[word].extend(context)
-
-# Print the most common context words for each target word
-print("Contextual Fingerprints:\n")
-for word, context_list in co_occurrence.items():
-    # We use Counter to get a frequency count of context words
-    fingerprint = Counter(context_list).most_common(5)
-    print(f"'{word}': {fingerprint}")
 ```
 
-``` ouptut
-Contextual Fingerprints:
+We should first use spacy to tokenize the text and do some direct word count:
 
-'pizza': [('eat', 2), ('delicious', 2), ('?', 1), ('or', 1), ('maybe', 1)]
-'hamburger': [('eat', 2), ('juicy', 1), ('instead', 1), ('many', 1), ('agree', 1)]
-'car': [('drive', 1), ('restaurant', 1), ('wash', 1), ('gasoline', 1)]
-'cat': [('walk', 2), ('now', 1), ('sleeps', 1), ('on', 1), ('take', 1)]
+``` python
+import spacy
+nlp = spacy.load("en_core_web_sm")
+
+doc = nlp(text)
+words = [token.lower_ for token in doc if token.is_alpha]  # Filter out punctuation and new lines
+print(words)
+print(len(words))
 ```
+
+We have in total 104 words, but we actually want to know how many times each word appears. For that we use the python Counter and matplotlib to create a chart:
+
+``` python
+from collections import Counter
+import matplotlib.pyplot as plt
+
+word_count = Counter(words).most_common()
+tokens = [item[0] for item in word_count]
+frequencies = [item[1] for item in word_count]
+
+plt.figure(figsize=(18, 6))
+plt.bar(tokens, frequencies)
+plt.xticks(rotation=90)
+plt.show()
+```
+
+This bar chart shows us several things about sparsity, even with such a small text: - The most common words are filler words, which do not carry strong semantic meaning (they are known as stop words) - The two concepts we are interested in, appear only 3 times each, out of 104 words (comprising only of 3% our corpus). This number only goes lower as the corpus increases - There is a long tail in the distribution, where actually a lot of meaningful words are located
+
+Sparsity is tightly link to what is frequently called **domain-specific data**. The discourse context in which language is used varies importantly across disciplines (domains). Take for example law texts and medical texts, we should expect the top part of the distirbution to contain very different content words. Also, the meaning of concepts described in each domain will significantly differ. For this reason there are specialized models and corpora that model language use in specific domains. The concept of fine-tunning a general purpose model with domain-specific data is also popular, even when using LLMs.
 
 ::: callout
 ## Stop Words
 
-Depending on the use case you will always perform some preprocessing steps in order to have the data as normalized and clean as possible before making any computations. These steps are not exhaustive and are task-dependent. In this case, we introduced the concept of "stop_words" (extremely common words that do not provide relevant information for our use case and, given their high frequency, they tend to obscure the results we are interested in). Of course, our list could have been much bigger, but it served the purpose for this toy example.
+**Stop words** are extremely frequent syntactic filler words that do not provide relevant semantic information for our use case. For some use cases it is better to ignore them in order to fight the sparsity problem. However, consider that in many other use cases the syntactic information that stop words provide is crucial to solve the task.
 
 Spacy has a pre-defined list of stopwords per language. To explicitly load the English stop words we can do
 
@@ -446,6 +472,8 @@ from spacy.lang.en.stop_words import STOP_WORDS
 print(STOP_WORDS)  # a set of common stopwords
 print(len(STOP_WORDS)) # There are 326 words considered in this list
 ```
+
+You can also manually extend the list of stop words if you ar einterested in ignoring specific terms.
 
 Alternatively you can filter out stop words when iterating your tokens (remember the spacy token properties!) like this:
 
@@ -456,18 +484,71 @@ print(content_words)
 ```
 :::
 
-### Sparsity
+### Discreteness
 
-Another key property of linguistic data is its sparsity. This means that if we are hunting for a specific phenomenon, we will realize it barely occurs inside a enormous amount of text. Our previous example of *pizzas* and *hamburgers* worked for us because our experiment was run in an extremely hand-crafted text for the purpose. However, it would be hard to scale this up in a real setting, where we would possibly need to dive into public reviews that specifically mentions those two foods to construct a corpus.
+There is no inherent relationship between the form of a word and its meaning. For the same reason, by textual means alone, there is no way of knowing if two words are similar or how do they relate to each other. How can we automatically know that "pizza" and "hamburger" share more properties than "car" and "cat"? One way is by looking at the context in which these words are used, and how they are related to each other. This idea is the principle behind **distributional semantics**, and aims to look at the statistical properties of language, such as word co-occurrences, to understand how words relate to each other.
 
-Sparsity is tightly link to what is frequently called **domain-specific data**. The discourse context in which language is used varies importantly across disciplines (domains). Take for example law texts and medical texts, the meaning of concepts described in each domain will significantly differ. Another example would be to compare texts written in 16th century English vs 21st century English, where significant shifts have occurred at all linguistic levels. For this reason there are specialized models and corpora that model language use in specific domains. The concept of fine-tunning a general purpose model with domain-specific data is also popular.
+Let's keep using our mini corpus. This time we only keep content words as we have very specific targets in mind
 
-While it's true that sparsity has been reduced after the era of LLMs and big training corpora, especially when dealing with general purpose tasks, if you have domain specific objectives you should take special care on the assumptions and results you get out of pre-trained models, including LLMs.
+``` python
+words = [token.lower_ for token in doc if token.is_alpha and not token.is_stop]  # Filter out punctuation and new lines
+```
+
+Now we will create a dictionary where we accumulate the words that appear around our words of interest. In this case we want to find out, according to our corpus, the most frequent words that occurr around *pizza*, *hamburger*, *car* and *cat*:
+
+``` python
+target_words = ["pizza", "hamburger", "car", "cat"] # words we want to analyze
+co_occurrence = {word: [] for word in target_words}
+co_occurrence
+```
+
+We iterate the content words, calculate a window of words arount each word and accumulate them:
+
+``` python
+window_size = 3 # How many words to look at on each side
+for i, word in enumerate(words):
+    # If the current word is one of our target words...
+    if word in target_words:
+        start = max(0, i - window_size) # get the start index of the window
+        end = min(len(words), i + 1 + window_size) # get the end index of the window
+        context = words[start:i] + words[i+1:end]  # Exclude the target word itself
+        co_occurrence[word].extend(context)
+
+print(co_occurrence)
+```
+
+As we can see, our dictionary has as keys each word of interest, and the values are a long list of the words that occur within *window_size* distance of the word. Now we use a Counter to get the most common items:
+
+``` python
+# Print the most common context words for each target word
+print("Contextual Fingerprints:\n")
+for word, context_list in co_occurrence.items():
+    # We use Counter to get a frequency count of context words
+    fingerprint = Counter(context_list).most_common(5)
+    print(f"'{word}': {fingerprint}")
+```
+
+``` output
+Contextual Fingerprints:
+
+'pizza': [('eat', 2), ('delicious', 2), ('?', 1), ('or', 1), ('maybe', 1)]
+'hamburger': [('eat', 2), ('juicy', 1), ('instead', 1), ('many', 1), ('agree', 1)]
+'car': [('drive', 1), ('restaurant', 1), ('wash', 1), ('gasoline', 1)]
+'cat': [('walk', 2), ('now', 1), ('sleeps', 1), ('on', 1), ('take', 1)]
+```
+
+As our tiny experiment show, discreteness can then be combatted with statistical co-occurrence: words with similar meaning will occur around similar concepts, giving us an idea of similarity that has nothing to do with how they are written. This is the core idea behind most modern meaning representation models in NLP.
 
 :::: challenge
-### NLP in the real world
+### Your first NLP Script
 
-Use what you have learned so far to search inside the Frankenstein book how many times does the word "love" appear, and how many times does "hate" appear. Compute what percentage of the content words in the text do these two terms together represent? To do this experiment you should:
+Choose one book file: dracula or frankenstein. Use what you have learned so far to count how many times the words "love" and "hate" appear in the book. What does this tell you about sparsity?
+
+Then replicate the word co-ocurrence experiment using the book you chose.
+
+Pair with someone that chose a different book and compare the most common words appearing around the two target terms. What can you conclude from this?
+
+To do this experiment you should:
 
 1.  Read the file and save it into a text variable
 2.  Use spacy to load the text into a Doc object.
@@ -475,10 +556,26 @@ Use what you have learned so far to search inside the Frankenstein book how many
 4.  Lowercase all the tokens to merge the instances of "Love" and "love" into a single one.
 5.  Iterate the tokens and count how many of them are exactly "love"
 6.  Iterate the tokens and count how many of them are exactly "hate"
-7.  compute the percentage of hate + love compared to all content words. For example with: (len(hate_words) + len(love_words)) / len(content_words) \* 100
+7.  You can use the following function to compute co-occurrence. You can play with the `window_size` or the `most_common_words` parameters to see how the results change.
+
+``` python
+def populate_co_occurrence(words, target_words, window_size=3, most_common_words=5):
+    co_occurrence = {word: [] for word in target_words}
+    for i, word in enumerate(words):
+        if word in target_words:
+            start = max(0, i - window_size)
+            end = min(len(words), i + 1 + window_size)
+            context = words[start:i] + words[i+1:end]
+            co_occurrence[word].extend(context)
+    # Print the most common context words for each target word
+    print("Contextual Fingerprints:\n")
+    for word, context_list in co_occurrence.items():
+        fingerprint = Counter(context_list).most_common(most_common_words)
+        print(f"'{word}': {fingerprint}")
+```
 
 ::: solution
-Following our preprocessing procedure, there are **30,500 content words**. The word **love appears 59 times** and the word **hate appears only 9 times**. These are 0.22% of the total words in the text. Even though intuitively these words should be quite common, in reality they occur only a handful of times. So if we are interested in studying the occurrences of love/hate in the novel, we can only rely on those occurrences. Code:
+Following our preprocessing procedure with the *frankenstein book*, there are **30,500 content words**. The word **love appears 59 times** and the word **hate appears only 9 times**. These are 0.22% of the total words in the text. Even though intuitively these words should be quite common, in reality they occur only a handful of times. Code:
 
 ``` python
 with open("84_frankenstein_clean.txt") as f:
@@ -496,27 +593,10 @@ print("Love and Hate percentage:", (len(love_words) + len(hate_words)) / len(wor
 :::
 ::::
 
-## NLP = Machine Learning + Linguistics
-
-So far we saw how important it is to consider the linguistic properties of our data. We now recall that NLP is also built on top of ideas from Machine Learning, Deep Learning. A general workflow for solving an NLP task therefore looks quite close to the general Machine Learning Workflow:
-
-1.  Formulate the problem
-2.  Gather relevant data
-3.  Data pre-processing
-4.  Structure your Corpus (Inputs/Outputs)
-5.  Split your Data (Train/Validation/Test)
-6.  Choose Approach/Model/Architecture
-7.  If necessary Train or Fine-tune a new Model
-8.  Evaluate Results on Test Set
-9.  Refine your approach
-10. Share model/results
-
-With this in mind we can start now exploring more NLP techniques!
-
 ::: keypoints
--   NLP is embedded in numerous daily-use products
--   Key tasks include language modeling, text classification, information extraction, information retrieval, conversational agents, and topic modeling, each supporting various real-world applications.
--   NLP is a subfield of Artificial Intelligence (AI) that deals with approaches to process, understand and generate natural language
+-   NLP is a subfield of Artificial Intelligence (AI) that, using the help of Linguistics, deals with approaches to process, understand and generate natural language
+-   Linguistic Data has special properties that we should consider when modeling our solutions
+-   Key tasks include language modeling, text classification, token classification and text generation
 -   Deep learning has significantly advanced NLP, but the challenge remains in processing the discrete and ambiguous nature of language
--   The ultimate goal of NLP is to enable machines to understand and process language as humans do, but challenges in measuring and interpreting linguistic information still exist.
+-   The ultimate goal of NLP is to enable machines to understand and process language as humans do
 :::
