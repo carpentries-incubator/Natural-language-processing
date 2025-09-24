@@ -242,15 +242,8 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#what-are-large-language-models">What are Large Language Models?</a></li>
-<li><a href="#how-are-llms-different-from-other-nlp-techniques">How are LLMs different from other NLP techniques?</a></li>
-<li><a href="#what-llms-are-good-at">What LLMs are good at</a></li>
-<li><a href="#what-llms-struggle-with">What LLMs struggle with</a></li>
-<li><a href="#how-do-llms-work">How do LLMs work?</a></li>
-<li><a href="#a-zoo-of-large-language-models">A zoo of Large Language Models</a></li>
-<li><a href="#which-one-to-chose-when">Which one to chose when?</a></li>
-<li><a href="#building-a-chatbot">Building a chatbot</a></li>
-<li><a href="#retrieval-augmented-generation---build-a-rag">Retrieval Augmented Generation - Build a RAG</a></li>
+        <ul><li><a href="#background">Background</a></li>
+<li><a href="#what-are-large-language-models-llms">1. What are Large Language Models (LLMs)?</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -315,7 +308,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Episode 3: Using large language models</h1>
-        <p>Last updated on 2025-09-18 |
+        <p>Last updated on 2025-09-24 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/04-LargeLanguageModels.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -327,901 +320,565 @@
 
         
 
-<div class="overview card">
-<h2 class="card-header">Overview</h2>
-<div class="row g-0">
-<div class="col-md-4">
-<div class="card-body">
-<div class="inner">
-<h3 class="card-title">Questions</h3>
-<ul><li>What is a Large Language Model (LLM)?</li>
-<li>How do LLMs differ from traditional NLP models?</li>
-<li>What is the Transformer architecture, and why is it important for
-LLMs?</li>
-<li>How does prompt engineering influence LLM outputs?</li>
-<li>What are some real-world applications of LLMs?</li>
-<li>How can LLMs generate, classify, and summarise text?</li>
-</ul></div>
+<section><h2 class="section-heading" id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a></h2>
+<hr class="half-width"><p>Chat assistants like <a href="https://chatgpt.com/" class="external-link">ChatGPT</a> and
+<a href="http://claude.ai" class="external-link">Claude</a>, which are based on Large Language
+Models (LLMs) are widely used today for tasks such as content
+generation, question answering, research and software development. The
+rapid rise of such models has had quite a disruptive and strong impact.
+But what are these models exactly? How do they work ‘under the hood’?
+And how can one use them programmatically, in a responsible and
+effective way?</p>
+<p>This episode is a gentle introduction to LLMs which aims to equip you
+with knowledge of the underpinnings of LLMs based on transformers
+architecture, as well as practical skills to programmatically work with
+LLMs in your own projects.</p>
+<p><img src="fig/llm-logos/anthropic.png" alt="Company A" width="80" class="figure"><img src="fig/llm-logos/alibaba.png" alt="Company B" width="80" class="figure"><img src="fig/llm-logos/xai.jpg" alt="Company C" width="80" class="figure"><img src="fig/llm-logos/zhipu.png" alt="Company C" width="150" class="figure"><img src="fig/llm-logos/google.png" alt="Company C" width="80" class="figure"><img src="fig/llm-logos/openai.jpg" alt="Company C" width="150" class="figure"></p>
+<p><img src="fig/llm-logos/nvidia.png" alt="Company D" width="80" class="figure"><img src="fig/llm-logos/deepseek.png" alt="Company E" width="80" class="figure"><img src="fig/llm-logos/huggingface.png" alt="Company F" width="80" class="figure"><img src="fig/llm-logos/meta.png" alt="Company C" width="150" class="figure"></p>
+</section><section><h2 class="section-heading" id="what-are-large-language-models-llms">1. What are Large Language Models (LLMs)?<a class="anchor" aria-label="anchor" href="#what-are-large-language-models-llms"></a></h2>
+<hr class="half-width"><p>Large language models (LLMs) are transformer-based language models
+that are specialised to interpret and generate text, and to converse in
+a conversational-like manner with humans. The text that they generate
+are mostly natural language but can, in theory, constitute any character
+or symbol sequence such as software code. They represent a significant
+advancement in AI and NLP. and are trained on vast amounts of textual
+data mostly obtained from the internet.</p>
+<div class="section level3">
+<h3 id="examples-of-llms">1.1 Examples of LLMs<a class="anchor" aria-label="anchor" href="#examples-of-llms"></a></h3>
+<p>Many different LLMs have been, and continue to be, developed. There
+are both proprietary and open-source varieties. Open-source varieties
+often make the data that their LLMs are trained on free, open and
+accessible online. Some even make the code they use to train these
+models open-source as well. Below is a summary of some current LLMs
+together with their creators, chat assistant interfaces, and proprietary
+status:</p>
+<figure><img src="fig/llm_table4.png" alt="LLMs table" width="1000" class="figure mx-auto d-block"></figure><hr></div>
+<div class="section level3">
+<h3 id="applications-of-llms">1.2 Applications of LLMs<a class="anchor" aria-label="anchor" href="#applications-of-llms"></a></h3>
+<p>LLMs can be used for many different helpful tasks. Some common tasks
+include:</p>
+<ul><li>Question Answering</li>
+<li>Text Generation</li>
+<li>Text Summarisation</li>
+<li>Sentiment Analysis</li>
+<li>Machine Translation</li>
+<li>Code Generation</li>
+</ul><div class="section level4">
+<h4 id="exercise-1-your-first-programmatic-llm-interaction-30-minutes">Exercise 1: Your first programmatic LLM interaction (30
+minutes)<a class="anchor" aria-label="anchor" href="#exercise-1-your-first-programmatic-llm-interaction-30-minutes"></a></h4>
+<p>Before exploring how we can invoke LLMs programmatically to solve the
+kinds of tasks abve, let us setup and load our first LLM.</p>
+<div class="section level5">
+<h5 id="step-1--setup-code">Step 1. Setup code<a class="anchor" aria-label="anchor" href="#step-1--setup-code"></a></h5>
+<p>Install required packages <code>transformers</code> and
+<code>torch</code> and import required libraries.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForCausalLM, AutoTokenizer, pipeline</span></code></pre>
 </div>
 </div>
-<div class="col-md-8">
-<div class="card-body">
-<div class="inner bordered">
-<h3 class="card-title">Objectives</h3>
-<p>After following this lesson, learners will be able to:</p>
-<ul><li>Understand what Large Language Models (LLMs) are and their role in
-NLP</li>
-<li>Explain the Transformer architecture and why it is foundational for
-LLMs</li>
-<li>Use prompt engineering to generate high-quality text responses</li>
-<li>Apply LLMs to real-world tasks like news article analysis</li>
-<li>Explore pre-trained LLMs and experiment with custom tasks</li>
-<li>Set up a chatbot and a simple RAG</li>
-<li>Understand the impact of LLMs in modern AI and language
-processing</li>
-</ul></div>
+<div class="section level5">
+<h5 id="step-2-load-and-setup-an-llm">Step 2: Load and setup an LLM<a class="anchor" aria-label="anchor" href="#step-2-load-and-setup-an-llm"></a></h5>
+<p>Let’s load a lightweight LLM.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># We'll use SmolLM-135M - an open, small, fast model</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co"># model_name = "HuggingFaceTB/SmolLM2-135M" # base model</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"HuggingFaceTB/SmolLM2-135M-Instruct"</span> <span class="co"># fine-tuned assistant model</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># model_name = "HuggingFaceTB/SmolLM3-3B-Base" # base model</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co"># model_name = "HuggingFaceTB/SmolLM3-3B" # fine-tuned assistant model</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co"># Load tokenizer and model</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(model_name)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>model <span class="op">=</span> AutoModelForCausalLM.from_pretrained(model_name)</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co"># Check if model is loaded correctly</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model loaded! It has </span><span class="sc">{</span>model<span class="sc">.</span>num_parameters()<span class="sc">:,}</span><span class="ss"> parameters"</span>)</span></code></pre>
 </div>
 </div>
-</div>
-</div>
-<p>Large Language Models (LLMs) are a hot and a big topic these days,
-and are continuously in the news. Everybody heard of ChatGPT, many tried
-it out for a variety of purposes, or even incorporated these tools in
-their daily work. But what are these models exactly, how do they work
-‘under the hood’, and how can you make use of them in the best possible
-way?</p>
-<p>In this episode, we will:</p>
-<ul><li>Explore LLMs, which represent a significant advancement in natural
-language processing (NLP). We will begin by defining what LLMs are and
-touching on their foundational architecture, particularly the
-Transformer model, which allows the LLM to understand and generate
-human-like text.</li>
-<li>Through practical examples, you will discover how to work with these
-models for specific tasks with content generation.</li>
-<li>We’ll also discuss real-world applications of LLMs, such as
-analyzing news articles and generating insights from large amounts of
-text data.</li>
-</ul><p>This episode aims to equip you with both theoretical knowledge and
-practical skills, preparing you to harness the power of LLMs in your own
-projects and applications.</p>
-<section><h2 class="section-heading" id="what-are-large-language-models">What are Large Language Models?<a class="anchor" aria-label="anchor" href="#what-are-large-language-models"></a></h2>
-<hr class="half-width"><p>Large language models (LLMs) represent a significant advancement in
-artificial intelligence, designed to process and interpret large-scale
-natural language data to generate responses to user queries. By being
-trained on extensive datasets through advanced machine learning
-algorithms, these models learn the intricate patterns, structures and
-nuances of human language. This enables them to produce coherent and
-natural-sounding language outputs across various inputs. As a result,
-large language models are becoming increasingly essential in a range of
-tasks such as text generation, text summarisation, rewriting, question
-answering, and language translation.</p>
-<p>The emergence of <em>ChatGPT</em>, powered by OpenAI’s advanced LLMs,
-has brought these capabilities into the mainstream. With ChatGPT, users
-interact through natural language, enabling seamless conversations and
-performing complex tasks across various sectors, like customer service,
-education, and content creation. Models like GPT-4, BERT, and LLaMA are
-also used across various applications; from chatbots, virtual
-assistants, text analysis, translation, summarisation, and more.</p>
-<p>Notably, the success of ChatGPT and other LLM-driven applications
-highlights their versatility and potential to transform how humans
-interact with digital systems. These models continue to push the
-boundaries of what’s possible in human-computer interaction, offering a
-glimpse into a future where machines and humans communicate more
-naturally and effectively.</p>
-<div class="section level3">
-<h3 id="timeline">Timeline<a class="anchor" aria-label="anchor" href="#timeline"></a></h3>
-<p>The journey of large language models over the past decade highlights
-the rapid evolution and growing impact of AI in language processing:</p>
-<ul><li><p><strong>2012</strong>: Significant advancements in deep learning
-architectures and access to larger datasets lead to the creation of the
-GPT (Generative Pre-trained Transformer) framework, marking a pivotal
-point in AI development.</p></li>
-<li><p><strong>2018</strong>: Google unveils BERT (Bidirectional Encoder
-Representations from Transformers), introducing a groundbreaking
-architecture that sets the stage for the next generation of large
-language models.</p></li>
-<li><p><strong>2020</strong>: OpenAI releases GPT-3, which, with its
-remarkable 175 billion parameters, establishes a new standard for
-performance in language-related tasks.</p></li>
-<li><p><strong>2022</strong>: The launch of ChatGPT marks a turning
-point by making GPT-3 and similar models easily accessible to the public
-via a web interface, significantly raising public awareness and interest
-in LLMs and generative AI.</p></li>
-<li><p><strong>2023</strong>: Open-source LLMs begin to deliver
-impressive outcomes with the introduction of models like Dolly 2.0,
-LLaMA, Alpaca, and Vicuna. Meanwhile, the release of GPT-4 pushes the
-envelope by setting new records for both parameter scale and overall
-performance.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="starting-up-a-simple-chat">Starting up a simple chat<a class="anchor" aria-label="anchor" href="#starting-up-a-simple-chat"></a></h3>
-<p>Let’s explore how these LLMs work by doing a simple chat
-demonstration.</p>
-<p>Imagine asking a computer a question and getting a human-like
-response. An LLM, like GPT-4, can generate responses that feel natural,
-informative, and tailored to your question by analyzing the context and
-meaning of your input. In the demonstration below, you’ll see how an LLM
-responds to a prompt and how it builds upon previous information to
-maintain the conversation.</p>
-</div>
-<div class="section level3">
-<h3 id="example-chat">Example Chat<a class="anchor" aria-label="anchor" href="#example-chat"></a></h3>
-<ul><li><p><em>User</em>: “What’s the tallest mountain in the
-world?”</p></li>
-<li><p><em>LLM</em>: “The tallest mountain in the world is Mount
-Everest, which stands at 8,848 meters (29,029 feet).”</p></li>
-<li><p><em>User</em>: “How long does it take to climb it?”</p></li>
-<li><p><em>LLM</em>: “Climbing Mount Everest typically takes around two
-months, due to the acclimatization process needed to adjust to high
-altitudes. Expeditions often start from Base Camp in Nepal, where
-climbers spend several weeks preparing.”</p></li>
-<li><p><em>User</em>: “Could someone with no climbing experience try
-it?”</p></li>
-<li><p><em>LLM</em>: “Climbing Mount Everest is extremely challenging
-and requires significant training and experience due to the harsh
-conditions, high altitudes, and technical aspects of the climb. Most
-climbers spend years training and gaining experience on other mountains
-before attempting Everest.”</p></li>
-</ul><p>This example shows how LLMs can maintain context across multiple
-questions. Notice how the model connects information across each
-question, keeping the conversation relevant and informed.</p>
-<p>This quick chat example introduces you to the conversational
-abilities of LLMs, demonstrating their ability to respond contextually,
-provide coherent answers, and follow up on earlier parts of the
-conversation.</p>
-</div>
-</section><section><h2 class="section-heading" id="how-are-llms-different-from-other-nlp-techniques">How are LLMs different from other NLP techniques?<a class="anchor" aria-label="anchor" href="#how-are-llms-different-from-other-nlp-techniques"></a></h2>
-<hr class="half-width"><p>LLMs stand apart from traditional NLP techniques due to their scale,
-versatility, and reliance on deep learning models, especially
-Transformers. Here’s a breakdown of how they differ:</p>
-<div class="section level3">
-<h3 id="scale-of-training-data-and-parameters">Scale of training data and parameters<a class="anchor" aria-label="anchor" href="#scale-of-training-data-and-parameters"></a></h3>
-<ul><li>LLMs: Trained on massive datasets (trillions of words) and use
-billions of parameters, allowing them to learn language patterns, facts,
-and relationships at an unprecedented depth.</li>
-<li>Traditional NLP: Techniques like rule-based systems or smaller
-machine learning models rely on much smaller datasets, often requiring
-domain-specific training for each task (e.g., sentiment analysis or
-named entity recognition).</li>
-</ul></div>
-<div class="section level3">
-<h3 id="model-architecture">Model architecture<a class="anchor" aria-label="anchor" href="#model-architecture"></a></h3>
-<ul><li>LLMs: Use the Transformer architecture, particularly self-attention,
-to analyze relationships between words regardless of position. This
-allows them to capture long-range dependencies and context better than
-traditional models.</li>
-<li>Traditional NLP: Often use simpler models like bag-of-words, TF-IDF
-(term frequency-inverse document frequency), RNNs (recurrent neural
-networks), and LSTMs (long-short-term memory models), which treat words
-independently or consider only local context, missing the complex,
-global relationships.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="generalization-vs--task-specific-models">Generalization vs. task-specific models<a class="anchor" aria-label="anchor" href="#generalization-vs--task-specific-models"></a></h3>
-<ul><li>LLMs: Can be applied across a wide range of tasks—summarization,
-translation, question answering, etc.—without the need for separate
-models for each. Fine-tuning makes them even more adaptable to specific
-needs.</li>
-<li>Traditional NLP: Typically requires developing or training a
-separate model for each task. For example, separate models for sentiment
-analysis, translation, and entity recognition.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="learning-from-unlabeled-data">Learning from unlabeled data<a class="anchor" aria-label="anchor" href="#learning-from-unlabeled-data"></a></h3>
-<ul><li>LLMs: Leverage unsupervised or self-supervised learning during
-pretraining, enabling them to learn language patterns from raw text
-without human-labeled data.</li>
-<li>Traditional NLP: are often supervised models, relying on labeled
-data for training (e.g., labeled sentiment or part-of-speech tags),
-which can be costly and time-consuming to create at scale.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="context-and-language-nuance">Context and language nuance<a class="anchor" aria-label="anchor" href="#context-and-language-nuance"></a></h3>
-<ul><li>LLMs: Excel at understanding context, tone, and nuance, due to their
-ability to weigh word relationships dynamically. This enables better
-handling of idioms, sarcasm, and ambiguous phrases.</li>
-<li>Traditional NLP: Struggles with complex language nuances, often
-producing more rigid or literal interpretations. Contextual
-understanding is limited, especially for longer sentences or
-paragraphs.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="adaptability-and-fine-tuning">Adaptability and fine-tuning<a class="anchor" aria-label="anchor" href="#adaptability-and-fine-tuning"></a></h3>
-<ul><li>LLMs: Easily adaptable to new tasks or domains with fine-tuning,
-making them versatile across different applications.</li>
-<li>Traditional NLP: Less flexible, often requiring retraining from
-scratch or heavy feature engineering to adapt to new domains or
-tasks.</li>
-</ul><p>In short, LLMs represent a leap forward by combining scale,
-flexibility, and deep learning power, allowing for more accurate,
-nuanced, and versatile language processing compared to traditional NLP
-techniques.</p>
-</div>
-</section><section><h2 class="section-heading" id="what-llms-are-good-at">What LLMs are good at<a class="anchor" aria-label="anchor" href="#what-llms-are-good-at"></a></h2>
-<hr class="half-width"><ul><li>
-<em>Language generation</em>: Creating coherent and contextually
-appropriate text, making them ideal for creative writing, chatbots, and
-automated responses.</li>
-<li>
-<em>Summarization and translation</em>: Quickly summarizing
-articles, books, and translating text between languages with reasonable
-accuracy.</li>
-<li>
-<em>Information retrieval and answering questions</em>: LLMs can
-recall and apply general knowledge from their training data to answer
-questions, though they don’t actually “know” facts.</li>
-<li>
-<em>Sentiment and text classification</em>: LLMs can classify text
-for tasks like sentiment analysis, spam detection, and topic
-categorization.</li>
-</ul></section><section><h2 class="section-heading" id="what-llms-struggle-with">What LLMs struggle with<a class="anchor" aria-label="anchor" href="#what-llms-struggle-with"></a></h2>
-<hr class="half-width"><ul><li>
-<em>Fact-based accuracy</em>: Since LLMs don’t “know” facts, they
-may generate incorrect or outdated information and are prone to
-hallucinations (making up facts).</li>
-<li>
-<em>Understanding context over long passages</em>: LLMs can struggle
-with context over very long texts and may lose track of earlier details,
-affecting coherence.</li>
-<li>
-<em>Mathematical reasoning and logic</em>: Though improving, LLMs
-often find complex problem-solving and detailed logical reasoning
-challenging without direct guidance.</li>
-<li>
-<em>Ethical and sensitive issues</em>: LLMs may produce biased or
-offensive text based on biases present in the training data, making
-content moderation necessary in sensitive applications.</li>
-</ul></section><section><h2 class="section-heading" id="how-do-llms-work">How do LLMs work?<a class="anchor" aria-label="anchor" href="#how-do-llms-work"></a></h2>
-<hr class="half-width"><p>So, how is it that you can chat with a model and receive responses
-that seem almost human? The answer lies in the architecture and training
-of Large Language Models (LLMs), which are powered by advanced neural
-networks that understand, generate, and even translate human language
-with surprising accuracy.</p>
-<p>At the core of LLMs lies a framework known as the
-<strong>transformer</strong>; a concept already encountered in the
-previous episode. Transformers allow these models to process vast
-amounts of text and learn the structure and nuances of language. This
-setup enables LLMs not only to answer questions but also to predict,
-complete, and even generate coherent text based on the patterns they’ve
-learned.</p>
-<p>LLMs are trained on large text datasets and later fine-tuned on
-specific tasks, which helps them adapt to a wide range of applications,
-from conversation to text classification. The result? A model that can
-chat, summarize, translate, and much more—all by leveraging these core
-mechanisms. LLM’s rely on the following key concepts:</p>
-<ul><li>
-<em>Transformers and self-attention</em>: The transformer
-architecture, especially the self-attention mechanism, is at the heart
-of LLMs. Self-attention enables these models to understand the
-importance of each word in relation to others in a sequence, regardless
-of their position.</li>
-<li>
-<em>Pretraining and fine-tuning</em>: LLMs are first pre-trained on
-large text datasets using tasks like predicting the next word in a
-sentence, learning language patterns. They are then fine-tuned on
-specific tasks (e.g., translation, summarization) to enhance performance
-for targeted applications.</li>
-<li>
-<em>Generative vs. discriminative models</em>: LLMs can be applied
-to both generative tasks (e.g., text generation) and discriminative
-tasks (e.g., classification).</li>
-</ul><p>In practice, this attention mechanism helps LLMs produce coherent
-responses by establishing relationships between words as each new token
-is generated. Here’s how it works:</p>
-<ul><li><p><em>Understanding word relationships</em>. Self-attention enables
-the model to weigh the importance of each word in a sentence, no matter
-where it appears, to make sense of the sentence as a whole.</p></li>
-<li><p><em>Predicting next words based on context</em>. With these
-relationships mapped out, the model can predict the next word in a
-sequence. For example, in “The fox,” self-attention allows the model to
-anticipate that “jumps” or “runs” might come next rather than something
-unrelated like “table.”</p></li>
-<li><p><em>Structuring responses</em>. As each word is generated, the
-model assesses how each new token impacts the entire sentence, ensuring
-that responses are relevant, logically sound, and grammatically correct.
-This ability to “structure” language is why LLMs can produce responses
-that are contextually meaningful and well-organized.</p></li>
-</ul></section><section><h2 class="section-heading" id="a-zoo-of-large-language-models">A zoo of Large Language Models<a class="anchor" aria-label="anchor" href="#a-zoo-of-large-language-models"></a></h2>
-<hr class="half-width"><p>The era of Large Language Models gained momentum in 2018 with the
-release of Google’s BERT. Since then, many companies have rapidly
-developed newer and more powerful models. Among these are GPT (OpenAI),
-Llama (Meta), Mistral (Mistral AI), Gemini (Google DeepMind), Claude
-(Anthropic), and Grok (xAI). Some are open-source or more transparent
-than others, revealing their architectures, parameter counts, or
-training data and the collection thereof.</p>
-<p>A list of LLMs: - GPT - OpenAI - Llama - Meta - Mistral / Mixtral -
-Mistral AI (founded by former engineers from Google DeepMind and Meta) -
-Gemini - Google DeepMind - Claude - Anthropic - (founded by former
-OpenAI employees) - Grok - xAI (Elon Musk)</p>
-<p>Training a large language model is extremely resource intensive. For
-example, llama’s model Llama 3.1 405B is a model that has 405 billion
-parameters. It was trained on 15 trillion tokens, uses 31 million GPU
-hours (H100 gpus), and emitted almost 9000 tons of CO_2 (for the
-training process only).</p>
-<p>Inference also consumes considerable resources and has a significant
-environmental impact. Large models require large memory for storing and
-loading the model weights (storing weights alone can require
-<em>hundreds</em> of gigabytes), and need high-performance GPUs to
-achieve reasonable runtimes. As a result, many models operate on
-cloud-based servers, increasing power consumption, especially when
-scaled accomodate large numbers of users.</p>
-</section><section><h2 class="section-heading" id="which-one-to-chose-when">Which one to chose when?<a class="anchor" aria-label="anchor" href="#which-one-to-chose-when"></a></h2>
-<hr class="half-width"><p>With so many available models the question arises “which model you
-should use when”? One thing to consider here is whether you want to use
-an open source model or not. But another important aspect is that it
-depends on the task at hand. There are various leaderboards (for
-example: <a href="https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/,%20%5BHELM%5D(https://crfm.stanford.edu/helm/lite/latest/)" class="external-link">HuggingFace</a>
-that track which tasks specific models are good at, based on widely used
-benchmarks. Also, which language are you using? Most models are fully
-trained on English, not many models are trained on Dutch text. So if you
-are using Dutch texts, you may want to look for a model that is trained
-on or finetuned for Dutch. Additionally, some LLMs are multimodal
-models, meaning they can process various forms of input; text, images,
-timeseries, audio, videos and so on.</p>
-</section><section><h2 class="section-heading" id="building-a-chatbot">Building a chatbot<a class="anchor" aria-label="anchor" href="#building-a-chatbot"></a></h2>
-<hr class="half-width"><p>It is time to start using an LLM! We are not going to train our own
-LLM, but use Meta’s open source Llama model to set up a chatbot.</p>
-<div class="section level4">
-<h4 id="starting-ollama">Starting Ollama<a class="anchor" aria-label="anchor" href="#starting-ollama"></a></h4>
-<p>Ollama is a platform that allows users to run various LLM locally on
-your own computer. This is different from for example using chatgpt,
-where you log in and use the online api. ChatGPT collects the input you
-are providing and uses this to their own benefit. Running an LLM locally
-using Ollama thus preserves your privacy. It also allows you to
-customize a model, by setting certain parameters, or even by finetuning
-a model.</p>
-<p>To start Ollama:</p>
-<pre><code>ollama serve</code></pre>
-<p>Next, download the large language model to be used. In this case use
-the smallest open source llama model, which is llama3.1:8b. Here 3.1 is
-the version of the model and 8b stands for the number of parameters that
-the model has.</p>
-<pre><code>!ollama pull llama3.1:8b</code></pre>
-<p>In general, a bigger version of the same model (such as Llama3.1:70b)
-is better in accuracy, but since it is larger it takes more resources to
-run and can hence be too much for a laptop.</p>
-<p>Import the packages that will be used:</p>
+<div class="section level5">
+<h5 id="step-3-basic-text-generation">Step 3: Basic Text Generation<a class="anchor" aria-label="anchor" href="#step-3-basic-text-generation"></a></h5>
+<p>Let’s perform inference with the LLM to generate some text.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="im">from</span> langchain_core.messages <span class="im">import</span> HumanMessage, SystemMessage</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Set pad_token_id to eos_token_id to avoid warnings</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># if tokenizer.pad_token_id is None:</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#     tokenizer.pad_token = tokenizer.eos_token</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#     model.config.pad_token_id = tokenizer.eos_token_id</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    </span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># Build pipeline</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>llm <span class="op">=</span> pipeline(<span class="st">"text-generation"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"</span><span class="sc">{}</span><span class="st">"</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>response <span class="op">=</span> llm(prompt, max_new_tokens<span class="op">=</span><span class="dv">100</span>, do_sample<span class="op">=</span><span class="va">True</span>, top_k<span class="op">=</span><span class="dv">50</span>, temperature<span class="op">=</span><span class="fl">0.7</span>)[<span class="dv">0</span>][<span class="st">"generated_text"</span>]</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Prompt: </span><span class="sc">{</span>prompt<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Response: </span><span class="sc">{</span>response<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
 </div>
+<p><strong><em>max_new_tokens</em>:</strong> sets maximum number of
+tokens (roughly words/word pieces) that the model will generate in
+total. It’s a hard limit - generation stops when this limit is reached,
+even mid-sentence. Useful for controlling cost / time. The more tokens
+you need to generate for an answer the more time it takes. LLMs called
+through paid APIs often charge per a set number of tokens (e.g. $0.008
+per 1000 tokens).</p>
+<p><strong><em>temperature</em>:</strong> positive float value that
+controls the randomness/creativity of the model’s token selection during
+generation. The model predicts probabilities for each possible next
+token, temperature modifies these probabilities before making the final
+choice.</p>
+<p>0.0: Completely deterministic - always picks the most likely token
+1.0+: More random, and “creative”, but potentially less coherent</p>
+<p><strong><em>do_sample</em>:</strong> when do_sample=True, the model
+generates text by sampling from the probability distribution of possible
+next tokens. If do_sample=False, the model uses <a href="https://huggingface.co/docs/transformers/generation_strategies" class="external-link">greedy
+decoding</a> (always picking the most likely next token), which makes
+the output more deterministic but often repetitive.</p>
+<p><strong><em>top_k</em>:</strong> This is a sampling strategy called
+<a href="https://arxiv.org/pdf/1805.04833" class="external-link">Top-K sampling</a>. Instead
+of considering all possible next tokens, the model looks at the k most
+likely tokens (based on their probabilities) and samples only from that
+reduced set. If top_k=50, the model restricts its choices to the top 50
+most probable words at each step.</p>
 </div>
-<div class="section level3">
-<h3 id="create-a-model-instance">Create a model instance<a class="anchor" aria-label="anchor" href="#create-a-model-instance"></a></h3>
-<p>Here, <code>model</code> defines the LLM to be used, which is set to
-the model just downloaded, and <code>temperature</code> sets the
-randomness of the mode, using the value zero ensures that repeating a
-question will give the same model output (answer).</p>
-<pre><code><span><span class="va">llm</span> <span class="op">=</span> <span class="fu">ChatOllama</span><span class="op">(</span>model<span class="op">=</span><span class="st">"llama3.1:8b"</span>, temperature<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span></code></pre>
-<p>Now that the model is set up, it can be invoked - ask it a
-question.</p>
-<div class="codewrapper sourceCode" id="cb5">
+<div class="section level5">
+<h5 id="step-5--sentiment-analysis">Step 5. Sentiment analysis<a class="anchor" aria-label="anchor" href="#step-5--sentiment-analysis"></a></h5>
+<p>Let us try a sentiment analysis task to see how well different models
+(with different number of parameters perform). Consider the following
+set of lines from product reviews:</p>
+<p><strong>Product reviews:</strong></p>
+<ol style="list-style-type: decimal"><li>I love this movie! It was absolutely fantastic and made my day.
+[<strong>positive</strong>]</li>
+<li>This product is terrible. I hate everything about it.
+[<strong>negative</strong>]</li>
+<li>Nothing says quality like a phone that dies after 20 minutes.
+[<strong>negative</strong>]</li>
+<li>The movie was dark and depressing — exactly what I was hoping for.
+[<strong>positive</strong>]</li>
+<li>The food was delicious, but the service was painfully slow.
+[<strong>mixed</strong>]</li>
+</ol><p>Set the prompt for this as (substitute the above sentences for
+<a href="https://r-text.org/" class="external-link">text</a> each time):</p>
+<p><code>Classify the sentiment of the following text as either POSITIVE or NEGATIVE. Text: "{text}"</code></p>
+<p>Examine the results afterwards to see which models correctly
+classified them and which didn’t.</p>
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>question <span class="op">=</span> <span class="st">"When was the moon landing?"</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>chatresult <span class="op">=</span> llm.invoke([HumanMessage(content<span class="op">=</span>question)])</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="bu">print</span>(chatresult.content)</span></code></pre>
-</div>
-<div id="challenge1" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div class="callout-inner">
-<h3 class="callout-title">Challenge</h3>
-<div class="callout-content">
-<p>Play around with the chat bot by changing the questions. - How is the
-quality of the answers? - Is it able to answer general questions, and
-very specific questions? - Which limitations can you identify? - How
-could you get better answers?</p>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>sentiment_llm <span class="op">=</span> pipeline(<span class="st">"text-generation"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>sentiment_texts <span class="op">=</span> [</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="st">"I love this movie! It was absolutely fantastic and made my day."</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="st">"This product is terrible. I hate everything about it."</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="st">"Nothing says quality like a phone that dies after 20 minutes."</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="st">"The movie was dark and depressing — exactly what I was hoping for."</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="st">"The food was delicious, but the service was painfully slow."</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>]</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>text <span class="op">=</span> sentiment_texts[<span class="dv">0</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Classify the sentiment of the following text as either POSITIVE or NEGATIVE. Text: "</span>{text}<span class="st">""</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>response <span class="op">=</span> sentiment_llm(prompt, max_new_tokens<span class="op">=</span><span class="dv">100</span>, do_sample<span class="op">=</span><span class="va">True</span>, top_k<span class="op">=</span><span class="dv">50</span>, temperature<span class="op">=</span><span class="fl">0.7</span>)[<span class="dv">0</span>][<span class="st">"generated_text"</span>]</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Prompt: </span><span class="sc">{</span>prompt<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Response: </span><span class="sc">{</span>response<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
 </div>
 </div>
+<div class="section level5">
+<h5 id="discussion-post-exercise-questions">Discussion: Post-exercise questions<a class="anchor" aria-label="anchor" href="#discussion-post-exercise-questions"></a></h5>
+<ol style="list-style-type: decimal"><li>
+<strong>What did you notice about the models’ responses?</strong>
+<ul><li>Were they always accurate? Always coherent?</li>
+<li>How did different prompts affect the quality?</li>
+</ul></li>
+<li>
+<strong>Temperature Effects:</strong>
+<ul><li>What happened when temperature was low (e.g. 0.0 or 0.1) vs. high
+(e.g. 1.2)?</li>
+<li>Under which circumstances would you want more random / creative
+responses vs. consistent responses?</li>
+</ul></li>
+<li>
+<strong>Model Size:</strong>
+<ul><li>What were the differences across different models?</li>
+<li>What trade-offs do you think exist between model size and
+performance?</li>
+</ul></li>
+<li>
+<strong>Max Length Effects:</strong>
+<ul><li>Did you notice a difference in speed of responses when adjusting the
+max_length parameter?</li>
+</ul></li>
+</ol></div>
 </div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
-<div class="accordion-body">
-
-</div>
-</div>
-</div>
-</div>
-<div id="discussion1" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<span class="callout-header">Discussion</span>
-<div class="callout-inner">
-<h3 class="callout-title">Challenge<em> (continued)</em>
-</h3>
-<div class="callout-content">
-<p>This Llama chat bot, just like ChatGPT, is quite generic. It is good
-at answering general questions; things that a lot of people know. Going
-deeper and asking very specific questions often leads to vague or
-inaccurate results.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="section level3">
-<h3 id="use-context">Use context<a class="anchor" aria-label="anchor" href="#use-context"></a></h3>
-<p>To improve on what to expect the LLM to return, it is also possible
-to provide it with some context. For example, add:</p>
-<div class="codewrapper sourceCode" id="cb6">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>context <span class="op">=</span> <span class="st">"You are a highschool history teacher trying to explain societal impact of historic events."</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>messages <span class="op">=</span> [</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    SystemMessage(content<span class="op">=</span>context),</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    HumanMessage(content<span class="op">=</span>question),</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>]</span></code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>chatresult <span class="op">=</span> llm.invoke(messages)</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="bu">print</span>(chatresult.content)</span></code></pre>
-</div>
-<p>The benefit here is that your answer will be phrased in a way that
-fits your context, without having to specify this for every
-question.</p>
-</div>
-<div class="section level3">
-<h3 id="use-the-chat-history">Use the chat history<a class="anchor" aria-label="anchor" href="#use-the-chat-history"></a></h3>
-<p>With this chatbot the LLM can be invoked to generate output based on
-the provided input and context. However, what is not possible in this
-state, is to ask followup questions. This can be useful to refine the
-output that it generates. The next step is therefore to implement
-message persistence in the workflow.</p>
-<div class="codewrapper sourceCode" id="cb8">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="im">from</span> langgraph.checkpoint.memory <span class="im">import</span> MemorySaver</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="im">from</span> langgraph.graph <span class="im">import</span> START, MessagesState, StateGraph</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image, display</span></code></pre>
-</div>
-<p>The package LangGraph is a library that is designed to build LLM
-agents using workflows represented as graphs. The workflows you create
-consist of connected components, which allows you to build multi-step
-processes. The workflow graphs can be easily visualised which makes them
-quite insightful. LangGraph also has a build-in persistence layer,
-exactly what we want right now!</p>
-<p>First, define an empty workflow graph with the StateGraph class with
-the MessageState schema (a simple schema with messages as only key)</p>
-<div class="codewrapper sourceCode" id="cb9">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>workflow <span class="op">=</span> StateGraph(state_schema<span class="op">=</span>MessagesState)</span></code></pre>
-</div>
-<p>Then define a function to invoke the llm with a message</p>
-<div class="codewrapper sourceCode" id="cb10">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="kw">def</span> call_llm(state: MessagesState):</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(state[<span class="st">"messages"</span>])</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"messages"</span>: response}</span></code></pre>
-</div>
-<p>Then add the call_llm function as a node to the graph and connect it
-with an edge to the start point of the graph. This start node sends the
-user input to the graph, which in this case only contains the LLM
-element.</p>
-<div class="codewrapper sourceCode" id="cb11">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>workflow.add_node(<span class="st">"LLM"</span>, call_llm)</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>workflow.add_edge(START, <span class="st">"LLM"</span>)</span></code></pre>
-</div>
-<p>Initialise a memory that will preserve the messages state in a
-dictionary while going though the graph multiple times asking followup
-questions.</p>
-<div class="codewrapper sourceCode" id="cb12">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>memory <span class="op">=</span> MemorySaver()</span></code></pre>
-</div>
-<p>Then compile and visualise the graph with the memory as
-checkpoint.</p>
+<div class="section level4">
+<h4 id="exercise-2-other-nlp-tasks">Exercise 2: Other NLP tasks<a class="anchor" aria-label="anchor" href="#exercise-2-other-nlp-tasks"></a></h4>
+<p>Write and execute the following prompts in Python code within Jupyter
+notebook.</p>
+<ol style="list-style-type: decimal"><li>
+<p><strong>Question answering:</strong></p>
+<ul><li>answering general knowledge questions <br></li>
+</ul><pre><code>Human: What is the longest river in the world?
+LLM: The Nile River in Africa is traditionally considered the longest river in the world, stretching about 6,650 km (4,130 miles) through 11 countries before emptying into the Mediterranean Sea.</code></pre>
+<p><br></p>
+<ul><li>expert advice in a particular domain or scientific field <br></li>
+</ul><pre><code>Human: What are good strategies for film-making on a budget in Night conditions?
+LLM: Night filmmaking can be both creatively rewarding and technically challenging, especially on a budget. Here are some strategies that indie filmmakers often use to maximize image quality and mood without expensive gear:...</code></pre>
+<p><br></p>
+</li>
+<li>
+<p><strong>Text generation:</strong></p>
+<ul><li>Writing essays, business plans and other documents <br></li>
+</ul><pre><code>Human: Write a template cover letter for a mid-level software engineering position at a large AI startup.
+LLM: Dear [Hiring Manager’s Name], I am excited to apply for the Software Engineer position at [Company Name]...</code></pre>
+<p><br></p>
+<ul><li>Creative writing (slogans, poems, fiction, jokes) <br></li>
+</ul><pre><code>Human: Write a two sentence comedy sketch.
+LLM: [Scene: A man sits in a job interview.] Interviewer: "Your resume says you’re fluent in Python?" Candidate: pulls out a snake from his briefcase "She does most of the talking."</code></pre>
+<p><br></p>
+</li>
+<li>
+<p><strong>Text summarisation</strong> <br></p>
+<pre><code>Human: Shorten: "Amsterdam, the capital of the Netherlands, is a city celebrated for its rich history, cultural diversity, and iconic canals. Known as the “Venice of the North,” it is home to a vast network of waterways lined with elegant 17th-century houses, giving the city its distinct charm. Amsterdam seamlessly blends old-world character with modern vibrancy, attracting millions of visitors each year."
+LLM: Amsterdam, the capital of the Netherlands, is known for its history, canals, and 17th-century houses, combining old charm with modern vibrancy that attracts millions each year.</code></pre>
+<p><br></p>
+</li>
+<li>
+<p><strong>Sentiment or text classification</strong> <br></p>
+<pre><code>Sentiment analysis
+Human: Is this a positive, neutral or negative statement about the movie: "Incredible and not in a good way."
+LLM: That’s a negative statement about the movie. The phrase “Incredible” usually suggests something impressive, but the qualifier “not in a good way” makes it clear the speaker means the film was bad or shockingly poor.</code></pre>
+<p><br></p>
+<pre><code>Text classification
+Human: Categorise this statement into either sports, business, or science: "Lionel Messi scored twice to lead Argentina to victory in the World Cup qualifier."
+LLM: This statement falls under Sports. It talks about a soccer player and a match result, which clearly relates to athletic competition.</code></pre>
+<p><br></p>
+</li>
+<li><p><strong>Language translation</strong> <br><code>Human: Translate "I have recently naturalised as a Dutch citizen" into Dutch.     LLM: Ik ben onlangs genaturaliseerd als Nederlands staatsburger.</code>
+<br></p></li>
+<li>
+<p><strong>Generating software code</strong> <br></p>
+<pre><code>Human: Write a short Python function to demonstrate bubble sort
+LLM: ...</code></pre>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>graph <span class="op">=</span> workflow.<span class="bu">compile</span>(checkpointer<span class="op">=</span>memory)</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>display(Image(graph.get_graph().draw_mermaid_png()))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="kw">def</span> bubble_sort(arr):</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(arr)</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>        <span class="co"># Last i elements are already in place</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n <span class="op">-</span> i <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>            <span class="cf">if</span> arr[j] <span class="op">&gt;</span> arr[j <span class="op">+</span> <span class="dv">1</span>]:</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>                <span class="co"># Swap if the element is greater than the next</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>                arr[j], arr[j <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> arr[j <span class="op">+</span> <span class="dv">1</span>], arr[j]</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>    <span class="cf">return</span> arr</span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">64</span>, <span class="dv">34</span>, <span class="dv">25</span>, <span class="dv">12</span>, <span class="dv">22</span>, <span class="dv">11</span>, <span class="dv">90</span>]</span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>sorted_numbers <span class="op">=</span> bubble_sort(numbers)</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="bu">print</span>(sorted_numbers)</span></code></pre>
 </div>
-<p><img src="./fig/workflow_llm.png" alt="workflow" class="figure"> Define a memory
-id for the current conservation.</p>
-<div class="codewrapper sourceCode" id="cb14">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>config <span class="op">=</span> {<span class="st">"configurable"</span>: {<span class="st">"thread_id"</span>: <span class="st">"moonconversation"</span>}}</span></code></pre>
-</div>
-<p>Then call the workflow with memory we created with the original
-question</p>
-<div class="codewrapper sourceCode" id="cb15">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>question <span class="op">=</span> <span class="st">'Who landed on the Moon?'</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>messages <span class="op">=</span> [HumanMessage(question)]</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>output <span class="op">=</span> graph.invoke({<span class="st">"messages"</span>: messages}, config)</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>output[<span class="st">"messages"</span>][<span class="op">-</span><span class="dv">1</span>].pretty_print()</span></code></pre>
-</div>
-<p>The question and answer are now saved in the graph state with this
-config, and followup questions and answers with the same config will be
-added to it.</p>
-<p>Everything that is saved can be found in the config state</p>
-<div class="codewrapper sourceCode" id="cb16">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>graph.get_state(config)</span></code></pre>
-</div>
-<p>The workflow can now be used to ask followup questions without having
-to repeat the original question, and based on the previous generated
-answer.</p>
-<div class="codewrapper sourceCode" id="cb17">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Followup</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>followup <span class="op">=</span> <span class="st">"Shorten the answer to 20 words"</span></span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>input_messages <span class="op">=</span> [HumanMessage(followup)]</span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>output <span class="op">=</span> graph.invoke({<span class="st">"messages"</span>: input_messages}, config)</span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co"># print the last output</span></span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>output[<span class="st">"messages"</span>][<span class="op">-</span><span class="dv">1</span>].pretty_print()</span></code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb18">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># Followup instruction</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>followup2 <span class="op">=</span> <span class="st">"Translate the answer to Dutch"</span></span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>input_messages <span class="op">=</span> [HumanMessage(followup2)]</span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>output <span class="op">=</span> graph.invoke({<span class="st">"messages"</span>: input_messages}, config)</span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co"># print the last output</span></span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>output[<span class="st">"messages"</span>][<span class="op">-</span><span class="dv">1</span>].pretty_print()</span></code></pre>
-</div>
-</div>
-</section><section><h2 class="section-heading" id="retrieval-augmented-generation---build-a-rag">Retrieval Augmented Generation - Build a RAG<a class="anchor" aria-label="anchor" href="#retrieval-augmented-generation---build-a-rag"></a></h2>
-<hr class="half-width"><p>A chatbot tends to give quite generic answers. A more specific
-chatbot can be made by building a Retrieval Augmented Generation agent.
-This is an information that you yourself provide with a knowledge base:
-a large number of documents. When prompted with a questions, the agent
-first retrieves relevant sections of the data that is in the knowledge
-base, and then generates and answer based on that data. In this way you
-can build an agent with very specific knowledge.</p>
-<p>The simplest form of a rag consists of two parts, a retriever and a
-generator. The retriever part will collect data from the provided data,
-so first a knowledge base has to be created for the retriever.</p>
-<p>To generate text in the RAG the trained Llama model will be used,
-which works well for English text. Because this model was not trained on
-Dutch text, the RAG will work better for an English knowledge base.</p>
-<p>Three newspaper pages will be used for the example RAG, these are
-pages from a Curacao newspaper. This is a Dutch newspaper with an
-additional page in English. The text versions of the newspapers can be
-downloaded to only get these specific English pages. Save them in a
-folder called “rag_data” for further processing: - <a href="https://www.delpher.nl/nl/kranten/view?query=the+moon&amp;coll=ddd&amp;identifier=ddd:010460545:mpeg21:p012&amp;resultsidentifier=ddd:010460545:mpeg21:a0134&amp;rowid=4" class="external-link">page1</a>
-- <a href="https://www.delpher.nl/nl/kranten/view?query=moon+landing&amp;coll=ddd&amp;page=1&amp;facets%5Bspatial%5D%5B%5D=Nederlandse+Antillen&amp;identifier=ddd:010460616:mpeg21:a0146&amp;resultsidentifier=ddd:010460616:mpeg21:a0146&amp;rowid=1" class="external-link">page2</a>
-- <a href="https://www.delpher.nl/nl/kranten/view?query=moon+landing&amp;coll=ddd&amp;page=1&amp;facets%5Bspatial%5D%5B%5D=Nederlandse+Antillen&amp;identifier=ddd:010460520:mpeg21:a0167&amp;resultsidentifier=ddd:010460520:mpeg21:a0167&amp;rowid=7" class="external-link">page3</a></p>
+</li>
+</ol></div>
 <div class="section level4">
-<h4 id="the-knowledge-base---a-vector-store">The knowledge base - a vector store<a class="anchor" aria-label="anchor" href="#the-knowledge-base---a-vector-store"></a></h4>
-<p>Language models all work with vectors - embedded text. Instead of
-saving text, a the data has to be stored in embedded versions in a
-vector store, where the retriever can shop around for the relevant
-text.</p>
-<p>There a number of packages to be used in this section to build the
-RAG.</p>
-<div class="codewrapper sourceCode" id="cb19">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image, display</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="im">from</span> typing_extensions <span class="im">import</span> List, TypedDict</span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama, OllamaEmbeddings</span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="im">from</span> langchain_core.messages <span class="im">import</span> HumanMessage</span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="im">from</span> langchain_core.documents <span class="im">import</span> Document</span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="im">from</span> langchain_core.vectorstores <span class="im">import</span> InMemoryVectorStore</span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="im">from</span> langchain_text_splitters <span class="im">import</span> RecursiveCharacterTextSplitter</span>
-<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="im">from</span> langgraph.graph <span class="im">import</span> START, StateGraph</span>
-<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="im">from</span> langchain_nomic.embeddings <span class="im">import</span> NomicEmbeddings</span></code></pre>
+<h4 id="key-takeaways">Key Takeaways<a class="anchor" aria-label="anchor" href="#key-takeaways"></a></h4>
+<ul><li>
+<strong>LLMs are generative models</strong> - they predict the next
+most likely tokens</li>
+<li>
+<strong>Prompts matter</strong> - the way you ask affects what you
+get</li>
+<li>
+<strong>Parameters control behavior</strong> - temperature,
+max_length, etc. tune the output</li>
+<li>
+<strong>Models have limitations</strong> - they can be wrong,
+inconsistent, or biased</li>
+<li>
+<strong>Size vs Speed trade-off</strong> - smaller models are faster
+but less capable</li>
+</ul><hr></div>
 </div>
-<p>Define the large language model to be used to generate an answer
-based on provided context:</p>
-<div class="codewrapper sourceCode" id="cb20">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>llm <span class="op">=</span> ChatOllama(model<span class="op">=</span><span class="st">"llama3.1:8b"</span>, temperature<span class="op">=</span><span class="dv">0</span>)</span></code></pre>
+<div class="section level3">
+<h3 id="llm-selection-criteria">1.3 LLM selection criteria<a class="anchor" aria-label="anchor" href="#llm-selection-criteria"></a></h3>
+<p>Choosing the right LLM for your specific use case requires
+consideration of multiple factors. This section will guide you through
+some decision points that will help you select an appropriate model for
+your needs.</p>
+<div class="section level4">
+<h4 id="openness-and-licensing-considerations">1.3.1 Openness and Licensing Considerations<a class="anchor" aria-label="anchor" href="#openness-and-licensing-considerations"></a></h4>
+<p>The spectrum of model availability ranges from fully open to
+completely proprietary:</p>
+<p><strong>Open-weights</strong> release the trained model parameters
+while keeping training code or data proprietary. This allows you to run
+and fine-tune the model locally but if you don’t have the code used to
+train the model or information about the architecture used, it limits
+your ability to fully understand or replicate the training process.</p>
+<p><strong>Open training data</strong> they release the text data used
+for pretraining.</p>
+<p><strong>Open architecture</strong> they publish a paper about the
+neural network architecture and specific configuration they used for
+training. Or they release the actual source code they used for
+pretraining.</p>
+<p>Ideally, if you want to use a model for empirical academic research
+you might decide for models that are completely open in all three of the
+above facets. Although, open training data is quite rare for available
+state-of-the-art models.</p>
+<p><strong>Commercial/proprietary models</strong> like GPT-4, Claude, or
+Gemini are accessed only through APIs. While often offering superior
+performance, they provide no access to internal architecture and may
+have usage restrictions or costs that scale with volume.</p>
+<p>Consider your requirements for: - Code modification and customization
+- Data privacy and control - Commercial usage rights - Research
+reproducibility - Long-term availability guarantees</p>
+<p>If you wish to build an application that makes use of LLM text
+generation, and you need accurate results, commercial APIs may be more
+suitable.</p>
 </div>
-<p>Define the embeddings model, this is the model to convert our
-knowledge base texts into vector embeddings and will be used for the
-retrieval part of the RAG:</p>
-<div class="codewrapper sourceCode" id="cb21">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>embeddings<span class="op">=</span>NomicEmbeddings(model<span class="op">=</span><span class="st">"nomic-embed-text-v1.5"</span>, inference_mode<span class="op">=</span><span class="st">"local"</span>)</span></code></pre>
+<div class="section level4">
+<h4 id="hardware-and-compute-requirements">1.3.2 Hardware and Compute Requirements<a class="anchor" aria-label="anchor" href="#hardware-and-compute-requirements"></a></h4>
+<p>Your available computational resources significantly constrain your
+model options:</p>
+<p><strong>Modern GPU access</strong> (RTX 4090, A100, H100, etc.)
+enables you to run larger models locally. Consider: - VRAM requirements:
+7B parameter models typically need 14+ GB, 13B models need 26+ GB, 70B
+models require 140+ GB or multi-GPU setups - Inference speed
+requirements for your application - Whether you need real-time responses
+or can accept slower processing</p>
+<p><strong>CPU-only environments</strong> limit you to smaller models
+(such as SmolLM2 and SmolLM3) or <a href="https://ojs.aaai.org/index.php/AAAI/article/view/29908" class="external-link">quantized</a>
+versions.</p>
+<p><strong>Cloud/API access</strong> removes hardware constraints but
+introduces ongoing costs and potential latency issues.</p>
 </div>
+<div class="section level4">
+<h4 id="performance-evaluation">1.3.3 Performance Evaluation<a class="anchor" aria-label="anchor" href="#performance-evaluation"></a></h4>
+<p>Different models excel at different tasks. Some evaluation criteria
+include:</p>
+<p><strong>General capability benchmarks</strong> like those found on
+the <a href="https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard" class="external-link">Open
+LLM Leaderboard</a> provide standardized comparisons across models for
+reasoning, knowledge, and language understanding tasks.</p>
+<p><strong>Multilingual performance</strong> varies significantly
+between models. The <a href="https://mmluprox.github.io/" class="external-link">MMLU-Pro
+benchmark</a> offers insights into cross-lingual capabilities if you
+need support for non-English languages.</p>
+<p><strong>Task-specific performance</strong> should be evaluated based
+on your particular needs: - Code generation - Mathematical reasoning -
+Reading comprehension and summarization - Creative writing and dialogue
+quality - Scientific and technical domain knowledge</p>
+<p>Always validate benchmark performance with your own test cases, as
+real-world performance may differ from standardized evaluations.</p>
+</div>
+<div class="section level4">
+<h4 id="purpose-or-use-case">1.3.4 Purpose or Use Case<a class="anchor" aria-label="anchor" href="#purpose-or-use-case"></a></h4>
+<p><strong>Scientific and research applications</strong> often
+prioritize reproducibility, transparency, and the ability to modify
+model behavior. Open-source models with detailed documentation are
+typically preferred (e.g. SmolLM, LLama, Olmo)</p>
+<p><strong>Applications (mobile or web apps)</strong> may require: -
+Reliable API uptime and support - Clear licensing for commercial use -
+Scalability to handle many concurrent users - Content filtering and
+safety features</p>
+<p><strong>Personal or educational use</strong> might emphasize: -
+Cost-effectiveness - Ease of setup and use</p>
+</div>
+<div class="section level4">
+<h4 id="integration-and-deployment-considerations">1.3.5 Integration and Deployment Considerations<a class="anchor" aria-label="anchor" href="#integration-and-deployment-considerations"></a></h4>
+<p><strong>Software integration</strong> requirements affect model
+choice: - API-based models offer simpler integration but require
+internet connectivity - Local models provide more control but require
+more complex deployment - Consider latency requirements, offline
+capabilities, and data privacy needs</p>
+<p><strong>Hosting and serving capabilities</strong> determine whether
+you can run models locally: - Do you have the infrastructure to serve
+models at scale? - Are you self-hosting the model?</p>
+</div>
+<div class="section level4">
+<h4 id="domain-specific-models">1.3.6 Domain-Specific Models<a class="anchor" aria-label="anchor" href="#domain-specific-models"></a></h4>
+<p>Many models have been fine-tuned for specific domains or tasks. For
+example:</p>
+<ul><li>Medical and healthcare applications (e.g., <a href="https://huggingface.co/microsoft/biogpt" class="external-link">BioGPT</a>)</li>
+<li>Legal document processing (e.g., <a href="https://huggingface.co/Equall/Saul-7B-Instruct-v1" class="external-link">SaulLM</a>)</li>
+</ul><p>Remember that the LLM landscape evolves rapidly. New models are
+released frequently, and performance benchmarks should be regularly
+reassessed. Consider building your system with model-agnostic interfaces
+to facilitate future transitions between different LLMs as your needs
+evolve or better options become available.</p>
+<hr></div>
+</div>
+<div class="section level3">
+<h3 id="transformers-and-llms">1.4 Transformers and LLMs<a class="anchor" aria-label="anchor" href="#transformers-and-llms"></a></h3>
+<p>LLMs are also trained using the transformer neural network
+architecture, making use of the self-attention mechanism discussion in
+Lesson 02. This means that an LLM is also a transformer-based language
+model. However, they are distinct from <em>general</em>
+transformer-based language models in three main characteristics:</p>
+<ol style="list-style-type: decimal"><li><p><strong>Scale:</strong> there are two dimensions in which current
+LLMs exceed general transformer language models in terms of scale. The
+most important one is the number of <em>training parameters</em>
+(weights) that are used for training models. In current models there are
+hundreds of billions of parameters up to trillions. The second factor is
+the <em>amount of training data</em> (raw text sequences) used for
+training. Current LLMs use snapshots of the internet (upwards of
+hundreds of terabytes in size) as a base for training and possibly
+augment this with additional manually curated data. The sheer scale
+characteristic of LLMs mean that such models require extremely
+resource-intensive computation to train. State-of-the-art LLMs require
+multiple dedicated Graphical Processing Units (GPUs) with tens or
+hundreds of gigabytes of memory to load and train in reasonable time.
+GPUs offer high parallelisability in their architecture for data
+processing which makes them more efficient for training these
+models.</p></li>
+<li><p><strong>Post-training:</strong> After training a base language
+model on textual data, there is an additional step of fine-tuning for
+enabling conversation in a prompt style of interaction with users, which
+current LLMs are known for. After the pre-training and neural network
+training stages we end up with what is called a <em>base</em> model. The
+base model is a language model which is essentially a token sequence
+generator. This model by itself is not suitable for the interaction
+style we see with current LLMs, which can do things like answer
+questions, interpret instructions from the user, and incorporate
+feedback to improve responses in conversations.</p></li>
+<li><p><strong>Generalization:</strong> LLMs can be applied across a
+wide range of NLP tasks such as summarization, translation, question
+answering, etc., without necessarily the need for fine-tuning or
+training separate models for different NLP tasks.</p></li>
+</ol><figure><img src="fig/llm_analogy3.png" alt="llm engine analogy" width="1000" class="figure mx-auto d-block"></figure><p>What about the relation between BERT, which we learned about in
+Lesson 02, and LLMs? Apart from the differences described above, BERT
+only makes use of the encoder layer of the transformers architecture
+because the goal is on creating token representations preserving
+contextual meaning. There is no generative component to do something
+with those representations. <br></p>
+<figure><img src="fig/llms_vs_bert2.png" alt="llms vs bert" width="800" class="figure mx-auto d-block"></figure><hr></div>
+<div class="section level3">
+<h3 id="how-are-llms-trained">2. How are LLMs trained?<a class="anchor" aria-label="anchor" href="#how-are-llms-trained"></a></h3>
+<p>Training LLMs involves a series of steps. There are two main phases:
+pretraining and post training. Pretraining generally involves the
+following substeps:</p>
+<div class="section level4">
+<h4 id="obtaining-and-pre-processing-textual-data-for-training">2.1 Obtaining and pre-processing textual data for training<a class="anchor" aria-label="anchor" href="#obtaining-and-pre-processing-textual-data-for-training"></a></h4>
+<ul><li>
+<em>Downloading and pre-processing text:</em> State-of-the-art LLMs
+include entire snapshots of the internet as the core textual data for
+training. This data can be sourced from efforts such as <a href="https://commoncrawl.org/" class="external-link">CommonCrawl</a>. Proprietary LLMs may
+augment or supplement this training data with additional licensed or
+proprietary textual data (e.g., books) from other sources or companies.
+The raw web pages are not usable by themselves, we need to extract the
+raw text from those HTML pages. This requires a preprocessing or data
+cleaning step.</li>
+</ul><figure><img src="fig/html_to_text.png" alt="html to text processing" width="800" class="figure mx-auto d-block"></figure><ul><li>
+<em>Tokenization:</em> As we saw in Lesson 01, the raw text itself
+cannot be used in the training step, we need a way to tokenize and
+encode the text for processing by the neural network. As an example of
+what these encodings look like for OpenAI models like GPT, you can visit
+<a href="https://tiktokenizer.f2api.com/" class="external-link">TikTokenizer</a>.</li>
+</ul><figure><img src="fig/text_to_tokenids.png" alt="tokenization" width="800" class="figure mx-auto d-block"></figure></div>
+<div class="section level4">
+<h4 id="neural-network-training">2.2 Neural network training<a class="anchor" aria-label="anchor" href="#neural-network-training"></a></h4>
+<p>With LLMs the training goal is to predict the next token in a
+one-dimensional sequence of tokens. This is different from BERT where
+the goal is to predict masked tokens in the input sequence. BERT is
+therefore not natively developed for generating text, whereas LLMs are.
+In the internals of the transformer architecture, this is illustrated by
+the fact that BERT only makes use of the Encoder component to create its
+contextualised word embeddings. It does not use the Decoder component to
+generate new tokens for the input sequence.</p>
+<figure><img src="fig/llm_training_goal.png" alt="training goal llms" width="800" class="figure mx-auto d-block"></figure><p>After training we obtain a <em>base</em> LLM which is predicts or
+generates token sequences that resemble its training data. However, a
+post training step is required in order to fine-tune the model to accept
+instructions, answer questions in a conversational style and to have
+behavior that is more suitable for interaction with humans.</p>
+</div>
+<div class="section level4">
+<h4 id="post-training">2.3 Post training<a class="anchor" aria-label="anchor" href="#post-training"></a></h4>
+<p>What does post training for LLMs look like? Why is this step
+necessary? What would happen if you skip this step and just use the base
+model trained in Step 2.2 for inference? The answer is that the base
+model is just a token sequence predictor. It just predicts the most
+likely next token for an input sequence of tokens. It does not
+understand how to deal with conversations or to interpret instructions
+(the intentions and tone behind written communication).</p>
+<p>Therefore, you may encounter unexpected conversations like this if
+interacting with a base LLM:</p>
+<p><strong>Not Following Instructions</strong></p>
+<pre><code>Human: Summarize this paragraph in one sentence: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.
+Raw LLM: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.</code></pre>
+<p>In this example interaction, the model was trained to predict text,
+not to follow instructions. So it might not give expected or correct
+responses although, statistically, these response tokens are indeed the
+next most likely tokens.</p>
+<p><strong>Regurgitation</strong></p>
+<pre><code>Human: Donald John Trump (born June 14, 1946) is an American politician,
+Raw LLM: media personality, and businessman who is the 47th president of the United States. A member of the Republican Party, he served as the 45th president from 2017 to 2021...</code></pre>
+<figure><img src="fig/trump.png" alt="tokenization" width="800" class="figure mx-auto d-block"></figure><p>In this interaction, the model just “regurgitates” verbatim a
+response from Wikipedia (part of it’s training data), instead of
+creatively formulating a response in its own words. These are just a few
+examples of the kind of undesirable behavior one might encounter when
+doing inference with the base model without post training.</p>
+<p>Therefore, to avoid issues like this, and to be useful as
+conversational assistants, LLMs generally have to be fine-tuned on
+additional unseen conversation datasets (containing on the order of
+hundreds of thousands of conversations). These datasets are manually
+created and validated by humans. For proprietary models, these humans
+are hired professionally to contribute to this dataset from platforms
+such as Upwork and ScaleAI. There are also open-source efforts to create
+such datasets such as <a href="https://huggingface.co/datasets/OpenAssistant/oasst2" class="external-link">OpenAssistant</a>.</p>
+<p>Once such a dataset is obtained, the conversations need to be
+represented as a one-dimensional token sequence. Conversations therefore
+have to be encoded into such representations before being used as input
+for training. The encoding method for conversations currently differ
+among LLMs. The figure below shows how GPT-4 tokenizes and encodes input
+conversations as one dimensional token sequences (<a href="https://tiktokenizer.f2api.com/" class="external-link">TikTokenizer</a> is a page for
+visualizing and experimenting with tokenization approaches used by
+OpenAI LLMs).</p>
+<figure><img src="fig/tokenize_conversations.png" alt="tokenization for conversation data" width="800" class="figure mx-auto d-block"></figure><p>After encoding or tokenization, the conversational data is supplied
+as input for fine-tuning the base model (replacing the original training
+data). I.e., the base model’s weights or parameters are updated through
+this process.</p>
+<p>Below are some examples of conversational data that one might use to
+fine-tune an LLM. In general, you want multi-turn conversations where
+each participant in the conversation gets the opportunity to respond
+multiple times. Because this is the likely mode of interaction that will
+take place between humans and LLM-based chat assistants:</p>
+<pre><code>**Conversation 1 (Travel Planning):**
+Human: Can you suggest a weekend getaway near Amsterdam?
+LLM: Sure! Giethoorn – Known as the “Venice of the North,” this village has canals, thatched-roof houses, and a peaceful atmosphere. Utrecht, a charming city with medieval streets, beautiful canals, and cozy cafés.
+Human: Which one would be better for a quiet, relaxing trip?
+LLM: Giethoorn would be the quieter option. Unlike Utrecht, which is a bustling city, Giethoorn is a small village with a calm, serene atmosphere, ideal for a peaceful getaway.
 
-<p>In the text files, the articles are split by ‘—’. This information
-can be used to store the individual articles into a list. Store the
-filename of the articles in a list as well, so that one can find easily
-in from which file a text snippet was taken.</p>
-<div class="codewrapper sourceCode" id="cb22">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="bu">dir</span> <span class="op">=</span> <span class="st">"./rag_data"</span></span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>articles <span class="op">=</span> []</span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>metadata <span class="op">=</span> []</span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co"># Iterate over files and add individual articles and corresponding filenames to lists</span></span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> os.listdir(<span class="bu">dir</span>):</span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>    file_path <span class="op">=</span> os.path.join(<span class="bu">dir</span>, <span class="bu">file</span>)</span>
-<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>        content <span class="op">=</span> f.read().split(<span class="st">'---'</span>)</span>
-<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>        articles.extend(content)</span>
-<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>        metadata.extend([file_path] <span class="op">*</span> <span class="bu">len</span>(content))</span></code></pre>
+**Conversation 2 (Math Help):**
+Human: What's the derivative of 3𝑥^2 + 5𝑥 − 7?
+LLM: The derivative is 6𝑥 + 5.
+Human: Great, and what about the second derivative?
+LLM: The second derivative is 6.
+
+**Conversation 3 (Creative Writing):**
+Human: Give me a one-line horror story.
+LLM: The reflection in the mirror smiled back before I did.
+Human: Can you make it even creepier?
+LLM: The reflection winked, though I was alone in the room.</code></pre>
+<hr></div>
 </div>
-<p>The generator will in the end provide an answer based on the text
-snippet that is retrieved from the knowledge base. If the fragment is
-very long, it may contain a lot of irrelevant information, which will
-blur the generated answer. Therefor it is better to split the data into
-smaller parts, so that the retriever can collect very specific pieces of
-text to generate an answer from. It is useful to keep some overlap
-between the splits, so that information does not get lost because of for
-example splits in the middle of a sentence.</p>
-<div class="codewrapper sourceCode" id="cb23">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>text_splitter <span class="op">=</span> RecursiveCharacterTextSplitter(</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>    chunk_size<span class="op">=</span><span class="dv">500</span>, chunk_overlap<span class="op">=</span><span class="dv">50</span></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>)</span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>documents <span class="op">=</span> text_splitter.create_documents(articles, metadatas<span class="op">=</span>[{<span class="st">'filename'</span>: <span class="bu">file</span>} <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files])</span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="bu">print</span>(documents)</span></code></pre>
-</div>
-<p>This text splitter splits text based on the defined character chunk
-size, but also takes into account spaces and newlines to slit in “smart”
-chunks, so the chunks will not be exactly of length 500.</p>
-<p>Finally, convert each text split into a vector, and save all vectors
-in a vector store. The text is converted into embeddings using the
-earlier defined embeddings model.</p>
-<div class="codewrapper sourceCode" id="cb24">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>vectorstore <span class="op">=</span> InMemoryVectorStore.from_texts(</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>    [doc.page_content <span class="cf">for</span> doc <span class="kw">in</span> documents],</span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>    embedding<span class="op">=</span>embeddings,</span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>)</span></code></pre>
-</div>
-<p>The contents of the vectorstore can be printed as</p>
-<div class="codewrapper sourceCode" id="cb25">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="bu">print</span>(vectorstore.store)</span></code></pre>
-</div>
-<p>It shows that for each text fragment that was given, a vector is
-created and it is saved in the vectorstore together with the original
-text.</p>
-</div>
-<div class="section level4">
-<h4 id="setting-up-the-retriever-and-generator">Setting up the retriever and generator<a class="anchor" aria-label="anchor" href="#setting-up-the-retriever-and-generator"></a></h4>
-<p>Define the structure of a dictionary with the keys
-<code>question</code>, <code>context</code>, and
-<code>answer</code>.</p>
-<div class="codewrapper sourceCode" id="cb26">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="kw">class</span> State(TypedDict):</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>    question: <span class="bu">str</span></span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>    context: List[Document]</span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>    answer: <span class="bu">str</span></span></code></pre>
-</div>
-<p>Define the retriever function of the RAG. It takes in the question
-and does a similarity search in the created vectorstore and returns the
-text snippets that were found to be similar. The similarity search
-converts the question into an embeddings vector and uses the cosine
-similarity to determine the similarity between the question and
-snippets. It then returns the top 4 snippets with the highest cosine
-similarity score. The snippets are returned in the original text form,
-i.e. the retrieved vectors are transformed back into text.</p>
-<div class="codewrapper sourceCode" id="cb27">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="kw">def</span> retrieve(state: State):</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>    <span class="co">"Retrieve documents that are similar to the question."</span></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>    retrieved_docs <span class="op">=</span> vectorstore.similarity_search(state[<span class="st">"question"</span>], k<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"context"</span>: retrieved_docs}</span></code></pre>
-</div>
-<p>Define the generator function of the RAG. In this function a prompt
-is defined for the RAG using the context and question. The large
-language model (the Llama model, defined above) is then invoked with
-this question and generates an answer for the provided prompt, which is
-returned as the answer key of the dictionary.</p>
-<div class="codewrapper sourceCode" id="cb28">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="kw">def</span> generate(state: State):</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>    docs_content <span class="op">=</span> <span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>.join(doc.page_content <span class="cf">for</span> doc <span class="kw">in</span> state[<span class="st">"context"</span>])</span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>    </span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>    rag_prompt <span class="op">=</span> <span class="st">"""You are an assistant for question-answering tasks.</span></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="st">    Here is the context to use to answer the question:</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="st">    </span><span class="sc">{context}</span></span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="st">    Think carefully about the above context.</span></span>
-<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a><span class="st">    Now, review the user question:</span></span>
-<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a><span class="st">    </span><span class="sc">{question}</span></span>
-<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a><span class="st">    Provide an answer to this questions using only the above context.</span></span>
-<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a><span class="st">    Use 10 sentences maximum and keep the answer concise.</span></span>
-<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a><span class="st">    Answer:"""</span></span>
-<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a></span>
-<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a>    rag_prompt_formatted <span class="op">=</span> rag_prompt.<span class="bu">format</span>(context<span class="op">=</span>docs_content, question<span class="op">=</span>State[<span class="st">"question"</span>])</span>
-<span id="cb28-15"><a href="#cb28-15" tabindex="-1"></a>    </span>
-<span id="cb28-16"><a href="#cb28-16" tabindex="-1"></a>    generate <span class="op">=</span> llm.invoke([HumanMessage(content<span class="op">=</span>rag_prompt_formatted)])</span>
-<span id="cb28-17"><a href="#cb28-17" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"answer"</span>: generate.content}</span></code></pre>
-</div>
-</div>
-<div class="section level4">
-<h4 id="build-the-workflow">Build the workflow<a class="anchor" aria-label="anchor" href="#build-the-workflow"></a></h4>
-<p>The retriever and generator are combined into a workflow graph. The
-workflow is defined as a StateGraph that uses the dictionary structure
-(with the keys <code>question</code>, <code>context</code>, and
-<code>answer</code>) defined above. The retriever and generator are
-added as nodes, and the two are connected via the edge. The retrieve is
-set as the start point of the workflow, and finally the graph is
-compiled into an executable.</p>
-<pre><code><span><span class="va">workflow</span> <span class="op">=</span> <span class="fu">StateGraph</span><span class="op">(</span><span class="va">State</span><span class="op">)</span></span>
-<span><span class="fu">workflow.add_node</span><span class="op">(</span><span class="st">"retrieve"</span>, <span class="va">retrieve</span><span class="op">)</span></span>
-<span><span class="fu">workflow.add_node</span><span class="op">(</span><span class="st">"generate"</span>, <span class="va">generate</span><span class="op">)</span></span>
-<span><span class="fu">workflow.add_edge</span><span class="op">(</span><span class="st">"retrieve"</span>, <span class="st">"generate"</span><span class="op">)</span></span>
-<span><span class="fu">workflow.set_entry_point</span><span class="op">(</span><span class="st">"retrieve"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">graph</span> <span class="op">=</span> <span class="fu">workflow.compile</span><span class="op">(</span><span class="op">)</span></span></code></pre>
-<div class="codewrapper sourceCode" id="cb30">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>display(Image(graph.get_graph().draw_mermaid_png()))https:<span class="op">//</span>scikit<span class="op">-</span>learn.org<span class="op">/</span><span class="fl">1.5</span><span class="op">/</span>modules<span class="op">/</span>grid_search.html</span></code></pre>
-</div>
-<figure><img src="./fig/workflow_rag.png" alt="workflow" class="figure mx-auto d-block"><div class="figcaption">workflow</div>
-</figure><p>That’s it! The RAG can now be asked questions. Let’s see what it can
-tell about the moon landing:</p>
-<div class="codewrapper sourceCode" id="cb31">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>response <span class="op">=</span> graph.invoke({<span class="st">"question"</span>: <span class="st">"Who landed on the Moon?"</span>})</span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="bu">print</span>(response[<span class="st">"answer"</span>])</span></code></pre>
-</div>
-<p>This is quite a specific answer. It can be seen why by looking at the
-text snippets that were used:</p>
-<pre><code><span><span class="fu">print</span><span class="op">(</span><span class="va">response</span><span class="op">[</span><span class="st">"context"</span><span class="op">]</span><span class="op">)</span></span></code></pre>
-<p>While a general chatbot uses all the information in the material that
-it was trained on, the RAG only uses the information that was stored in
-the vectorstore to generate the answer.</p>
-<div id="challenge2" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div class="callout-inner">
-<h3 class="callout-title">Challenge</h3>
-<div class="callout-content">
-<p>Try generating more answers with the RAG based on other questions,
-perhaps also looking at the newspaper texts that are used. What stands
-out?</p>
-</div>
-</div>
-</div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
-</button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
-<div class="accordion-body">
-<p>For example: - The RAG returns in some cases that no answer can be
-generated on the context it was provided with - For some questions, the
-LLM returns that it cannot provide an answer because of safety
-precautions that are inherent to the LLM used, such as information about
-violent acts.</p>
-</div>
-</div>
-</div>
-</div>
-<p>This is the simplest form of a RAG, with a retriever and a generator.
-However, one can make the RAG more complex by adding more components and
-options to the workflow, for example one to check the relevance of the
-retrieved documents, removing those that turn out to be irrelevant to be
-used for the answer generation, or having a component that can
-reformulate the question. Another example is to add a hallucination
-checker step after the generator that checks if the generated answer can
-actually be found in the provided context.</p>
+<div class="section level3">
+<h3 id="llm-prompting-strategies">3. LLM Prompting strategies<a class="anchor" aria-label="anchor" href="#llm-prompting-strategies"></a></h3>
+<p>See <a href="">notebooks/prompting.ipynb</a>…</p>
+<hr></div>
+<div class="section level3">
+<h3 id="solving-nlp-tasks-with-llms">4. Solving NLP tasks with LLMs<a class="anchor" aria-label="anchor" href="#solving-nlp-tasks-with-llms"></a></h3>
+<p>See <a href="">notebooks/classifandeval.ipynb</a>…</p>
+<hr></div>
+<div class="section level3">
+<h3 id="creating-your-own-chat-assistant">5. Creating your own chat assistant<a class="anchor" aria-label="anchor" href="#creating-your-own-chat-assistant"></a></h3>
+<p>See <a href="">notebooks/chatbot.ipynb</a>…</p>
+<hr></div>
+<div class="section level3">
+<h3 id="drawbacks-and-biases-with-llms">6. Drawbacks and Biases with LLMs<a class="anchor" aria-label="anchor" href="#drawbacks-and-biases-with-llms"></a></h3>
+<p>See <a href="">notebooks/responsible.ipynb</a>…</p>
 </div>
 </section><div class="section level1">
-<h1 id="pitfalls-limitations-privacy">Pitfalls, limitations, privacy<a class="anchor" aria-label="anchor" href="#pitfalls-limitations-privacy"></a></h1>
-<p>While LLMs are very powerful and provide us with many great
-possibilities and opportunities, they also have limitations.</p>
-<ul><li>Training data: LLMs are trained on large data sets. These are often
-collected from the internet and books, but these come with downsides
-<ul><li>They have a date cutoff; LLMs are trained on a static data set,
-meaning they are trained on information up to a certain date. They
-therefor do not have the latest information. They are definitely not
-useful for recent news events (often they mention this), but also lack
-behind in for example technological advancements. Always consider how
-old the model is that you are using.s</li>
-<li>There is no fact checking involved in the training data. If the
-training data contains a lot of incorrect information or fake news, this
-will affect the answers generated.</li>
-<li>The training data is often biased, including social and cultural
-biases. This can lead to harmful responses that are stereotyping or
-racist. Training LLMs does involve a human review for fine-tuning the
-models, such that they are prevented from answering questions on illegal
-activities, political advice, advice on harming yourself or others, or
-generating violent or sexual content. When for example prompted with
-questions about politics it does provide generic factual information,
-but will also say that it will not give advice or opinionated
-answers.</li>
-<li>For GPT-4, there is no exact information provided as to which data
-it is trained on, meaning that the data might be breaking privacy laws
-or copyright infringement.</li>
-<li>The data an LLM is trained on is generic, resulting in that it is
-not good at generating answers for specialised questions. There are
-however already a lot of models that are finetuned for specific
-fields.</li>
-<li>Language: LLMs are primarily trained on data collected from the
-internet, resulting in that they are ‘best’ in the most spoken
-languages. ChatGPT is trained on many languages, but languages that are
-less widely spoken will automatically have smaller data to train on,
-which makes the LLM less accurate in these languages.</li>
-</ul></li>
-<li>Multi-step thinking: LLMs are generally not good at multi-step
-thinking. They are very good at providing bullet point lists of
-information, but reasoning like humans do, drawing a conclusion from
-combined logic is something they are not good at (yet).</li>
-<li>Hallucinations: LLMs tend to hallucinate. When it ‘does not know the
-answer’, it will often still try to provide an answer. You should
-therefore not blindly use the answers from an LLM, but still check the
-given information yourself.</li>
-<li>Privacy: when using a language model locally, such as done above
-with Llama, your privacy is preserved. The model is only on your laptop,
-and the data you provide is not uploaded to any server. But when you for
-example use ChatGPT via the web interface, there is no privacy. Any
-information you provide, questions, provided context and so on will be
-used by ChatGPT. It will be used (ao) for improving the model, which may
-be considered a good thing, but other things it is used for are not
-necessarily known. This means that you should be careful in what you
-provide to the LLM. Never provide sensitive information or private data
-to an LLM that you do not run fully locally.</li>
-</ul><div id="key-points-to-remember" class="callout keypoints">
-<div class="callout-square">
-<i class="callout-icon" data-feather="key"></i>
-</div>
-<span class="callout-header">Key Points</span>
-<div id="key-points-to-remember" class="callout-inner">
-<h3 class="callout-title">Key points to remember</h3>
-<div class="callout-content">
-<ul><li>
-<em>Transformer models power LLMs</em>: The Transformer architecture
-and its self-attention mechanism allow LLMs to handle long-range
-dependencies in text effectively.</li>
-<li>
-<em>LLMs excel at multiple tasks</em>: From text generation to
-classification and summarisation, LLMs like Llama are versatile and
-perform well on various NLP tasks.</li>
-<li>
-<em>Prompt engineering is crucial</em>: Designing effective prompts
-can significantly improve the quality of outputs from LLMs, especially
-for creative tasks like text generation and translation.</li>
-<li>
-<em>Real-world use cases</em>: LLMs can be applied to real-world
-problems like news classification, summarisation, and headline
-generation, improving efficiency in content management and
-delivery.</li>
-</ul></div>
-</div>
-</div>
+<h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h1>
+<p>Comprehensive overview of LLMs: <a href="https://dl.acm.org/doi/abs/10.1145/3744746" class="external-link uri">https://dl.acm.org/doi/abs/10.1145/3744746</a></p>
+<p>Andrej Karpathy deep dive into LLMs: <a href="https://www.youtube.com/watch?v=7xTGNNLPyMI" class="external-link uri">https://www.youtube.com/watch?v=7xTGNNLPyMI</a></p>
+<p>Multilingual benchmark for LLMs: <a href="https://mmluprox.github.io/" class="external-link uri">https://mmluprox.github.io/</a></p>
 </div>
 
 
@@ -1284,7 +941,7 @@ delivery.</li>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/04-LargeLanguageModels.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/04-LargeLanguageModels.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-09-18",
+  "dateModified": "2025-09-24",
   "datePublished": "2025-09-24"
 }
 
