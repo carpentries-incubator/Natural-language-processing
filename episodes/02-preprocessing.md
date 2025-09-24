@@ -1,5 +1,5 @@
 ---
-title: 'Episode 1: From text to vectors'
+title: '2. From words to vectors'
 teaching: 60
 exercises: 60
 ---
@@ -17,9 +17,11 @@ exercises: 60
 ::: objectives
 After following this lesson, learners will be able to:
 
--   Implement a full preprocessing pipeline on a text
--   Use Word2Vec to train a model
--   Inspect word embeddings
+-   Implement a basic NLP Pipeline
+-   Build a Document-Term Matrix
+-   Understand the concept of word embeddings
+-   Use and Explore Word2Vec models
+-   Use word vectors as features for a classifier
 :::
 
 ## Introduction
@@ -49,7 +51,7 @@ We have already done some basic data pre-processing in the introduction. Here we
 ```
 
 ::: callout
--   Preprocessing approaches affect significantly the quality of the training when working with word embeddings. For example, [Rahimi & Homayounpour (2022)] (<https://link.springer.com/article/10.1007/s10579-022-09620-5>) demonstrated that for text classification and sentiment analysis, the removal of punctuation and stopwords leads to higher performance.
+-   Preprocessing approaches affect significantly the quality of the training when working with word embeddings. For example, [Rahimi & Homayounpour (2022)](https://link.springer.com/article/10.1007/s10579-022-09620-5) demonstrated that for text classification and sentiment analysis, the removal of punctuation and stopwords leads to higher performance.
 
 -   You do not always need to do all the preprocessing steps, and which ones you should do depends on what you want to do. For example, if you want to segment text into sentences then characters such as '.', ',' or '?' are the most important; if you want to extract Named Entities from text, you explicitly do not want to lowercase the text, as capitals are a component in the identification process, and if you are interested in gender bias you definitely want to keep the pronouns, etc...
 
@@ -135,33 +137,6 @@ print(tokens_no_punct[:10])
 
 `['mens', 'op', 'maan', 'de', 'eagle', 'is', 'geland', 'reisduur', '102', 'uur']`
 
-#### Visualise the tokens
-
-This was the end of our preprocessing step. Let's look at what tokens we have extracted and how frequently they occur in the text.
-
-``` python
-import matplotlib.pyplot as plt
-from collections import Counter
-
-# count the frequency of occurrence of each token
-token_counts = Counter(tokens_no_punct)
-
-# get the top n most common tokens (otherwise the plot would be too crowded) and their relative frequencies
-most_common = token_counts.most_common(100)
-tokens = [item[0] for item in most_common]
-frequencies = [item[1] for item in most_common]
-
-plt.figure(figsize=(12, 6))
-plt.bar(tokens, frequencies)
-plt.xlabel('Tokens')
-plt.ylabel('Frequency')
-plt.title('Token Frequencies')
-plt.xticks(rotation=90)
-plt.tight_layout()
-plt.show()
-```
-
-As one can see, words in the text have a very specific [skewed distribution](https://link.springer.com/article/10.3758/s13423-014-0585-6), such that there are few very high-frequency words that account for most of the tokens in text (e.g., articles, conjunctions) and many low frequency words.
 
 ### 5. Stop word removal
 
@@ -182,7 +157,7 @@ This is also sometimes known as a bag-of-words as it ignores grammar and word se
 -   Doc 3: “Language processing with computers is NLP”
 -   Doc 4: "Today it rained a lot"
 
-| Term       | Doc1 | Doc2 | Doc3 | Doc3 |
+| Term       | Doc1 | Doc2 | Doc3 | Doc4 |
 |------------|------|------|------|------|
 | natural    | 1    | 1    | 0    | 0    |
 | language   | 1    | 1    | 1    | 0    |
@@ -204,7 +179,7 @@ We can represent each document by taking its column and treating it as a vector 
 
 ## What are word embeddings?
 
-A Word Embedding is a word representation type that maps words in a numerical manner (i.e., into vectors) in a multidimensional space, capturing their meaning based on characteristics or context. Since similar words occur in similar contexts, or have same characteristics, the system automatically learns to assign similar vectors to similar words.
+A Word Embedding is a word representation type that maps words in a numerical manner (i.e., into vectors) in a multidimensional space, capturing their meaning based on characteristics or context. Since similar words occur in similar contexts, or have same characteristics, a properly trained model will learn to assign similar vectors to similar words.
 
 Let's illustrate this concept using animals. This example will show us an intuitive way of representing things into vectors.
 
@@ -266,122 +241,10 @@ The higher similarity score between the cat and the dog indicates they are more 
 
 ![](fig/emb6.png)
 
-:::: challenge
--   Add one of two other dimensions. What characteristics could they map?
--   Add another animal and map their dimensions
--   Compute again the cosine similarity among those animals and find the couple that is the least similar and the most similar
-
-::: solution
-1.  Add one of two other dimensions
-
-We could add the dimension of "velocity" or "speed" that goes from 0 to 100 meters/second.
-
--   Caterpillar: 0.001 m/s
--   Cat: 1.5 m/s
--   Dog: 2.5 m/s
-
-(just as an example, actual speeds may vary)
-
-``` python
-cat = np.asarray([[70, 4, 1.5]])
-dog = np.asarray([[56, 4, 2.5]])
-caterpillar = np.asarray([[70, 100, .001]])
-```
-
-Another dimension could be weight in Kg:
-
--   Caterpillar: .05 Kg
--   Cat: 4 Kg
--   Dog: 15 Kg
-
-(just as an example, actual weight may vary)
-
-``` python
-cat = np.asarray([[70, 4, 1.5, 4]])
-dog = np.asarray([[56, 4, 2.5, 15]])
-caterpillar = np.asarray([[70, 100, .001, .05]])
-```
-
-Then the cosine similarity would be:
-
-``` python
-cosine_similarity(cat, caterpillar)
-
-cosine_similarity(cat, dog)
-```
-
-Output:
-
-``` python
-array([[0.61814254]])
-array([[0.97893809]])
-```
-
-2.  Add another animal and map their dimensions
-
-Another animal that we could add is the Tarantula!
-
-``` python
-cat = np.asarray([[70, 4, 1.5, 4]])
-dog = np.asarray([[56, 4, 2.5, 15]])
-caterpillar = np.asarray([[70, 100, .001, .05]])
-tarantula = np.asarray([[80, 6, .1, .3]])
-```
-
-3.  Compute again the cosine similarity among those animals - find out the most and least similar couple
-
-Given the values above, the least similar couple is the dog and the caterpillar, whose cosine similarity is `array([[0.60855407]])`.
-
-The most similar couple is the cat and the tarantula: `array([[0.99822302]])`
-:::
-::::
 
 By representing words as vectors with multiple dimensions, we capture more nuances of their meanings or characteristics.
 
-::: keypoints
--   We can represent text as vectors of numbers (which makes it interpretable for machines)
--   The most efficient and useful way is to use word embeddings
--   We can easily compute how words are similar to each other with the cosine similarity
-:::
-
-When semantic change occurs, words in their context *also* change. We can trace how a word evolves semantically over time through comparison of that word with other similar words. The idea is that the most similar words are not always fixed in each different year, if a word acquires a new meaning.
-
-## Train the Word2Vec model
-
-### Load the embeddings and inspect them
-
-We proceed to load our models. We will load all pre-trained model files from the original Word2Vec paper, which was trained on a big corpus from Google News. The library `gensim` contains a method called `KeyedVectors` which allows us to load them.
-
-### Prepare the data to be ingested by the model (preprocessing)
-
-Also, the decision to remove or retain these parts of text is quite crucial for training our model, as it affects the quality of generated word vectors.
-
-::: callout
-### Dataset size in training
-
-To obtain high-quality embeddings, the size/length of your training dataset plays a crucial role. Generally [tens of thousands of documents](https://cs.stanford.edu/~quocle/paragraph_vector.pdf) are considered a reasonable amount of data for decent results.
-
-Is there however a strict minimum? Not really. Things to keep in mind is that `vocabulary size`, `document length` and `desired vector size` interacts with each other. The higher the dimensional vectors (e.g. 200-300 dimensions) the more data is required, and of high quality, i.e. that allows the learning of words in a variety of contexts.
-
-While word2vec models typically perform better with large datasets containing millions of words, using a single page is sufficient for demonstration and learning purposes. This smaller dataset allows us to train the model quickly and understand how word2vec works without the need for extensive computational resources.
-:::
-
-For the purpose of this episode and to make training easy on our laptop, we'll train our word2vec model using **just one book**. Subsequently, we'll load pre-trained models for tackling our task.
-
-Now we will train a two-layer neural network to transform our tokens into word embeddings. We will be using the library `gensim` and the model we will be using is called `Word2Vec`, developed by Tomas Mikolov et al. in 2013.
-
-Import the necessary libraries:
-
-``` python
-import gensim
-from gensim.models import Word2Vec
-
-# import logging to monitor training
-import logging
-
-# set up logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-```
+## Explore the Word2Vec Vector Space
 
 There are two main architectures for training Word2Vec:
 
@@ -396,11 +259,7 @@ CBOW is faster to train, while Skip-Gram is more effective for infrequent words.
 
 We will be using CBOW. We are interested in having vectors with 300 dimensions and a context size of 5 surrounding words. We include all words present in the corpora, regardless of their frequency of occurrence and use 4 CPU cores for training. All these specifics are translated in only one line of code.
 
-Let's train our model then:
 
-``` python
-model = Word2Vec([tokens_no_stopwords], vector_size=300, window=5, min_count=1, workers=4, sg=0)
-```
 
 We can inspect already what's the output of this training, by checking the top 5 most similar words to "maan" (moon):
 
@@ -410,8 +269,65 @@ word_vectors.most_similar('maan', topn=5)
 
 `[('plek', 0.48467501997947693), ('ouders', 0.46935707330703735), ('supe|', 0.3929591178894043), ('rotterdam', 0.37788015604019165), ('verkeerden', 0.33672046661376953)]`
 
-We have trained our model on one page only of the newspaper and the training was very quick. However, to approach our problem it's best to train our model on the entire dataset. We dont' have the resources for doing that on our local laptop, but luckily for us, [Wevers, M (2019)](https://zenodo.org/records/3237380) did that already for us and released it publicly. Let's download this dataset on our laptop and let's save them in a folder called `w2v`.
+### Load the embeddings and inspect them
+
+We proceed to load our models. We will load all pre-trained model files from the original Word2Vec paper, which was trained on a big corpus from Google News. The library `gensim` contains a method called `KeyedVectors` which allows us to load them.
+
+Put here the cod eform the notebook... with simple w2v operations, load existing vectors, test analogy, load neoghbors etc...
+
+
+### Use Word2Vec vectors as features for a classifier
+
+TODO: Here step-bystep a very simple sentiment logistic regression classifier using word2vec as input.
+Maybe this is too advanced ???
+
+
+::: callout
+## Dataset size in training
+
+To obtain your own high-quality embeddings, the size/length of the training dataset plays a crucial role. Generally [tens of thousands of documents](https://cs.stanford.edu/~quocle/paragraph_vector.pdf) are considered a reasonable amount of data for decent results.
+
+Is there however a strict minimum? Not really. Things to keep in mind is that `vocabulary size`, `document length` and `desired vector size` interacts with each other. The higher the dimensional vectors (e.g. 200-300 dimensions) the more data is required, and of high quality, i.e. that allows the learning of words in a variety of contexts.
+
+While word2vec models typically perform better with large datasets containing millions of words, using a single page is sufficient for demonstration and learning purposes. This smaller dataset allows us to train the model quickly and understand how word2vec works without the need for extensive computational resources.
+:::
+
+
+:::: challenge
+## Train your own Word2Vec model
+
+1. Load the necessary libraries. See the Gensim [documentation](https://radimrehurek.com/gensim/models/word2vec.html)
+2. Prepare the data (preprocessing pipeline)
+3. Train your model using the `Word2Vec` object. 
+4. Save your trained model using
+::: solution
+
+1. Import the necessary libraries:
 
 ``` python
-folder_path = 'data/w2v/'
+import gensim
+from gensim.models import Word2Vec
+
+
 ```
+
+2. Prepare the data
+
+3. Train your own model then:
+
+``` python
+model = Word2Vec([tokens_no_stopwords], vector_size=300, window=5, min_count=1, workers=4, sg=0)
+```
+
+:::
+::::
+
+
+
+
+::: keypoints
+-   The first step for working with text is to run a preprocessing pipeline to obtain clear features
+-   We can represent text as vectors of numbers (which makes it interpretable for machines)
+-   One of the most efficient and useful ways is to use word embeddings
+-   We can easily compute how words are similar to each other with the cosine similarity
+:::
