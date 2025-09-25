@@ -126,7 +126,7 @@ For simplicity, in the rest of the course we will use the terms "word" and "toke
 Let's open a file, read it into a string and split it by spaces. We will print the original text and the list of "words" to see how they look:
 
 ``` python
-with open("frankenstein_clean.txt") as f:
+with open("84_frankenstein_clean.txt") as f:
   text = f.read()
 
 print(text[:100])
@@ -181,8 +181,8 @@ print(len(only_words))
 ```
 
 ``` output
-[Letter, Petersburgh, TO, Saville, England, You, will, rejoice, to, hear]
-1199
+[Letter, Petersburgh, TO, Saville, England, You, will, rejoice, to, hear, that, no, disaster, has, accompanied, the, commencement, of, an, enterprise, which, you, have, regarded, with, such, evil, forebodings, I, arrived, here, yesterday, and, my, first, task, is, to, assure, my, dear, sister, of, my, welfare, and, increasing, confidence, in, the]
+75062
 ```
 
 or keep only the verbs from our text:
@@ -195,7 +195,7 @@ print(len(only_verbs))
 
 ``` output
 [rejoice, hear, accompanied, regarded, arrived, assure, increasing, walk, feel, braces]
-150
+10148
 ```
 
 SpaCy also predicts the sentences under the hood for us. We can access them like this:
@@ -207,12 +207,8 @@ print(len(sentences))
 ```
 
 ``` output
-Letter 1 St. Petersburgh, Dec. 11th, 17-- TO Mrs. Saville, England You will rejoice to hear that no disaster has accompanied the commencement of an enterprise which you have regarded with such evil forebodings.
-I arrived here yesterday, and my first task is to assure my dear sister of my welfare and increasing confidence in the success of my undertaking.
-I am already far north of London, and as I walk in the streets of Petersburgh, I feel a cold northern breeze play upon my cheeks, which braces my nerves and fills me with delight.
-Do you understand this feeling?
-This breeze, which has travelled from the regions towards which I am advancing, gives me a foretaste of those icy climes.
-48
+['Letter 1 St. Petersburgh, Dec. 11th, 17-- TO Mrs. Saville, England You will rejoice to hear that no disaster has accompanied the commencement of an enterprise which you have regarded with such evil forebodings.', 'I arrived here yesterday, and my first task is to assure my dear sister of my welfare and increasing confidence in the success of my undertaking.', 'I am already far north of London, and as I walk in the streets of Petersburgh, I feel a cold northern breeze play upon my cheeks, which braces my nerves and fills me with delight.', 'Do you understand this feeling?', 'This breeze, which has travelled from the regions towards which I am advancing, gives me a foretaste of those icy climes.']
+3317
 ```
 
 We can also see what named entities the model predicted:
@@ -531,10 +527,10 @@ for word, context_list in co_occurrence.items():
 ``` output
 Contextual Fingerprints:
 
-'pizza': [('eat', 2), ('delicious', 2), ('?', 1), ('or', 1), ('maybe', 1)]
-'hamburger': [('eat', 2), ('juicy', 1), ('instead', 1), ('many', 1), ('agree', 1)]
-'car': [('drive', 1), ('restaurant', 1), ('wash', 1), ('gasoline', 1)]
-'cat': [('walk', 2), ('now', 1), ('sleeps', 1), ('on', 1), ('take', 1)]
+'pizza': [('eat', 3), ('delicious', 2), ('tasty', 2), ('think', 2), ('pizza', 2)]
+'hamburger': [('eat', 2), ('car', 2), ('maybe', 1), ('juicy', 1), ('instead', 1)]
+'car': [('hamburger', 2), ('wo', 2), ('wash', 2), ('car', 2), ('gasoline', 2)]
+'cat': [('come', 2), ('walk', 2), ('cat', 2), ('happy', 2), ('succulent', 1)]
 ```
 
 As our tiny experiment show, discreteness can then be combatted with statistical co-occurrence: words with similar meaning will occur around similar concepts, giving us an idea of similarity that has nothing to do with how they are written. This is the core idea behind most modern meaning representation models in NLP.
