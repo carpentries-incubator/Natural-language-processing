@@ -126,7 +126,7 @@ For simplicity, in the rest of the course we will use the terms "word" and "toke
 Let's open a file, read it into a string and split it by spaces. We will print the original text and the list of "words" to see how they look:
 
 ``` python
-with open("text1_clean.txt") as f:
+with open("frankenstein_clean.txt") as f:
   text = f.read()
 
 print(text[:100])
