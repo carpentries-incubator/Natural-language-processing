@@ -5,12 +5,10 @@ exercises: 60
 ---
 
 ::: questions
--   How do I load text and do basic linguistic analysis?
--   How do I use words as features in a machine learning model?
 -   What is a word2vec model?
 -   What properties do word embeddings have?
 -   What insights can I get from word embeddings?
--   How do I train a basic NLP classifier?
+-   How do I prepare text to train my own word2vec model?
 :::
 
 ::: objectives
@@ -20,14 +18,13 @@ After following this lesson, learners will be able to:
 -   Build a Document-Term Matrix
 -   Understand the concept of word embeddings
 -   Use and Explore Word2Vec models
--   Use word vectors as features for a classifier
 :::
 
 ## Introduction
 
-In this episode, we will expand on the idea of distributional semantics: “You shall know a word by the company it keeps”. We continue working with words as individual features of text by introducing the concept of Term-Document matrix, one of the most basic techniques to transform words into features that represent documents, which can be fed directly it into Machine Learning classifiers.
+In this episode, we will expand on the idea of distributional semantics: “You shall know a word by the company it keeps”. We work with words as individual features of text by introducing the concept of Term-Document matrix, one of the most basic techniques to transform words into features that represent documents, which can be fed directly it into Machine Learning classifiers.
 
-We will then visit the Word2Vec vector space, a method to represent words proposed in 2013 by [Mikolov et al](https://arxiv.org/pdf/1301.3781). They trained a neural network on large amounts of text in order to obtain continuous vectors that represent words, which hold interesting semantic properties. We will also use such vectors as features for our first NLP classifier: a senitment analysis recognizer for short sentences. An optional advanced challenge shows how to train your own Word2Vec models.
+We will then visit the Word2Vec vector space, a method to represent words proposed in 2013 by [Mikolov et al](https://arxiv.org/pdf/1301.3781), where instead of counting word co-occurrences they trained a neural network on large amounts of text to predict the context windows. By doing this, they obtained continuous vectors that represent words, which hold interesting semantic properties.
 
 ## Term-Document Matrix
 
@@ -75,7 +72,7 @@ Take a look at the Term-Document matrix. Can you explain which documents are mor
 :::
 ::::
 
-TDM is also a good solution to characterize documents based on their vocabulary, and there are more advanced versions of term-document matrices, including frequency metrices and TF-IDF. However we will now look at the converse possibility: to characterize words based on the context where they appear, so we can study words independently of their documents of origin, and more importantly, we can measure how do they relate to each other. We enter the world of word embeddings!
+TDM is also a good solution to characterize documents based on their vocabulary, and there are more advanced versions of term-document matrices, including frequency matrices and TF-IDF, but they are not going to be covered here. We will instead look at the converse possibility: to characterize words based on the context where they appear, so we can study words independently of their documents of origin, and more importantly, we can measure how do they relate to each other. We enter the world of word embeddings!
 
 ## What are word embeddings?
 
@@ -96,7 +93,7 @@ There are two main architectures for training Word2Vec:
 CBOW is faster to train, while Skip-Gram is more effective for infrequent words. Increasing context size improves embeddings but increases training time.
 :::
 
-The python module `gensim` offers a very usgul interface to interact with pre-trained word2vec models and also to train our own. First we will explore the model from the original Word2Vec paper, which was trained on a big corpus from Google News. We will see what functionalities are available to explore a vector space. Then we will step by step prepare our own text to train our own word2vec models and save them.
+The python module `gensim` offers a very useful interface to interact with pre-trained word2vec models and also to train our own. First we will explore the model from the original Word2Vec paper, which was trained on a big corpus from Google News. We will see what functionalities are available to explore a vector space. Then we will step by step prepare our own text to train our own word2vec models and save them.
 
 ### Load the embeddings and inspect them
 
@@ -132,10 +129,12 @@ print(w2v_model['cat'][:10]) # The first 10 dimensions of the vector representin
   0.04980469 -0.00952148  0.22070312 -0.12597656]
 ```
 
-This is a very big model with 3 million words and the dimensionality chosen at training time was 300, thus all words will have a 300-dimension vector associated to it. Even with such a big vocabulary we can always find a word that won't be in there:
+This is a very big model with 3 million words and the dimensionality chosen at training time was 300, thus all words will have a 300-dimension vector associated to it.
+
+Even with such a big vocabulary we can always find a word that won't be in there:
 
 ``` python
-print(w2v_model['bazzinga'][:10]) # The first 10 dimensions of the vector representing 'cat'.
+print(w2v_model['bazzinga'][:10]) # ???
 ```
 
 This will throw a `KeyError` as the model does not know that word. Unfortunately this is a limitation that word2vec cannot solve.
@@ -147,6 +146,8 @@ Now let's talk about the vectors themselves. They are not easy to interpret as t
 
 ![](fig/emb12.png){alt=""}
 :::
+
+We can use `sklearn` learn to measure any pair of high-dimensional vectors:
 
 ``` python
 from sklearn.metrics.pairwise import cosine_similarity
@@ -167,6 +168,8 @@ Cosine similarity between 'car' and 'cat': 0.21528185904026031
 Cosine similarity between 'hamburger' and 'pizza': 0.6153676509857178
 ```
 
+Or you can use directly the `w2v_model.similarity('car', 'cat')` function which gives the same result.
+
 The higher similarity score between the hamburger and pizza indicates they are more similar based on the contexts where they appear in the training data. Even though is hard to read all the floating numbers in the vectors, we can trust this metric to always give us a hint of which words are semantically closer than others
 
 :::: challenge
@@ -181,7 +184,8 @@ print(w2v_model.similarity('queen', 'princess'))
 print(w2v_model.similarity('love', 'hate')) #!! (think of "I love X" and "I hate X")
 print(w2v_model.similarity('love', 'lover'))
 ```
-```output
+
+``` output
 0.86444813
 0.7070532
 0.6003957
@@ -197,8 +201,10 @@ Now that we have a metric we can trust, we can retrieve neighborhoods of vectors
 ``` python
 print(w2v_model.most_similar('pizza', topn=10))
 ```
+
 This returns a list of ranked tuples with the form (word, similarity_score). The list is already ordered in descent, so the first element is the closest vector in the vector space, the second element is the second closest word and so on...
-```output
+
+``` output
 [('pizzas', 0.7863470911979675), 
 ('Domino_pizza', 0.7342829704284668), 
 ('Pizza', 0.6988078355789185), 
@@ -211,30 +217,34 @@ This returns a list of ranked tuples with the form (word, similarity_score). The
 ('meatball_sandwich', 0.6377009749412537)]
 ```
 
-Exploring neighborhoods can helps us understand why some vectors are closer (or not so much). Take the case of *love* and *lover*, originally we might think these should be very close to each other but by looking at their neighborhoods we understant why this is not the case:
+Exploring neighborhoods can help us understand why some vectors are closer (or not so much). Take the case of *love* and *lover*, originally we might think these should be very close to each other but by looking at their neighborhoods we understand why this is not the case:
 
 ``` python
 print(w2v_model.most_similar('love', topn=10))
 print(w2v_model.most_similar('lover', topn=10))
 ```
+
 This returns a list of ranked tuples with the form (word, similarity_score). The list is already ordered in descent, so the first element is the closest vector in the vector space, the second element is the second closest word and so on...
-```output
+
+``` output
 [('loved', 0.6907791495323181), ('adore', 0.6816874146461487), ('loves', 0.6618633270263672), ('passion', 0.6100709438323975), ('hate', 0.6003956198692322), ('loving', 0.5886634588241577), ('Ilove', 0.5702950954437256), ('affection', 0.5664337873458862), ('undying_love', 0.5547305345535278), ('absolutely_adore', 0.5536840558052063)]
+
 [('paramour', 0.6798686385154724), ('mistress', 0.6387110352516174), ('boyfriend', 0.6375402212142944), ('lovers', 0.6339589953422546), ('girlfriend', 0.6140860915184021), ('beau', 0.609399676322937), ('fiancé', 0.5994566679000854), ('soulmate', 0.5993717312812805), ('hubby', 0.5904166102409363), ('fiancée', 0.5888950228691101)]
 ```
+
 The first word is a noun or a verb (depending on the context) that denotes affection to someone/something , so it is associated with other concepts of affection (positive or negative). The case of *lover* is used to describe a person, hence the associated concepts are descriptors of people with whom the lover can be associated.
 
 ### Word Analogies with Vectors
 
 Another powerful property that word embeddings show is that vector algebra can preserve semantic analogy. An analogy is a comparison between two different things based on their similar features or relationships, for example king is to queen as man is to woman. We can mimic this operations directly on the vectors using the `most_similar()` method with the `positive` and `negative` parameters:
 
-```python
+``` python
 # king is to man as what is to woman?
 # king + woman - man = queen
 w2v_model.most_similar(positive=['king', 'woman'], negative=['man'])
 ```
 
-```output
+``` output
 [('queen', 0.7118192911148071),
  ('monarch', 0.6189674735069275),
  ('princess', 0.5902431011199951),
@@ -251,17 +261,17 @@ w2v_model.most_similar(positive=['king', 'woman'], negative=['man'])
 
 ### Preprocessing Text
 
-NLP models work by learning the statistical regularities within the constituent parts of the language (i.e, letters, digits, words and sentences) in a text. Text contains also other types of information that humans find useful to convey meaning. To signal pauses, give emphasis and convey tone, for instance, we use punctuation. Articles, conjunctions and prepositions also alter the meaning of a sentence. The machine does not know the difference among all of these linguistic units, as it treats them all as equal.
-
 We have already done some basic data pre-processing in the introduction. Here we will analyze with more detail the most common pre-processing steps when dealing with structured data. Whether you need to perform certain steps will depend on your task at hand. This is analogue to the data cleaning and sanitation step in any Machine Learning task.
 
-In the case of linguistic data, we are interested in getting rid of unwanted components (such as rare punctuation or formatting characters) that can confuse a model. As we already know, an NLP library such as SpaCy comes in handy to deal with the preprocessing of text, here is the list of the recommended (always optional!) steps:
+We can perform the data cleaning ourselves but, as we already know, an NLP library such as SpaCy comes in handy to deal with the preprocessing of text, here is the list of the recommended (always optional!) steps:
 
 -   **Tokenization:** splitting strings into meaningful/useful units. This step also includes a method for "mapping back" the segments to their character position in the original string.
 -   **Lowercasing:** removing uppercases to e.g. avoid treating "Dog" and "dog" as two different words
 -   **Punctuation and Special Character Removal:** if we are interested in *content only,* we can filter out anything that is not alphanumerical. We can also explicitly exclude symbols that are just noise in our dataset. Note that getting rid of punctuation can significantly change meaning! A special mention is that new lines are a character in text, sometimes we can use them in our benefit (for example to separate paragraphs) but many times they are just noise.
 -   **Stop Word Removal:** as we've seen, the most frequent words in texts are those which contribute little semantic value on their own: articles ('the', 'a' , 'an'), conjunctions ('and', 'or', 'but'), prepositions ('on', 'by'), auxiliary verbs ('is', 'am'), pronouns ('he', 'which'), or any highly frequent word that might not be of interest in several *content only* related tasks. A special case is the word 'not' which carries the significant semantic value of negation.
 -   **Lemmatization:** although it has become less frequent, normalizing words into their *dictionary form* can help to focus on relevant aspects of text. Think how "eating", "ate", "eaten" are all a variation of the verb "eat".
+
+In the case of this episode, we are interested in preparing the data for training Word2Vec models. This means we are interested on having vectors for content words only, so even though our preprocessing will unfortunately loose a lot of the original information, in exchange we will be able manipulate the most relevant conceptual words as individual numeric representations. Therefore the preprocessing includes: loading the text, tokenizing, lowercasing words, removing punctuation, lemmatizing words and removing stop words. Let's apply this step by step on a longer text. In this case, because we are learning the process, our corpus will be only one book but in reality we would like to train a network with thousands of them. We will use the Frankenstein book to train a model of word vectors according to this book.
 
 ::: callout
 -   Preprocessing approaches affect significantly the quality of the training when working with word embeddings. For example, [Rahimi & Homayounpour (2022)](https://link.springer.com/article/10.1007/s10579-022-09620-5) demonstrated that for text classification and sentiment analysis, the removal of punctuation and stopwords leads to higher performance.
@@ -270,8 +280,6 @@ In the case of linguistic data, we are interested in getting rid of unwanted com
 
 -   Note that preprocessing can differ significantly if you work with different languages. This is both in terms of which steps to apply, but also which methods to use for a specific step.
 :::
-
-In the case of this episode, we are interested in preparing the data for training Word2Vec models. This means we are interested on having vectors for content words only, so even though our preprocessing will unfortunately loose a lot of the original information, in exchange we will be able manipulate the most relevant conceptual words as individual numeric representations. Therefore the preprocessing includes: loading the text, tokenizing, lowercasing words, removing punctuation, lemmatizing words and removing stop words. Let's apply this step by step.
 
 ### 1. Loading the text
 
@@ -399,12 +407,14 @@ See the Gensim [documentation](https://radimrehurek.com/gensim/models/word2vec.h
 ### Save and Retrieve your model
 
 Once your model is trained it is useful to save the checkpoint in order to retrieve it next time instead of having to train it every time. You can save it with:
-```python
+
+``` python
 model.save("word2vec_frankenstein.model")
 ```
 
 And the way to load back the pre-trained vectors is with:
-```python
+
+``` python
 model = Word2Vec.load("word2vec_frankenstein.model")
 w2v_frankenstein = model.wv
 # Test:
@@ -412,14 +422,9 @@ w2v_frankenstein.most_similar('monster')
 ```
 
 
-### Use Word2Vec vectors as features for a classifier
-
-TODO: Here step-bystep a very simple sentiment logistic regression classifier using word2vec as input. Maybe this is too advanced ???
-
-
 ::: keypoints
--   The first step for working with text is to run a preprocessing pipeline to obtain clear features
 -   We can represent text as vectors of numbers (which makes it interpretable for machines)
--   One of the most efficient and useful ways is to use word embeddings
+-   We can run a preprocessing pipeline to obtain clear words that can be used as features
 -   We can easily compute how words are similar to each other with the cosine similarity
+-   Using gensim we can train our own word2vec models
 :::
