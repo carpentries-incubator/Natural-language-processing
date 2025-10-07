@@ -24,11 +24,11 @@ exercises: 60
 
 Natural language processing (NLP) is an area of research and application that focuses on making human languages processable for computers, so that they can perform useful tasks. It is therefore not a single method, but a collection of techniques that help us deal with linguistic inputs. The range of techniques spans simple word counts, to Machine Learning (ML) methods, all the way up to complex Deep Learning (DL) architectures.
 
-The term "natural language", as opposed to "artificial language" such as programming languages, which are by design constructed to be easily formalized into machine-readable instructions. In contrast to programming languages, natural languages are complex, ambiguous, and heavily context-dependent, making them challenging for computers to process. To complicate matters, there is not only a single *human language*. More than 7000 languages are spoken around the world, each with its own grammar, vocabulary, and cultural context.
+We use the term "natural language", as opposed to "artificial language" such as programming languages, which are by design constructed to be easily formalized into machine-readable instructions. In contrast to programming languages, natural languages are complex, ambiguous, and heavily context-dependent, making them challenging for computers to process. To complicate matters, there is not only a single *human language*. More than 7000 languages are spoken around the world, each with its own grammar, vocabulary, and cultural context.
 
-In this course we will mainly focus on written English (and a few others in specific examples). However, this is only a convenience so we can address some technical aspects of processing textual data. While ideally most of the concepts from NLP apply to most languages, one should always be aware that certain languages require different approaches to solve seemingly similar problems. We would like to encourage the usage of NLP in other less widely known languages, especially if it is a minority language. You can read more about this topic [here](https://www.ruder.io/nlp-beyond-english/).
+In this course we will mainly focus on written language, specifically written English, we leave out audio and speech, as they require a different kind of input processing. But consider that we use English only as a convenience so we can address the technical aspects of processing textual data. While ideally most of the concepts from NLP apply to most languages, one should always be aware that certain languages require different approaches to solve seemingly similar problems. We would like to encourage the usage of NLP in other less widely known languages, especially if it is a minority language. You can read more about this topic in this [blogpost](https://www.ruder.io/nlp-beyond-english/).
 
-We can already find differences between languages in the most basic step for processing text. Take the problem of segmenting text into meaningful units, most of the times these units are words, in NLP we call this task **tokenization**. A naive approach is to obtain individual words by splitting text by spaces, as it seems obvious that we always separate words with spaces. Just as human beings break up sentences into words, phrases and other units in order to learn about grammar and other structures of a language, NLP techniques achieve a similar goal through tokenization. Let's see how can we segment or **tokenize** a sentence in English and Chinese:
+We can already find differences between languages in the most basic step for processing text. Take the problem of segmenting text into meaningful units, most of the times these units are words, in NLP we call this task **tokenization**. A naive approach is to obtain individual words by splitting text by spaces, as it seems obvious that we always separate words with spaces. Just as human beings break up sentences into words, phrases and other units in order to learn about grammar and other structures of a language, NLP techniques achieve a similar goal through tokenization. Let's see how can we segment or **tokenize** a sentence in English:
 
 ``` python
 english_sentence = "Tokenization isn't always trivial."
@@ -42,7 +42,7 @@ print(len(english_words))
 4
 ```
 
-The words are mostly well separated, however we do not get fully formed words (we have punctuation with the period after "trivial" and also special cases such as the abbreviation of "is not" into "isn't"). However, at least we get a rough count of the number of words present in the sentence. Let's now look at the same example in Chinese:
+The words are mostly well separated, however we do not get fully formed words (we have punctuation with the period after "trivial" and also special cases such as the abbreviation of "is not" into "isn't"). But at least we get a rough count of the number of words present in the sentence. Let's now look at the same example in Chinese:
 
 ``` python
 # Chinese Translation of "Tokenization is not always trivial"
@@ -58,7 +58,7 @@ print(len(chinese_words))
 1
 ```
 
-The same example however did not work in Chinese, because Chinese does not use spaces to separate words. This is an example of how the idiosyncrasies of human language affects how we can process them with computers. We therefore cannot use the same approach for tokenization of English and Chinese. We need to use a tokenizer specifically designed for Chinese. Here we use a ``pre-trained'' tokenizer called **jieba**, which uses a dictionary-based approach to correctly identify the distinct words:
+The same example however did not work in Chinese, because Chinese does not use spaces to separate words. This is an example of how the idiosyncrasies of human language affects how we can process them with computers. We therefore need to use a tokenizer specifically designed for Chinese to obtain the list of well-formed words in the text. Here we use a "pre-trained" tokenizer called **jieba**, which uses a dictionary-based approach to correctly identify the distinct words:
 
 ``` python
 import jieba  # A popular Chinese text segmentation library
@@ -95,12 +95,12 @@ The term LLM now is often (and wrongly) used as a synonym of Artificial Intellig
 
 LLM is a blanket term for an assembly of large neural networks that are trained on vast amounts of text data with the objective of optimizing for language modeling. Once they are trained, they are used to generate human-like text or fine-tunned to perform much more advanced tasks. Indeed, the surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answer elaborate questions, translate languages, solve complex problems, generate narratives that emulate reasoning, and many more, all of this with a single tool.
 
-It is important, however, to pay attention to what is happening behind the scenes in order to be able **trace sources of errors and biases** that get hidden in the complexity of these models. The purpose of this course is precisely to take a step back, and understand that: 
+It is important, however, to pay attention to what is happening behind the scenes in order to be able **trace sources of errors and biases** that get hidden in the complexity of these models. The purpose of this course is precisely to take a step back, and understand that:
 
-- There are a wide variety of tools available, beyond LLMs, that do not require so much computing power
-- Sometimes a much simpler method than an LLM is available that can solve our problem at hand
-- If we learn how previous approaches to solve linguistic problems were designed, we can better understand the limitations of LLMs and how to use them effectively
-- LLMs excel at confidently delivering information, without any regards for correctness. This calls for a careful design of **evaluation metrics** that give us a better understanding of the quality of the generated content.
+-   There are a wide variety of tools available, beyond LLMs, that do not require so much computing power
+-   Sometimes a much simpler method than an LLM is available that can solve our problem at hand
+-   If we learn how previous approaches to solve linguistic problems were designed, we can better understand the limitations of LLMs and how to use them effectively
+-   LLMs excel at confidently delivering information, without any regards for correctness. This calls for a careful design of **evaluation metrics** that give us a better understanding of the quality of the generated content.
 
 Let's go back to our problem of segmenting text and see what ChatGPT has to say about tokenizing Chinese text:
 
@@ -120,12 +120,12 @@ From a more technical perspective, NLP focuses on applying advanced statistical 
 
 ### What is a word?
 
-When dealing with language our basic data unit is usually a word. We deal with sequences of words and with how they relate to each other to generate meaning in text pieces. Thus, our first step will be to load a text file and provide it with structure by chunking it into valid words (tokenization!).
+When dealing with language our basic data unit is usually a word. We deal with sequences of words and with how they relate to each other to generate meaning in text pieces. Thus, our first step will be to load a text file and provide it with structure by splitting it into valid words (tokenization)!
 
 ::: callout
 ### Token vs Word
 
-For simplicity, in the rest of the course we will use the terms "word" and "token" interchangeably, but as we just saw they do not always have the same granularity. Originally the concept of token comprised dictionary words, numeric symbols and punctuation. Nowadays, tokenization has also evolved and became an optimization task on its own (How can we segment text in a way that neural networks learn optimally from text?). Tokenizers allow one to reconstruct or revert back to the original pre-tokenized form of tokens or words, hence we can afford to use the tokenized forms as synonyms. If you are curious, you can visualize how different state-of-the-art tokenizers work [here](https://tiktokenizer.vercel.app/)
+For simplicity, in the rest of the course we will use the terms "word" and "token" interchangeably, but as we just saw they do not always have the same granularity. Originally the concept of token comprised dictionary words, numeric symbols and punctuation. Nowadays, tokenization has also evolved and became an optimization task on its own (How can we segment text in a way that neural networks learn optimally from text?). Tokenizers allow one to reconstruct or revert back to the original pre-tokenized form of tokens or words, hence we can afford to use *token* and *word* as synonyms. If you are curious, you can visualize how different state-of-the-art tokenizers split text [in this WebApp](https://tiktokenizer.vercel.app/)
 :::
 
 Let's open a file, read it into a string and split it by spaces. We will print the original text and the list of "words" to see how they look:
@@ -203,7 +203,7 @@ print(len(only_verbs))
 10148
 ```
 
-SpaCy also predicts the sentences under the hood for us. We can access them like this:
+SpaCy also predicts the sentences under the hood for us. It might seem trivial to you as a human reader to recognize where a sentence begins and ends but for a machine, just like finding words, finding sentences is a task on its own, for which sentence-segmentation models exist. In the case of Spacy, we can access the sentences like this:
 
 ``` python
 sentences = [sent.text for sent in doc.sents] # Sentences are also python objects
@@ -278,7 +278,7 @@ The Deep Learning perspective usually involves the selection of the right model 
 
 -   Convolutional Neural Network
 
--   LSTM
+-   Long-Short Term Memory Networks (LSTMs)
 
 -   Transformer (including LLMs!)
 
@@ -287,10 +287,12 @@ Regardless of the chosen method, below we show one possible taxonomy of NLP task
 ![A taxonomy of NLP Tasks](fig/intro_taxonomy.png){width="630"}
 
 -   **Text Classification**: Assign one or more labels to a given piece of text. This text is usually referred to as a *document* and in our context this can be a sentence, a paragraph, a book chapter, etc...
+
     -   **Language Identification**: determining the language in which a particular input text is written.
     -   **Spam Filtering**: classifying emails into spam or not spam based on their content.
     -   **Authorship Attribution**: determining the author of a text based on its style and content (based on the assumption that each author has a unique writing style).
     -   **Sentiment Analysis**: classifying text into positive, negative or neutral sentiment. For example, in the sentence "I love this product!", the model would classify it as positive sentiment.
+
 -   **Token Classification**: The task of individually assigning one label to each word in a document. This is a one-to-one mapping; however, because words do not occur in isolation and their meaning depend on the sequence of words to the left or the right of them, this is also called Word-In-Context Classification or Sequence Labeling and usually involves syntactic and semantic analysis.
 
     -   **Part-Of-Speech Tagging**: is the task of assigning a part-of-speech label (e.g., noun, verb, adjective) to each word in a sentence.
@@ -410,7 +412,7 @@ Whenever you are solving a specific task, you should ask yourself what kind of a
 
 ### Sparsity
 
-Another key property of linguistic data is its sparsity. This means that if we are hunting for a specific phenomenon, we may often realize it barely occurs inside a enormous amount of text. Imagine we have the following brief text and we are interested in *pizzas* and *hamburgers*:
+Another key property of linguistic data is its sparsity. This means that if we are hunting for a specific phenomenon, we may often realize it barely occurs inside a vast amount of text. Imagine we have the following brief text and we are interested in *pizzas* and *hamburgers*:
 
 ``` python
 # A mini-corpus where our target words appear
@@ -427,7 +429,7 @@ The cat will be happy then.
 """
 ```
 
-We should first use spaCy to tokenize the text and do some direct word count:
+We can first use spaCy to tokenize the text and do some direct word count:
 
 ``` python
 import spacy
@@ -439,7 +441,7 @@ print(words)
 print(len(words))
 ```
 
-We have in total 104 words, but we actually want to know how many times each word appears. For that we use the Python Counter and matplotlib to create a chart:
+We have in total 104 words, but we actually want to know how many times each word appears. For that we use the Python Counter and then we can visualize it inside a chart with matplotlib:
 
 ``` python
 from collections import Counter
@@ -455,9 +457,17 @@ plt.xticks(rotation=90)
 plt.show()
 ```
 
-This bar chart shows us several things about sparsity, even with such a small text: - The most common words are filler words such as "the", "of", "not" etc. These are known as stopwords because such words by themselves generally do not hold a lot of information about the meaning of the piece of text. The two concepts (hamburger and pizza) we are interested in, appear only 3 times each, out of 104 words (comprising only of 3% our corpus). This number only goes lower as the corpus increases - There is a long tail in the distribution, where actually a lot of meaningful words are located.
+This bar chart shows us several things about sparsity, even with such a small text:
 
-Sparsity is closely related to what is frequently called **domain-specific data**. The discourse context in which language is used varies importantly across disciplines (domains). Take for example law texts and medical texts which are typically filled with domain-specific jargon. We should expect the top part of the distribution to contain very different content words. Also, the meaning of concepts described in each domain will significantly differ. For example "trial" refers to a procedure for examining evidence in court, but in the medical domain this could refer to a clinical "trial" which is a procedure to test the efficacy and safety of treatments on patients. For this reason there are specialized models and corpora that model language use in specific domains. The concept of fine-tuning a general purpose model with domain-specific data is also popular, even when using LLMs.
+-   The most common words are filler words such as "the", "of", "not" etc. These are known as **stopwords** because such words by themselves generally do not hold a lot of information about the meaning of the piece of text.
+
+-   The two concepts (hamburger and pizza) we are interested in, appear only 3 times each, out of 104 words (comprising only \~3% of our corpus). This number only goes lower as the corpus size increases
+
+-   There is a long tail in the distribution, where actually a lot of meaningful words are located.
+
+::: callout
+Sparsity is closely related to what is frequently called **domain-specific data**. The discourse context in which language is used varies importantly across disciplines (domains). Take for example law texts and medical texts which are typically filled with domain-specific jargon. We should expect the top part of the distribution to contain mostly the same worda as they tend to be stop words. But once we remove the stop words, the top of the distirbution will contain very different content words. Also, the meaning of concepts described in each domain might significantly differ. For example the word "trial" refers to a procedure for examining evidence in court, but in the medical domain this could refer to a clinical "trial" which is a procedure to test the efficacy and safety of treatments on patients. For this reason there are specialized models and corpora that model language use in specific domains. The concept of fine-tuning a general purpose model with domain-specific data is also popular, even when using LLMs.
+:::
 
 ::: callout
 ## Stop Words
@@ -485,14 +495,14 @@ print(content_words)
 
 ### Discreteness
 
-There is no inherent relationship between the form of a word and its meaning. For this reason, by syntactic or lexical analysis alone, there is no certain way of knowing if two words are similar in meaning or how they relate semantically to each other. For example, we can see that "car" and "cat" are very closely related syntactically or lexically. Only one letter needs to change to convert one word into the other. But the two words represent concepts or entities in the world which are very different semantically. Conversely, "pizza" and "hamburger" are very different syntactically (they only share one letter in common) but are more closely related semantically because they both refer to typical fast foods.
+There is no inherent relationship between the form of a word and its meaning. For this reason, by syntactic or lexical analysis alone, there is no automatic way of knowing if two words are similar in meaning or how they relate semantically to each other. For example, "car" and "cat" appear to be very closely related at the morphological level, only one letter needs to change to convert one word into the other. But the two words represent concepts or entities in the world which are very different. Conversely, "pizza" and "hamburger" look very different (they only share one letter in common) but are more closely related semantically, because they both refer to typical fast foods.
 
 How can we automatically know that "pizza" and "hamburger" share more semantic properties than "car" and "cat"? One way is by looking at the **context** (neighboring words) of these words. This idea is the principle behind **distributional semantics**, and aims to look at the statistical properties of language, such as word co-occurrences (what words are typically located nearby a given word in a given corpus of text), to understand how words relate to each other.
 
-Let's keep using our mini corpus. This time we only keep content words as we have very specific targets in mind:
+Let's keep using the list of words from our mini corpus:
 
 ``` python
-words = [token.lower_ for token in doc if token.is_alpha and not token.is_stop]  # Filter out punctuation and new lines
+words = [token.lower_ for token in doc if token.is_alpha]
 ```
 
 Now we will create a dictionary where we accumulate the words that appear around our words of interest. In this case we want to find out, according to our corpus, the most frequent words that occur around *pizza*, *hamburger*, *car* and *cat*:
@@ -503,7 +513,7 @@ co_occurrence = {word: [] for word in target_words}
 co_occurrence
 ```
 
-We iterate over each content word, collecting its surrounding words within a defined window. A window consists of a set number of words to the left and right of the target word, as determined by the window_size parameter. For example, with ```window_size = 3```, a word ```W``` has a window of six neighboring words—three preceding and three following—excluding ```W``` itself:
+We iterate over each word in our corpus, collecting its surrounding words within a defined window. A window consists of a set number of words to the left and right of the target word, as determined by the window_size parameter. For example, with `window_size = 3`, a word `W` has a window of six neighboring words—three preceding and three following—excluding `W` itself:
 
 ``` python
 window_size = 3 # How many words to look at on each side
@@ -513,6 +523,26 @@ for i, word in enumerate(words):
         start = max(0, i - window_size) # get the start index of the window
         end = min(len(words), i + 1 + window_size) # get the end index of the window
         context = words[start:i] + words[i+1:end]  # Exclude the target word itself
+        co_occurrence[word].extend(context)
+
+print(co_occurrence)
+```
+
+We call the words that fall inside this window the `context` of a target word. We can already see other interesting related words in the context of each target word, but a lot of non interesting stuff is in there. To obtain even nicer results, we can delete the stop words from the context window before adding it to the dictionary. You can define your own stop words, here we use the STOP_WORDS list provided by spaCy:
+
+``` python
+from spacy.lang.en.stop_words import STOP_WORDS
+
+co_occurrence = {word: [] for word in target_words} # Empty the dictionary
+
+window_size = 3 # How many words to look at on each side
+for i, word in enumerate(words):
+    # If the current word is one of our target words...
+    if word in target_words:
+        start = max(0, i - window_size) # get the start index of the window
+        end = min(len(words), i + 1 + window_size) # get the end index of the window
+        context = words[start:i] + words[i+1:end]  # Exclude the target word itself
+        context = [w for w in context if w not in STOP_WORDS] # Filter out stop words
         co_occurrence[word].extend(context)
 
 print(co_occurrence)
@@ -532,10 +562,10 @@ for word, context_list in co_occurrence.items():
 ``` output
 Contextual Fingerprints:
 
-'pizza': [('eat', 3), ('delicious', 2), ('tasty', 2), ('think', 2), ('pizza', 2)]
-'hamburger': [('eat', 2), ('car', 2), ('maybe', 1), ('juicy', 1), ('instead', 1)]
-'car': [('hamburger', 2), ('wo', 2), ('wash', 2), ('car', 2), ('gasoline', 2)]
-'cat': [('come', 2), ('walk', 2), ('cat', 2), ('happy', 2), ('succulent', 1)]
+'pizza': [('eat', 2), ('delicious', 2), ('tasty', 2), ('maybe', 1), ('like', 1)]
+'hamburger': [('eat', 2), ('juicy', 1), ('instead', 1), ('people', 1), ('agree', 1)]
+'car': [('drive', 1), ('restaurant', 1), ('wash', 1), ('gasoline', 1)]
+'cat': [('walk', 2), ('right', 1), ('sleeps', 1), ('happy', 1)]
 ```
 
 As our mini experiment demonstrates, discreteness can be combatted with statistical co-occurrence: words with similar meaning will occur around similar concepts, giving us an idea of similarity that has nothing to do with syntactic or lexical form of words. This is the core idea behind most modern semantic representation models in NLP.
@@ -567,6 +597,7 @@ def populate_co_occurrence(words, target_words, window_size=3, most_common_words
             start = max(0, i - window_size)
             end = min(len(words), i + 1 + window_size)
             context = words[start:i] + words[i+1:end]
+            context = [w for w in context if w not in STOP_WORDS]
             co_occurrence[word].extend(context)
     # Print the most common context words for each target word
     print("Contextual Fingerprints:\n")
@@ -596,10 +627,15 @@ print("Love and Hate percentage:", (len(love_words) + len(hate_words)) / len(wor
 
 What did we learn in this lesson?
 
-::: Key points
--   NLP is a subfield of Artificial Intelligence (AI) that, using the help of Linguistics, deals with approaches to process, understand and generate natural language
--   Linguistic Data has special properties that we should consider when modeling our solutions
--   Key tasks include language modeling, text classification, token classification and text generation
--   Deep learning has significantly advanced NLP, but the challenge remains in processing the discrete and ambiguous nature of language
--   The ultimate goal of NLP is to enable machines to understand and process language as humans do
+
+::: keypoints
+- NLP is a subfield of Artificial Intelligence (AI) that, using the help of Linguistics, deals with approaches to process, understand and generate natural language 
+
+- Linguistic Data has special properties that we should consider when modeling our solutions 
+
+- Key tasks include language modeling, text classification, token classification and text generation 
+
+- Deep learning has significantly advanced NLP, but the challenge remains in processing the discrete and ambiguous nature of language 
+
+- The ultimate goal of NLP is to enable machines to understand and process language as humans do 
 :::
