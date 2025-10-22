@@ -76,21 +76,10 @@ Remember that you need to activate your environment every time you restart your 
 
 ::: spoiler
 
-### On Windows
-
-```shell
-nlp_workshop\Scripts\activate
-```
-
-:::
-
-
-::: spoiler
-
 ### On Linux/macOs
 
 ```shell
-python3 -m pip install jupyter torch transformers scikit-learn spacy gensim langgraph langchain-ollama langchain-text-splitters langchain-nomic nomic[local] seqeval datasets wordcloud
+python3 -m pip install jupyterlab jieba spacy matplotlib
 ```
 
 :::
@@ -100,7 +89,7 @@ python3 -m pip install jupyter torch transformers scikit-learn spacy gensim lang
 ### On Windows
 
 ```shell
-py -m pip install install jupyter torch transformers scikit-learn spacy gensim langgraph langchain-ollama langchain-text-splitters langchain-nomic seqeval datasets wordcloud
+py -m pip install jupyterlab jieba spacy matplotlib
 ```
 
 :::
@@ -129,15 +118,8 @@ Next, download the model that we will be using from a terminal (Mac/Linux) or Co
 ollama pull llama3.1:8b
 ```
 
-
 ## Data Sets
-
-
-<!--
-FIXME: place any data you want learners to use in `episodes/data` and then use
-       a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
-       link to it, replacing the example.com link.
--->
+Datasets and example files are placed in the [episodes/data/](https://github.com/carpentries-incubator/Natural-language-processing/tree/main/episodes/data) directory.
 
 ### Delpher newspapers
 
