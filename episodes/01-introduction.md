@@ -10,14 +10,12 @@ exercises: 60
 -   What makes text different from other data?
 -   Why not just learn Large Language Models?
 -   What linguistic properties should we consider when dealing with texts?
--   How does NLP relates to Deep Learning methodologies?
 :::
 
 ::: objectives
 -   Define Natural Language Processing
 -   Show the most relevant NLP tasks and applications in practice
 -   Learn how to handle Linguistic Data and how is Linguistics relevant to NLP
--   Learn a general workflow for solving NLP tasks
 :::
 
 ## What is NLP?
@@ -338,35 +336,8 @@ Example: the task of Conversational agent. Here are 3 instances to provide super
 :::
 ::::
 
-::: callout
-### NLP Libraries
 
-Related to the need of shaping our problems into a known task, there are several existing NLP libraries which provide a wide range of models that we can use out-of-the-box (without further need of modification). We already saw simple examples using SpaCy for English and jieba for Chinese. Again, as a non-exhaustive list, we mention some widely used NLP libraries in Python:
-
--   [NLTK](https://github.com/nltk/nltk)
--   [spaCy](https://github.com/explosion/spaCy)
--   [Gensim](https://github.com/RaRe-Technologies/gensim)
--   [Stanza](https://github.com/stanfordnlp/stanza)
--   [Flair](https://github.com/flairNLP/flair)
--   [FastText](https://github.com/facebookresearch/fastText)
--   [HuggingFace Transformers](https://github.com/huggingface/transformers)
-
-### Linguistic Resources
-
-There are also several curated resources (textual data) that can help solve your NLP-related tasks, specifically when you need highly specialized definitions. An exhaustive list would be impossible as there are thousands of them, and also them being language and domain dependent. Below we mention some of the most prominent, just to give you an idea of the kind of resources you can find, so you don't need to reinvent the wheel every time you start a project:
-
--   [HuggingFace Datasets](https://huggingface.co/datasets): A large collection of datasets for NLP tasks, including text classification, question answering, and language modeling.
--   [WordNet](https://wordnet.princeton.edu/): A large lexical database of English, where words are grouped into sets of synonyms (synsets) and linked by semantic relations.
--   [Europarl](https://www.europarl.europa.eu/ep-search/search.do?language=en): A parallel corpus of the proceedings of the European Parliament, available in 21 languages, which can be used for machine translation and cross-lingual NLP tasks.
--   [Universal Dependencies](https://universaldependencies.org/): A collection of syntactically annotated treebanks across 100+ languages, providing a consistent annotation scheme for syntactic and morphological properties of words, which can be used for cross-lingual NLP tasks.
--   [PropBank](https://propbank.github.io/): A corpus of texts annotated with information about basic semantic propositions, which can be used for English semantic tasks.
--   [FrameNet](https://framenet.icsi.berkeley.edu/fndrupal/): A lexical resource that provides information about the semantic frames that underlie the meanings of words (mainly verbs and nouns), including their roles and relations.
--   [BabelNet](https://babelnet.org/): A multilingual lexical resource that combines WordNet and Wikipedia, providing a large number of concepts and their relations in multiple languages.
--   [Wikidata](https://www.wikidata.org/): A free and open knowledge base initially derived from Wikipedia, that contains structured data about entities, their properties and relations, which can be used to enrich NLP applications.
--   [Dolma](https://github.com/allenai/dolma): An open dataset of 3 trillion tokens from a diverse mix of clean web content, academic publications, code, books, and encyclopedic materials, used to train English large language models.
-:::
-
-## Relevant Linguistic Aspects
+## A Primer on Linguistics
 
 Natural language exhibits a set of properties that make it more challenging to process than other types of data such as tables, spreadsheets or time series. **Language is hard to process because it is compositional, ambiguous, discrete and sparse**.
 
@@ -570,60 +541,39 @@ Contextual Fingerprints:
 
 As our mini experiment demonstrates, discreteness can be combatted with statistical co-occurrence: words with similar meaning will occur around similar concepts, giving us an idea of similarity that has nothing to do with syntactic or lexical form of words. This is the core idea behind most modern semantic representation models in NLP.
 
-:::: challenge
-### Your first NLP Script
 
-Choose one book file: dracula or frankenstein. Use what you have learned so far to count how many times the words "love" and "hate" appear in the book. What does this tell you about sparsity?
+::: callout
 
-Then replicate the word co-occurrence experiment using the book you chose.
+### NLP Libraries
 
-Pair with someone that chose a different book and compare the most common words appearing around the two target terms. What can you conclude from this?
+Related to the need of shaping our problems into a known task, there are several existing NLP libraries which provide a wide range of models that we can use out-of-the-box (without further need of modification). We already saw simple examples using SpaCy for English and jieba for Chinese. Again, as a non-exhaustive list, we mention some widely used NLP libraries in Python:
 
-To do this experiment you should:
+-   [NLTK](https://github.com/nltk/nltk)
+-   [spaCy](https://github.com/explosion/spaCy)
+-   [Gensim](https://github.com/RaRe-Technologies/gensim)
+-   [Stanza](https://github.com/stanfordnlp/stanza)
+-   [Flair](https://github.com/flairNLP/flair)
+-   [FastText](https://github.com/facebookresearch/fastText)
+-   [HuggingFace Transformers](https://github.com/huggingface/transformers)
 
-1.  Read the file and save it into a text variable
-2.  Use spaCy to load the text into a Doc object.
-3.  Iterate through the tokens in the document and keep all tokens that are alphanumeric (use the token.is_alpha property), and are not stopwords (use the property token.is_stop).
-4.  Lowercase all the tokens to merge the instances of "Love" and "love" into a single one.
-5.  Iterate through the tokens and count how many of them are exactly "love"
-6.  Iterate through the tokens and count how many of them are exactly "hate"
-7.  You may use the following function to compute co-occurrence. Experiment with the values for `window_size` or `most_common_words` and observe how the results change.
-
-``` python
-def populate_co_occurrence(words, target_words, window_size=3, most_common_words=5):
-    co_occurrence = {word: [] for word in target_words}
-    for i, word in enumerate(words):
-        if word in target_words:
-            start = max(0, i - window_size)
-            end = min(len(words), i + 1 + window_size)
-            context = words[start:i] + words[i+1:end]
-            context = [w for w in context if w not in STOP_WORDS]
-            co_occurrence[word].extend(context)
-    # Print the most common context words for each target word
-    print("Contextual Fingerprints:\n")
-    for word, context_list in co_occurrence.items():
-        fingerprint = Counter(context_list).most_common(most_common_words)
-        print(f"'{word}': {fingerprint}")
-```
-
-::: solution
-Following our preprocessing procedure with the *frankenstein book*, there are **30,500 content words**. The word **love appears 59 times** and the word **hate appears only 9 times**. These are 0.22% of the total words in the text. Even though intuitively one might expect these words to appear quite frequently in the text, in reality they occur only a handful of times. Code:
-
-``` python
-with open("84_frankenstein_clean.txt") as f:
-  text = f.read()
-
-doc = nlp(text)  # Process the text with SpaCy
-words = [token.lower_ for token in doc if token.is_alpha and not token.is_stop]
-print("Total Words:", len(words))
-
-love_words = [word for word in words if "love" == word]
-hate_words = [word for word in words if "hate" == word]
-
-print("Love and Hate percentage:", (len(love_words) + len(hate_words)) / len(words) * 100, "% of content words")
-```
 :::
-::::
+
+::: callout
+### Linguistic Resources
+
+There are also several curated resources (textual data) that can help solve your NLP-related tasks, specifically when you need highly specialized definitions. An exhaustive list would be impossible as there are thousands of them, and also them being language and domain dependent. Below we mention some of the most prominent, just to give you an idea of the kind of resources you can find, so you don't need to reinvent the wheel every time you start a project:
+
+-   [HuggingFace Datasets](https://huggingface.co/datasets): A large collection of datasets for NLP tasks, including text classification, question answering, and language modeling.
+-   [WordNet](https://wordnet.princeton.edu/): A large lexical database of English, where words are grouped into sets of synonyms (synsets) and linked by semantic relations.
+-   [Europarl](https://www.europarl.europa.eu/ep-search/search.do?language=en): A parallel corpus of the proceedings of the European Parliament, available in 21 languages, which can be used for machine translation and cross-lingual NLP tasks.
+-   [Universal Dependencies](https://universaldependencies.org/): A collection of syntactically annotated treebanks across 100+ languages, providing a consistent annotation scheme for syntactic and morphological properties of words, which can be used for cross-lingual NLP tasks.
+-   [PropBank](https://propbank.github.io/): A corpus of texts annotated with information about basic semantic propositions, which can be used for English semantic tasks.
+-   [FrameNet](https://framenet.icsi.berkeley.edu/fndrupal/): A lexical resource that provides information about the semantic frames that underlie the meanings of words (mainly verbs and nouns), including their roles and relations.
+-   [BabelNet](https://babelnet.org/): A multilingual lexical resource that combines WordNet and Wikipedia, providing a large number of concepts and their relations in multiple languages.
+-   [Wikidata](https://www.wikidata.org/): A free and open knowledge base initially derived from Wikipedia, that contains structured data about entities, their properties and relations, which can be used to enrich NLP applications.
+-   [Dolma](https://github.com/allenai/dolma): An open dataset of 3 trillion tokens from a diverse mix of clean web content, academic publications, code, books, and encyclopedic materials, used to train English large language models.
+:::
+
 
 What did we learn in this lesson?
 
