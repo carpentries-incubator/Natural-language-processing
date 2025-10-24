@@ -218,7 +218,7 @@
         <ul><li><a href="#what-is-nlp">What is NLP?</a></li>
 <li><a href="#why-should-we-learn-nlp-fundamentals">Why should we learn NLP Fundamentals?</a></li>
 <li><a href="#language-as-data">Language as Data</a></li>
-<li><a href="#relevant-linguistic-aspects">Relevant Linguistic Aspects</a></li>
+<li><a href="#a-primer-on-linguistics">A Primer on Linguistics</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -228,7 +228,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="02-preprocessing.html">2. From words to vectors</a>
+        <a href="02-word_representations.html">2. From words to vectors</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -295,7 +295,7 @@
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Previous and Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="index.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="02-preprocessing.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="02-word_representations.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
@@ -303,14 +303,14 @@
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
           Home
         </a>
-        <a class="chapter-link float-end" href="02-preprocessing.html" rel="next">
+        <a class="chapter-link float-end" href="02-word_representations.html" rel="next">
           Next: From words to...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Introduction</h1>
-        <p>Last updated on 2025-10-07 |
+        <p>Last updated on 2025-10-24 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/01-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -335,7 +335,6 @@
 <li>Why not just learn Large Language Models?</li>
 <li>What linguistic properties should we consider when dealing with
 texts?</li>
-<li>How does NLP relates to Deep Learning methodologies?</li>
 </ul></div>
 </div>
 </div>
@@ -347,7 +346,6 @@ texts?</li>
 <li>Show the most relevant NLP tasks and applications in practice</li>
 <li>Learn how to handle Linguistic Data and how is Linguistics relevant
 to NLP</li>
-<li>Learn a general workflow for solving NLP tasks</li>
 </ul></div>
 </div>
 </div>
@@ -755,7 +753,7 @@ use of the Web.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>These are some of the most popular NLP-based products that we use on
 a daily basis:</p>
@@ -952,7 +950,7 @@ order to train a supervised model for your chosen task.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Example: the task of Conversational agent. Here are 3 instances to
 provide supervision for a model:</p>
@@ -968,85 +966,8 @@ wearing.”</p>
 </div>
 </div>
 </div>
-<div id="nlp-libraries" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
 </div>
-<span class="callout-header">Callout</span>
-<div id="nlp-libraries" class="callout-inner">
-<h3 class="callout-title">NLP Libraries</h3>
-<div class="callout-content">
-<p>Related to the need of shaping our problems into a known task, there
-are several existing NLP libraries which provide a wide range of models
-that we can use out-of-the-box (without further need of modification).
-We already saw simple examples using SpaCy for English and jieba for
-Chinese. Again, as a non-exhaustive list, we mention some widely used
-NLP libraries in Python:</p>
-<ul><li><a href="https://github.com/nltk/nltk" class="external-link">NLTK</a></li>
-<li><a href="https://github.com/explosion/spaCy" class="external-link">spaCy</a></li>
-<li><a href="https://github.com/RaRe-Technologies/gensim" class="external-link">Gensim</a></li>
-<li><a href="https://github.com/stanfordnlp/stanza" class="external-link">Stanza</a></li>
-<li><a href="https://github.com/flairNLP/flair" class="external-link">Flair</a></li>
-<li><a href="https://github.com/facebookresearch/fastText" class="external-link">FastText</a></li>
-<li><a href="https://github.com/huggingface/transformers" class="external-link">HuggingFace
-Transformers</a></li>
-</ul><div class="section level3">
-<h3 id="linguistic-resources">Linguistic Resources<a class="anchor" aria-label="anchor" href="#linguistic-resources"></a></h3>
-<p>There are also several curated resources (textual data) that can help
-solve your NLP-related tasks, specifically when you need highly
-specialized definitions. An exhaustive list would be impossible as there
-are thousands of them, and also them being language and domain
-dependent. Below we mention some of the most prominent, just to give you
-an idea of the kind of resources you can find, so you don’t need to
-reinvent the wheel every time you start a project:</p>
-<ul><li>
-<a href="https://huggingface.co/datasets" class="external-link">HuggingFace Datasets</a>:
-A large collection of datasets for NLP tasks, including text
-classification, question answering, and language modeling.</li>
-<li>
-<a href="https://wordnet.princeton.edu/" class="external-link">WordNet</a>: A large
-lexical database of English, where words are grouped into sets of
-synonyms (synsets) and linked by semantic relations.</li>
-<li>
-<a href="https://www.europarl.europa.eu/ep-search/search.do?language=en" class="external-link">Europarl</a>:
-A parallel corpus of the proceedings of the European Parliament,
-available in 21 languages, which can be used for machine translation and
-cross-lingual NLP tasks.</li>
-<li>
-<a href="https://universaldependencies.org/" class="external-link">Universal
-Dependencies</a>: A collection of syntactically annotated treebanks
-across 100+ languages, providing a consistent annotation scheme for
-syntactic and morphological properties of words, which can be used for
-cross-lingual NLP tasks.</li>
-<li>
-<a href="https://propbank.github.io/" class="external-link">PropBank</a>: A corpus of
-texts annotated with information about basic semantic propositions,
-which can be used for English semantic tasks.</li>
-<li>
-<a href="https://framenet.icsi.berkeley.edu/fndrupal/" class="external-link">FrameNet</a>:
-A lexical resource that provides information about the semantic frames
-that underlie the meanings of words (mainly verbs and nouns), including
-their roles and relations.</li>
-<li>
-<a href="https://babelnet.org/" class="external-link">BabelNet</a>: A multilingual lexical
-resource that combines WordNet and Wikipedia, providing a large number
-of concepts and their relations in multiple languages.</li>
-<li>
-<a href="https://www.wikidata.org/" class="external-link">Wikidata</a>: A free and open
-knowledge base initially derived from Wikipedia, that contains
-structured data about entities, their properties and relations, which
-can be used to enrich NLP applications.</li>
-<li>
-<a href="https://github.com/allenai/dolma" class="external-link">Dolma</a>: An open
-dataset of 3 trillion tokens from a diverse mix of clean web content,
-academic publications, code, books, and encyclopedic materials, used to
-train English large language models.</li>
-</ul></div>
-</div>
-</div>
-</div>
-</div>
-</section><section><h2 class="section-heading" id="relevant-linguistic-aspects">Relevant Linguistic Aspects<a class="anchor" aria-label="anchor" href="#relevant-linguistic-aspects"></a></h2>
+</section><section><h2 class="section-heading" id="a-primer-on-linguistics">A Primer on Linguistics<a class="anchor" aria-label="anchor" href="#a-primer-on-linguistics"></a></h2>
 <hr class="half-width"><p>Natural language exhibits a set of properties that make it more
 challenging to process than other types of data such as tables,
 spreadsheets or time series. <strong>Language is hard to process because
@@ -1113,7 +1034,7 @@ times and each time write a different word in italics).</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>This is why the previous statements were difficult:</p>
 <ul><li>“Un-lockable vs Unlock-able” is a <strong>Morphological</strong>
@@ -1204,7 +1125,7 @@ corpus). This number only goes lower as the corpus size
 increases</p></li>
 <li><p>There is a long tail in the distribution, where actually a lot of
 meaningful words are located.</p></li>
-</ul><div id="callout4" class="callout">
+</ul><div id="callout3" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -1380,89 +1301,89 @@ with statistical co-occurrence: words with similar meaning will occur
 around similar concepts, giving us an idea of similarity that has
 nothing to do with syntactic or lexical form of words. This is the core
 idea behind most modern semantic representation models in NLP.</p>
-<div id="your-first-nlp-script" class="callout challenge">
+<div id="nlp-libraries" class="callout">
 <div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
+<i class="callout-icon" data-feather="bell"></i>
 </div>
-<span class="callout-header">Challenge</span>
-<div id="your-first-nlp-script" class="callout-inner">
-<h3 class="callout-title">Your first NLP Script</h3>
+<span class="callout-header">Callout</span>
+<div id="nlp-libraries" class="callout-inner">
+<h3 class="callout-title">NLP Libraries</h3>
 <div class="callout-content">
-<p>Choose one book file: dracula or frankenstein. Use what you have
-learned so far to count how many times the words “love” and “hate”
-appear in the book. What does this tell you about sparsity?</p>
-<p>Then replicate the word co-occurrence experiment using the book you
-chose.</p>
-<p>Pair with someone that chose a different book and compare the most
-common words appearing around the two target terms. What can you
-conclude from this?</p>
-<p>To do this experiment you should:</p>
-<ol style="list-style-type: decimal"><li>Read the file and save it into a text variable</li>
-<li>Use spaCy to load the text into a Doc object.</li>
-<li>Iterate through the tokens in the document and keep all tokens that
-are alphanumeric (use the token.is_alpha property), and are not
-stopwords (use the property token.is_stop).</li>
-<li>Lowercase all the tokens to merge the instances of “Love” and “love”
-into a single one.</li>
-<li>Iterate through the tokens and count how many of them are exactly
-“love”</li>
-<li>Iterate through the tokens and count how many of them are exactly
-“hate”</li>
-<li>You may use the following function to compute co-occurrence.
-Experiment with the values for <code>window_size</code> or
-<code>most_common_words</code> and observe how the results change.</li>
-</ol><div class="codewrapper sourceCode" id="cb31">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="kw">def</span> populate_co_occurrence(words, target_words, window_size<span class="op">=</span><span class="dv">3</span>, most_common_words<span class="op">=</span><span class="dv">5</span>):</span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>    co_occurrence <span class="op">=</span> {word: [] <span class="cf">for</span> word <span class="kw">in</span> target_words}</span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>    <span class="cf">for</span> i, word <span class="kw">in</span> <span class="bu">enumerate</span>(words):</span>
-<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>        <span class="cf">if</span> word <span class="kw">in</span> target_words:</span>
-<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>            start <span class="op">=</span> <span class="bu">max</span>(<span class="dv">0</span>, i <span class="op">-</span> window_size)</span>
-<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>            end <span class="op">=</span> <span class="bu">min</span>(<span class="bu">len</span>(words), i <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> window_size)</span>
-<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a>            context <span class="op">=</span> words[start:i] <span class="op">+</span> words[i<span class="op">+</span><span class="dv">1</span>:end]</span>
-<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a>            context <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> context <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> STOP_WORDS]</span>
-<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a>            co_occurrence[word].extend(context)</span>
-<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a>    <span class="co"># Print the most common context words for each target word</span></span>
-<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Contextual Fingerprints:</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a>    <span class="cf">for</span> word, context_list <span class="kw">in</span> co_occurrence.items():</span>
-<span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a>        fingerprint <span class="op">=</span> Counter(context_list).most_common(most_common_words)</span>
-<span id="cb31-14"><a href="#cb31-14" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span>word<span class="sc">}</span><span class="ss">': </span><span class="sc">{</span>fingerprint<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
+<p>Related to the need of shaping our problems into a known task, there
+are several existing NLP libraries which provide a wide range of models
+that we can use out-of-the-box (without further need of modification).
+We already saw simple examples using SpaCy for English and jieba for
+Chinese. Again, as a non-exhaustive list, we mention some widely used
+NLP libraries in Python:</p>
+<ul><li><a href="https://github.com/nltk/nltk" class="external-link">NLTK</a></li>
+<li><a href="https://github.com/explosion/spaCy" class="external-link">spaCy</a></li>
+<li><a href="https://github.com/RaRe-Technologies/gensim" class="external-link">Gensim</a></li>
+<li><a href="https://github.com/stanfordnlp/stanza" class="external-link">Stanza</a></li>
+<li><a href="https://github.com/flairNLP/flair" class="external-link">Flair</a></li>
+<li><a href="https://github.com/facebookresearch/fastText" class="external-link">FastText</a></li>
+<li><a href="https://github.com/huggingface/transformers" class="external-link">HuggingFace
+Transformers</a></li>
+</ul></div>
 </div>
 </div>
+<div id="linguistic-resources" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
 </div>
-</div>
-<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
-  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
-</button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
-<div class="accordion-body">
-<p>Following our preprocessing procedure with the <em>frankenstein
-book</em>, there are <strong>30,500 content words</strong>. The word
-<strong>love appears 59 times</strong> and the word <strong>hate appears
-only 9 times</strong>. These are 0.22% of the total words in the text.
-Even though intuitively one might expect these words to appear quite
-frequently in the text, in reality they occur only a handful of times.
-Code:</p>
-<div class="codewrapper sourceCode" id="cb32">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"84_frankenstein_clean.txt"</span>) <span class="im">as</span> f:</span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>  text <span class="op">=</span> f.read()</span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>doc <span class="op">=</span> nlp(text)  <span class="co"># Process the text with SpaCy</span></span>
-<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>words <span class="op">=</span> [token.lower_ <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> token.is_alpha <span class="kw">and</span> <span class="kw">not</span> token.is_stop]</span>
-<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Total Words:"</span>, <span class="bu">len</span>(words))</span>
-<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a>love_words <span class="op">=</span> [word <span class="cf">for</span> word <span class="kw">in</span> words <span class="cf">if</span> <span class="st">"love"</span> <span class="op">==</span> word]</span>
-<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a>hate_words <span class="op">=</span> [word <span class="cf">for</span> word <span class="kw">in</span> words <span class="cf">if</span> <span class="st">"hate"</span> <span class="op">==</span> word]</span>
-<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a></span>
-<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Love and Hate percentage:"</span>, (<span class="bu">len</span>(love_words) <span class="op">+</span> <span class="bu">len</span>(hate_words)) <span class="op">/</span> <span class="bu">len</span>(words) <span class="op">*</span> <span class="dv">100</span>, <span class="st">"</span><span class="sc">% o</span><span class="st">f content words"</span>)</span></code></pre>
-</div>
-</div>
-</div>
+<span class="callout-header">Callout</span>
+<div id="linguistic-resources" class="callout-inner">
+<h3 class="callout-title">Linguistic Resources</h3>
+<div class="callout-content">
+<p>There are also several curated resources (textual data) that can help
+solve your NLP-related tasks, specifically when you need highly
+specialized definitions. An exhaustive list would be impossible as there
+are thousands of them, and also them being language and domain
+dependent. Below we mention some of the most prominent, just to give you
+an idea of the kind of resources you can find, so you don’t need to
+reinvent the wheel every time you start a project:</p>
+<ul><li>
+<a href="https://huggingface.co/datasets" class="external-link">HuggingFace Datasets</a>:
+A large collection of datasets for NLP tasks, including text
+classification, question answering, and language modeling.</li>
+<li>
+<a href="https://wordnet.princeton.edu/" class="external-link">WordNet</a>: A large
+lexical database of English, where words are grouped into sets of
+synonyms (synsets) and linked by semantic relations.</li>
+<li>
+<a href="https://www.europarl.europa.eu/ep-search/search.do?language=en" class="external-link">Europarl</a>:
+A parallel corpus of the proceedings of the European Parliament,
+available in 21 languages, which can be used for machine translation and
+cross-lingual NLP tasks.</li>
+<li>
+<a href="https://universaldependencies.org/" class="external-link">Universal
+Dependencies</a>: A collection of syntactically annotated treebanks
+across 100+ languages, providing a consistent annotation scheme for
+syntactic and morphological properties of words, which can be used for
+cross-lingual NLP tasks.</li>
+<li>
+<a href="https://propbank.github.io/" class="external-link">PropBank</a>: A corpus of
+texts annotated with information about basic semantic propositions,
+which can be used for English semantic tasks.</li>
+<li>
+<a href="https://framenet.icsi.berkeley.edu/fndrupal/" class="external-link">FrameNet</a>:
+A lexical resource that provides information about the semantic frames
+that underlie the meanings of words (mainly verbs and nouns), including
+their roles and relations.</li>
+<li>
+<a href="https://babelnet.org/" class="external-link">BabelNet</a>: A multilingual lexical
+resource that combines WordNet and Wikipedia, providing a large number
+of concepts and their relations in multiple languages.</li>
+<li>
+<a href="https://www.wikidata.org/" class="external-link">Wikidata</a>: A free and open
+knowledge base initially derived from Wikipedia, that contains
+structured data about entities, their properties and relations, which
+can be used to enrich NLP applications.</li>
+<li>
+<a href="https://github.com/allenai/dolma" class="external-link">Dolma</a>: An open
+dataset of 3 trillion tokens from a diverse mix of clean web content,
+academic publications, code, books, and encyclopedic materials, used to
+train English large language models.</li>
+</ul></div>
 </div>
 </div>
 <p>What did we learn in this lesson?</p>
@@ -1492,7 +1413,7 @@ process language as humans do</p></li>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="index.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="02-preprocessing.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="02-word_representations.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
@@ -1500,7 +1421,7 @@ process language as humans do</p></li>
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
           Home
         </a>
-        <a class="chapter-link float-end" href="02-preprocessing.html" rel="next">
+        <a class="chapter-link float-end" href="02-word_representations.html" rel="next">
           Next: From words to...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
@@ -1547,8 +1468,8 @@ process language as humans do</p></li>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/01-introduction.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/01-introduction.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-10-07",
-  "datePublished": "2025-10-21"
+  "dateModified": "2025-10-24",
+  "datePublished": "2025-10-24"
 }
 
   </script><script>
