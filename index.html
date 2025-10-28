@@ -434,7 +434,7 @@ restart your terminal!</p>
 </button>
 <div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
 <div class="accordion-body">
-<pre class="shell"><code>python3 -m pip install jupyterlab jieba spacy matplotlib</code></pre>
+<pre class="shell"><code>python3 -m pip install jupyterlab jieba spacy gensim matplotlib transformers  </code></pre>
 </div>
 </div>
 </div>
@@ -449,7 +449,7 @@ restart your terminal!</p>
 </button>
 <div id="collapseSpoiler6" class="accordion-collapse collapse" aria-labelledby="headingSpoiler6" data-bs-parent="#accordionSpoiler6">
 <div class="accordion-body">
-<pre class="shell"><code>py -m pip install jupyterlab jieba spacy matplotlib</code></pre>
+<pre class="shell"><code>py -m pip install jupyterlab jieba spacy gensim matplotlib transformers</code></pre>
 </div>
 </div>
 </div>
@@ -470,41 +470,81 @@ here:</p>
 <p><a href="https://ollama.com/download" class="external-link uri">https://ollama.com/download</a></p>
 <p>Next, download the model that we will be using from a terminal
 (Mac/Linux) or Command Prompt (Windows) by typing the command:</p>
-<pre class="shell"><code>ollama pull llama3.1:8b</code></pre>
+<pre class="shell"><code>ollama pull llama3.2:1b</code></pre>
 </section><section><h2 class="section-heading" id="data-sets">Data Sets<a class="anchor" aria-label="anchor" href="#data-sets"></a></h2>
 <hr class="half-width"><p>Datasets and example files are placed in the <a href="https://github.com/carpentries-incubator/Natural-language-processing/tree/main/episodes/data" class="external-link">episodes/data/</a>
 directory.</p>
-<div class="section level3">
-<h3 id="delpher-newspapers">Delpher newspapers<a class="anchor" aria-label="anchor" href="#delpher-newspapers"></a></h3>
-<p>Download the form page of the <a href="https://www.delpher.nl/nl/kranten/view?coll=ddd&amp;query=&amp;cql%5B%5D=%28date+_gte_+%2220-07-1969%22%29&amp;redirect=true&amp;sortfield=date&amp;resultscoll=dddtitel&amp;identifier=KBPERS01:002846018:mpeg21&amp;rowid=3" class="external-link">Algemeen
-Dagblad from July 21 1969</a> as txt file from Delpher. To do so, click
-on the link and navigate to the right hand side of the web page. There
-you’ll find an icon with an arrow pointing down:</p>
-<figure><img src="fig/setup_download_arrow.png" alt="arrow" class="figure mx-auto d-block"><div class="figcaption">arrow</div>
-</figure><p>Click on this icon and select <code>txt</code> among the downloading
-options. Save the file as <code>ad.txt</code> in the folder that you
-will be using for the workshop.</p>
-<p>Similarly, download the following pages from <i>Amigoe di Curacao :
-weekblad voor de Curacaosche eilanden</i> as txt file</p>
-<ul><li><a href="https://www.delpher.nl/nl/kranten/view?query=the+moon&amp;coll=ddd&amp;identifier=ddd:010460545:mpeg21:p012&amp;resultsidentifier=ddd:010460545:mpeg21:a0134&amp;rowid=4" class="external-link">Page
-1</a></li>
-<li><a href="https://www.delpher.nl/nl/kranten/view?query=moon+landing&amp;coll=ddd&amp;page=1&amp;facets%5Bspatial%5D%5B%5D=Nederlandse+Antillen&amp;identifier=ddd:010460616:mpeg21:a0146&amp;resultsidentifier=ddd:010460616:mpeg21:a0146&amp;rowid=1" class="external-link">Page
-2</a></li>
-<li><a href="https://www.delpher.nl/nl/kranten/view?query=moon+landing&amp;coll=ddd&amp;page=1&amp;facets%5Bspatial%5D%5B%5D=Nederlandse+Antillen&amp;identifier=ddd:010460520:mpeg21:a0167&amp;resultsidentifier=ddd:010460520:mpeg21:a0167&amp;rowid=7" class="external-link">Page
-3</a></li>
-</ul></div>
 <div class="section level3">
 <h3 id="word2vec">Word2Vec<a class="anchor" aria-label="anchor" href="#word2vec"></a></h3>
 <p>Download Word2Vec models trained on 6 national Dutch newspaper data
 spanning a time period from 1950 to 1989 (Wevers, M., 2019). These
 models are available on <a href="https://zenodo.org/records/3237380" class="external-link">Zenodo</a>.</p>
+<div id="accordionSpoiler7" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler7" aria-expanded="false" aria-controls="collapseSpoiler7">
+  <h3 class="accordion-header" id="headingSpoiler7">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  On Linux/macOs
+  </h3>
+</button>
+<div id="collapseSpoiler7" class="accordion-collapse collapse" aria-labelledby="headingSpoiler7" data-bs-parent="#accordionSpoiler7">
+<div class="accordion-body">
+<pre class="shell"><code>python3 -m gensim.downloader --download word2vec-google-news-300 </code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSpoiler8" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler8" aria-expanded="false" aria-controls="collapseSpoiler8">
+  <h3 class="accordion-header" id="headingSpoiler8">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  On Windows
+  </h3>
+</button>
+<div id="collapseSpoiler8" class="accordion-collapse collapse" aria-labelledby="headingSpoiler8" data-bs-parent="#accordionSpoiler8">
+<div class="accordion-body">
+<pre class="shell"><code>py -m gensim.downloader --download word2vec-google-news-300</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section level3">
-<h3 id="spacy-dutch">Spacy Dutch<a class="anchor" aria-label="anchor" href="#spacy-dutch"></a></h3>
-<p>Download the <a href="https://spacy.io/models/nl/" class="external-link">trained pipelines
-for Dutch from Spacy</a>. To do so, open a terminal (Mac/Linux) or
+<h3 id="spacy-english">Spacy English<a class="anchor" aria-label="anchor" href="#spacy-english"></a></h3>
+<p>Download the <a href="https://spacy.io/models/en/" class="external-link">trained pipelines
+for English from Spacy</a>. To do so, open a terminal (Mac/Linux) or
 Command Prompt (Windows) and type the command:</p>
-<pre class="shell"><code>python -m spacy download nl_core_news_sm</code></pre>
+<div id="accordionSpoiler9" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler9" aria-expanded="false" aria-controls="collapseSpoiler9">
+  <h3 class="accordion-header" id="headingSpoiler9">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  On Linux/macOs
+  </h3>
+</button>
+<div id="collapseSpoiler9" class="accordion-collapse collapse" aria-labelledby="headingSpoiler9" data-bs-parent="#accordionSpoiler9">
+<div class="accordion-body">
+<pre class="shell"><code>python3 -m spacy download en_core_web_sm</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSpoiler10" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler10" aria-expanded="false" aria-controls="collapseSpoiler10">
+  <h3 class="accordion-header" id="headingSpoiler10">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  On Windows
+  </h3>
+</button>
+<div id="collapseSpoiler10" class="accordion-collapse collapse" aria-labelledby="headingSpoiler10" data-bs-parent="#accordionSpoiler10">
+<div class="accordion-body">
+<pre class="shell"><code>py -m spacy download en_core_web_sm</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link float-end" href="01-introduction.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
