@@ -10,5 +10,5 @@
 "episodes/03-transformers.md" "c171fb204a3033c2f2687a036875c0aa" "site/built/03-transformers.md" "2025-09-24"
 "episodes/04-LargeLanguageModels.md" "96a5780c2121d4750a50c0a1c9a4f7b9" "site/built/04-LargeLanguageModels.md" "2025-09-24"
 "instructors/instructor-notes.md" "cae72b6712578d74a49fea7513099f8c" "site/built/instructor-notes.md" "2025-09-16"
-"learners/setup.md" "f44e0591b8bce41b1904082e34b6ca15" "site/built/setup.md" "2025-10-28"
+"learners/setup.md" "f99bf68726734fe2903049b886f18db1" "site/built/setup.md" "2025-10-29"
 "profiles/learner-profiles.md" "7cf2c1bec32069388ea395a4914bad46" "site/built/learner-profiles.md" "2025-09-16"
