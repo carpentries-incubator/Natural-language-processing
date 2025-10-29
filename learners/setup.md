@@ -108,9 +108,12 @@ jupyter lab
 ```
 
 ## Ollama
-We will use Ollama to run large language models. It can be downloaded here:
+We will use Ollama to run large language models. The installer (available for Linux/Windows/Mac OS) can be downloaded here:
 
 https://ollama.com/download
+
+Run the installer and follow the instructions on screen.
+
 
 Next, download the model that we will be using from a terminal (Mac/Linux) or Command Prompt (Windows) by typing the command:
 
@@ -120,6 +123,12 @@ ollama pull llama3.2:1b
 
 ## Data Sets
 Datasets and example files are placed in the [episodes/data/](https://github.com/carpentries-incubator/Natural-language-processing/tree/main/episodes/data) directory.
+
+You can manually download each of the 4 .txt files by clicking on them and using the down arrow buttom ("download raw file") that is on the upper right corner of the screen, below the word "History".
+
+You should also manually download a notebook template vailable in the [learners/notebook](https://github.com/carpentries-incubator/Natural-language-processing/blob/main/learners/notebooks/introduction.ipynb) directory.
+
+The 4 text files and the notebook should be placed together in the same directory.
 
 
 ### Word2Vec
