@@ -79,7 +79,7 @@ Remember that you need to activate your environment every time you restart your 
 ### On Linux/macOs
 
 ```shell
-python3 -m pip install jupyterlab jieba spacy gensim matplotlib transformers  
+python3 -m pip install jupyterlab MicroTokenizer spacy gensim matplotlib transformers  
 ```
 
 :::
@@ -89,7 +89,7 @@ python3 -m pip install jupyterlab jieba spacy gensim matplotlib transformers
 ### On Windows
 
 ```shell
-py -m pip install jupyterlab jieba spacy gensim matplotlib transformers
+py -m pip install jupyterlab MicroTokenizer spacy gensim matplotlib transformers
 ```
 
 :::
@@ -121,19 +121,18 @@ Next, download the model that we will be using from a terminal (Mac/Linux) or Co
 ollama pull llama3.2:1b
 ```
 
+NOTE: if the previous command fails, you can pull the model manually inside the Ollama graphic interface. Open Ollama and on the right side of the "Send a message" prompt you will see a dropdown. Type there "llama3.2:1b" and then send any message so Ollama can download (pull) the model for you.
+
 ## Data Sets
 Datasets and example files are placed in the [episodes/data/](https://github.com/carpentries-incubator/Natural-language-processing/tree/main/episodes/data) directory.
 
-You can manually download each of the 4 .txt files by clicking on them and using the down arrow buttom ("download raw file") that is on the upper right corner of the screen, below the word "History".
+You can manually download the zip file inside that directory by clicking on `data.zip` and then using the down arrow button ("download raw file") that is on the upper right corner of the screen, below the word "History".
 
-You should also manually download a notebook template vailable in the [learners/notebook](https://github.com/carpentries-incubator/Natural-language-processing/blob/main/learners/notebooks/introduction.ipynb) directory.
-
-The 4 text files and the notebook should be placed together in the same directory.
+The zip file should be unpacked in the same root directory where you will create the notebooks during the workshops.
 
 
 ### Word2Vec
-Download Word2Vec models trained on 6 national Dutch newspaper data spanning a time period from 1950 to 1989 (Wevers, M., 2019). These models are available on [Zenodo](https://zenodo.org/records/3237380).
-
+Download Word2Vec model
 
 ::: spoiler
 
