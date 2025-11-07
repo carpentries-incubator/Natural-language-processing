@@ -41,7 +41,7 @@ Here we will analyze with more detail the most common pre-processing steps when 
 ### Data Formatting
 Text comes in different formats (Microsoft Word documents, PDF documents, ePub files, plain text etc...). The first step is to obtain a clean text representation that can be transferred into python UTF-8 strings that our scripts can manipulate.
 
-Take a look at the `episodes/data/84_frankenstein_or_the_modern_prometheus.txt` file: 
+Take a look at the `data/84_frankenstein_or_the_modern_prometheus.txt` file: 
 
 ```python
 filename = "data/84_frankenstein_or_the_modern_prometheus.txt"
