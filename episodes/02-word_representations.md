@@ -81,6 +81,8 @@ What if I need to extract text from MS Word docs or PDF files or Web pages?
 - For MS Word documents [python-docx](https://python-docx.readthedocs.io/en/latest/) is popular.
 - For (text-based) PDF files [PyPDF2](https://pypi.org/project/PyPDF2/) and [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/) are widely used. Note that some PDF files are encoded as images (pixels) and not text. If the text in these files is digital (as opposed to scanned handwriting), you can use OCR (Optical Character Recognition) libraries such as [pytesseract](https://pypi.org/project/pytesseract/) to convert the image to machine-readable text.
 - For scraping text from websites, [BeautifulSoup](https://pypi.org/project/beautifulsoup4/) and [Scrapy](https://docs.scrapy.org/en/latest/) are some common options.
+:::
+
 
 ::: callout
 Another important choice at the data formatting level is to decide at what granularity do you need to perform the NLP task: 
