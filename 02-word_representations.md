@@ -5,7 +5,8 @@ exercises: 60
 ---
 
 ::: questions
--   What operations should I perform to get clean text?
+-   Why do we need to preprocess text in NLP?
+-   What are the most common preprocessing operations and in which contexts should each be used?
 -   What properties do word embeddings have?
 -   What is a word2vec model?
 -   What insights can I get from word embeddings?
@@ -16,30 +17,31 @@ exercises: 60
 ::: objectives
 After following this lesson, learners will be able to:
 
--   Learn basic preprocessing operations
+-   Perform basic NLP preprocessing operations
 -   Implement a basic NLP Pipeline
--   Understand the concept of word embeddings
--   Use and Explore word2vec models
--   Train your own word2vec
+-   Explain the motivation for vectorization in modern NLP
+-   Train a custom Word2Vec model using the [Gensim](https://radimrehurek.com/gensim/) library
+-   Apply a Word2Vec model to interpret and analyze semantics of text (either a pre-trained model or custom model)
+-   Describe the kinds of semantic relationships captured by Word2Vec, and identify NLP tasks it is suited to support
+-   Explain, with examples, what the limitations are for the Word2Vec representation
 :::
 
 ## Introduction
 
-In this episode, we will learn to apply preprocessing operations to our text files. We will visit the concept of NLP Pipelines and learn about their basic components.
+In this episode, we will learn about the importance of preprocessing text in NLP, and how to apply common preprocessing operations to text files. We will also introduce the concept of "NLP Pipelines", learn about their basic components and how to construct such pipelines.
 
-We will then explain the transition from text-based NLP into word embeddings. We will visit the Word2Vec vector space, a method to represent words proposed in 2013 by [Mikolov et al](https://arxiv.org/pdf/1301.3781), where instead of counting word co-occurrences they trained a neural network on large amounts of text to predict the context windows. By doing this, they obtained continuous vectors that represent words, which hold interesting semantic properties.
+We will then address the transition from rule-based NLP to distributional semantics approaches which encode text into numerical representations based on statistical relationships between tokens. We will introduce one particular algorithm for this kind of encoding called Word2Vec proposed in 2013 by [Mikolov et al](https://arxiv.org/pdf/1301.3781). We will show what kind of useful semantic relationships these representations encode in text, and how we can use them to solve specific NLP tasks. We will also discuss some of the limitations of Word2Vec which are addressed in the next lesson on transformers before concluding with a summary of what we covered in this lesson.
 
 ## Preprocessing Operations
 
-As in most data science and machine learning scenarios, usually your text data sources won't be in the exact shape that you need. Preprocessing operations in NLP are analogue to the data cleaning and sanitation step in any Machine Learning task. Whether you need to perform certain preprocessing operations and the order of them will depend on your NLP task at hand.
+As is common in data science and machine learning, raw textual data often comes in a form that is not readily suitable for downstream NLP tasks. Preprocessing operations in NLP are analogous to the data cleaning and sanitation steps in traditional non-NLP Machine Learning tasks. Sometimes you are extracting text from PDF files which contain line breaks, headers, tables etc. that are not relevant to NLP tasks and which need to be removed. You may need to remove punctuation and special characters, or lowercase text for some NLP tasks etc. Whether you need to perform certain preprocessing operations, and the order in which you should perform them, will depend on the NLP task at hand.
 
 Also note that preprocessing can differ significantly if you work with different languages. This is both in terms of which steps to apply, but also which methods to use for a specific step.
 
 Here we will analyze with more detail the most common pre-processing steps when dealing with unstructured English text data:
 
-
 ### Data Formatting
-Text comes in different formats (Microsoft Word documents, PDF documents, ePub files, plain text etc...). The first step is to obtain a clean text representation that can be transferred into python UTF-8 strings that our scripts can manipulate.
+Text comes from various sources and are available in different formats (e.g., Microsoft Word documents, PDF documents, ePub files, plain text files, Web pages etc...). The first step is to obtain a clean text representation that can be transferred into python UTF-8 strings that our scripts can manipulate.
 
 Take a look at the `episodes/data/84_frankenstein_or_the_modern_prometheus.txt` file: 
 
@@ -61,11 +63,26 @@ print(text_flat[:300]) # print the first 300 characters
 ```
 
 Other data formatting operations might include:
-- Remove special or noisy characters (think of documents obtained by OCR)
-- Remove HTML tags
-- Strip non-meaningful punctuation (think of dashes separating words when the line ends)
-- Strip footnotes and headers
+- Removal of special or noisy characters. For example:
+
+    -  Random symbols: "The total cost is $120.00#" → remove #
+    - Incorrectly recognized letters or numbers: 1 misread as l, 0 as O, etc. Example: "l0ve" → should be "love"
+    - Control or formatting characters: \n, \t, \r appearing in the middle of sentences. Example: "Please\nsubmit\tyour form." → "Please submit your form."
+    - Non-standard Unicode characters: �, �, or other placeholder symbols where OCR failed. Example: "Th� quick brown fox" → "The quick brown fox"
+- Remove HTML tags (e.g., if you are extracting text from Web pages)
+- Strip non-meaningful punctuation (e.g., "The quick brown fox jumps over the lazy dog and con-
+tinues to run across the field.)
+- Strip footnotes, headers, tables, images etc.
 - Remove URLs or phone numbers
+
+::: callout
+What if I need to extract text from MS Word docs or PDF files or Web pages?
+- There are various Python libraries for helping you extract and manipulate text from these kinds of sources.
+- For MS Word documents [python-docx](https://python-docx.readthedocs.io/en/latest/) is popular.
+- For (text-based) PDF files [PyPDF2](https://pypi.org/project/PyPDF2/) and [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/) are widely used. Note that some PDF files are encoded as images (pixels) and not text. If the text in these files is digital (as opposed to scanned handwriting), you can use OCR (Optical Character Recognition) libraries such as [pytesseract](https://pypi.org/project/pytesseract/) to convert the image to machine-readable text.
+- For scraping text from websites, [BeautifulSoup](https://pypi.org/project/beautifulsoup4/) and [Scrapy](https://docs.scrapy.org/en/latest/) are some common options.
+:::
+
 
 ::: callout
 Another important choice at the data formatting level is to decide at what granularity do you need to perform the NLP task: 
@@ -80,9 +97,9 @@ Sometimes your data will be already available at the desired granularity level. 
 
 ### Tokenization 
 
-Tokenization is essential in NLP, as it helps to create structure from raw text. It involves the segmentation of the text into smaller units referred as `tokens`. Tokens can be sentences (e.g. `'the happy cat'`), words (`'the', 'happy', 'cat'`), subwords (`'un', 'happiness'`) or characters (`'c','a', 't'`). The choice of tokens depends by the requirement of the model used for training, and the text.
+Tokenization is a foundational operation in NLP, as it helps to create structure from raw text. This structure is a basic requirement and input for modern NLP algorithms to attribute and interpret meaning from text. This operation involves the segmentation of the text into smaller units referred to as `tokens`. Tokens can be sentences (e.g. `'the happy cat'`), words (`'the', 'happy', 'cat'`), subwords (`'un', 'happiness'`) or characters (`'c','a', 't'`). Different NLP algorithms may require different choices for the token unit. And different languages may require different approaches to identify or segment these tokens.
 
-Python strings are by definition sequences of characters, thus we can iterate the string char by char:
+Python strings are by definition sequences of characters, thus we can iterate through the string character by character:
 
 ```python
 print(type(text_flat))  # Should be <class 'str'>
@@ -90,7 +107,7 @@ for ch in text_flat:
     print(ch)
 ```
 
- However, it is more advantageous if our atomic units are words. As we know already, the task of extracting words from texts is not trivial, therefore pre-trained models such as sPaCy can help us with this step. In this case we will use the small English model that was trained on a web corpus:
+ However, it is often more advantageous if our atomic units are words. As we saw in Lesson 1, the task of extracting word tokens from texts is not trivial, therefore pre-trained models such as spaCy can help with this step. In this case we will use the small English model that was trained on a web corpus:
 
 ```python
 import spacy
@@ -124,7 +141,7 @@ print(tokens_txt[:15])
 ['Letter', '1', '\n\n\n', 'St.', 'Petersburgh', ',', 'Dec.', '11th', ',', '17', '-', '-', '\n\n', 'TO', 'Mrs.']
 ```
 
-This shows us the individual tokens, including new lines and punctuation (in case we didn't run the previous cleaning step). SpaCy allows us to filter based in token properties. For example, assume we are not interested in the newlines, punctuation nor in numeric tokens, so in one single step we can keep only the token objects that contain alphabetical:
+This shows us the individual tokens, including new lines and punctuation (in case we didn't run the previous cleaning step). spaCy allows us to filter based on token properties. For example, assuming we are not interested in the newlines, punctuation nor in numeric tokens, in one single step we can keep only the token objects that contain alphabetical characters:
 
 ``` python
 tokens = [token for token in doc if token.is_alpha]
@@ -142,43 +159,46 @@ words = [token.text for token in doc]
 print(words[:20])
 ```
 
-Again, it all depends on what your requirements are. For example, sometimes it is more useful if our atomic units are sentences. Think of the NLP task of classifying each whole sentence inside a text as Positive/Negative/Neutral. SpaCy also helps with this using a sentence segmentation model:
+Again, it all depends on what your requirements are. For example, sometimes it is more useful if our atomic units are sentences. Think of the NLP task of classifying each whole sentence inside a text as Positive/Negative/Neutral in terms of sentiment (e.g., within movie reviews). spaCy also helps with this using a sentence segmentation model:
 
 ```python
 sentences = [sent.text for sent in doc.sents]
 [print(s) for s in sentences[:5]]
 ```
 
-Note that in this case each sentence is an untokenized string. If you later are interested in accessing the tokens inside each sentence, you have to run a word tokenizer on each sentence.
+Note that in this case each sentence is an untokenized string. In terms of what we can do with these sentence tokens now spaCy has identified them, we could ask humans to label each sentence as either Positive/Negative/Neutral and train a supervised model for sentiment classification on the set of sentences. Or if we have a pre-trained model for sentiment classification on sentences, we could load this model in spaCy and then classify each of our input sentences as either Positive/Negative/Neutral. If you instead are interested in accessing the individual word or subword tokens inside each sentence, you have to run a _word_ or _subword_ tokenizer on each sentence. 
 
 ### Lowercasing
 
-Removing uppercases to e.g. avoid treating "Dog" and "dog" as two different words is also a common step, for example to train word vector representations, we want to merge both occurrences as they represent exactly the same concept. Lowercasing can be done with python directly as:
+Removing uppercases to e.g. avoid treating "Dog" and "dog" as two different words is also a common step, for example to train word vector representations, we want to merge both occurrences as they represent exactly the same concept. Lowercasing can be done with Python directly as:
 
 ```python
 lower_text = text_flat.lower()
 lower_text[:100] # Beware that this is a python string operation
 ```
 
-Beware that lowercasing the whole string as a first step might affect the tokenizer since tokenization benefits from information provided by case-sensitive strings. We can therefore tokenize first using spaCy and then obtain the lowercase strings of each token using the `.lower_` property:
+Beware that lowercasing the whole string as a first step might affect the tokenizer behavior since tokenization benefits from information provided by case-sensitive strings. We can therefore tokenize first using spaCy and then obtain the lowercase strings of each token using the `.lower_` property:
 
 ```python
 lower_text = [token.lower_ for token in doc]
 lower_text[:10] # Beware that this is a list of strings now!
 ```
 
-In other cases, such as with Named Entity Recognition, lowercasing can actually damage the performance of your model, since words that start with an uppercase (not preceded by a period) tend to be proper nouns that map into Entities, for example:
+In other tasks, such as Named Entity Recognition (NER), lowercasing before training can actually lower the performance of your model. This is because words that start with an uppercase (not preceded by a period) can represent proper nouns that map into Entities, for example:
 
-```text
-My next laptop will be from Apple, Will said.
-
-my next laptop will be from apple, will said.
+```python
+# Preserving uppercase characters increases the likelihood that an NER model
+# will correctly identify Apple and Will as a company (ORG) and a person (PER)
+# respectively.
+str1 = "My next laptop will be from Apple, Will said." 
+# Lowercasing can reduce the likelihood of accurate labeling
+str2 = "my next laptop will be from apple, will said."
 ```
 
 ### Lemmatization 
-Although it has become less frequent, normalizing words into their *dictionary form* can help to focus on relevant aspects of text. Think how "eating", "ate", "eaten" are all a variation of the verb "eat".
+Although it has become less widely used in modern NLP approaches, normalizing words into their *dictionary form* can help to focus on relevant aspects of text. Consider how "eating", "ate", "eaten" are all variations of the root verb "eat". Each variation is sometimes known as an _inflection_ of the root word. Conversely, we say that the word "eat" is the _lemma_ for the words "eating", "eats", "eaten", "ate" etc. Lemmatization is therefore the process of rewriting each token or word in a given input text as its lemma.
 
-Lemmatization is a NLP task on its own therefore we also tend to use ready pre-trained models to obtain the lemmas. Using spaCy we can access the lemmmatized version of each token with the `lemma_` (notice the underscore!) property:
+Lemmatization is not only a possible preprocessing step in NLP but also an NLP task on its own, with different algorithms for it. Therefore we also tend to use pre-trained models to perform lemmatization. Using spaCy we can access the lemmmatized version of each token with the `lemma_` property (notice the underscore!):
 
 ```python
 lemmas = [token.lemma_ for token in doc]
@@ -187,10 +207,9 @@ print(lemmas)
 
 Note that the list of lemmas is now a list of strings.
 
-Having a lemmatized text allows us to merge into a single token the different surface occurrences of the same concept. This can be very useful for count based methods, or for generating word representations. For example, you can have a single vector for `eat` instead of one vector per verb tense. 
+Having a lemmatized text allows us to merge the different surface occurrences of the same concept into a single token. This can be very useful for count-based NLP methods such as topic modelling approaches which count the frequency of certain words to see how prevalent a given topic is within a document. If you condense "eat", "eating", "ate", "eaten" to the same token "eat" then you can count four occurrences of the same "topic" in a text, instead of treating these four tokens as distinct or unrelated topics just because they are spelled differently. You can also use lemmatization for generating word embeddings. For example, you can have a single vector for `eat` instead of one vector per verb tense. 
 
-As with each preprocessing operation, this step is optional. Think for example, the cases where the differences of verb usage according to tense is informative, or the difference between singular and plural usage of nouns, in those cases lemmatizing will get rid of important information for your task. 
-
+As with each preprocessing operation, this step is optional. Consider, for example, the cases where the differences of verb usage according to tense is informative, or the difference between singular and plural usage of nouns, in those cases lemmatizing will get rid of important information for your task. For example, if your chosen NLP task is to detect past tense verbs from a document, then lemmatizing "eaten" into "eat" loses crucial information about tense that your model requires.
 
 ### Stop Word Removal
 The most frequent words in texts are those which contribute little semantic value on their own: articles ('the', 'a', 'an'), conjunctions ('and', 'or', 'but'), prepositions ('on', 'by'), auxiliary verbs ('is', 'am'), pronouns ('he', 'which'), or any highly frequent word that might not be of interest in several *content-only* related tasks. Let's define a small list of stop words for this specific case:
@@ -199,7 +218,7 @@ The most frequent words in texts are those which contribute little semantic valu
 STOP_WORDS = ["the", "you", "will"] # This list can be customized to your needs...
 ```
 
-Using python directly, we need to manually define a list of what we consider to be stop words and directly filter the tokens that match this. Note that doing the lemmatization step was crucial to get more coverage with the stop word filtering:
+Using Python directly, we need to manually define a list of what we consider to be stop words and directly filter the tokens that match this. Notice that lemmatization was a crucial step to get more coverage with the stop word filtering:
 
 ```python
 lemmas = [token.lemma_ for token in doc]
@@ -217,9 +236,9 @@ tokens_nostop = [token for token in tokens if not token.is_stop]
 print(tokens[:15])
 ```
 
-There is no canonical definition of stop words because what you consider to be a stop word is directly linked to the objective of your task at hand. For example, pronouns are usually considered stopwords, but if you want to do gender bias analysis then pronouns are actually a key element of your text processing pipeline. 
+There is no canonical definition of stop words because what you consider to be a stop word is directly linked to the objective of your task at hand. For example, pronouns are usually considered stopwords, but if you want to do gender bias analysis then pronouns are actually a key element of your text processing pipeline. Similarly, removing articles such as prepositions from text is obviously not advised if you are doing _dependency parsing_ (the task of identifying the parts of speech in a given text).
 
-Another special case is the word 'not' which carries a highly significant semantic value, the mere presence of this token changes the meaning of the sentences.
+Another special case is the word 'not' which may encode the semantic notion of _negation_. Removing such tokens can drastically change the meaning of sentences and therefore affect the accuracy of models for which negation is important to preserve (e.g., sentiment classification "this movie was NOT great" vs. "this movie was great").
 
 ## NLP Pipeline
 
@@ -228,9 +247,9 @@ The concept of NLP pipeline refers to the sequence of operations that we apply t
 ### A simple rule-based classifier
 Imagine we want to build a very lightweight sentiment classifier. A basic approach is to design the following pipeline: 
 
-1. Clean Original Text File
-2. Apply a sentence segmentation model
-3. Define a set of positive and negative words
+1. Clean the original text file (as we saw in the Data Formatting section)
+2. Apply a sentence segmentation or tokenization model
+3. Define a set of positive and negative words (a hard coded dictionary)
 4. For each sentence: 
     - If it contains one or more of the positive words, classify as `POSITIVE`
     - If it contains one or more of the negative words, classify as `NEGATIVE`
@@ -250,10 +269,10 @@ filename = "data/84_frankenstein_or_the_modern_prometheus.txt"
 with open(filename, 'r', encoding='utf-8') as file:
     text = file.read()
 
-text = text.replace("\n", " ")
+text = text.replace("\n", " ") # some cleaning by removing new line characters
 ```
 
-2. Apply Sentence segmentation
+2. Apply Sentence segmentation (Tokenization)
 
 ```python
 doc = nlp(text)
@@ -303,12 +322,11 @@ Discuss the pros and cons of the proposed NLP pipeline:
 
 ::::
 
+So far we’ve seen how to format and segment the text to have atomic data at the word level or sentence level. We then apply operations to the word and sentence strings. This approach still depends on counting and exact keyword matching. And as we have already seen it has several limitations. The method cannot interpret words outside the dictionary defined for example.
 
-So far we’ve seen how to format and segment the text to have atomic data at the word level or sentence level.
-We then apply operations to the word and sentence strings. This approach still depends on counting and exact keyword matching. And as we have already seen it has several limitations. 
+One way to combat this is by transforming each word into numeric representation and study statistical patterns in how these words are distributed in text. For example, what words tend to occur "close" to a given word in my data? For example, if we analyze restaurant menus we find that "cheese", "mozzarella", "base" etc. frequently occur near the token "pizza". We can then exploit these statistical patterns to inform various NLP tasks. This concept is commonly known as [distributional semantics](https://arxiv.org/pdf/1905.01896). It is based on the assumption "words that appear in similar contexts have similar meanings.”
 
-One way to combat this is by transforming each word into numeric representations and then perform math operations on them. We then can define similarity measures for the word representations which will allow more advance models, such as machine learning models, exploit patterns beyond the sting matching level. This is where the concept of word embeddings comes in handy.
-
+This concept is powerful for enabling, for example, the measurement of semantic similarity of words, sentences, phrases etc. in text. And this, in turn, can help with other downstream NLP tasks, as we shall see in the next section on word embeddings.
 
 ## Word Embeddings
 
@@ -331,7 +349,7 @@ There are two main architectures for training Word2Vec:
 CBOW is faster to train, while Skip-Gram is more effective for infrequent words. Increasing context size improves embeddings but increases training time.
 :::
 
-The python module `gensim` offers a very useful interface to interact with pre-trained word2vec models and also to train our own. First we will explore the model from the original Word2Vec paper, which was trained on a big corpus from Google News. We will see what functionalities are available to explore a vector space. Then we will step by step prepare our own text to train our own word2vec models and save them.
+The python module `gensim` offers a user-friendly interface to interact with pre-trained Word2vec models and also to train our own. First we will explore the model from the original Word2Vec paper, which was trained on a big corpus from Google News (English news articles). We will see what functionalities are available to explore a vector space. Then we will prepare our own text step-by-step to train our own Word2vec models and save them.
 
 ### Load the embeddings and inspect them
 
@@ -349,7 +367,7 @@ We will download the google News model with:
 w2v_model = gensim.downloader.load('word2vec-google-news-300')
 ```
 
-We can do some basic checkups such as showing how many words are in the vocabulary (i.e. for how many words do we have an available vector), what is the dimension of each vector and pick at how the vectors look inside:
+We can do some basic checkups such as showing how many words are in the vocabulary (i.e., for how many words do we have an available vector), what is the total number of dimensions in each vector, and print the components of a vector for a given word:
 
 ``` python
 print(len(w2v_model.key_to_index.keys())) # 3 million words
@@ -367,7 +385,7 @@ print(w2v_model['cat'][:10]) # The first 10 dimensions of the vector representin
   0.04980469 -0.00952148  0.22070312 -0.12597656]
 ```
 
-This is a very big model with 3 million words and the dimensionality chosen at training time was 300, thus each word will have a 300-dimension vector associated to it.
+As we can see, this is a very large model with 3 million words and the dimensionality chosen at training time was 300, thus each word will have a 300-dimension vector associated with it.
 
 Even with such a big vocabulary we can always find a word that won't be in there:
 
@@ -375,9 +393,9 @@ Even with such a big vocabulary we can always find a word that won't be in there
 print(w2v_model['bazzinga'][:10])
 ```
 
-This will throw a `KeyError` as the model does not know that word. Unfortunately this is a limitation that word2vec cannot solve.
+This will throw a `KeyError` as the model does not know that word. Unfortunately this is a limitation of Word2vec - unseen words (words that were not included in the training data) cannot be interpreted by the model. 
 
-Now let's talk about the vectors themselves. They are not easy to interpret as they are a bunch of floating point numbers. These are the weights that the network learned when optimizing for language modelling. As the vectors are hard to interpret, we rely on a mathematical method to compute how similar two vectors are. The best metric for measuring similarity between two high-dimensional vectors is cosine similarity.
+Now let's talk about the vectors themselves. They are not easy to interpret as they are a bunch of floating point numbers. These are the weights that the network learned when optimizing for language modelling. As the vectors are hard to interpret, we rely on a mathematical method to compute how similar two vectors are. Generally speaking, the recommended metric for measuring similarity between two high-dimensional vectors is [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) .
 
 ::: callout
 [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) ranges between [`-1` and `1`]. It is the cosine of the angle between two vectors, divided by the product of their length. Mathematically speaking, when two vectors point in exactly the same direction their cosine will be 1, and when they point in the opposite direction their cosine will be -1. In python we can use Numpy to compute the cosine similarity of vectors.
@@ -518,7 +536,7 @@ Once your model is trained it is useful to save the checkpoint in order to retri
 model.save("word2vec_mini_books.model")
 ```
 
-Let's put everything together. We have now the following NLP task: train our own Word2Vec model. We are interested on having vectors for content words only, so even though our preprocessing will unfortunately loose a lot of the original information, in exchange we will be able manipulate the most relevant conceptual words as individual numeric representations. 
+Let's put everything together. We have now the following NLP task: train our own Word2Vec model. We are interested on having vectors for content words only, so even though our preprocessing will unfortunately lose a lot of the original information, in exchange we will be able to manipulate the most relevant conceptual words as individual numeric representations. 
 
 
 :::: challenge
@@ -558,9 +576,9 @@ w2v.most_similar('monster')
 
 To obtain your own high-quality embeddings, the size/length of the training dataset plays a crucial role. Generally [tens of thousands of documents](https://cs.stanford.edu/~quocle/paragraph_vector.pdf) are considered a reasonable amount of data for decent results.
 
-Is there however a strict minimum? Not really. Things to keep in mind is that `vocabulary size`, `document length` and `desired vector size` interacts with each other. The higher the dimensional vectors (e.g. 200-300 dimensions) the more data is required, and of high quality, i.e. that allows the learning of words in a variety of contexts.
+Is there a strict minimum? Not really. It’s important to keep in mind that ``vocabulary size``, ``document length``, and ``desired vector size`` all interact with each other. Higher-dimensional vectors (e.g., 200–300 dimensions) provide more features to capture a word’s meaning, resulting in higher-quality embeddings that can represent words across a finer-grained and more diverse set of contexts.
 
-While word2vec models typically perform better with large datasets containing millions of words, using a single page is sufficient for demonstration and learning purposes. This smaller dataset allows us to train the model quickly and understand how word2vec works without the need for extensive computational resources.
+While Word2vec models typically perform better with large datasets containing millions of words, using a single page is sufficient for demonstration and learning purposes. This smaller dataset allows us to train the model quickly and understand how word2vec works without the need for extensive computational resources.
 :::
 
 
