@@ -28,7 +28,7 @@ After following this lesson, learners will be able to:
 
 ## Introduction
 
-In this episode, we will learn about the importance of preprocessing text in NLP, and how to apply common preprocessing operations to text files. We will also introduce the concept of "NLP Pipelines", learn about their basic components and how to construct such pipelines.
+In this episode, we will learn about the importance of preprocessing text in NLP, and how to apply common preprocessing operations to text files. We will also learn more about *NLP Pipelines*, learn about their basic components and how to construct such pipelines.
 
 We will then address the transition from rule-based NLP to distributional semantics approaches which encode text into numerical representations based on statistical relationships between tokens. We will introduce one particular algorithm for this kind of encoding called Word2Vec proposed in 2013 by [Mikolov et al](https://arxiv.org/pdf/1301.3781). We will show what kind of useful semantic relationships these representations encode in text, and how we can use them to solve specific NLP tasks. We will also discuss some of the limitations of Word2Vec which are addressed in the next lesson on transformers before concluding with a summary of what we covered in this lesson.
 
@@ -65,7 +65,7 @@ print(text_flat[:300]) # print the first 300 characters
 Other data formatting operations might include:
 - Removal of special or noisy characters. For example:
 
-    -  Random symbols: "The total cost is $120.00#" → remove #
+    - Random symbols: "The total cost is $120.00#" → remove #
     - Incorrectly recognized letters or numbers: 1 misread as l, 0 as O, etc. Example: "l0ve" → should be "love"
     - Control or formatting characters: \n, \t, \r appearing in the middle of sentences. Example: "Please\nsubmit\tyour form." → "Please submit your form."
     - Non-standard Unicode characters: �, �, or other placeholder symbols where OCR failed. Example: "Th� quick brown fox" → "The quick brown fox"
@@ -81,16 +81,17 @@ What if I need to extract text from MS Word docs or PDF files or Web pages?
 - For MS Word documents [python-docx](https://python-docx.readthedocs.io/en/latest/) is popular.
 - For (text-based) PDF files [PyPDF2](https://pypi.org/project/PyPDF2/) and [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/) are widely used. Note that some PDF files are encoded as images (pixels) and not text. If the text in these files is digital (as opposed to scanned handwriting), you can use OCR (Optical Character Recognition) libraries such as [pytesseract](https://pypi.org/project/pytesseract/) to convert the image to machine-readable text.
 - For scraping text from websites, [BeautifulSoup](https://pypi.org/project/beautifulsoup4/) and [Scrapy](https://docs.scrapy.org/en/latest/) are some common options.
+- LLMs also have something to offer here, and the field is moving pretty fast. There are some interesting open source LLM-based document parsers and OCR-like extractors such as [Marker](https://github.com/datalab-to/marker), or [PyMuPDF4LLM](https://github.com/pymupdf/PyMuPDF4LLM), just to mention a couple.
 :::
 
 
 ::: callout
 Another important choice at the data formatting level is to decide at what granularity do you need to perform the NLP task: 
 
-- Are you analyzing phenomena at the **word level**? 
-- Do you need to first extract sentences from the text and do analysis at the **sentence level**? 
-- Do you need full **chunks of text**? (e.g. paragraphs or chapters?)
-- Or perhaps you want to extract patterns at the **document level**? For example each book should have a genre tag.
+- Are you analyzing phenomena at the **word level**? For example, detecting abusive language (based on a known vocabulary).
+- Do you need to first extract sentences from the text and do analysis at the **sentence level**? For example, extracting entities in each sentence.
+- Do you need full **chunks of text**? (e.g. paragraphs or chapters?) For example, summarizing each paragraph in a document.
+- Or perhaps you want to extract patterns at the **document level**? For example each full book should have one genre tag (Romance, History, Poetry).
 
 Sometimes your data will be already available at the desired granularity level. If this is not the case, then during the tokenization step you will need to figure out how to obtain the desired granularity level.
 :::
@@ -166,7 +167,17 @@ sentences = [sent.text for sent in doc.sents]
 [print(s) for s in sentences[:5]]
 ```
 
-Note that in this case each sentence is an untokenized string. In terms of what we can do with these sentence tokens now spaCy has identified them, we could ask humans to label each sentence as either Positive/Negative/Neutral and train a supervised model for sentiment classification on the set of sentences. Or if we have a pre-trained model for sentiment classification on sentences, we could load this model in spaCy and then classify each of our input sentences as either Positive/Negative/Neutral. If you instead are interested in accessing the individual word or subword tokens inside each sentence, you have to run a _word_ or _subword_ tokenizer on each sentence. 
+Note that in this case each sentence is a python object, and the property `.text` returns an untokenized string (in terms of words). But we can still access the list of word tokens inside each sentence object if we want:
+
+```python
+sents_sample = list(doc.sents)[:10]
+for sent in sents_sample:
+    print("Sentence:", sent.text)
+    for token in sent:
+        print("\tToken:", token.text)
+```
+
+This will give us enough flexibility to work at the sentence and word level at the same time. In terms of what we can do with these sentences once spaCy has identified them, we could ask humans to label each sentence as either Positive/Negative/Neutral and train a supervised model for sentiment classification on the set of sentences. Or if we have a pre-trained model for sentiment classification on sentences, we could load this model and classify each of our input sentences as either Positive/Negative/Neutral.
 
 ### Lowercasing
 
@@ -272,7 +283,7 @@ with open(filename, 'r', encoding='utf-8') as file:
 text = text.replace("\n", " ") # some cleaning by removing new line characters
 ```
 
-2. Apply Sentence segmentation (Tokenization)
+2. Apply Sentence segmentation
 
 ```python
 doc = nlp(text)
@@ -330,24 +341,35 @@ This concept is powerful for enabling, for example, the measurement of semantic 
 
 ## Word Embeddings
 
-As we have seen, count-based methods can be directly applied to learn statistical co-occurrences in raw texts. Count-based methods are limited because they rapidly become unmanageable. The idea behind word embeddings is built on top of exploiting statistical co-occurrences in context but **instead of holding explicit counts for every single word and document, a neural network is trained to predict missing words in context**. 
+### Reminder: Neural Networks
 
-A shallow neural network is optimized with the task of language modeling and the final trained network holds vectors of a fixed size whose values can be mapped into linguistic properties (since the training objective was language modeling). Since similar words occur in similar contexts, or have same characteristics, a properly trained model will learn to assign similar vectors to similar words.
+Understanding how neural networks work is out of the scope of this course. For our purposes we will simplify the explanation in order to conceptually understand how Neural Network works. A Neural Network (NN) is a pattern-finding machine with layers (a *deep* neural network is the same concept but scaled to dozens or even hundreds of layers). In a neural network, each layer has several interconnected *neurons*, each one corresponding to a random number initially. The deeper the network is, the more complex patterns it can learn. As the neural netork gets trained (that is, as it sees several labeled examples that we provide), each neuron value will be updated in order to maximize the probability of getting the answers right. A well trained neural network will be able to predict the right labels on completely new data with certain accuracy. 
+
+![After seeing thousands of examples, each layer represents different “features” that maximize the success of the task, but they are not human-readable. The last layer acts as a classifier and outputs the most likely label given the input](fig/emb_neuralnet.png)
+
+The main difference with traditional machine learning models is that we do not need to design explicitly any features, rather the network will *adjust itself* by looking at the data alone and executing the back-propagation algorithm. The main job when using NNs is to encode our data properly so it can be fed into the network. 
+
+### Rationale behind Embeddings
+
+**A word embedding is a numeric vector that represents a word**. Word2Vec exploits the "feature agnostic" power of neural networks to transform word strings into trained word numeric representations. Hence we still use words as features but instead of using the string directly, we transform that string into its corresponding vector in the pre-trained Word2Vec model. And because both the network input and output are the words themselves in text, we basically have billions of *labeled* training datapoints for free.
+
+![](fig/emb_embeddings.png)
+
+To obtained the word embeddings, a shallow neural network is optimized with the task of language modeling and the final hidden layer inside the trained network holds the fixed size vectors whose values can be mapped into linguistic properties (since the training objective was language modeling). Since similar words occur in similar contexts, or have same characteristics, a properly trained model will learn to assign similar vectors to similar words.
 
 By representing words with vectors, we can mathematically manipulate them through vector arithmetic and express semantic similarity in terms of vector distance. Because the size of the learned vectors is not proportional to the amount of documents we can learn the representations from larger collections of texts, obtaining more robust representations, that are less corpus-dependent.
 
-## The Word2Vec Vector Space
 
-There are two main architectures for training Word2Vec:
+There are two main algorithms for training Word2Vec:
 
 -   Continuous Bag-of-Words (CBOW): Predicts a target word based on its surrounding context words.
 -   Continuous Skip-Gram: Predicts surrounding context words given a target word.
 
 ![](fig/emb13.png)
 
-::: callout
-CBOW is faster to train, while Skip-Gram is more effective for infrequent words. Increasing context size improves embeddings but increases training time.
-:::
+If you want to know more about the technicl aspecs of training Word2Vec you can visit this [tutorial](https://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/)
+
+### The Word2Vec Vector Space
 
 The python module `gensim` offers a user-friendly interface to interact with pre-trained Word2vec models and also to train our own. First we will explore the model from the original Word2Vec paper, which was trained on a big corpus from Google News (English news articles). We will see what functionalities are available to explore a vector space. Then we will prepare our own text step-by-step to train our own Word2vec models and save them.
 
@@ -539,28 +561,6 @@ model.save("word2vec_mini_books.model")
 Let's put everything together. We have now the following NLP task: train our own Word2Vec model. We are interested on having vectors for content words only, so even though our preprocessing will unfortunately lose a lot of the original information, in exchange we will be able to manipulate the most relevant conceptual words as individual numeric representations. 
 
 
-:::: challenge
-Let's apply this step by step on a longer text. In this case, because we are learning the process, our corpus will be only one book but in reality we would like to train a network with thousands of them. We will use two books: Frankenstein and Dracula to train a model of word vectors.
-
-Write the code to follow the proposed pipeline and train the word2vec model. The proposed pipeline for this task is: 
-
-- load the text files
-- tokenize files
-- keep only alphanumerical tokens
-- lowercase words
-- lemmatize words
-- Remove stop words
-- Train a Word2Vec model (feed the clean tokens to the `Word2Vec` object)
-- Save the trained model
-
-::: solution
-```python
-pass
-```
-:::
-
-::::
-
 To load back the pre-trained vectors you just created you can use the following code:
 
 ```python
@@ -569,6 +569,52 @@ w2v = model.wv
 # Test:
 w2v.most_similar('monster')
 ```
+
+
+:::: challenge
+Let's apply this step by step on a longer text. In this case, because we are learning the process, our corpus will be only one book but in reality we would like to train a network with thousands of them. We will use two books: Frankenstein and Dracula to train a model of word vectors.
+
+Write the code to follow the proposed pipeline and train the word2vec model. The proposed pipeline for this task is: 
+
+- load the text files
+- tokenize files
+- keep only alphanumerical tokens
+- lemmatize words
+- Remove stop words
+- Train a Word2Vec model (feed the clean tokens to the `Word2Vec` object) with `vector_size=50`
+- Save the trained model
+
+::: solution
+```python
+import spacy
+from gensim.models import Word2Vec 
+
+def process_book(book_filename: str, spacy_model: spacy.lang) -> list[str]:
+    with open(book_filename) as f:
+        book_text = f.read()
+    
+    book_doc = spacy_model(book_text)
+    valid_tokens = [tok for tok in book_doc if tok.is_alpha and not tok.is_stop]
+    lemmas = [tok.lemma_ for tok in valid_tokens] 
+    return lemmas
+    
+nlp = spacy.load("en_core_web_sm")
+
+# Load the Tokens
+franken_tokens = process_book("data/84_frankenstein_clean.txt", nlp)
+dracula_tokens = process_book("data/345_dracula_clean.txt", nlp)
+
+# Train our own model
+spooky_model = Word2Vec([franken_tokens, dracula_tokens], sg=0 , vector_size=50, window=5, min_count=1, workers=4)
+
+# Test the vectors
+print(len(spooky_model.wv['Frankenstein']))
+print(spooky_model.wv['Frankenstein'][:30])
+print(spooky_model.wv.most_similar("Frankenstein"))
+```
+:::
+
+::::
 
 
 ::: callout

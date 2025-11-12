@@ -77,7 +77,7 @@ print(len(chinese_words))
 1
 ```
 
-The same example however did not work in Chinese, because Chinese does not use spaces to separate words. This is an example of how the idiosyncrasies of human language affects how we can process them with computers. We therefore need to use a tokenizer specifically designed for Chinese to obtain the list of well-formed words in the text. Here we use a "pre-trained" tokenizer called **jieba**, which uses a dictionary-based approach to correctly identify the distinct words:
+The same example however did not work in Chinese, because Chinese does not use spaces to separate words. This is an example of how the idiosyncrasies of human language affects how we can process them with computers. We therefore need to use a tokenizer specifically designed for Chinese to obtain the list of well-formed words in the text. Here we use a "pre-trained" tokenizer called **MicroTokenizer**, which uses a dictionary-based approach to correctly identify the distinct words:
 
 ``` python
 import MicroTokenizer  # A popular Chinese text segmentation library
