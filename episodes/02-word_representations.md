@@ -629,8 +629,8 @@ While Word2vec models typically perform better with large datasets containing mi
 
 
 ::: keypoints
--   We can represent text as vectors of numbers (which makes it interpretable for machines)
 -   We can run a preprocessing pipeline to obtain clear words that can be used as features
+-   We learned how are words converted into vectors of numbers (which makes them interpretable for machines)
 -   We can easily compute how words are similar to each other with the cosine similarity
 -   Using gensim we can train our own word2vec models
 :::
