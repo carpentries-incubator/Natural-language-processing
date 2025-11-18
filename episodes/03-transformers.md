@@ -7,29 +7,28 @@ exercises: 60
 - What are some drawbacks of static word embeddings?
 - What are Transformers?
 - What is BERT and how does it work?
-- How can I use BERT to solve NLP tasks?
+- How can I use BERT to solve supervised NLP tasks?
 - How should I evaluate my classifiers?
-- Which other Transformer variants are available?
-
 ::: 
 
 ::: objectives
-- Understand how a Transformer works and recognize their different use cases.
-- Understand how to use pre-trained tranfromers (Use Case: BERT)
+- Understand how a Transformer works and recognize their main components.
+- Understand how to use pre-trained transformers (Use Case: BERT)
+- Use BERT to predict words in context.
 - Use BERT to classify texts.
-- Use BERT as a Named Entity Recognizer.
+- Learn to evaluate your NLP Classifier.
 - Understand assumptions and basic evaluation for NLP outputs.
-
 :::
 
-Word embeddings such as Word2Vec can be used to represent each word as a unique vectors. Vector representations also allow us to apply numerical operations that can be mapped to some syntactic and semantic properties of words, such as the cases of analogies or finding synonyms.
 
-However, a big drawback of Word2Vec is that **each word is represented in isolation**, which means that once we finished training a model, each word will always be mapped into the same vector, regardless of the context in which it appeared. This is what is called *static word embedding*, and unfortunately that is not how language works. Words get their meanings *dinamically*, based on the specific context in which they are used. Think of polysemy, the cases where the same word can have very different meanings depending on the context. Therefore, we would like to have richer vector representations of words that are themselves sensitive to their context in order to obtain more powerful representations. 
+Word embeddings such as Word2Vec can be used to represent each word as a unique vectors instead of Python strings. These vector representations also allow us to apply numerical operations that can be mapped to some syntactic and semantic properties of words, such as the cases of analogies or finding synonyms. This has proven to be quite useful for downstream lexical-related tasks.
+
+However, a big drawback of Word2Vec is that **each word is represented in isolation**, which means that once we finished training a model, each word will always be mapped into the same vector, regardless of the context in which it appeared. This is what is called *static word embedding*, and unfortunately that is not how language works. Words get their meanings *dinamically*, based on the specific context in which they are used. Think of syntactic information, which is relevant to understand the difference between "the dog bit the man" and "the man bit the dog". Another case is polysemy, where the same word can have very different meanings depending on the context. Therefore, we would like to have richer vectors of words that are themselves sensitive to their context in order to obtain more powerful representations. 
 
 :::: challenge
 ### Polysemy in Language
 
-Think of (at least 2) different words that can have more than one meaning depending on the context. Come up with one simple sentence per meaning and explain what they mean in each context. Discuss: How do you know what of the possible meanings does the word have when you use it?
+Think of words (at least 2) that can have more than one meaning depending on the context. Come up with one simple sentence per meaning and explain what they mean in each context. Discuss: How do you know which of the possible meanings does the word have when you see it?
 
 ::: solution
 
@@ -50,12 +49,29 @@ Note how in the "run out" example we even have to understand that the meaning of
 ::::
 
 
-In 2019, the BERT language model was introduced. Using a novel architecture called Transformer (2017), BERT was specifically designed to integrate context into word representations. To understand BERT, we will first look at what a transformer is and we will then directly use some code to make use of BERT.
+::: callout
+
+### Bridging Word Embeddings and Contextualized Models
+
+The limitations of Word2Vec became apparent as researchers tackled more complex natural language understanding tasks. BERT, the model we will describe below, was not the first attempt to improve upon the drawbacks of Word2Vec.Several intermediate models emerged to address the shortcomings. Some prominent models were: 
+
+- **FastText** [(Joulin, et. al., 2016)](https://arxiv.org/pdf/1607.01759), developed by Facebook, extended Word2Vec by representing words as bags of character n-grams rather than atomic units. This subword tokenization approach enabled the model to generate embeddings for previously unseen words by combining learned subword representations—for instance, understanding "unhappiness" through its components "un-," "happiness," and "-ness." FastText proved particularly valuable for morphologically rich languages and handling misspellings or rare word forms.
+
+**ELMo** [(Peters, et. al., 2018)](https://aclanthology.org/N18-1202.pdf) marked a paradigm shift by integrating context into the word representations. Unlike Word2Vec's static embeddings, ELMo generated different representations for the same word based on its surrounding context using bidirectional LSTM networks. The model was pretrained on large text corpora using a language modeling objective—predicting words from both left and right contexts simultaneously—and crucially introduced effective transfer learning to NLP. BERT would basically replicate this concept but using a more powerful neural nwtwork architecture: the Transformer, which allowed for the scaling of training material. 
+
+**ULMFiT** [(Howard & Ruder, 2018)](https://aclanthology.org/P18-1031.pdf). Universal Language Model Fine-tuning, also tackled the problem via transfer learning; that is, *re-using the same model* for learning several different tasks and hence enriching word representations afte each task was learned). This idea also enriched BERT post-training methodologies.
+
+These intermediate models established several crucial concepts: that subword tokenization could handle vocabulary limitations, that context-dependent representations were superior to static embeddings, that deep bidirectional architectures captured richer linguistic information, and most importantly, that large-scale pretraining followed by task-specific fine-tuning could dramatically improve performance across diverse NLP applications.
+
+:::
+
+
+In late 2018, the [BERT](https://aclanthology.org/N19-1423.pdf) language model was introduced. Using a novel architecture called [Transformer](https://arxiv.org/pdf/1706.03762) (2017), BERT was specifically designed to scale the amount of training data and integrate context into word representations. To understand BERT, we will first look at what a transformer is and we will then directly use some code to make use of BERT.
 
 
 ## Transformers
 
-The Transformer is a deep neural network architecture proposed by Google researchers [in 2017](https://arxiv.org/pdf/1706.03762) in a paper called *Attention is all you Need*. They tackled specifically the NLP task of Machine Translation (MT), which is stated as: how to generate a sentence (sequence of words) in target language B given a sentence in source language A? We all know that translation cannot be done word by word in isolations, therefore integrating the context from both the source language and the target language is necessary. In order to translate, first one neural network needs to _encode_ the whole meaning of the senetence in language A into a single vector representation, then a second neural network needs to _decode_ that representation into tokens that are both coherent with the meaning of language A and understandable in language B. Therefore we say that translation is modeling language B _conditioned_ on what language A originally said.
+The Transformer is a deep neural network architecture proposed by Google researchers in a paper called *Attention is all you Need*. They tackled specifically the NLP task of Machine Translation (MT), which is stated as: how to generate a sentence (sequence of words) in target language B given a sentence in source language A? We all know that translation cannot be done word by word in isolations, therefore integrating the context from both the source language and the target language is necessary. In order to translate, first one neural network needs to _encode_ the whole meaning of the senetence in language A into a single vector representation, then a second neural network needs to _decode_ that representation into tokens that are both coherent with the meaning of language A and understandable in language B. Therefore we say that translation is modeling language B _conditioned_ on what language A originally said.
 
 
 ![Transformer Architecture](fig/trans1.png)
@@ -159,15 +175,18 @@ The output is a 2-dimensional tensor where the first dimention contains 1 elemen
 In order to see what these Token IDs represent, we can _translate_ them into human readable strings. This includes converting the tensors into numpy arrays and converting each ID into its string representation:
 
 ```python
-token_ids = list(encoded_input.input_ids[0].numpy())
+token_ids = list(encoded_input.input_ids[0].detach().numpy())
 string_tokens = tokenizer.convert_ids_to_tokens(token_ids)
 print("IDs:", token_ids)
 print("TOKENS:", string_tokens)
 ```
 
-`IDs: [101, 3406, 7871, 144, 3484, 15016, 102]`
+```
+IDs: [101, 3406, 7871, 144, 3484, 15016, 102]
 
-`TOKENS: ['[CLS]', 'Maria', 'loves', 'G', '##ron', '##ingen', '[SEP]']`
+TOKENS: ['[CLS]', 'Maria', 'loves', 'G', '##ron', '##ingen', '[SEP]']
+
+```
 
 
 ::: callout
@@ -181,14 +200,15 @@ tok_ron = output.last_hidden_state[0][4].detach().numpy()
 tok_ingen = output.last_hidden_state[0][5].detach().numpy()
 
 tok_groningen = np.mean([tok_G, tok_ron, tok_ingen], axis=0)
-tok_groningen.shape
+print(tok_groningen.shape)
+print(tok_groningen[:10])
 ```
-We use the functions `detach().numpy()` to bring the values from the Pytorch execution environment (for example a GPU) into the main python thread and treat it as a numpy vector for convenvience. Then, since we are dealing with three numpy vectors we can average the three of them and end op with a single `enchanting` vector of 768-dimensions representing the average of `'en', '##chan', '##ting'`.
+We use the functions `detach().numpy()` to bring the values from the Pytorch execution environment (for example a GPU) into the main python thread and treat it as a numpy vector for convenvience. Then, since we are dealing with three numpy vectors we can average the three of them and end op with a single `Groningen` vector of 768-dimensions representing the average of `'G', '##ron', '##ingen'`.
 
 :::
 
 
-### Polysemy in BERT
+### Analyzing polysemy with BERT
 We can encode two sentences containing the word *note* to see how BERT actually handles polysemy (*note* means something very different in each sentence) thanks to the representation of each word now being contextualized instead of isolated as was the case with word2vec.
 
 
@@ -336,6 +356,8 @@ We will next see the case of combining BERT with a classifier on top.
 Play with the `fill-mask` pipeline and try to find examples where the model gives bad predictions and examples where the prections are very good. You can change the `top_k` parameter and even play with the multilingual BERT model to compare. To do this last think you should change the `model` and `tokenizer` parameters to `bert-base-multilingual-cased`
 :::: solution
 This is a free excercise, so anything works. But even by running the same cases with the multilingual models we see some interesting aspects. For example, the predicions are of less quality in English. This is due to the "spread" of information across other languages, including a worse tokenization, since this model tries do predict for around 200 languages.
+
+Another interesting example is searching for **bias in the completions**. Compare the outputs you get for the sentences "This man works as a [MASK]." and "This woman works as a [MASK].".
 ::::
 
 :::
@@ -382,7 +404,7 @@ This code outputs again a list of dictionaries with the `top-k` (`k=3`) emotions
 
 ::: callout
 
-Finetunning BERT is very cheap, because we only need to train the _classifier_ layer,  a very small neural network, that can learn to choose between the classes (labels) for your custom classification problem, without needing a big amount of annotated data. This classifier is just a one-layer neural layer that assigns a score that can be translated to the probability over a set of labels, given the input features provided by BERT, which _encodes_ the meaning of the entire sequence in its hidden states. Unfortunately this is out of the scope of this course but you can learn more about fine-tuinning BERT-like models in [this HuggingFace tutorial](https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning)
+Fine-tuning BERT is very cheap, because we only need to train the _classifier_ layer,  a very small neural network, that can learn to choose between the classes (labels) for your custom classification problem, without needing a big amount of annotated data. This classifier is a one-layer neural layer that assigns a score that can be translated to the probability over a set of labels, given the input features provided by BERT, which already _encodes_ the meaning of the entire sequence in its hidden states. Unfortunately fine-tuning is out of the scope of this course but you can learn more about fine-tuinning BERT-like models in [this HuggingFace tutorial](https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning)
 :::
 
 
@@ -394,28 +416,38 @@ Finetunning BERT is very cheap, because we only need to train the _classifier_ l
 Model evaluation is a critical step in any machine learning project, and it is also the case for NLP. While it may be tempting to rely on the accuracy scores observed during training, or the model descriptions provided on the web, this approach can be misleading and often results in models that fail in real-world applications, and that includes your data.
 
 ::: callout
-The fundamental principle of model evaluation is to test your model on data it has never seen before. If you are training your own models, this is typically achieved by splitting your dataset into training, validation, and test sets. The training set is used to teach the model, the validation set helps tune hyperparameters or other aspects of model development, and the test set provides a less biased assessment of the final model's performance. Without this separation, you risk overfitting, where your model memorizes the training data rather than learning generalizable patterns.
+The fundamental principle of model evaluation is to test your model on data it has never seen before. **If you are training your own models, this is typically achieved by splitting your dataset into training, validation, and test sets**. The training set is used to teach the model, the validation set helps tune hyperparameters or other aspects of model development, and the test set provides a less biased assessment of the final model's performance. Without this separation, you risk overfitting, where your model memorizes the training data rather than learning generalizable patterns.
 
-If you are using out-of-the-box models, evaluation is also mandatory, as you must be sure that the outputs you obtain behave in the manner that you would expect. In this case you only need to design the test set (with human annotators) and measure the performance. It doesn't matter how *broadly a model was tested*, you must always confirm that it is suitable for your intended usage. It is also not enough to use semi-automated evaluation, designing human-labeled data will also provide insightful information for shaping your own task and judging the predictions you get.
+If you are using out-of-the-box models, evaluation is also mandatory, as you must be sure that the outputs you obtain behave in the manner that you would expect. In this case you only need to design the test set (with human annotators) and measure the performance. **It doesn't matter how broadly a model was tested, you must always confirm that it is suitable for your intended usage**. It is also not enough to use semi-automated evaluation, designing human-labeled data will also provide insightful information for shaping your own task and judging the predictions you get.
 :::
 
 ### Evaluation Metrics
 
-Several metrics are commonly used to evaluate NLP models, each offering different insights into performance. Here we will describe the 4 most used in suervised learning classifiers: 
-- **Accuracy:** measures the global proportion of correct predictions, regardless of the class they hold. 
-- **Precision:**  This answers the following question: "Of all the predictions the model made for a particular class, how many were actually correct?" 
-- **Recall:** This answers the following question: "Of all the actual instances of a class, how many did the model successfully identify?". 
+Several metrics are commonly used to evaluate NLP models, each offering different insights into performance. Here we will describe the 4 most used in suervised learning classifiers
+
+Let's give the toy example of classifying photographs of cats and dogs. In this task, there are 2 classes: `cat` and `dog`, and we have a model that return the label `cat` or `dog` given an input photograph. If we want to evaluate how good is our model at recognizing `dog`s (our *positive class* in this example), there are 4 possibilities when comparing with the ground truth (your labeled data): 
+
+1. **True Positives (TP):** the number of `dog` photographs the model *correctly* labeled as `dog`. 
+2. **True Negatives (TN):** the number of non-`dog` photographs *correctly* labeled as something else.
+3. **False Positives (FP):** the number of non-`dog` photographs the model *mistakenly* labeled as `dog`.
+4. **False Negatives (FN):** the number of `dog` photographs *mistakenly* labeled as something else.
+
+Based on this simple counts, we can derive four metrics that inform us at scale about the performance of our classifiers: 
+
+- **Accuracy:** measures the global proportion of correct predictions, regardless of the class they hold. This is al true cases (TP + TN) divided by all tested instances (TP+TN+FP+FN).
+- **Precision:**  This answers the following question: "Of all the predictions the model made for a particular class, how many were actually correct?". This is TP divided by (TP+FP). 
+- **Recall:** This answers the following question: "Of all the actual instances of a class, how many did the model successfully identify?". This is TP divided by (TP+FN).
 - **F1-score:** provides a harmonic mean of precision and recall, offering a single metric that balances both concerns. 
 
 Deciding which metric is the most relevant to your case depends on your specific task, but having a view at all of the metrics is always insightful.
 
 ![An example for a classifier of Cats and Dogs. Source: Wikipedia](fig/bert_precisionRecall.png)
 
-It's important to remember that a high accuracy score doesn't always indicate a good model. For example, if you're classifying rare events that occur only 5% of the time, a naive model that always predicts "no event" would achieve 95% accuracy while being completely useless. This is why examining multiple metrics and understanding your data's characteristics is essential for proper model evaluation.
+**It's important to remember that a high accuracy score doesn't always indicate a good model**. For example, if you're classifying rare events that occur only 5% of the time, a naive model that always predicts "no event" would achieve 95% accuracy while being completely useless. This is why examining multiple metrics and understanding your data's characteristics is essential for proper model evaluation.
 
 In python, the `scikit-learn` package already provides us with these (and many other) evaluation metrics. All we need to do is prepare an ordered list with the `true_labels` and a list with the corresponding `predicted_labels` for each example in our data. 
 
-We will use a simpler senitment model that predicts 5 classes: `Very positive`, `positive`, `neutral`, `negative` and `very negative`. Here is an example of the model predictions for 4 toy examples:
+To illustrate the usage of evaluation, we will use a simpler sentiment model that predicts 5 classes: `Very positive`, `positive`, `neutral`, `negative` and `very negative`. Here is an example of the model predictions for four toy examples:
 
 ```python
 from transformers import pipeline
@@ -454,7 +486,7 @@ for res in result:
 {'label': 'Very Negative', 'score': 0.36225152015686035}
 ```
 
-We can see that the model predicts correctly the 4 examples we gave. This is unsuprising as they are incredibly obvious examples. We can also print the 4 instances, but it is not a scalable approach. 
+We can see that the model predicts correctly the 4 examples we gave. This is unsuprising as they are incredibly obvious examples. We can also print the results and instepct them because they are only 4 instances, but it is clearly not a scalable approach. 
 
 ::: callout
 Note that many models will provide a confidence `score`, with their predicitons. It is very tempting to interpret these scores as a proxy to "how certain is the model of prediction X". However, you should be very careful, this score is only a relative confidece measure with respect to the training data, and it does not always translate well to unseen data. Most of the times it is better to just ignore it, especially if it is a model that you didn't train yourself.
@@ -483,13 +515,15 @@ Very Positive       1.00      1.00      1.00         1
  weighted avg       1.00      1.00      1.00         4
 ```
 
+These 4 metrics range from 0 to 1 (note that sometimes people multiply the scores by 100 to gain more granularity with decimal places). In this case, because we had a *perfect* score everything amounts to 1. In the most catastrophic scenario all scores would be zero.
+
 
 ::: challenge
 ### Evaluate Sentiment Classifier
 
-Now it is time to scale things a little but more...
+Now it is time to scale things a little but more... Use the same pipeline from the given toy example to run predictions over 100 examples of short boook reviews. Then print the classification report for the given *test set*. These examples are given in the `data/sentiment_film_data.tsv` file.
 
-You can use the following helper functions:
+You can use the following helper functions, the first one helps you read the file and the second one normalizes the 5-class predictions into the 3-class annotations given in the test set:
 
 ``` python
 def load_data(filename):
@@ -537,13 +571,8 @@ print(classification_report(y_true, y_pred))
 
 ### Confusion Matrix
 
-The confusion matrix is a very direct and informative tool for understanding your model's performance, by offering a detailed map of your model's behavior in detail. It is a table that compares your model's predictions against the true labels. The **rows typically represent the actual classes, while the columns show the predicted classes**. Each cell contains the count of instances that fall into that particular combination of true and predicted labels. Perfect predictions would result in all counts appearing along the diagonal of the matrix, with zeros everywhere else.
+The confusion matrix is another direct and informative tool for understanding your model's performance, by offering an intuitive visualization of your model's behavior in detail. It is a table that compares your model's predictions against the true labels. The **rows typically represent the actual classes, while the columns show the predicted classes**. Each cell contains the count of instances that fall into that particular combination of true and predicted labels. Perfect predictions would result in all counts appearing along the diagonal of the matrix, with zeros everywhere else.
 
-Some of the insights from a confusion matrix include:
-- Observe which classes your model handles well and which ones it struggles with.
-- Observe confusion patterns between classes. By examining the off-diagonal cells, you can identify systematic errors your model makes. For example, perhaps your sentiment classifier consistently confuses neutral statements with positive ones, but rarely mistakes neutral for negative.
-- Detect Bias, for example by exposing a tendency to over-predict certain classes while ignoring others.
-- Detect class imbalance. Even if your overall accuracy seems high, the confusion matrix might reveal that your model achieves this by simply predicting the majority class most of the time. 
 
 ```python
 from sklearn.metrics import ConfusionMatrixDisplay
@@ -558,6 +587,14 @@ show_confusion_matrix(y_true, y_pred)
 This code shows the following matrix:
 
 ![](fig/bert_sentiment_matrix.png)
+
+
+Some of the insights from a confusion matrix include:
+
+- Observe which classes your model handles well and which ones it struggles with.
+- Observe confusion patterns between classes. By examining the off-diagonal cells, you can identify systematic errors your model makes. For example, perhaps your sentiment classifier consistently confuses neutral statements with positive ones, but rarely mistakes neutral for negative.
+- Detect Bias, for example by exposing a tendency to over-predict certain classes while ignoring others.
+- Detect class imbalance. Even if your overall accuracy seems high, the confusion matrix might reveal that your model achieves this by simply predicting the majority class most of the time. 
 
 
 ## BERT for Token Classification
