@@ -79,7 +79,7 @@ Remember that you need to activate your environment every time you restart your 
 ### On Linux/macOs
 
 ```shell
-python3 -m pip install jupyterlab MicroTokenizer spacy gensim matplotlib transformers  
+python3 -m pip install jupyterlab MicroTokenizer spacy gensim matplotlib scikit-learn torch transformers langchain langchain-ollama
 ```
 
 :::
@@ -89,7 +89,7 @@ python3 -m pip install jupyterlab MicroTokenizer spacy gensim matplotlib transfo
 ### On Windows
 
 ```shell
-py -m pip install jupyterlab MicroTokenizer spacy gensim matplotlib transformers
+py -m pip install jupyterlab MicroTokenizer spacy gensim matplotlib scikit-learn torch transformers langchain langchain-ollama
 ```
 
 :::
