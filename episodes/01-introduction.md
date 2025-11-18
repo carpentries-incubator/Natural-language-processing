@@ -20,13 +20,13 @@ exercises: 60
 
 ## What is NLP?
 
-Natural language processing (NLP) is an area of research and application that focuses on making human languages processable for computers, so that they can perform useful tasks. It is therefore not a single method, but a collection of techniques that help us deal with linguistic inputs. The range of techniques spans simple word counts, to Machine Learning (ML) methods, all the way up to complex Deep Learning (DL) architectures.
+Natural language processing (NLP) is an area of research and application that focuses on making human languages processable for computers, so that they can perform useful tasks. It is therefore not a single method, but a collection of techniques that help us deal with linguistic inputs. The range of techniques spans from simple word counts, to Machine Learning (ML) methods, all the way up to complex Deep Learning (DL) architectures.
 
 We use the term "natural language", as opposed to "artificial language" such as programming languages, which are by design constructed to be easily formalized into machine-readable instructions. In contrast to programming languages, natural languages are complex, ambiguous, and heavily context-dependent, making them challenging for computers to process. To complicate matters, there is not only a single *human language*. More than 7000 languages are spoken around the world, each with its own grammar, vocabulary, and cultural context.
 
-In this course we will mainly focus on written language, specifically written English, we leave out audio and speech, as they require a different kind of input processing. But consider that we use English only as a convenience so we can address the technical aspects of processing textual data. While ideally most of the concepts from NLP apply to most languages, one should always be aware that certain languages require different approaches to solve seemingly similar problems. We would like to encourage the usage of NLP in other less widely known languages, especially if it is a minority language. You can read more about this topic in this [blogpost](https://www.ruder.io/nlp-beyond-english/).
+In this course we will mainly focus on written language, specifically written English. We leave out audio and speech, as they require a different kind of input processing. But consider that we use English only as a convenience so we can address the technical aspects of processing textual data. While ideally most of the concepts from NLP apply to most languages, one should always be aware that certain languages require different approaches to solve seemingly similar problems. We would like to encourage the usage of NLP in other less widely known languages, especially if it is a minority language. You can read more about this topic in this [blogpost](https://www.ruder.io/nlp-beyond-english/).
 
-We can already find differences between languages in the most basic step for processing text. Take the problem of segmenting text into meaningful units, most of the times these units are words, in NLP we call this task **tokenization**. A naive approach is to obtain individual words by splitting text by spaces, as it seems obvious that we always separate words with spaces. Just as human beings break up sentences into words, phrases and other units in order to learn about grammar and other structures of a language, NLP techniques achieve a similar goal through tokenization. Let's see how can we segment or **tokenize** a sentence in English:
+We can already find differences between languages in the most basic step for processing text. Take the problem of segmenting text into meaningful units. Most of the times these units are words. In NLP we call this task **tokenization**. A naive approach is to obtain individual words by splitting text by spaces, as it seems obvious that we always separate words with spaces. Just as human beings break up sentences into words, phrases and other units in order to learn about grammar and other structures of a language, NLP techniques achieve a similar goal through tokenization. Let's see how can we segment or **tokenize** a sentence in English:
 
 ``` python
 english_sentence = "Tokenization isn't always trivial."
@@ -40,7 +40,14 @@ print(len(english_words))
 4
 ```
 
-The words are mostly well separated, however we do not get fully formed words (we have punctuation with the period after "trivial" and also special cases such as the abbreviation of "is not" into "isn't"). But at least we get a rough count of the number of words present in the sentence. Let's now look at the same example in Chinese:
+The words are mostly well separated, however we do not get fully formed words (we have punctuation with the period after "trivial" and also special cases such as the abbreviation of "is not" into "isn't"). But at least we get a rough count of the number of words present in the sentence. 
+
+::: callout
+### A short history of word separation
+As any historian knows, word separation in written texts is a relatively new development. You can check this yourself next time you visit a city with ancient monuments. Word separation, as oddly as it might sound today, is an example of technology.
+:::
+
+Let's now look at the same example in Chinese:
 
 ``` python
 # Chinese Translation of "Tokenization is not always trivial"
@@ -85,15 +92,15 @@ Natural Language Processing deals with the challenges of correctly processing an
 
 ## Why should we learn NLP Fundamentals?
 
-In the past decade, NLP has evolved significantly, especially in the field of deep learning, to the point that it has become embedded in our daily lives, one just needs to look at the term Large Language Models (LLMs), the latest generation of NLP models, which is now ubiquitous in news media and tech products we use on a daily basis.
+In the past decade, NLP has evolved significantly, especially in the field of deep learning, to the point that it has become embedded in our daily lives. One just needs to look at the term Large Language Models (LLMs), the latest generation of NLP models, which is now ubiquitous in news media and tech products we use on a daily basis.
 
 The term LLM now is often (and wrongly) used as a synonym of Artificial Intelligence. We could therefore think that today we just need to learn how to manipulate LLMs in order to fulfill our research goals involving textual data. The truth is that Language Modeling has always been part of the core tasks of NLP, therefore, by learning NLP you will understand better where are the main ideas behind LLMs coming from.
 
 ![NLP is an interdisciplinary field, and LLMs are just a subset of it](fig/intro0_cs_nlp.png)
 
-LLM is a blanket term for an assembly of large neural networks that are trained on vast amounts of text data with the objective of optimizing for language modeling. Once they are trained, they are used to generate human-like text or fine-tunned to perform much more advanced tasks. Indeed, the surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answer elaborate questions, translate languages, solve complex problems, generate narratives that emulate reasoning, and many more, all of this with a single tool.
+LLM is a blanket term for an assembly of large neural networks that are trained on vast amounts of text data with the objective of optimizing for language modeling. Once they are trained, they are used to generate human-like text or fine-tunned to perform much more advanced tasks. Indeed, the surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answering elaborate questions, translating languages, solving complex problems, generating narratives that emulate reasoning, and many more. All of this with a single tool.
 
-It is important, however, to pay attention to what is happening behind the scenes in order to be able **trace sources of errors and biases** that get hidden in the complexity of these models. The purpose of this course is precisely to take a step back, and understand that:
+It is important, however, to pay attention to what is happening behind the scenes in order to be able **trace sources of errors and biases** that get hidden in the complexity of these models. The purpose of this course is precisely to take a step back and understand that:
 
 -   There are a wide variety of tools available, beyond LLMs, that do not require so much computing power
 -   Sometimes a much simpler method than an LLM is available that can solve our problem at hand
@@ -114,16 +121,16 @@ We can also argue if the statement "Chinese is generally tokenized character by 
 
 ## Language as Data
 
-From a more technical perspective, NLP focuses on applying advanced statistical techniques to linguistic data. This is a key factor, since we need a structured dataset with a well defined set of features in order to manipulate it numerically. Your first task as an NLP practitioner is to **understand what aspects of textual data are relevant for your application** and apply techniques to systematically extract meaningful features from unstructured data (if using statistics or Machine Learning) or choose an appropriate neural architecture (if using Deep Learning) that can help solve our problem at hand.
+From a more technical perspective, NLP focuses on applying advanced statistical techniques to linguistic data. This is a key factor, since we need a structured dataset with a well defined set of features in order to manipulate it numerically. Your first task as an NLP practitioner is to **understand what aspects of textual data are relevant for your application**. Afterwards you can apply techniques to systematically extract meaningful features from unstructured data (if using statistics or Machine Learning) or choose an appropriate neural architecture (if using Deep Learning) that can help solve our problem at hand.
 
 ### What is a word?
 
-When dealing with language our basic data unit is usually a word. We deal with sequences of words and with how they relate to each other to generate meaning in text pieces. Thus, our first step will be to load a text file and provide it with structure by splitting it into valid words (tokenization)!
+When dealing with language our basic data unit is usually a word. We deal with sequences of words and with how they relate to each other to generate meaning in text pieces. Thus, our first step will be to load a text file and provide it with structure by splitting it into valid words (this is known as tokenization)!
 
 ::: callout
 ### Token vs Word
 
-For simplicity, in the rest of the course we will use the terms "word" and "token" interchangeably, but as we just saw they do not always have the same granularity. Originally the concept of token comprised dictionary words, numeric symbols and punctuation. Nowadays, tokenization has also evolved and became an optimization task on its own (How can we segment text in a way that neural networks learn optimally from text?). Tokenizers allow one to reconstruct or revert back to the original pre-tokenized form of tokens or words, hence we can afford to use *token* and *word* as synonyms. If you are curious, you can visualize how different state-of-the-art tokenizers split text [in this WebApp](https://tiktokenizer.vercel.app/)
+For simplicity, in the rest of the course we will use the terms "word" and "token" interchangeably, but as we just saw they do not always have the same granularity. Originally the concept of token comprised dictionary words, numeric symbols and punctuation. Nowadays, tokenization has also evolved and became an optimization task on its own (_How can we segment text in a way that neural networks learn optimally from text?_). Tokenizers allow one to reconstruct or revert back to the original pre-tokenized form of tokens or words, hence we can afford to use *token* and *word* as synonyms. If you are curious, you can visualize how different state-of-the-art tokenizers split text [in this WebApp](https://tiktokenizer.vercel.app/)
 :::
 
 Let's open a file, read it into a string and split it by spaces. We will print the original text and the list of "words" to see how they look:
@@ -201,7 +208,7 @@ print(len(only_verbs))
 10148
 ```
 
-SpaCy also predicts the sentences under the hood for us. It might seem trivial to you as a human reader to recognize where a sentence begins and ends but for a machine, just like finding words, finding sentences is a task on its own, for which sentence-segmentation models exist. In the case of Spacy, we can access the sentences like this:
+SpaCy also predicts the sentences under the hood for us. It might seem trivial to you as a human reader to recognize where a sentence begins and ends. But for a machine, just like finding words, finding sentences is a task on its own, for which sentence-segmentation models exist. In the case of spaCy, we can access the sentences like this:
 
 ``` python
 sentences = [sent.text for sent in doc.sents] # Sentences are also python objects
@@ -343,7 +350,7 @@ Natural language exhibits a set of properties that make it more challenging to p
 
 ### Compositionality
 
-The basic elements of written languages are characters, a sequence of characters form words, and words in turn denote objects, concepts, events, actions and ideas (Goldberg, 2016). Subsequently words form phrases and sentences which are used in communication and depend on the context in which they are used. We as humans derive the meaning of utterances from interpreting contextual information that is present at different levels at the same time:
+The basic elements of written languages are characters, a sequence of characters form words, and words in turn denote objects, concepts, events, actions and ideas (Goldberg, 2016). Subsequently, words form phrases and sentences which are used in communication and depend on the context in which they are used. We as humans derive the meaning of utterances from interpreting contextual information that is present at different levels at the same time:
 
 ![Levels of Language](fig/intro2_levels_lang.svg){width="573"}
 
@@ -351,7 +358,7 @@ The first two levels refer to spoken language only, and the other four levels ar
 
 ### Ambiguity
 
-The disambiguation of meaning is usually a by-product of the context in which utterances are expressed and also the historic accumulation of interactions which are transmitted across generations (think for instance to idioms -- these are usually meaningless phrases that acquire meaning only if situated within their historical and societal context). These characteristics make NLP a particularly challenging field to work in.
+The disambiguation of meaning is usually a by-product of the context in which utterances are expressed and also of the historic accumulation of interactions which are transmitted across generations (think for instance to idioms -- these are usually meaningless phrases that acquire meaning only if situated within their historical and societal context). These characteristics make NLP a particularly challenging field to work in.
 
 We cannot expect a machine to process human language and simply understand it as it is. We need a systematic, scientific approach to deal with it. It's within this premise that the field of NLP is born, primarily interested in converting the building blocks of human/natural language into something that a machine can understand.
 
