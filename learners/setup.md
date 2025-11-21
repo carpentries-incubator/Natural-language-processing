@@ -10,11 +10,10 @@ title: Setup
 
 [Python](https://python.org) is a popular language for scientific computing, and a frequent choice
 for machine learning as well.
-To install Python, follow the [Beginner's Guide](https://wiki.python.org/moin/BeginnersGuide/Download) or head straight to the [download page](https://www.python.org/downloads/).
+To install Python, follow the [Beginner's Guide](https://wiki.python.org/moin/BeginnersGuide/Download) or head straight to the [download page](https://www.python.org/downloads/). **Note:** We will use Python 3.12 for this workshop.
 
-Please set up your python environment at least a day in advance of the workshop.
-If you encounter problems with the installation procedure, ask your workshop organizers via e-mail for assistance so
-you are ready to go as soon as the workshop begins.
+Please set up your Python environment ***at least a day in advance*** of the workshop.
+If you encounter problems with the installation procedure, ask your workshop organizers via e-mail for assistance so you are ready to go as soon as the workshop begins.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -79,7 +78,7 @@ Remember that you need to activate your environment every time you restart your 
 ### On Linux/macOs
 
 ```shell
-python3 -m pip install jupyterlab MicroTokenizer spacy gensim matplotlib scikit-learn torch transformers langchain langchain-ollama
+python3 -m pip install -r requirements.txt
 ```
 
 :::
@@ -89,7 +88,7 @@ python3 -m pip install jupyterlab MicroTokenizer spacy gensim matplotlib scikit-
 ### On Windows
 
 ```shell
-py -m pip install jupyterlab MicroTokenizer spacy gensim matplotlib scikit-learn torch transformers langchain langchain-ollama
+py -m pip install -r requirements.txt
 ```
 
 :::
@@ -128,11 +127,17 @@ Datasets and example files are placed in the [episodes/data/](https://github.com
 
 You can manually download the zip file inside that directory by clicking on `data.zip` and then using the down arrow button ("download raw file") that is on the upper right corner of the screen, below the word "History".
 
-The zip file should be unpacked in the same root directory where you will create the notebooks during the workshops.
+**Note:** The text data files in `data.zip` should be placed in a directory called `data/` in the root of the directory where your jupyter notebooks will reside.
 
 
-### Word2Vec
-Download Word2Vec model
+### Word2Vec & SpaCy English Models
+To download all models required for the workshop with one simple platform-independent command:
+
+```shell
+invoke init-models
+```
+
+If this command fails for whatever reason, try the following manual approach. Download the Word2Vec model first:
 
 ::: spoiler
 
@@ -154,8 +159,7 @@ py -m gensim.downloader --download word2vec-google-news-300
 
 :::
 
-### Spacy English
-Download the [trained pipelines for English from Spacy](https://spacy.io/models/en/). To do so, open a terminal (Mac/Linux) or Command Prompt (Windows) and type the command:
+Then, download the [trained pipelines for English from Spacy](https://spacy.io/models/en/):
 
 ::: spoiler
 
@@ -176,4 +180,3 @@ py -m spacy download en_core_web_sm
 ```
 
 :::
-

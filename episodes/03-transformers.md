@@ -21,9 +21,9 @@ exercises: 60
 :::
 
 
-Word embeddings such as Word2Vec can be used to represent each word as a unique vectors instead of Python strings. These vector representations also allow us to apply numerical operations that can be mapped to some syntactic and semantic properties of words, such as the cases of analogies or finding synonyms. This has proven to be quite useful for downstream lexical-related tasks.
+Word embeddings such as Word2Vec can be used to represent words as unique vectors instead of Python strings. These vector representations give us numerical "proxy" representations for words. And these allow us to provide mathematical definitions for attributing semantics or meaning to words. They also enable metrics and measures for studying linguistic relationships with words. For example, one can devise metrics for similarity and semantic closeness of words, by defining a measure of distance between their corresponding vectors. This has proven to be quite useful for downstream lexical-related tasks.
 
-However, a big drawback of Word2Vec is that **each word is represented in isolation**, which means that once we finished training a model, each word will always be mapped into the same vector, regardless of the context in which it appeared. This is what is called *static word embedding*, and unfortunately that is not how language works. Words get their meanings *dinamically*, based on the specific context in which they are used. Think of syntactic information, which is relevant to understand the difference between "the dog bit the man" and "the man bit the dog". Another case is polysemy, where the same word can have very different meanings depending on the context. Therefore, we would like to have richer vectors of words that are themselves sensitive to their context in order to obtain more powerful representations. 
+However, a big drawback of Word2Vec is that **each word is represented in isolation**, which means that once we finished training a model, each word has exactly one vector associated with it, regardless of the different contexts in which it appears in the corpus text. This is what is called *static word embedding*, and unfortunately that is a serious limitation in expressing finer-grained complexities in language. Words derive their meaning *dynamically*, based on the specific context in which they are used. Think of syntactic information, which is relevant to understand the difference between "the dog bit the man" and "the man bit the dog". Another case is polysemy, where the same word can have very different meanings depending on the context, for example, "bit" in "the dog bit the man" and "in this bit of the book". Therefore, we would like to have richer vectors of words that are themselves sensitive to their context in order to obtain finer-grained representations of word meaning. 
 
 :::: challenge
 ### Polysemy in Language
@@ -43,7 +43,7 @@ Sentences for 'run':
 - I had to run to catch the bus (run == moving fast)
 - Stop talking, before you run out of ideas (run (out) == exhaust)
 
-Note how in the "run out" example we even have to understand that the meaning of run is not literal but goes accompained with a preposition that changes its meaning.
+Note how in the "run out" example we even have to understand that the meaning of run is not literal but goes accompanied with a preposition that changes its meaning.
 
 :::
 ::::
@@ -53,13 +53,13 @@ Note how in the "run out" example we even have to understand that the meaning of
 
 ### Bridging Word Embeddings and Contextualized Models
 
-The limitations of Word2Vec became apparent as researchers tackled more complex natural language understanding tasks. BERT, the model we will describe below, was not the first attempt to improve upon the drawbacks of Word2Vec.Several intermediate models emerged to address the shortcomings. Some prominent models were: 
+The limitations of Word2Vec became apparent as researchers tackled more complex natural language understanding tasks. BERT, the model we will describe below, was not the first attempt to improve upon the drawbacks of Word2Vec. Several intermediate models emerged to address the shortcomings. Some prominent models were: 
 
 - **FastText** [(Joulin, et. al., 2016)](https://arxiv.org/pdf/1607.01759), developed by Facebook, extended Word2Vec by representing words as bags of character n-grams rather than atomic units. This subword tokenization approach enabled the model to generate embeddings for previously unseen words by combining learned subword representations—for instance, understanding "unhappiness" through its components "un-," "happiness," and "-ness." FastText proved particularly valuable for morphologically rich languages and handling misspellings or rare word forms.
 
-**ELMo** [(Peters, et. al., 2018)](https://aclanthology.org/N18-1202.pdf) marked a paradigm shift by integrating context into the word representations. Unlike Word2Vec's static embeddings, ELMo generated different representations for the same word based on its surrounding context using bidirectional LSTM networks. The model was pretrained on large text corpora using a language modeling objective—predicting words from both left and right contexts simultaneously—and crucially introduced effective transfer learning to NLP. BERT would basically replicate this concept but using a more powerful neural nwtwork architecture: the Transformer, which allowed for the scaling of training material. 
+**ELMo** [(Peters, et. al., 2018)](https://aclanthology.org/N18-1202.pdf) marked a paradigm shift by integrating context into the word representations. Unlike Word2Vec's static embeddings, ELMo generated different representations for the same word based on its surrounding context using bidirectional LSTM networks. The model was pretrained on large text corpora using a language modeling objective—predicting words from both left and right contexts simultaneously—and crucially introduced effective transfer learning to NLP. BERT would basically replicate this concept but using a more powerful neural network architecture: the Transformer, which allowed for the scaling of training material. 
 
-**ULMFiT** [(Howard & Ruder, 2018)](https://aclanthology.org/P18-1031.pdf). Universal Language Model Fine-tuning, also tackled the problem via transfer learning; that is, *re-using the same model* for learning several different tasks and hence enriching word representations afte each task was learned). This idea also enriched BERT post-training methodologies.
+**ULMFiT** [(Howard & Ruder, 2018)](https://aclanthology.org/P18-1031.pdf). Universal Language Model Fine-tuning, also tackled the problem via transfer learning; that is, *re-using the same model* for learning several different tasks and hence enriching word representations after each task was learned. This idea also enriched BERT post-training methodologies.
 
 These intermediate models established several crucial concepts: that subword tokenization could handle vocabulary limitations, that context-dependent representations were superior to static embeddings, that deep bidirectional architectures captured richer linguistic information, and most importantly, that large-scale pretraining followed by task-specific fine-tuning could dramatically improve performance across diverse NLP applications.
 
@@ -71,26 +71,25 @@ In late 2018, the [BERT](https://aclanthology.org/N19-1423.pdf) language model w
 
 ## Transformers
 
-The Transformer is a deep neural network architecture proposed by Google researchers in a paper called *Attention is all you Need*. They tackled specifically the NLP task of Machine Translation (MT), which is stated as: how to generate a sentence (sequence of words) in target language B given a sentence in source language A? We all know that translation cannot be done word by word in isolations, therefore integrating the context from both the source language and the target language is necessary. In order to translate, first one neural network needs to _encode_ the whole meaning of the senetence in language A into a single vector representation, then a second neural network needs to _decode_ that representation into tokens that are both coherent with the meaning of language A and understandable in language B. Therefore we say that translation is modeling language B _conditioned_ on what language A originally said.
-
+The Transformer is a deep neural network architecture proposed by Google researchers in a paper called *Attention is all you Need*. They tackled specifically the NLP task of Machine Translation (MT), which is stated as: how to generate a sentence (sequence of words) in target language B given a sentence in source language A? We all know that translation cannot be done word by word in isolation, therefore integrating the context from both the source language and the target language is necessary. In order to translate, first one neural network needs to _encode_ the whole meaning of the sentence in language A into a single vector representation, then a second neural network needs to _decode_ that representation into tokens that are both coherent with the meaning of language A and understandable in language B. Therefore we say that translation is modeling language B _conditioned_ on what language A originally said.
 
 ![Transformer Architecture](fig/trans1.png)
 
-As seen in the picture, the original Transformer is an Encoder-Decoder network that tackles translation. We first need a token embedder which converts the string of words into a sequence of vectors that the Transformer network can process. The first component, the __Encoder__, is optimized for creating **rich representations** of the source sequence (in this case an English sentence) while the second one, the __Decoder__ is a **generative network** that is conditioned on the encoded representation. The third component we see is the infamous attention mechanism, a third neural network what computes the correlation between source and target tokens (*Which word in Dutch should I pay attention to decide a better next English word?*) to generate the most likely token in the target sequence (in this case Dutch words). 
+As seen in the picture, the original Transformer is an Encoder-Decoder network that tackles translation. We first need a token embedder which converts the string of words into a sequence of vectors that the Transformer network can process. The first component, the __Encoder__, is optimized for creating **rich representations** of the source sequence (in this case an English sentence) while the second one, the __Decoder__ is a **generative network** that is conditioned on the encoded representation. The third component we see is the infamous attention mechanism, a third neural network what computes the correlation between source and target tokens (*which word in Dutch should I pay attention to, to decide a better next English word?*) to generate the most likely token in the target sequence (in this case Dutch words). 
 
 :::: challenge
 ### Emulate the Attention Mechanism
 
 Pair with a person who speaks a language different from English (we will call it language B). Think of 1 or 2 simple sentences in English and come up with their translations in the second language. In a piece of paper write down both sentences (one on top of the other with some distance in between) and try to:
-1. Draw a mapping of words or phrases from language B to English. Is it always possible to do this one-to-one?
-2. Think of how does this relate to attention?
+1. Draw a mapping of words or phrases from language B to English. Is it always possible to do this one-to-one for words?
+2. Think of how this might relate to attention in transformers?
 
 ::: solution
 Here is an example of a sentence in English and its translation into Spanish. We can look at the final mapping and observe that:
-1. Eventough they are closely related languages the tranlation is not linear
-2. There is also not a word to word direct mapping
-3. Some words present in the source are not present in the target (and viceversa)
-4. Some words are not tranlsations of each other but they are still very relevant to understand the context
+1. Even though they are closely related languages, the translation is not linear
+2. There is also not a direct word-to-word mapping between the sentences
+3. Some words present in the source are not present in the target (and vice versa)
+4. Some words are not translations of each other but they are still very relevant to understand the context
 
 ![](fig/trans_attention_mapping.png)
 
@@ -101,7 +100,7 @@ Next, we will see how BERT exploits the idea of a **Transformer Encoder** to per
 
 ## BERT
 
-[BERT](https://aclanthology.org/N19-1423.pdf) is an acronym that stands for **B**idirectional **E**ncoder **R**epresentations from **T**ransformers. The name describes it all: the idea is to use the power of the Encoder component of the Transformer architecture to create powerful token representations that preserve the contextual meaning of the whole input segment, instead of each word in isolation. The BERT vector representations of each token take into account both the left context (what comes before the word) and the right context (what comes after the word). Another advantage of the transformer Encoder is that it is parallelizable, which made it posible for the first time to train these networks on millions of datapoints, dramatically improving model generalization. 
+[BERT](https://aclanthology.org/N19-1423.pdf) is an acronym that stands for **B**idirectional **E**ncoder **R**epresentations from **T**ransformers. The name describes it all: the idea is to use the power of the Encoder component of the Transformer architecture to create powerful token representations that preserve the contextual meaning of the whole input segment, instead of each word in isolation. The BERT vector representations of each token take into account both the left context (what comes before the word) and the right context (what comes after the word). Another advantage of the transformer Encoder is that it is parallelizable, which made it possible for the first time to train these networks on millions of datapoints, dramatically improving model generalization. 
 
 ::: callout
 ### Pretraining BERT
@@ -124,14 +123,14 @@ The BERT Architecture can be seen as a basic NLP pipeline on its own:
 
 ![BERT Architecture](fig/bert3.png)
 
-BERT uses (self-) attention, which is very useful to capture longer-range word dependencies such as correference, where, for example, a pronoun can be linked to the noun it refers to previously in the same sentence. See the following example:
+BERT uses (self-) attention, which is very useful to capture longer-range word dependencies such as co-reference, where, for example, a pronoun can be linked to the noun it refers to previously in the same sentence. See the following example:
 
 ![The Encoder Self-Attention Mechanism](fig/trans5.png)
 
 
 ## BERT for Word-Based Analysis
 
-Let's see how these components can be manipulated with code. For this we will be using the HugingFace's _transformers_ python library.
+Let's see how these components can be manipulated with code. For this we will be using the HuggingFace's _transformers_ Python library.
 The first two main components we need to initialize are the model and tokenizer. The HuggingFace hub contains thousands of models based on a Transformer architecture for dozens of tasks, data domains and also hundreds of languages. Here we will explore the vanilla English BERT which was how everything started. We can initialize this model with the next lines:
 
 ```python
@@ -161,7 +160,7 @@ The print shows the `encoded_input` object returned by the tokenizer, with its a
 
 ```
 
- NOTE: the printing function shows transformers objects as dictionaries; however, to access the attributes, you must use the python object syntax, such as in the following example:
+ NOTE: the printing function shows transformers objects as dictionaries; however, to access the attributes, you must use the Python object syntax, such as in the following example:
 
 ```python
 print(encoded_input.input_ids.shape)
@@ -170,9 +169,9 @@ Output:
 
 `torch.Size([1, 7])`
 
-The output is a 2-dimensional tensor where the first dimention contains 1 element (this dimension represents the batch size), and the second dimension contains 7 elements which are equivalent to the 7 tokens that BERT generated with our string input.
+The output is a 2-dimensional tensor where the first dimension contains 1 element (this dimension represents the batch size), and the second dimension contains 7 elements which are equivalent to the 7 tokens that BERT generated with our string input.
 
-In order to see what these Token IDs represent, we can _translate_ them into human readable strings. This includes converting the tensors into numpy arrays and converting each ID into its string representation:
+In order to see what these Token IDs represent, we can _translate_ them into human readable strings. This includes converting the tensors into ```numpy``` arrays and converting each ID into its string representation:
 
 ```python
 token_ids = list(encoded_input.input_ids[0].detach().numpy())
@@ -188,6 +187,13 @@ TOKENS: ['[CLS]', 'Maria', 'loves', 'G', '##ron', '##ingen', '[SEP]']
 
 ```
 
+First we feed the tokenized input into the model:
+
+```python
+output = model(**encoded_input)
+```
+
+Now we can explore the representations in the model.
 
 ::: callout
 
@@ -203,13 +209,22 @@ tok_groningen = np.mean([tok_G, tok_ron, tok_ingen], axis=0)
 print(tok_groningen.shape)
 print(tok_groningen[:10])
 ```
-We use the functions `detach().numpy()` to bring the values from the Pytorch execution environment (for example a GPU) into the main python thread and treat it as a numpy vector for convenvience. Then, since we are dealing with three numpy vectors we can average the three of them and end op with a single `Groningen` vector of 768-dimensions representing the average of `'G', '##ron', '##ingen'`.
+
+We obtain the output:
+
+```
+(768,)
+[ 0.00990007 -0.44266668  0.05274092  0.08865168  0.71115637 -0.4092603
+  0.18841815  0.19883917  0.24680579 -0.07899686]
+```
+
+We use the functions `detach().numpy()` to bring the values from the Pytorch execution environment (for example a GPU) into the main Python thread and treat it as a ```Numpy``` vector for convenience. Then, since we are dealing with three ```Numpy``` vectors we can average the three of them and end up with a single `Groningen` vector of 768-dimensions representing the average of `'G', '##ron', '##ingen'`.
 
 :::
 
 
 ### Analyzing polysemy with BERT
-We can encode two sentences containing the word *note* to see how BERT actually handles polysemy (*note* means something very different in each sentence) thanks to the representation of each word now being contextualized instead of isolated as was the case with word2vec.
+We can encode two sentences containing the word *note* to see how BERT actually handles polysemy (*note* means something very different in each sentence) thanks to the representation of each word now being contextualized instead of isolated as was the case with Word2vec.
 
 
 ```python
@@ -252,9 +267,9 @@ print(note_vector_2[:5])
 [0.17840035 0.65847856 0.22412607 0.21162085 0.5393072 ]
 ```
 
-By printing the first 5 dimensions of the vectors we can see that eventhough both vectors technically belong to the same string input `note`, they have different numeric representations. This is the case because the BERT encoder takes into account the position of the token as well as all the previous and following tokens when computing the representation for each token.
+By printing the first 5 dimensions of the vectors we can see that, even though both vectors technically belong to the same string input `note`, they have different numeric representations. This is the case because the BERT encoder takes into account the position of the token as well as all the previous and following tokens when computing the representation for each token.
 
-To be sure, we can compute the cosine similarity of the word `note` in the first sentence and the word *note* in the second sentence confirming that they are indeed two different representations, even when in both cases they have the same token-id and they are the 12th token of the sentence:
+To be sure, we can compute the cosine similarity of the word `note` in the first sentence and the word *note* in the second sentence confirming that they are indeed two different representations, even when both cases have the same token-id and they are the 12th token of the sentence:
 
 ```python
 from sklearn.metrics.pairwise import cosine_similarity
@@ -271,7 +286,7 @@ With this small experiment, we have confirmed that the Encoder produces context-
 
 ::: callout
 
-When running examples in a BERT pre-trained model, it is advisable to wrap your code inside a `torch.no_grad():` context. This is linked to the fact that BERT is a Neural Network that has been trained (and can be further finetuned) with the Backpropagation algorithm. Essentially, this wrapper tells the model that we are not in training mode, and we are not interested in _updating_ the weights (as it would happen when training any neural network), because the weights are already optimal enough. By using this wrapper, we make the model more efficient as it does not need to calculate the gradients for an eventual backpropagation step, since we are only interested in what _comes out_ of the Encoder. So the previous code can be made more efficient like this:
+When running examples in a BERT pre-trained model, it is advisable to wrap your code inside a `torch.no_grad():` context. This is linked to the fact that BERT is a Neural Network that has been trained (and can be further fine-tuned) with the Backpropagation algorithm. Essentially, this wrapper tells the model that we are not in training mode, and we are not interested in _updating_ the weights (as it would happen when training any neural network), because the weights are already optimal enough. By using this wrapper, we make the model more efficient as it does not need to calculate the gradients for an eventual backpropagation step, since we are only interested in what _comes out_ of the Encoder. So the previous code can be made more efficient like this:
 
 ```python
 import torch 
@@ -293,10 +308,10 @@ As mentioned before, the main pre-training task of BERT is Language Modelling (L
 ![BERT Language Modeling](fig/bert1b.png)
 
 
-We can therefore start using BERT as a predictor for word completion. From now own, we will learn how to use the `pipeline` object, this is very useful when we only want to use a pre-trained model for predictions (no need to fine-tune or do word-specific analysis). The `pipeline` will internally initialize both model and tokenizer for us and also merge back word pieces into complete words. 
+We can therefore start using BERT as a predictor for word completion. From now own, we will learn how to use the `pipeline` object, this is very useful when we only want to use a pre-trained model for predictions (no need to fine-tune or do word-specific analysis). The `pipeline` will internally initialize both model and tokenizer for us and also merge word pieces back into complete words. 
 
 ::: callout
-The `pipeline` object is very convenient to test all the out-of-the box models that you can find in the huggingFace platform, and if you are lucky and you like what you see, this is the fastest way to get model predictions. 
+The `pipeline` object is very convenient to test all the out-of-the-box models that you can find in the HuggingFace platform, and if you are lucky and you like what you see, this is the fastest way to get model predictions. 
 
 But consider that for some tasks you will want more control over the tokenization and how the model merges the predictions. If that is the case, initializing the tokenizer, encoding the texts into word-vectors and running the model inference yourself might be the way to go (like it is shown in the *Polysemy in BERT* section).
 
@@ -346,16 +361,16 @@ pretty_print_outputs(sentences, model_outputs)
 
 ```
 
-When we call the `nlp` pipeline, requesting to return the `top_k` most likely suggestions to complete the provided sentences (in this case `k=5`). The pipeline returns a list of outputs as python dictionaries. Depending on the task, the fields of the dictionary will differ. In this case, the `fill-mask` task returns a score (between 0 and 1, the higher the score the more likely the token is), a tokenId, and its corresponding string, as well as the full "unmasked" sequence. 
+When we call the `nlp` pipeline, requesting to return the `top_k` most likely suggestions to complete the provided sentences (in this case `k=5`). The pipeline returns a list of outputs as Python dictionaries. Depending on the task, the fields of the dictionary will differ. In this case, the `fill-mask` task returns a score (between 0 and 1, the higher the score the more likely the token is), a tokenId, and its corresponding string, as well as the full "unmasked" sequence. 
 
 In the list of outputs we can observe: the first example shows correctly that the missing token in the first sentence is _capital_, the second example is a bit more ambiguous, but the model at least uses the context to correctly predict a series of items that can be eaten (unfortunately, none of its suggestions sound very tasty); finally, the third example gives almost no useful context so the model plays it safe and only suggests prepositions or punctuation. This already shows some of the weaknesses of the approach.
 
 We will next see the case of combining BERT with a classifier on top.
 
 ::: challenge
-Play with the `fill-mask` pipeline and try to find examples where the model gives bad predictions and examples where the prections are very good. You can change the `top_k` parameter and even play with the multilingual BERT model to compare. To do this last think you should change the `model` and `tokenizer` parameters to `bert-base-multilingual-cased`
+Play with the `fill-mask` pipeline and try to find examples where the model gives bad predictions and examples where the predictions are very good. You can change the `top_k` parameter and even play with the multilingual BERT model to compare. To do this last think you should change the `model` and `tokenizer` parameters to `bert-base-multilingual-cased`
 :::: solution
-This is a free excercise, so anything works. But even by running the same cases with the multilingual models we see some interesting aspects. For example, the predicions are of less quality in English. This is due to the "spread" of information across other languages, including a worse tokenization, since this model tries do predict for around 200 languages.
+This is a free exercise, so anything works. But even by running the same cases with the multilingual models we see some interesting aspects. For example, the predictions are of less quality in English. This is due to the "spread" of information across other languages, including a worse tokenization, since this model tries do predict for around 200 languages.
 
 Another interesting example is searching for **bias in the completions**. Compare the outputs you get for the sentences "This man works as a [MASK]." and "This woman works as a [MASK].".
 ::::
@@ -371,7 +386,7 @@ The task of text classification is assigning a label to a whole sequence of toke
 ![BERT as an Emotion Classifier](fig/bert4.png)
 
 
-Let's see the example of a ready pre-trained emotion classifier based on `RoBERTa` model. This model was fine-tuned in the Go emotions [dataset](https://huggingface.co/datasets/google-research-datasets/go_emotions), taken from English Reddit and labeled for 28 different emotions at the sentence level. The fine-tuned model is called [roberta-base-go_emotions](https://huggingface.co/SamLowe/roberta-base-go_emotions). This model takes a sentence as input and ouputs a probability distribution over the 28 possible emotions that might be conveyed in the text. For example:
+Let's see the example of a ready pre-trained emotion classifier based on `RoBERTa` model. This model was fine-tuned in the Go emotions [dataset](https://huggingface.co/datasets/google-research-datasets/go_emotions), taken from English Reddit and labeled for 28 different emotions at the sentence level. The fine-tuned model is called [roberta-base-go_emotions](https://huggingface.co/SamLowe/roberta-base-go_emotions). This model takes a sentence as input and outputs a probability distribution over the 28 possible emotions that might be conveyed in the text. For example:
 
 ```python
 
@@ -400,11 +415,11 @@ pretty_print_outputs(sentences, model_outputs)
 {'label': 'approval', 'score': 0.02525361441075802}
 ```
 
-This code outputs again a list of dictionaries with the `top-k` (`k=3`) emotions that each of the two sentences convey. In this case, the first sentence evokes (in order of likelihood) *dissapointment*, *sadness* and *annoyance*; whereas the second sentence evokes *love*, *neutral* and *approval*. Note however that the likelihood of each prediction decreases dramatically below the top choice, so perhaps this specific classifier is only useful for the top emotion.
+This code outputs again a list of dictionaries with the `top-k` (`k=3`) emotions that each of the two sentences convey. In this case, the first sentence evokes (in order of likelihood) *disappointment*, *sadness* and *annoyance*; whereas the second sentence evokes *love*, *neutral* and *approval*. Note however that the likelihood of each prediction decreases dramatically below the top choice, so perhaps this specific classifier is only useful for the top emotion.
 
 ::: callout
 
-Fine-tuning BERT is very cheap, because we only need to train the _classifier_ layer,  a very small neural network, that can learn to choose between the classes (labels) for your custom classification problem, without needing a big amount of annotated data. This classifier is a one-layer neural layer that assigns a score that can be translated to the probability over a set of labels, given the input features provided by BERT, which already _encodes_ the meaning of the entire sequence in its hidden states. Unfortunately fine-tuning is out of the scope of this course but you can learn more about fine-tuinning BERT-like models in [this HuggingFace tutorial](https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning)
+Fine-tuning BERT is very cheap, because we only need to train the _classifier_ layer,  a very small neural network, that can learn to choose between the classes (labels) for your custom classification problem, without needing a big amount of annotated data. This classifier is a one-layer neural layer that assigns a score that can be translated to the probability over a set of labels, given the input features provided by BERT, which already _encodes_ the meaning of the entire sequence in its hidden states. Unfortunately fine-tuning is out of the scope of this course but you can learn more about fine-tuning BERT-like models in [this HuggingFace tutorial](https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning)
 :::
 
 
@@ -445,7 +460,7 @@ Deciding which metric is the most relevant to your case depends on your specific
 
 **It's important to remember that a high accuracy score doesn't always indicate a good model**. For example, if you're classifying rare events that occur only 5% of the time, a naive model that always predicts "no event" would achieve 95% accuracy while being completely useless. This is why examining multiple metrics and understanding your data's characteristics is essential for proper model evaluation.
 
-In python, the `scikit-learn` package already provides us with these (and many other) evaluation metrics. All we need to do is prepare an ordered list with the `true_labels` and a list with the corresponding `predicted_labels` for each example in our data. 
+In Python, the `scikit-learn` package already provides us with these (and many other) evaluation metrics. All we need to do is prepare an ordered list with the `true_labels` and a list with the corresponding `predicted_labels` for each example in our data. 
 
 To illustrate the usage of evaluation, we will use a simpler sentiment model that predicts 5 classes: `Very positive`, `positive`, `neutral`, `negative` and `very negative`. Here is an example of the model predictions for four toy examples:
 
@@ -486,10 +501,10 @@ for res in result:
 {'label': 'Very Negative', 'score': 0.36225152015686035}
 ```
 
-We can see that the model predicts correctly the 4 examples we gave. This is unsuprising as they are incredibly obvious examples. We can also print the results and instepct them because they are only 4 instances, but it is clearly not a scalable approach. 
+We can see that the model predicts correctly the 4 examples we gave. This is unsurprising as they are incredibly obvious examples. We can also print the results and inspect them because they are only 4 instances, but it is clearly not a scalable approach. 
 
 ::: callout
-Note that many models will provide a confidence `score`, with their predicitons. It is very tempting to interpret these scores as a proxy to "how certain is the model of prediction X". However, you should be very careful, this score is only a relative confidece measure with respect to the training data, and it does not always translate well to unseen data. Most of the times it is better to just ignore it, especially if it is a model that you didn't train yourself.
+Note that many models will provide a confidence `score`, with their predictions. It is very tempting to interpret these scores as a proxy to "how certain is the model of prediction X". However, you should be very careful, this score is only a relative confidence measure with respect to the training data, and it does not always translate well to unseen data. Most of the times it is better to just ignore it, especially if it is a model that you didn't train yourself.
 :::
 
 We can obtain an automated evaluation report, including the basic evaluation metrics, from `scikit-learn` by calling:
@@ -521,7 +536,7 @@ These 4 metrics range from 0 to 1 (note that sometimes people multiply the score
 ::: challenge
 ### Evaluate Sentiment Classifier
 
-Now it is time to scale things a little but more... Use the same pipeline from the given toy example to run predictions over 100 examples of short boook reviews. Then print the classification report for the given *test set*. These examples are given in the `data/sentiment_film_data.tsv` file.
+Now it is time to scale things a little but more... Use the same pipeline from the given toy example to run predictions over 100 examples of short book reviews. Then print the classification report for the given *test set*. These examples are given in the `data/sentiment_film_data.tsv` file.
 
 You can use the following helper functions, the first one helps you read the file and the second one normalizes the 5-class predictions into the 3-class annotations given in the test set:
 
@@ -639,7 +654,7 @@ The code now prints the following:
 
 As you can see, the outputs contain already the entities aggregated at the Span Leven (instead of the Token Level). Word pieces are merged back into *human words* and also multiword entities are assigned a single entity unified label. Depending on your use case you can request the pipeline to give different `aggregation_strateg[ies]`. More info about the pipeline can be found [here](https://huggingface.co/docs/transformers/main_classes/pipelines).
 
-The same evaluation metrics you learned for the text classifier can be applied also to this classification task. A common python library to deal with token classification is [seqeval](https://github.com/chakki-works/seqeval) or [evaluate](https://github.com/huggingface/evaluate?tab=readme-ov-file). Remember to always test on a significant human-labeled dataset to assess if the predictions you are getting make sense. If they dont, more advances use of the models, inlcuding fine-tuning should be used.
+The same evaluation metrics you learned for the text classifier can also be applied to this classification task. A common Python library to deal with token classification is [seqeval](https://github.com/chakki-works/seqeval) or [evaluate](https://github.com/huggingface/evaluate?tab=readme-ov-file). Remember to always test on a significant human-labeled dataset to assess if the predictions you are getting make sense. If they don't, more advances use of the models, including fine-tuning should be used.
 
 
 
