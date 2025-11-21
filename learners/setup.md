@@ -10,11 +10,10 @@ title: Setup
 
 [Python](https://python.org) is a popular language for scientific computing, and a frequent choice
 for machine learning as well.
-To install Python, follow the [Beginner's Guide](https://wiki.python.org/moin/BeginnersGuide/Download) or head straight to the [download page](https://www.python.org/downloads/).
+To install Python, follow the [Beginner's Guide](https://wiki.python.org/moin/BeginnersGuide/Download) or head straight to the [download page](https://www.python.org/downloads/). **Note:** We will use Python 3.12 for this workshop.
 
-Please set up your python environment at least a day in advance of the workshop.
-If you encounter problems with the installation procedure, ask your workshop organizers via e-mail for assistance so
-you are ready to go as soon as the workshop begins.
+Please set up your Python environment ***at least a day in advance*** of the workshop.
+If you encounter problems with the installation procedure, ask your workshop organizers via e-mail for assistance so you are ready to go as soon as the workshop begins.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -79,7 +78,7 @@ Remember that you need to activate your environment every time you restart your 
 ### On Linux/macOs
 
 ```shell
-python3 -m pip install jupyterlab jieba spacy gensim matplotlib transformers  
+python3 -m pip install -r requirements.txt
 ```
 
 :::
@@ -89,7 +88,7 @@ python3 -m pip install jupyterlab jieba spacy gensim matplotlib transformers
 ### On Windows
 
 ```shell
-py -m pip install jupyterlab jieba spacy gensim matplotlib transformers
+py -m pip install -r requirements.txt
 ```
 
 :::
@@ -121,19 +120,24 @@ Next, download the model that we will be using from a terminal (Mac/Linux) or Co
 ollama pull llama3.2:1b
 ```
 
+NOTE: if the previous command fails, you can pull the model manually inside the Ollama graphic interface. Open Ollama and on the right side of the "Send a message" prompt you will see a dropdown. Type there "llama3.2:1b" and then send any message so Ollama can download (pull) the model for you.
+
 ## Data Sets
 Datasets and example files are placed in the [episodes/data/](https://github.com/carpentries-incubator/Natural-language-processing/tree/main/episodes/data) directory.
 
-You can manually download each of the 4 .txt files by clicking on them and using the down arrow buttom ("download raw file") that is on the upper right corner of the screen, below the word "History".
+You can manually download the zip file inside that directory by clicking on `data.zip` and then using the down arrow button ("download raw file") that is on the upper right corner of the screen, below the word "History".
 
-You should also manually download a notebook template vailable in the [learners/notebook](https://github.com/carpentries-incubator/Natural-language-processing/blob/main/learners/notebooks/introduction.ipynb) directory.
-
-The 4 text files and the notebook should be placed together in the same directory.
+**Note:** The text data files in `data.zip` should be placed in a directory called `data/` in the root of the directory where your jupyter notebooks will reside.
 
 
-### Word2Vec
-Download Word2Vec models trained on 6 national Dutch newspaper data spanning a time period from 1950 to 1989 (Wevers, M., 2019). These models are available on [Zenodo](https://zenodo.org/records/3237380).
+### Word2Vec & SpaCy English Models
+To download all models required for the workshop with one simple platform-independent command:
 
+```shell
+invoke init-models
+```
+
+If this command fails for whatever reason, try the following manual approach. Download the Word2Vec model first:
 
 ::: spoiler
 
@@ -155,8 +159,7 @@ py -m gensim.downloader --download word2vec-google-news-300
 
 :::
 
-### Spacy English
-Download the [trained pipelines for English from Spacy](https://spacy.io/models/en/). To do so, open a terminal (Mac/Linux) or Command Prompt (Windows) and type the command:
+Then, download the [trained pipelines for English from Spacy](https://spacy.io/models/en/):
 
 ::: spoiler
 
@@ -177,4 +180,3 @@ py -m spacy download en_core_web_sm
 ```
 
 :::
-

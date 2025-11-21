@@ -23,11 +23,13 @@ Check our [Contribution Guide](https://github.com/esciencecenter-digital-skills/
 - [Laura Ootes][laura_escience]
 - [Eva Viviani][eva_escience]
 - [Angel Daza][angel_escience]
+- [Kody Moodley][kody_escience]
 - [Thijs Vroegh][thijs_escience]
 
 [laura_escience]: https://www.esciencecenter.nl/team/dr-laura-ootes/
 [eva_escience]: https://www.esciencecenter.nl/team/eva-viviani/
 [angel_escience]: https://www.esciencecenter.nl/team/angel-daza/
+[kody_escience]: https://www.esciencecenter.nl/team/kody-moodley/
 [thijs_escience]: https://www.esciencecenter.nl/team/thijs-vroegh/
 
 ## Citation
