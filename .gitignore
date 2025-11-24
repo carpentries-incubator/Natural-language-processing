@@ -55,3 +55,6 @@ po/*~
 
 # python notebooks
 .ipynb_checkpoints/
+
+nlp_workshop/
+venv/
