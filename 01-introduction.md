@@ -26,6 +26,27 @@ We use the term "natural language", as opposed to "artificial language" such as 
 
 In this course we will mainly focus on written language, specifically written English, we leave out audio and speech, as they require a different kind of input processing. But consider that we use English only as a convenience so we can address the technical aspects of processing textual data. While ideally most of the concepts from NLP apply to most languages, one should always be aware that certain languages require different approaches to solve seemingly similar problems. We would like to encourage the usage of NLP in other less widely known languages, especially if it is a minority language. You can read more about this topic in this [blogpost](https://www.ruder.io/nlp-beyond-english/).
 
+:::: challenge
+### NLP in the real world
+
+Name three to five tools/products that you use on a daily basis and that you think leverage NLP techniques. To do this exercise you may make use of the Web.
+
+::: solution
+These are some of the most popular NLP-based products that we use on a daily basis:
+
+-   Agentic Chatbots (ChatGPT, Perplexity)
+-   Voice-based assistants (e.g., Alexa, Siri, Cortana)
+-   Machine translation (e.g., Google translate, DeepL, Amazon translate)
+-   Search engines (e.g., Google, Bing, DuckDuckGo)
+-   Keyboard autocompletion on smartphones
+-   Spam filtering
+-   Spell and grammar checking apps
+-   Customer care chatbots
+-   Text summarization tools (e.g., news aggregators)
+-   Sentiment analysis tools (e.g., social media monitoring)
+:::
+::::
+
 We can already find differences between languages in the most basic step for processing text. Take the problem of segmenting text into meaningful units, most of the times these units are words, in NLP we call this task **tokenization**. A naive approach is to obtain individual words by splitting text by spaces, as it seems obvious that we always separate words with spaces. Just as human beings break up sentences into words, phrases and other units in order to learn about grammar and other structures of a language, NLP techniques achieve a similar goal through tokenization. Let's see how can we segment or **tokenize** a sentence in English:
 
 ``` python
@@ -56,13 +77,14 @@ print(len(chinese_words))
 1
 ```
 
-The same example however did not work in Chinese, because Chinese does not use spaces to separate words. This is an example of how the idiosyncrasies of human language affects how we can process them with computers. We therefore need to use a tokenizer specifically designed for Chinese to obtain the list of well-formed words in the text. Here we use a "pre-trained" tokenizer called **jieba**, which uses a dictionary-based approach to correctly identify the distinct words:
+The same example however did not work in Chinese, because Chinese does not use spaces to separate words. This is an example of how the idiosyncrasies of human language affects how we can process them with computers. We therefore need to use a tokenizer specifically designed for Chinese to obtain the list of well-formed words in the text. Here we use a "pre-trained" tokenizer called **MicroTokenizer**, which uses a dictionary-based approach to correctly identify the distinct words:
 
 ``` python
-import jieba  # A popular Chinese text segmentation library
+import MicroTokenizer  # A popular Chinese text segmentation library
 chinese_sentence = "标记化并不总是那么简单"
-chinese_words = jieba.lcut(chinese_sentence)
+chinese_words = MicroTokenizer.cut(chinese_sentence)
 print(chinese_words)
+# ['mark', 'transform', 'and', 'no', 'always', 'so', 'simple']
 print(len(chinese_words))  # Output: 7
 ```
 
@@ -73,13 +95,6 @@ print(len(chinese_words))  # Output: 7
 
 We can trust that the output is valid because we are using a verified library - jieba, even though we don't speak Chinese. Another interesting aspect is that the Chinese sentence has more words than the English one, even though they convey the same meaning. This shows the complexity of dealing with more than one language at a time, as is the case in task such as **Machine Translation** (using computers to translate speech or text from one human language to another).
 
-::: callout
-### Pre-trained Models and Fine-tuning
-
-These two terms frequently arise in discussions of NLP. The notion of pre-trained comes from Machine Learning and describes a model that has already been optimized on relevant data for a given task. Such a model can typically be loaded and applied directly to new datasets, often working “out of the box.” without need of further refinement. Ideally, publicly released pre-trained models have undergone rigorous testing for both generalization and output quality on different textual data that it was intended to be used on. Nevertheless, it remains essential to carefully review the evaluation methods used before relying on them in practice. It is also recommended that you perform your own evaluation of the model on text that you intend to use it on.
-
-Sometimes a pre-trained model is of good quality, but it does not fit the nuances of our specific dataset. For example, the model was trained on newspaper articles but you are interested in poetry. In this case, it is common to perform *fine-tuning*, this means that instead of training your own model from scratch, you start with the knowledge obtained in the pre-trained model and adjust it (fine-tune it) to work optimally with your specific data. If this is done well it leads to increased performance in the specific task you are trying to solve. The advantage of fine-tuning is that you often do not need a large amount of data to improve the results, hence the popularity of the technique.
-:::
 
 Natural Language Processing deals with the challenges of correctly processing and generating text in any language. This can be as simple as counting word frequencies to detect different writing styles, using statistical methods to classify texts into different categories, or using **deep neural networks** to generate human-like text by exploiting word co-occurrences in large amounts of texts.
 
@@ -129,7 +144,7 @@ For simplicity, in the rest of the course we will use the terms "word" and "toke
 Let's open a file, read it into a string and split it by spaces. We will print the original text and the list of "words" to see how they look:
 
 ``` python
-with open("84_frankenstein_clean.txt") as f:
+with open("data/84_frankenstein_clean.txt") as f:
   text = f.read()
 
 print(text[:100])
@@ -155,7 +170,17 @@ Splitting by white space is possible but needs several extra steps to separate o
 ! python -m spacy download en_core_web_sm
 ```
 
-This is a model that spaCy already trained for us on a subset of web English data. Hence, the model already "knows" how to tokenize into English words. When the model processes a string, it does not only do the splitting for us but already provides more advanced linguistic properties of the tokens (such as part-of-speech tags, or named entities). Let's now import the model and use it to parse our document:
+This is a model that spaCy already trained for us on a subset of web English data. Hence, the model already "knows" how to tokenize into English words. When the model processes a string, it does not only do the splitting for us but already provides more advanced linguistic properties of the tokens (such as part-of-speech tags, or named entities). You can check more languages and models in the [spacy documentation](https://spacy.io/models)
+
+::: callout
+### Pre-trained Models and Fine-tuning
+
+These two terms frequently arise in discussions of NLP. The notion of pre-trained comes from Machine Learning and describes a model that has already been optimized on relevant data for a given task. Such a model can typically be loaded and applied directly to new datasets, often working “out of the box.” without need of further refinement. Ideally, publicly released pre-trained models have undergone rigorous testing for both generalization and output quality on different textual data that it was intended to be used on. Nevertheless, it remains essential to carefully review the evaluation methods used before relying on them in practice. It is also recommended that you perform your own evaluation of the model on text that you intend to use it on.
+
+Sometimes a pre-trained model is of good quality, but it does not fit the nuances of our specific dataset. For example, the model was trained on newspaper articles but you are interested in poetry. In this case, it is common to perform *fine-tuning*, this means that instead of training your own model from scratch, you start with the knowledge obtained in the pre-trained model and adjust it (fine-tune it) to work optimally with your specific data. If this is done well it leads to increased performance in the specific task you are trying to solve. The advantage of fine-tuning is that you often do not need a large amount of data to improve the results, hence the popularity of the technique.
+:::
+
+Let's now import the model and use it to parse our document:
 
 ``` python
 import spacy
@@ -231,26 +256,39 @@ GPE England
 DATE yesterday
 ```
 
+
 These are just basic tests to demonstrate how you can immediately process the structure of text using existing NLP libraries. The spaCy models we used are simpler relative to state of the art approaches. So the more complex the input text and task, the more errors are likely to appear when using such models. The biggest advantage of using these existing libraries is that they help you transform unstructured plain text files into structured data that you can manipulate later for your own goals such as training language models.
 
 :::: challenge
-### NLP in the real world
+## Computing stats with spaCy
 
-Name three to five tools/products that you use on a daily basis and that you think leverage NLP techniques. To do this exercise you may make use of the Web.
+Use the spaCy Doc object to compute an aggregate statistic about the Frankenstein book. HINT: Use the python `set`, `dictionary` or `Counter` objects to hold the accumulative counts. For example:
+- Give the list of the 20 most common verbs in the book
+- How many different Places are identified in the book? (Label = GPE)
+- How many different entity categories are in the book?
+- Who are the 10 most mentioned PERSONs in the book?
+- Or any other similar aggregate you want...
+
 
 ::: solution
-These are some of the most popular NLP-based products that we use on a daily basis:
 
--   Agentic Chatbots (ChatGPT, Perplexity)
--   Voice-based assistants (e.g., Alexa, Siri, Cortana)
--   Machine translation (e.g., Google translate, DeepL, Amazon translate)
--   Search engines (e.g., Google, Bing, DuckDuckGo)
--   Keyboard autocompletion on smartphones
--   Spam filtering
--   Spell and grammar checking apps
--   Customer care chatbots
--   Text summarization tools (e.g., news aggregators)
--   Sentiment analysis tools (e.g., social media monitoring)
+Let's describe the solution to obtain all the different entity categories. For that we should iterate the whole text and keep a python set with all the seen labels.
+
+```python
+entity_types = set()
+
+for ent in doc.ents:
+    entity_types.add(ent.label_)
+
+print(entity_types)
+print(len(entity_types))
+```
+
+```output
+{'CARDINAL', 'GPE', 'WORK_OF_ART', 'ORDINAL', 'DATE', 'LAW', 'PRODUCT', 'QUANTITY', 'ORG', 'TIME', 'PERSON', 'LOC', 'LANGUAGE', 'FAC', 'NORP'}
+15
+```
+
 :::
 ::::
 
@@ -366,15 +404,16 @@ Discuss what the following sentences mean. What level of ambiguity do they repre
 
 -   "The door is unlockable from the inside." vs "Unfortunately, the cabinet is unlockable, so we can't secure it"
 -   "I saw the *cat with the stripes*" vs "I saw the cat *with the telescope*"
--   "Colorless green ideas sleep furiously"
+-   "Please don’t drive the cat to the vet!" vs "Please don’t drive the car tomorrow!"
+
 -   "I never said she stole my money." (re-write this sentence multiple times and each time write a different word in italics).
 
 ::: solution
 This is why the previous statements were difficult:
 
 -   "Un-lockable vs Unlock-able" is a **Morphological** ambiguity: Same word form, two possible meanings
--   "I saw the cat with the telescope" is a **Syntactic** ambiguity: Same sentence structure, different properties
--   "Colorless green ideas sleep furiously" **Semantic** ambiguity: Grammatical but meaningless (ideas do not have color as a property. Even if this was true, they would be either colorless or green)
+-   "I saw the cat with the telescope" has a **Syntactic** ambiguity: Same sentence structure, different properties
+-   "drive the cat" vs "drive the car" shows a **Semantic** ambiguity: Syntactically identical sentences that imply quite different actions.
 -   "I NEVER said she stole MY money." is a **Pragmatic** ambiguity: Meaning relies on word emphasis
 :::
 ::::
@@ -436,9 +475,6 @@ This bar chart shows us several things about sparsity, even with such a small te
 
 -   There is a long tail in the distribution, where actually a lot of meaningful words are located.
 
-::: callout
-Sparsity is closely related to what is frequently called **domain-specific data**. The discourse context in which language is used varies importantly across disciplines (domains). Take for example law texts and medical texts which are typically filled with domain-specific jargon. We should expect the top part of the distribution to contain mostly the same worda as they tend to be stop words. But once we remove the stop words, the top of the distirbution will contain very different content words. Also, the meaning of concepts described in each domain might significantly differ. For example the word "trial" refers to a procedure for examining evidence in court, but in the medical domain this could refer to a clinical "trial" which is a procedure to test the efficacy and safety of treatments on patients. For this reason there are specialized models and corpora that model language use in specific domains. The concept of fine-tuning a general purpose model with domain-specific data is also popular, even when using LLMs.
-:::
 
 ::: callout
 ## Stop Words
@@ -462,6 +498,12 @@ doc = nlp(text)
 content_words = [token.text for token in doc if token.is_alpha and not token.is_stop]  # Filter out stop words and punctuation
 print(content_words)
 ```
+:::
+
+::: callout
+Sparsity is closely related to what is frequently called **domain-specific data**. The discourse context in which language is used varies importantly across disciplines (domains). Take for example law texts and medical texts which are typically filled with domain-specific jargon. We should expect the top part of the distribution to contain mostly the same words as they tend to be stop words. But once we remove the stop words, the top of the distribution will contain very different content words. 
+
+Also, the meaning of concepts described in each domain might significantly differ. For example the word "trial" refers to a procedure for examining evidence in court, but in the medical domain this could refer to a clinical "trial" which is a procedure to test the efficacy and safety of treatments on patients. For this reason there are specialized models and corpora that model language use in specific domains. The concept of fine-tuning a general purpose model with domain-specific data is also popular, even when using LLMs.
 :::
 
 ### Discreteness
