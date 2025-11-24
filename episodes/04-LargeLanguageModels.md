@@ -177,10 +177,7 @@ Besides the existence of roles, the `pipeline()` method has several hyperparamet
 
 **_max_new_tokens_:** sets maximum number of tokens (roughly words/word pieces) that the model will generate in total. It's a hard limit - generation stops when this limit is reached, even mid-sentence. Useful for controlling cost / time. The more tokens you need to generate for an answer the more time it takes. LLMs called through paid APIs often charge per a set number of tokens (e.g. $0.008 per 1000 tokens).
 
-**_temperature_:** positive float value that controls the randomness/creativity of the model's token selection during generation. The model predicts probabilities for each possible next token, temperature modifies these probabilities before making the final choice.
-
-0.0: Completely deterministic - always picks the most likely token
-1.0+: More random, and "creative", but potentially less coherent
+**_temperature_:** positive float value that controls the randomness/creativity of the model's token selection during generation. The model predicts probabilities for each possible next token, temperature modifies these probabilities before making the final choice. 0.0: Completely deterministic - always picks the most likely token; 1.0+: More random, and "creative", but potentially less coherent.
 
 **_do_sample_:** when do_sample=True, the model generates text by sampling from the probability distribution of possible next tokens. If do_sample=False, the model uses [greedy decoding](https://huggingface.co/docs/transformers/generation_strategies) (always picking the most likely next token), which makes the output more deterministic but often repetitive.
 
@@ -333,6 +330,19 @@ for sent in sentences:
     y_pred.append(response.content.lower())
 
 print(classification_report(y_true, y_pred))
+```
+
+Report:
+```output
+              precision    recall  f1-score   support
+
+    negative       0.50      1.00      0.67        23
+     neutral       0.43      0.08      0.14        37
+    positive       0.70      0.82      0.76        40
+
+    accuracy                           0.59       100
+   macro avg       0.54      0.64      0.52       100
+weighted avg       0.55      0.59      0.51       100
 ```
 
 ::::
