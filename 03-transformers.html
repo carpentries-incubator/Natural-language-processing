@@ -223,12 +223,26 @@
 <div class="accordion accordion-flush" id="accordionFlushcurrent">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-headingcurrent">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
         3. Transformers: BERT and Beyond
         </span>
-      
+      </button>
     </div><!--/div.accordion-header-->
+
+    <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
+      <div class="accordion-body">
+        <ul><li><a href="#transformers">Transformers</a></li>
+<li><a href="#bert">BERT</a></li>
+<li><a href="#bert-architecture">BERT Architecture</a></li>
+<li><a href="#bert-for-word-based-analysis">BERT for Word-Based Analysis</a></li>
+<li><a href="#bert-as-a-language-model">BERT as a Language Model</a></li>
+<li><a href="#bert-for-text-classification">BERT for Text Classification</a></li>
+<li><a href="#model-evaluation">Model Evaluation</a></li>
+<li><a href="#bert-for-token-classification">BERT for Token Classification</a></li>
+        </ul></div><!--/div.accordion-body-->
+    </div><!--/div.accordion-collapse-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -300,7 +314,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Transformers: BERT and Beyond</h1>
-        <p>Last updated on 2025-09-24 |
+        <p>Last updated on 2025-11-24 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/03-transformers.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -322,9 +336,8 @@
 <ul><li>What are some drawbacks of static word embeddings?</li>
 <li>What are Transformers?</li>
 <li>What is BERT and how does it work?</li>
-<li>How can I use BERT to solve NLP tasks?</li>
+<li>How can I use BERT to solve supervised NLP tasks?</li>
 <li>How should I evaluate my classifiers?</li>
-<li>Which other Transformer variants are available?</li>
 </ul></div>
 </div>
 </div>
@@ -332,32 +345,42 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Understand how a Transformer works and recognize their different use
-cases.</li>
-<li>Understand how to use pre-trained tranfromers (Use Case: BERT)</li>
+<ul><li>Understand how a Transformer works and recognize their main
+components.</li>
+<li>Understand how to use pre-trained transformers (Use Case: BERT)</li>
+<li>Use BERT to predict words in context.</li>
 <li>Use BERT to classify texts.</li>
-<li>Use BERT as a Named Entity Recognizer.</li>
+<li>Learn to evaluate your NLP Classifier.</li>
 <li>Understand assumptions and basic evaluation for NLP outputs.</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<p>Static word embeddings such as Word2Vec can be used to represent each
-word as a unique vectors. Vector representations also allow us to apply
-numerical operations that can be mapped to some syntactic and semantic
-properties of words, such as the cases of analogies or finding synonyms.
-Once we transform words into vectors, these can also be used as
-<strong>features</strong> for classifiers that can be trained predict
-any supervised NLP task.</p>
+<p>Word embeddings such as Word2Vec can be used to represent words as
+unique vectors instead of Python strings. These vector representations
+give us numerical “proxy” representations for words. And these allow us
+to provide mathematical definitions for attributing semantics or meaning
+to words. They also enable metrics and measures for studying linguistic
+relationships with words. For example, one can devise metrics for
+similarity and semantic closeness of words, by defining a measure of
+distance between their corresponding vectors. This has proven to be
+quite useful for downstream lexical-related tasks.</p>
 <p>However, a big drawback of Word2Vec is that <strong>each word is
-represented in isolation</strong>, and unfortunately that is not how
-language works. Words get their meanings based on the specific context
-in which they are used (take for example polysemy, the cases where the
-same word can have very different meanings depending on the context);
-therefore, we would like to have richer vector representations of words
-that also integrate context into account in order to obtain more
-powerful representations.</p>
+represented in isolation</strong>, which means that once we finished
+training a model, each word has exactly one vector associated with it,
+regardless of the different contexts in which it appears in the corpus
+text. This is what is called <em>static word embedding</em>, and
+unfortunately that is a serious limitation in expressing finer-grained
+complexities in language. Words derive their meaning
+<em>dynamically</em>, based on the specific context in which they are
+used. Think of syntactic information, which is relevant to understand
+the difference between “the dog bit the man” and “the man bit the dog”.
+Another case is polysemy, where the same word can have very different
+meanings depending on the context, for example, “bit” in “the dog bit
+the man” and “in this bit of the book”. Therefore, we would like to have
+richer vectors of words that are themselves sensitive to their context
+in order to obtain finer-grained representations of word meaning.</p>
 <div id="polysemy-in-language" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -366,13 +389,10 @@ powerful representations.</p>
 <div id="polysemy-in-language" class="callout-inner">
 <h3 class="callout-title">Polysemy in Language</h3>
 <div class="callout-content">
-<p>Think of (at least 2) different words that can have more than one
-meaning depending on the context. Come up with one simple sentence per
-meaning and explain what they mean in each context. Discuss: How do you
-know what of the possible meanings does the word have when you use
-it?</p>
-<p>OPTIONAL: Why do you think Word2Vec can’t caputure different meanings
-of words?</p>
+<p>Think of words (at least 2) that can have more than one meaning
+depending on the context. Come up with one simple sentence per meaning
+and explain what they mean in each context. Discuss: How do you know
+which of the possible meanings does the word have when you see it?</p>
 </div>
 </div>
 </div>
@@ -381,7 +401,7 @@ of words?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Two possible examples can be the words ‘fine’ and ‘run’</p>
 <p>Sentences for ‘fine’: - She has a fine watch (fine == high-quality) -
@@ -391,33 +411,82 @@ bad)</p>
 fast) - Stop talking, before you run out of ideas (run (out) ==
 exhaust)</p>
 <p>Note how in the “run out” example we even have to understand that the
-meaning of run is not literal but goes accompained with a preposition
+meaning of run is not literal but goes accompanied with a preposition
 that changes its meaning.</p>
 </div>
 </div>
 </div>
 </div>
-<p>In 2019, the BERT language model was introduced. Using a novel
-architecture called Transformer (2017), BERT can integrate context into
-word representations. To understand BERT, we will first look at what a
-transformer is and we will then directly use some code to make use of
-BERT.</p>
-<div class="section level1">
-<h1 id="transformers">Transformers<a class="anchor" aria-label="anchor" href="#transformers"></a></h1>
-<p>The Transformer is a neural network architecture proposed by Google
-researchers <a href="https://arxiv.org/pdf/1706.03762" class="external-link">in 2017</a> in a
-paper called <em>Attention is all you Need</em>. They tackled
-specifically the NLP task of Machine Translation (MT), which is stated
-as: how to generate a sentence (sequence of words) in target language B
-given a sentence in source language A? We all know that translation
-cannot be done word by word in isolations, therefore integrating the
-context from both the source language and the target language is
-necessary. In order to translate, first one neural network needs to
-<em>encode</em> the whole meaning of the senetence in language A into a
-single vector representation, then a second neural network needs to
-<em>decode</em> that representation into tokens that are both coherent
-with the meaning of language A and understandable in language B.
-Therefore we say that translation is modeling language B
+<div id="bridging-word-embeddings-and-contextualized-models" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="bridging-word-embeddings-and-contextualized-models" class="callout-inner">
+<h3 class="callout-title">Bridging Word Embeddings and Contextualized
+Models</h3>
+<div class="callout-content">
+<p>The limitations of Word2Vec became apparent as researchers tackled
+more complex natural language understanding tasks. BERT, the model we
+will describe below, was not the first attempt to improve upon the
+drawbacks of Word2Vec. Several intermediate models emerged to address
+the shortcomings. Some prominent models were:</p>
+<ul><li>
+<strong>FastText</strong> <a href="https://arxiv.org/pdf/1607.01759" class="external-link">(Joulin, et. al., 2016)</a>,
+developed by Facebook, extended Word2Vec by representing words as bags
+of character n-grams rather than atomic units. This subword tokenization
+approach enabled the model to generate embeddings for previously unseen
+words by combining learned subword representations—for instance,
+understanding “unhappiness” through its components “un-,” “happiness,”
+and “-ness.” FastText proved particularly valuable for morphologically
+rich languages and handling misspellings or rare word forms.</li>
+</ul><p><strong>ELMo</strong> <a href="https://aclanthology.org/N18-1202.pdf" class="external-link">(Peters, et. al., 2018)</a>
+marked a paradigm shift by integrating context into the word
+representations. Unlike Word2Vec’s static embeddings, ELMo generated
+different representations for the same word based on its surrounding
+context using bidirectional LSTM networks. The model was pretrained on
+large text corpora using a language modeling objective—predicting words
+from both left and right contexts simultaneously—and crucially
+introduced effective transfer learning to NLP. BERT would basically
+replicate this concept but using a more powerful neural network
+architecture: the Transformer, which allowed for the scaling of training
+material.</p>
+<p><strong>ULMFiT</strong> <a href="https://aclanthology.org/P18-1031.pdf" class="external-link">(Howard &amp; Ruder,
+2018)</a>. Universal Language Model Fine-tuning, also tackled the
+problem via transfer learning; that is, <em>re-using the same model</em>
+for learning several different tasks and hence enriching word
+representations after each task was learned. This idea also enriched
+BERT post-training methodologies.</p>
+<p>These intermediate models established several crucial concepts: that
+subword tokenization could handle vocabulary limitations, that
+context-dependent representations were superior to static embeddings,
+that deep bidirectional architectures captured richer linguistic
+information, and most importantly, that large-scale pretraining followed
+by task-specific fine-tuning could dramatically improve performance
+across diverse NLP applications.</p>
+</div>
+</div>
+</div>
+<p>In late 2018, the <a href="https://aclanthology.org/N19-1423.pdf" class="external-link">BERT</a> language model was
+introduced. Using a novel architecture called <a href="https://arxiv.org/pdf/1706.03762" class="external-link">Transformer</a> (2017), BERT was
+specifically designed to scale the amount of training data and integrate
+context into word representations. To understand BERT, we will first
+look at what a transformer is and we will then directly use some code to
+make use of BERT.</p>
+<section><h2 class="section-heading" id="transformers">Transformers<a class="anchor" aria-label="anchor" href="#transformers"></a></h2>
+<hr class="half-width"><p>The Transformer is a deep neural network architecture proposed by
+Google researchers in a paper called <em>Attention is all you Need</em>.
+They tackled specifically the NLP task of Machine Translation (MT),
+which is stated as: how to generate a sentence (sequence of words) in
+target language B given a sentence in source language A? We all know
+that translation cannot be done word by word in isolation, therefore
+integrating the context from both the source language and the target
+language is necessary. In order to translate, first one neural network
+needs to <em>encode</em> the whole meaning of the sentence in language A
+into a single vector representation, then a second neural network needs
+to <em>decode</em> that representation into tokens that are both
+coherent with the meaning of language A and understandable in language
+B. Therefore we say that translation is modeling language B
 <em>conditioned</em> on what language A originally said.</p>
 <figure><img src="fig/trans1.png" alt="Transformer Architecture" class="figure mx-auto d-block"><div class="figcaption">Transformer Architecture</div>
 </figure><p>As seen in the picture, the original Transformer is an
@@ -430,9 +499,9 @@ sentence) while the second one, the <strong>Decoder</strong> is a
 <strong>generative network</strong> that is conditioned on the encoded
 representation. The third component we see is the infamous attention
 mechanism, a third neural network what computes the correlation between
-source and target tokens (<em>Which word in Dutch should I pay attention
-to decide a better next English word?</em>) to generate the most likely
-token in the target sequence (in this case Dutch words).</p>
+source and target tokens (<em>which word in Dutch should I pay attention
+to, to decide a better next English word?</em>) to generate the most
+likely token in the target sequence (in this case Dutch words).</p>
 <div id="emulate-the-attention-mechanism" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -442,14 +511,13 @@ token in the target sequence (in this case Dutch words).</p>
 <h3 class="callout-title">Emulate the Attention Mechanism</h3>
 <div class="callout-content">
 <p>Pair with a person who speaks a language different from English (we
-will cal it language B). This time you should think of 2 simple
-sentences in English and come up with their translations in the second
-language. In a piece of paper write down both sentences (one on top of
-the other) and try to: 1. Draw a one to one mapping of words in English
-to language B. Is it always possible to do this? 2. Think of each word
-in language B and draw as many lines as necessary to the relevant
-English words that can “help you” predict the word in language B. If you
-managed, congratulations, this is how attention works!</p>
+will call it language B). Think of 1 or 2 simple sentences in English
+and come up with their translations in the second language. In a piece
+of paper write down both sentences (one on top of the other with some
+distance in between) and try to: 1. Draw a mapping of words or phrases
+from language B to English. Is it always possible to do this one-to-one
+for words? 2. Think of how this might relate to attention in
+transformers?</p>
 </div>
 </div>
 </div>
@@ -458,20 +526,24 @@ managed, congratulations, this is how attention works!</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<p>Here an image of a bilingual “manual attention” example</p>
-</div>
+<p>Here is an example of a sentence in English and its translation into
+Spanish. We can look at the final mapping and observe that: 1. Even
+though they are closely related languages, the translation is not linear
+2. There is also not a direct word-to-word mapping between the sentences
+3. Some words present in the source are not present in the target (and
+vice versa) 4. Some words are not translations of each other but they
+are still very relevant to understand the context</p>
+<figure><img src="fig/trans_attention_mapping.png" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
 </div>
 <p>Next, we will see how BERT exploits the idea of a <strong>Transformer
 Encoder</strong> to perform the NLP Task we are interested in:
 generating powerful word representations.</p>
-</div>
-<div class="section level1">
-<h1 id="bert">BERT<a class="anchor" aria-label="anchor" href="#bert"></a></h1>
-<p><a href="https://aclanthology.org/N19-1423.pdf" class="external-link">BERT</a> is an
+</section><section><h2 class="section-heading" id="bert">BERT<a class="anchor" aria-label="anchor" href="#bert"></a></h2>
+<hr class="half-width"><p><a href="https://aclanthology.org/N19-1423.pdf" class="external-link">BERT</a> is an
 acronym that stands for <strong>B</strong>idirectional
 <strong>E</strong>ncoder <strong>R</strong>epresentations from
 <strong>T</strong>ransformers. The name describes it all: the idea is to
@@ -481,7 +553,7 @@ meaning of the whole input segment, instead of each word in isolation.
 The BERT vector representations of each token take into account both the
 left context (what comes before the word) and the right context (what
 comes after the word). Another advantage of the transformer Encoder is
-that it is parallelizable, which made it posible for the first time to
+that it is parallelizable, which made it possible for the first time to
 train these networks on millions of datapoints, dramatically improving
 model generalization.</p>
 <div id="pretraining-bert" class="callout">
@@ -517,10 +589,8 @@ Face</a>.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="section level1">
-<h1 id="bert-architecture">BERT Architecture<a class="anchor" aria-label="anchor" href="#bert-architecture"></a></h1>
-<p>The BERT Architecture can be seen as a basic NLP pipeline on its
+</section><section><h2 class="section-heading" id="bert-architecture">BERT Architecture<a class="anchor" aria-label="anchor" href="#bert-architecture"></a></h2>
+<hr class="half-width"><p>The BERT Architecture can be seen as a basic NLP pipeline on its
 own:</p>
 <ol style="list-style-type: decimal"><li>
 <strong>Tokenizer:</strong> splits text into tokens that the model
@@ -550,14 +620,13 @@ sentence, or at the token-level, for example Named Entity
 Recognition.</li>
 </ol><figure><img src="fig/bert3.png" alt="BERT Architecture" class="figure mx-auto d-block"><div class="figcaption">BERT Architecture</div>
 </figure><p>BERT uses (self-) attention, which is very useful to capture
-longer-range word dependencies such as correference, where, for example,
+longer-range word dependencies such as co-reference, where, for example,
 a pronoun can be linked to the noun it refers to previously in the same
 sentence. See the following example:</p>
 <figure><img src="fig/trans5.png" alt="The Encoder Self-Attention Mechanism" class="figure mx-auto d-block"><div class="figcaption">The Encoder Self-Attention Mechanism</div>
-</figure><div class="section level2">
-<h2 id="bert-for-word-based-analysis">BERT for Word-Based Analysis<a class="anchor" aria-label="anchor" href="#bert-for-word-based-analysis"></a></h2>
-<p>Let’s see how these components can be manipulated with code. For this
-we will be using the HugingFace’s <em>transformers</em> python library.
+</figure></section><section><h2 class="section-heading" id="bert-for-word-based-analysis">BERT for Word-Based Analysis<a class="anchor" aria-label="anchor" href="#bert-for-word-based-analysis"></a></h2>
+<hr class="half-width"><p>Let’s see how these components can be manipulated with code. For this
+we will be using the HuggingFace’s <em>transformers</em> Python library.
 The first two main components we need to initialize are the model and
 tokenizer. The HuggingFace hub contains thousands of models based on a
 Transformer architecture for dozens of tasks, data domains and also
@@ -595,7 +664,7 @@ recognized by BERT</p>
 }
 </code></pre>
 <p>NOTE: the printing function shows transformers objects as
-dictionaries; however, to access the attributes, you must use the python
+dictionaries; however, to access the attributes, you must use the Python
 object syntax, such as in the following example:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -604,14 +673,14 @@ object syntax, such as in the following example:</p>
 </div>
 <p>Output:</p>
 <p><code>torch.Size([1, 7])</code></p>
-<p>The output is a 2-dimensional tensor where the first dimention
+<p>The output is a 2-dimensional tensor where the first dimension
 contains 1 element (this dimension represents the batch size), and the
 second dimension contains 7 elements which are equivalent to the 7
 tokens that BERT generated with our string input.</p>
 <p>In order to see what these Token IDs represent, we can
 <em>translate</em> them into human readable strings. This includes
-converting the tensors into numpy arrays and converting each ID into its
-string representation:</p>
+converting the tensors into <code>numpy</code> arrays and converting
+each ID into its string representation:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -620,9 +689,18 @@ string representation:</p>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IDs:"</span>, token_ids)</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"TOKENS:"</span>, string_tokens)</span></code></pre>
 </div>
-<p><code>IDs: [101, 3406, 7871, 144, 3484, 15016, 102]</code></p>
-<p><code>TOKENS: ['[CLS]', 'Maria', 'loves', 'G', '##ron', '##ingen', '[SEP]']</code></p>
-<div id="callout2" class="callout">
+<pre><code>IDs: [101, 3406, 7871, 144, 3484, 15016, 102]
+
+TOKENS: ['[CLS]', 'Maria', 'loves', 'G', '##ron', '##ingen', '[SEP]']
+</code></pre>
+<p>First we feed the tokenized input into the model:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>output <span class="op">=</span> model(<span class="op">**</span>encoded_input)</span></code></pre>
+</div>
+<p>Now we can explore the representations in the model.</p>
+<div id="callout3" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -630,97 +708,108 @@ string representation:</p>
 <div class="callout-inner">
 <div class="callout-content">
 <p>In the case of wanting to obtain a single vector for
-<em>enchanting</em>, you can average the three vectors that belong to
-the token pieces that ultimately form that word. For example:</p>
-<div class="codewrapper sourceCode" id="cb6">
+<em>Groningen</em>, you can average the three vectors that belong to the
+token pieces that ultimately form that word. For example:</p>
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>tok_en <span class="op">=</span> output.last_hidden_state[<span class="dv">0</span>][<span class="dv">15</span>].detach().numpy()</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>tok_chan <span class="op">=</span> output.last_hidden_state[<span class="dv">0</span>][<span class="dv">16</span>].detach().numpy()</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>tok_ting <span class="op">=</span> output.last_hidden_state[<span class="dv">0</span>][<span class="dv">17</span>].detach().numpy()</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>tok_enchanting <span class="op">=</span> np.mean([tok_en, tok_chan, tok_ting], axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>tok_enchanting.shape</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>tok_G <span class="op">=</span> output.last_hidden_state[<span class="dv">0</span>][<span class="dv">3</span>].detach().numpy()</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>tok_ron <span class="op">=</span> output.last_hidden_state[<span class="dv">0</span>][<span class="dv">4</span>].detach().numpy()</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>tok_ingen <span class="op">=</span> output.last_hidden_state[<span class="dv">0</span>][<span class="dv">5</span>].detach().numpy()</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>tok_groningen <span class="op">=</span> np.mean([tok_G, tok_ron, tok_ingen], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="bu">print</span>(tok_groningen.shape)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="bu">print</span>(tok_groningen[:<span class="dv">10</span>])</span></code></pre>
 </div>
+<p>We obtain the output:</p>
+<pre><code>(768,)
+[ 0.00990007 -0.44266668  0.05274092  0.08865168  0.71115637 -0.4092603
+  0.18841815  0.19883917  0.24680579 -0.07899686]</code></pre>
 <p>We use the functions <code>detach().numpy()</code> to bring the
 values from the Pytorch execution environment (for example a GPU) into
-the main python thread and treat it as a numpy vector for convenvience.
-Then, since we are dealing with three numpy vectors we can average the
-three of them and end op with a single <code>enchanting</code> vector of
-768-dimensions representing the average of
-<code>'en', '##chan', '##ting'</code>.</p>
+the main Python thread and treat it as a <code>Numpy</code> vector for
+convenience. Then, since we are dealing with three <code>Numpy</code>
+vectors we can average the three of them and end up with a single
+<code>Groningen</code> vector of 768-dimensions representing the average
+of <code>'G', '##ron', '##ingen'</code>.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="section level3">
-<h3 id="polysemy-in-bert">Polysemy in BERT<a class="anchor" aria-label="anchor" href="#polysemy-in-bert"></a></h3>
+<h3 id="analyzing-polysemy-with-bert">Analyzing polysemy with BERT<a class="anchor" aria-label="anchor" href="#analyzing-polysemy-with-bert"></a></h3>
 <p>We can encode two sentences containing the word <em>note</em> to see
 how BERT actually handles polysemy (<em>note</em> means something very
 different in each sentence) thanks to the representation of each word
 now being contextualized instead of isolated as was the case with
-word2vec.</p>
-<div class="codewrapper sourceCode" id="cb7">
+Word2vec.</p>
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Search for the index of 'note' and obtain its vector from the sequence</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>note_index_1 <span class="op">=</span> string_tokens.index(<span class="st">"note"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>note_vector_1 <span class="op">=</span> output.last_hidden_state[<span class="dv">0</span>][note_index_1].detach().numpy()</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>note_token_id_1 <span class="op">=</span> token_ids[note_index_1]</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="bu">print</span>(note_index_1, note_token_id_1, string_tokens)</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="bu">print</span>(note_vector_1[:<span class="dv">5</span>])</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># We tokenize the sentence and identify the two different 'note' tokens inside the sentence</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>text_note <span class="op">=</span> <span class="st">"Please note that this bank note is fake!"</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>tokenized_text <span class="op">=</span> tokenizer(text_note, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>token_ids <span class="op">=</span> <span class="bu">list</span>(tokenized_text.input_ids[<span class="dv">0</span>].detach().numpy())</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>string_tokens <span class="op">=</span> tokenizer.convert_ids_to_tokens(token_ids)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="bu">print</span>(string_tokens)</span></code></pre>
 </div>
-<p>We are basically printing the tokenized sentence from the previous
-example and showing the index of the token <code>note</code> in the list
-of tokens. We are also printing the tokenID assigned to this token and
-the list of tokens. Finally, the last print shows the first five
-dimensions of the vector representing the token <code>note</code>.</p>
-<pre><code>12 3805 ['[CLS]', 'Maria', "'", 's', 'passion', 'for', 'music', 'is', 'clearly', 'heard', 'in', 'every', 'note', 'and', 'every', 'en', '##chan', '##ting', 'melody', '.', '[SEP]']
-[0.15780845 0.38866335 0.41498923 0.03389652 0.40278202]</code></pre>
-<p>Let’s encode now another sentence, also containing the word
-<code>note</code>, and confirm that the same token string, with the same
-assigned tokenID holds a vector with different weights:</p>
-<div class="codewrapper sourceCode" id="cb9">
+<p>We are printing the BERT tokens extracted from the sentence, and
+displaying them:</p>
+<pre><code>['[CLS]', 'Please', 'note', 'that', 'this', 'bank', 'note', 'is', 'fake', '!', '[SEP]']</code></pre>
+<p>We then manually count which token indices in the list belong to
+<code>note</code>, so we can extract their vectors later</p>
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Encode and then take the 'note' token from the second sentence</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>note_text_2 <span class="op">=</span> <span class="st">"I could not buy milk in the supermarket because the bank note I wanted to use was fake."</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>encoded_note_2 <span class="op">=</span> tokenizer(note_text_2, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>token_ids <span class="op">=</span> <span class="bu">list</span>(encoded_note_2.input_ids[<span class="dv">0</span>].detach().numpy())</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>string_tokens_2 <span class="op">=</span> tokenizer.convert_ids_to_tokens(token_ids)</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>note_index_2 <span class="op">=</span> string_tokens_2.index(<span class="st">"note"</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>note_vector_2 <span class="op">=</span> model(<span class="op">**</span>encoded_note_2).last_hidden_state[<span class="dv">0</span>][note_index_2].detach().numpy()</span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>note_token_id_2 <span class="op">=</span> token_ids[note_index_2]</span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="bu">print</span>(note_index_2, note_token_id_2, string_tokens_2)</span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="bu">print</span>(note_vector_2[:<span class="dv">5</span>])</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>note_index_1 <span class="op">=</span> <span class="dv">2</span> <span class="co"># first occurrence of `note`</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>note_index_2 <span class="op">=</span> <span class="dv">6</span> <span class="co"># second occurrence of `note`</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="bu">print</span>(string_tokens[note_index_1], string_tokens[note_index_2])</span></code></pre>
 </div>
-<pre><code>12 3805 ['[CLS]', 'I', 'could', 'not', 'buy', 'milk', 'in', 'the', 'supermarket', 'because', 'the', 'bank', 'note', 'I', 'wanted', 'to', 'use', 'was', 'fake', '.', '[SEP]']
-[ 0.5003222   0.653664    0.22919582 -0.32637975  0.52929205]</code></pre>
+<p>We now pass the sentence through the BERT encoder and extract the
+encoded vectors belonging to each <code>note</code> token:</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Encode the sentence and extract the vector belonging to each 'note' token</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    bert_output <span class="op">=</span> model(<span class="op">**</span>tokenized_text)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>note_vector_1 <span class="op">=</span> bert_output.last_hidden_state[<span class="dv">0</span>][note_index_1].detach().numpy()</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>note_vector_2 <span class="op">=</span> bert_output.last_hidden_state[<span class="dv">0</span>][note_index_2].detach().numpy()</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="bu">print</span>(note_vector_1[:<span class="dv">5</span>])</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="bu">print</span>(note_vector_2[:<span class="dv">5</span>])</span></code></pre>
+</div>
+<pre><code>[1.0170387  0.93691176 0.30571502 0.33091038 0.73093796]
+[0.17840035 0.65847856 0.22412607 0.21162085 0.5393072 ]</code></pre>
+<p>By printing the first 5 dimensions of the vectors we can see that,
+even though both vectors technically belong to the same string input
+<code>note</code>, they have different numeric representations. This is
+the case because the BERT encoder takes into account the position of the
+token as well as all the previous and following tokens when computing
+the representation for each token.</p>
 <p>To be sure, we can compute the cosine similarity of the word
-<em>note</em> in the first sentence and the word <em>note</em> in the
-second sentence confirming that they are indeed two different
-representations, even when in both cases they have the same token-id and
-they are the 12th token of the sentence:</p>
-<div class="codewrapper sourceCode" id="cb11">
+<code>note</code> in the first sentence and the word <em>note</em> in
+the second sentence confirming that they are indeed two different
+representations, even when both cases have the same token-id and they
+are the 12th token of the sentence:</p>
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>vector1 <span class="op">=</span> np.array(note_vector_1).reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>vector2 <span class="op">=</span> np.array(note_vector_2).reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>similarity <span class="op">=</span> cosine_similarity(vector1, vector2)</span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cosine Similarity 'note' vs 'note': </span><span class="sc">{</span>similarity[<span class="dv">0</span>][<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>vector1 <span class="op">=</span> np.array(note_vector_1).reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)  <span class="co"># Reshape to 2D array</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>vector2 <span class="op">=</span> np.array(note_vector_2).reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>)  <span class="co"># Reshape to 2D array</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>similarity <span class="op">=</span> cosine_similarity(vector1, vector2)</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cosine Similarity 'note' vs 'note': </span><span class="sc">{</span>similarity[<span class="dv">0</span>][<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
 </div>
 <p>With this small experiment, we have confirmed that the Encoder
 produces context-dependent word representations, as opposed to Word2Vec,
 where <em>note</em> would always have the same vector no matter where it
 appeared.</p>
-<div id="callout3" class="callout">
+<div id="callout4" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -730,7 +819,7 @@ appeared.</p>
 <p>When running examples in a BERT pre-trained model, it is advisable to
 wrap your code inside a <code>torch.no_grad():</code> context. This is
 linked to the fact that BERT is a Neural Network that has been trained
-(and can be further finetuned) with the Backpropagation algorithm.
+(and can be further fine-tuned) with the Backpropagation algorithm.
 Essentially, this wrapper tells the model that we are not in training
 mode, and we are not interested in <em>updating</em> the weights (as it
 would happen when training any neural network), because the weights are
@@ -739,25 +828,22 @@ efficient as it does not need to calculate the gradients for an eventual
 backpropagation step, since we are only interested in what <em>comes
 out</em> of the Encoder. So the previous code can be made more efficient
 like this:</p>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">import</span> torch </span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    output <span class="op">=</span> model(<span class="op">**</span>encoded_input)</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="bu">print</span>(output)</span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    <span class="bu">print</span>(output.last_hidden_state.shape)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="im">import</span> torch </span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    output <span class="op">=</span> model(<span class="op">**</span>encoded_input)</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    <span class="bu">print</span>(output)</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>    <span class="bu">print</span>(output.last_hidden_state.shape)</span></code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section level1">
-<h1 id="bert-as-a-language-model">BERT as a Language Model<a class="anchor" aria-label="anchor" href="#bert-as-a-language-model"></a></h1>
-<p>As mentioned before, the main pre-training task of BERT is Language
+</section><section><h2 class="section-heading" id="bert-as-a-language-model">BERT as a Language Model<a class="anchor" aria-label="anchor" href="#bert-as-a-language-model"></a></h2>
+<hr class="half-width"><p>As mentioned before, the main pre-training task of BERT is Language
 Modelling (LM): calculating the probability of a word based on the known
 neighboring words (yes, Word2Vec was also a kind of LM!). Obtaining
 training data for this task is very cheap, as all we need is millions of
@@ -771,29 +857,53 @@ From now own, we will learn how to use the <code>pipeline</code> object,
 this is very useful when we only want to use a pre-trained model for
 predictions (no need to fine-tune or do word-specific analysis). The
 <code>pipeline</code> will internally initialize both model and
-tokenizer for us and also merge back word pieces into complete
+tokenizer for us and also merge word pieces back into complete
 words.</p>
+<div id="callout5" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>The <code>pipeline</code> object is very convenient to test all the
+out-of-the-box models that you can find in the HuggingFace platform, and
+if you are lucky and you like what you see, this is the fastest way to
+get model predictions.</p>
+<p>But consider that for some tasks you will want more control over the
+tokenization and how the model merges the predictions. If that is the
+case, initializing the tokenizer, encoding the texts into word-vectors
+and running the model inference yourself might be the way to go (like it
+is shown in the <em>Polysemy in BERT</em> section).</p>
+<p>Even if you <em>like what you see</em>, it is important that you
+evaluate the performance of the models in <strong>your data and use
+case</strong> regardless of what the model performance claims to be. We
+will show an example with a couple of evaluation metrics in the <em>BERT
+for Text Classification</em> section.</p>
+</div>
+</div>
+</div>
 <p>In this case again we use <code>bert-base-cased</code>, which refers
 to the vanilla BERT English model. Once we declared a pipeline, we can
 feed it with sentences that contain one masked token at a time (beware
 that BERT can only predict one word at a time, since that was its
 training scheme). For example:</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="kw">def</span> pretty_print_outputs(sentences, model_outputs):</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="cf">for</span> i, model_out <span class="kw">in</span> <span class="bu">enumerate</span>(model_outputs):</span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=====</span><span class="ch">\t</span><span class="st">"</span>,sentences[i])</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>        <span class="cf">for</span> label_scores <span class="kw">in</span> model_out:</span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>            <span class="bu">print</span>(label_scores)</span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>nlp <span class="op">=</span> pipeline(task<span class="op">=</span><span class="st">"fill-mask"</span>, model<span class="op">=</span><span class="st">"bert-base-cased"</span>, tokenizer<span class="op">=</span><span class="st">"bert-base-cased"</span>)</span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>sentences <span class="op">=</span> [<span class="st">"Paris is the [MASK] of France"</span>, <span class="st">"I want to eat a cold [MASK] this afternoon"</span>, <span class="st">"Maria [MASK] Groningen"</span>]</span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>model_outputs <span class="op">=</span> nlp(sentences, top_k<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>pretty_print_outputs(sentences, model_outputs)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="kw">def</span> pretty_print_outputs(sentences, model_outputs):</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>    <span class="cf">for</span> i, model_out <span class="kw">in</span> <span class="bu">enumerate</span>(model_outputs):</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=====</span><span class="ch">\t</span><span class="st">"</span>,sentences[i])</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>        <span class="cf">for</span> label_scores <span class="kw">in</span> model_out:</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>            <span class="bu">print</span>(label_scores)</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>nlp <span class="op">=</span> pipeline(task<span class="op">=</span><span class="st">"fill-mask"</span>, model<span class="op">=</span><span class="st">"bert-base-cased"</span>, tokenizer<span class="op">=</span><span class="st">"bert-base-cased"</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>sentences <span class="op">=</span> [<span class="st">"Paris is the [MASK] of France"</span>, <span class="st">"I want to eat a cold [MASK] this afternoon"</span>, <span class="st">"Maria [MASK] Groningen"</span>]</span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a>model_outputs <span class="op">=</span> nlp(sentences, top_k<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>pretty_print_outputs(sentences, model_outputs)</span></code></pre>
 </div>
 <pre><code>=====	 Paris is the [MASK] of France
 {'score': 0.9807965755462646, 'token': 2364, 'token_str': 'capital', 'sequence': 'Paris is the capital of France'}
@@ -819,7 +929,7 @@ training scheme). For example:</p>
 <p>When we call the <code>nlp</code> pipeline, requesting to return the
 <code>top_k</code> most likely suggestions to complete the provided
 sentences (in this case <code>k=5</code>). The pipeline returns a list
-of outputs as python dictionaries. Depending on the task, the fields of
+of outputs as Python dictionaries. Depending on the task, the fields of
 the dictionary will differ. In this case, the <code>fill-mask</code>
 task returns a score (between 0 and 1, the higher the score the more
 likely the token is), a tokenId, and its corresponding string, as well
@@ -834,10 +944,35 @@ model plays it safe and only suggests prepositions or punctuation. This
 already shows some of the weaknesses of the approach.</p>
 <p>We will next see the case of combining BERT with a classifier on
 top.</p>
+<div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
 </div>
-<div class="section level1">
-<h1 id="bert-for-text-classification">BERT for Text Classification<a class="anchor" aria-label="anchor" href="#bert-for-text-classification"></a></h1>
-<p>The task of text classification is assigning a label to a whole
+<span class="callout-header">Discussion</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Play with the <code>fill-mask</code> pipeline and try to find
+examples where the model gives bad predictions and examples where the
+predictions are very good. You can change the <code>top_k</code>
+parameter and even play with the multilingual BERT model to compare. To
+do this last think you should change the <code>model</code> and
+<code>tokenizer</code> parameters to
+<code>bert-base-multilingual-cased</code> :::: solution This is a free
+exercise, so anything works. But even by running the same cases with the
+multilingual models we see some interesting aspects. For example, the
+predictions are of less quality in English. This is due to the “spread”
+of information across other languages, including a worse tokenization,
+since this model tries do predict for around 200 languages.</p>
+<p>Another interesting example is searching for <strong>bias in the
+completions</strong>. Compare the outputs you get for the sentences
+“This man works as a [MASK].” and “This woman works as a [MASK].”.</p>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section><section><h2 class="section-heading" id="bert-for-text-classification">BERT for Text Classification<a class="anchor" aria-label="anchor" href="#bert-for-text-classification"></a></h2>
+<hr class="half-width"><p>The task of text classification is assigning a label to a whole
 sequence of tokens, for example a sentence. With the parameter
 <code>task="text_classification"</code> the <code>pipeline()</code>
 function will load the base model and automatically add a linear layer
@@ -850,19 +985,19 @@ on <code>RoBERTa</code> model. This model was fine-tuned in the Go
 emotions <a href="https://huggingface.co/datasets/google-research-datasets/go_emotions" class="external-link">dataset</a>,
 taken from English Reddit and labeled for 28 different emotions at the
 sentence level. The fine-tuned model is called <a href="https://huggingface.co/SamLowe/roberta-base-go_emotions" class="external-link">roberta-base-go_emotions</a>.
-This model takes a sentence as input and ouputs a probability
+This model takes a sentence as input and outputs a probability
 distribution over the 28 possible emotions that might be conveyed in the
 text. For example:</p>
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>classifier <span class="op">=</span> pipeline(task<span class="op">=</span><span class="st">"text-classification"</span>, model<span class="op">=</span><span class="st">"SamLowe/roberta-base-go_emotions"</span>, top_k<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>sentences <span class="op">=</span> [<span class="st">"I am not having a great day"</span>, <span class="st">"This is a lovely and innocent sentence"</span>, <span class="st">"Maria loves Groningen"</span>]</span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>model_outputs <span class="op">=</span> classifier(sentences)</span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>pretty_print_outputs(sentences, model_outputs)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>classifier <span class="op">=</span> pipeline(task<span class="op">=</span><span class="st">"text-classification"</span>, model<span class="op">=</span><span class="st">"SamLowe/roberta-base-go_emotions"</span>, top_k<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>sentences <span class="op">=</span> [<span class="st">"I am not having a great day"</span>, <span class="st">"This is a lovely and innocent sentence"</span>, <span class="st">"Maria loves Groningen"</span>]</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>model_outputs <span class="op">=</span> classifier(sentences)</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>pretty_print_outputs(sentences, model_outputs)</span></code></pre>
 </div>
 <pre><code>=====	 I am not having a great day
 {'label': 'disappointment', 'score': 0.46669483184814453}
@@ -881,42 +1016,337 @@ text. For example:</p>
 <p>This code outputs again a list of dictionaries with the
 <code>top-k</code> (<code>k=3</code>) emotions that each of the two
 sentences convey. In this case, the first sentence evokes (in order of
-likelihood) <em>dissapointment</em>, <em>sadness</em> and
+likelihood) <em>disappointment</em>, <em>sadness</em> and
 <em>annoyance</em>; whereas the second sentence evokes <em>love</em>,
 <em>neutral</em> and <em>approval</em>. Note however that the likelihood
 of each prediction decreases dramatically below the top choice, so
 perhaps this specific classifier is only useful for the top emotion.</p>
-<div id="callout4" class="callout">
+<div id="callout6" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
 <div class="callout-inner">
 <div class="callout-content">
-<p>Finetunning BERT is very cheap, because we only need to train the
+<p>Fine-tuning BERT is very cheap, because we only need to train the
 <em>classifier</em> layer, a very small neural network, that can learn
 to choose between the classes (labels) for your custom classification
 problem, without needing a big amount of annotated data. This classifier
-is just a one-layer neural layer with a softmax that assigns a score
-that can be translated to the probability over a set of labels, given
-the input features provided by BERT, which <em>encodes</em> the meaning
-of the entire sequence in its hidden states.</p>
+is a one-layer neural layer that assigns a score that can be translated
+to the probability over a set of labels, given the input features
+provided by BERT, which already <em>encodes</em> the meaning of the
+entire sequence in its hidden states. Unfortunately fine-tuning is out
+of the scope of this course but you can learn more about fine-tuning
+BERT-like models in <a href="https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning" class="external-link">this
+HuggingFace tutorial</a></p>
 </div>
 </div>
 </div>
 <figure><img src="fig/bert4b.png" alt="BERT as an Emotion Classifier" class="figure mx-auto d-block"><div class="figcaption">BERT as an Emotion Classifier</div>
-</figure></div>
-<div class="section level1">
-<h1 id="bert-for-token-classification">BERT for Token Classification<a class="anchor" aria-label="anchor" href="#bert-for-token-classification"></a></h1>
-<p>Just as we plugged in a trainable text classifier layer, we can add a
+</figure></section><section><h2 class="section-heading" id="model-evaluation">Model Evaluation<a class="anchor" aria-label="anchor" href="#model-evaluation"></a></h2>
+<hr class="half-width"><p>Model evaluation is a critical step in any machine learning project,
+and it is also the case for NLP. While it may be tempting to rely on the
+accuracy scores observed during training, or the model descriptions
+provided on the web, this approach can be misleading and often results
+in models that fail in real-world applications, and that includes your
+data.</p>
+<div id="callout7" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>The fundamental principle of model evaluation is to test your model
+on data it has never seen before. <strong>If you are training your own
+models, this is typically achieved by splitting your dataset into
+training, validation, and test sets</strong>. The training set is used
+to teach the model, the validation set helps tune hyperparameters or
+other aspects of model development, and the test set provides a less
+biased assessment of the final model’s performance. Without this
+separation, you risk overfitting, where your model memorizes the
+training data rather than learning generalizable patterns.</p>
+<p>If you are using out-of-the-box models, evaluation is also mandatory,
+as you must be sure that the outputs you obtain behave in the manner
+that you would expect. In this case you only need to design the test set
+(with human annotators) and measure the performance. <strong>It doesn’t
+matter how broadly a model was tested, you must always confirm that it
+is suitable for your intended usage</strong>. It is also not enough to
+use semi-automated evaluation, designing human-labeled data will also
+provide insightful information for shaping your own task and judging the
+predictions you get.</p>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="evaluation-metrics">Evaluation Metrics<a class="anchor" aria-label="anchor" href="#evaluation-metrics"></a></h3>
+<p>Several metrics are commonly used to evaluate NLP models, each
+offering different insights into performance. Here we will describe the
+4 most used in suervised learning classifiers</p>
+<p>Let’s give the toy example of classifying photographs of cats and
+dogs. In this task, there are 2 classes: <code>cat</code> and
+<code>dog</code>, and we have a model that return the label
+<code>cat</code> or <code>dog</code> given an input photograph. If we
+want to evaluate how good is our model at recognizing <code>dog</code>s
+(our <em>positive class</em> in this example), there are 4 possibilities
+when comparing with the ground truth (your labeled data):</p>
+<ol style="list-style-type: decimal"><li>
+<strong>True Positives (TP):</strong> the number of <code>dog</code>
+photographs the model <em>correctly</em> labeled as
+<code>dog</code>.</li>
+<li>
+<strong>True Negatives (TN):</strong> the number of
+non-<code>dog</code> photographs <em>correctly</em> labeled as something
+else.</li>
+<li>
+<strong>False Positives (FP):</strong> the number of
+non-<code>dog</code> photographs the model <em>mistakenly</em> labeled
+as <code>dog</code>.</li>
+<li>
+<strong>False Negatives (FN):</strong> the number of
+<code>dog</code> photographs <em>mistakenly</em> labeled as something
+else.</li>
+</ol><p>Based on this simple counts, we can derive four metrics that inform
+us at scale about the performance of our classifiers:</p>
+<ul><li>
+<strong>Accuracy:</strong> measures the global proportion of correct
+predictions, regardless of the class they hold. This is al true cases
+(TP + TN) divided by all tested instances (TP+TN+FP+FN).</li>
+<li>
+<strong>Precision:</strong> This answers the following question: “Of
+all the predictions the model made for a particular class, how many were
+actually correct?”. This is TP divided by (TP+FP).</li>
+<li>
+<strong>Recall:</strong> This answers the following question: “Of
+all the actual instances of a class, how many did the model successfully
+identify?”. This is TP divided by (TP+FN).</li>
+<li>
+<strong>F1-score:</strong> provides a harmonic mean of precision and
+recall, offering a single metric that balances both concerns.</li>
+</ul><p>Deciding which metric is the most relevant to your case depends on
+your specific task, but having a view at all of the metrics is always
+insightful.</p>
+<figure><img src="fig/bert_precisionRecall.png" alt="An example for a classifier of Cats and Dogs. Source: Wikipedia" class="figure mx-auto d-block"><div class="figcaption">An example for a classifier of Cats and Dogs.
+Source: Wikipedia</div>
+</figure><p><strong>It’s important to remember that a high accuracy score doesn’t
+always indicate a good model</strong>. For example, if you’re
+classifying rare events that occur only 5% of the time, a naive model
+that always predicts “no event” would achieve 95% accuracy while being
+completely useless. This is why examining multiple metrics and
+understanding your data’s characteristics is essential for proper model
+evaluation.</p>
+<p>In Python, the <code>scikit-learn</code> package already provides us
+with these (and many other) evaluation metrics. All we need to do is
+prepare an ordered list with the <code>true_labels</code> and a list
+with the corresponding <code>predicted_labels</code> for each example in
+our data.</p>
+<p>To illustrate the usage of evaluation, we will use a simpler
+sentiment model that predicts 5 classes: <code>Very positive</code>,
+<code>positive</code>, <code>neutral</code>, <code>negative</code> and
+<code>very negative</code>. Here is an example of the model predictions
+for four toy examples:</p>
+<div class="codewrapper sourceCode" id="cb21">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co"># Load the classification pipeline with the specified model</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>pipe <span class="op">=</span> pipeline(<span class="st">"text-classification"</span>, model<span class="op">=</span><span class="st">"tabularisai/multilingual-sentiment-analysis"</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="co"># Classify a new sentence</span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>sentences <span class="op">=</span> [</span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>    <span class="st">"I love this product! It's amazing and works perfectly."</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>    <span class="st">"The movie was a bit boring, I could predict the ending since minute 1."</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a>    <span class="st">"Mary Shelley wrote this book around 1816."</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a>    <span class="st">"Everything suuuucks!"</span></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>]</span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a>gold_labels <span class="op">=</span> [</span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a>    <span class="st">"Very Positive"</span>,</span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a>    <span class="st">"Negative"</span>,</span>
+<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a>    <span class="st">"Neutral"</span>,</span>
+<span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a>    <span class="st">"Very Negative"</span></span>
+<span id="cb21-18"><a href="#cb21-18" tabindex="-1"></a>]</span>
+<span id="cb21-19"><a href="#cb21-19" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="#cb21-20" tabindex="-1"></a><span class="co"># The pipeline can also run on a batch of examples</span></span>
+<span id="cb21-21"><a href="#cb21-21" tabindex="-1"></a>result <span class="op">=</span> pipe(sentences)</span>
+<span id="cb21-22"><a href="#cb21-22" tabindex="-1"></a></span>
+<span id="cb21-23"><a href="#cb21-23" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb21-24"><a href="#cb21-24" tabindex="-1"></a>predicted_labels <span class="op">=</span> []</span>
+<span id="cb21-25"><a href="#cb21-25" tabindex="-1"></a><span class="cf">for</span> res <span class="kw">in</span> result:</span>
+<span id="cb21-26"><a href="#cb21-26" tabindex="-1"></a>    <span class="bu">print</span>(res)</span>
+<span id="cb21-27"><a href="#cb21-27" tabindex="-1"></a>    predicted_labels.append(res[<span class="st">'label'</span>])</span></code></pre>
+</div>
+<pre><code>{'label': 'Very Positive', 'score': 0.5586304068565369}
+{'label': 'Negative', 'score': 0.9448591470718384}
+{'label': 'Neutral', 'score': 0.9229359030723572}
+{'label': 'Very Negative', 'score': 0.36225152015686035}</code></pre>
+<p>We can see that the model predicts correctly the 4 examples we gave.
+This is unsurprising as they are incredibly obvious examples. We can
+also print the results and inspect them because they are only 4
+instances, but it is clearly not a scalable approach.</p>
+<div id="callout8" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Note that many models will provide a confidence <code>score</code>,
+with their predictions. It is very tempting to interpret these scores as
+a proxy to “how certain is the model of prediction X”. However, you
+should be very careful, this score is only a relative confidence measure
+with respect to the training data, and it does not always translate well
+to unseen data. Most of the times it is better to just ignore it,
+especially if it is a model that you didn’t train yourself.</p>
+</div>
+</div>
+</div>
+<p>We can obtain an automated evaluation report, including the basic
+evaluation metrics, from <code>scikit-learn</code> by calling:</p>
+<div class="codewrapper sourceCode" id="cb23">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true<span class="op">=</span>gold_labels, y_pred<span class="op">=</span>predicted_labels))</span></code></pre>
+</div>
+<p>The output is a table showing a breakdown of metrics by class. The
+column <code>support</code> shows how many examples per class were
+present in the gold data.</p>
+<pre><code>               precision    recall  f1-score   support
+
+     Negative       1.00      1.00      1.00         1
+      Neutral       1.00      1.00      1.00         1
+Very Negative       1.00      1.00      1.00         1
+Very Positive       1.00      1.00      1.00         1
+
+     accuracy                           1.00         4
+    macro avg       1.00      1.00      1.00         4
+ weighted avg       1.00      1.00      1.00         4</code></pre>
+<p>These 4 metrics range from 0 to 1 (note that sometimes people
+multiply the scores by 100 to gain more granularity with decimal
+places). In this case, because we had a <em>perfect</em> score
+everything amounts to 1. In the most catastrophic scenario all scores
+would be zero.</p>
+<div id="evaluate-sentiment-classifier" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="evaluate-sentiment-classifier" class="callout-inner">
+<h3 class="callout-title">Evaluate Sentiment Classifier</h3>
+<div class="callout-content">
+<p>Now it is time to scale things a little but more… Use the same
+pipeline from the given toy example to run predictions over 100 examples
+of short book reviews. Then print the classification report for the
+given <em>test set</em>. These examples are given in the
+<code>data/sentiment_film_data.tsv</code> file.</p>
+<p>You can use the following helper functions, the first one helps you
+read the file and the second one normalizes the 5-class predictions into
+the 3-class annotations given in the test set:</p>
+<div class="codewrapper sourceCode" id="cb25">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="kw">def</span> load_data(filename):</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()[<span class="dv">1</span>:] <span class="co"># skip header</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>    sentences, labels <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>(line.strip().split(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> line <span class="kw">in</span> lines))</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>(sentences), <span class="bu">list</span>(labels)</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a><span class="kw">def</span> get_normalized_labels(predictions):</span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>    <span class="co"># predicitons is a list with dicts such as {'label': 'positive', 'score': 0.95}</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>    <span class="co"># We also need to normalize the labels to match the true labels (which are only 'positive' and 'negative')</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>    normalized <span class="op">=</span> []</span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>    <span class="cf">for</span> pred <span class="kw">in</span> predictions:</span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>        label <span class="op">=</span> pred[<span class="st">'label'</span>].lower()</span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'positive'</span> <span class="kw">in</span> label:</span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>            normalized.append(<span class="st">'positive'</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>        <span class="cf">elif</span> <span class="st">'negative'</span> <span class="kw">in</span> label:</span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a>            normalized.append(<span class="st">'negative'</span>)</span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a>            normalized.append(<span class="st">'neutral'</span>)</span>
+<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a>    <span class="cf">return</span> normalized</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb26">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report, precision_recall_fscore_support</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>sentences, labels <span class="op">=</span> load_data(<span class="st">'data/sentiment_film_data.tsv'</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co"># The labels from our dataset</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>y_true <span class="op">=</span> labels</span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co"># Run the model to get predictions per sentence</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>y_pred <span class="op">=</span> pipe(sentences)</span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a><span class="co"># Normalize the labels to match the gold standard</span></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a>y_pred <span class="op">=</span> get_normalized_labels(y_pred)</span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a><span class="co"># Detailed report with all metrics</span></span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="confusion-matrix">Confusion Matrix<a class="anchor" aria-label="anchor" href="#confusion-matrix"></a></h3>
+<p>The confusion matrix is another direct and informative tool for
+understanding your model’s performance, by offering an intuitive
+visualization of your model’s behavior in detail. It is a table that
+compares your model’s predictions against the true labels. The
+<strong>rows typically represent the actual classes, while the columns
+show the predicted classes</strong>. Each cell contains the count of
+instances that fall into that particular combination of true and
+predicted labels. Perfect predictions would result in all counts
+appearing along the diagonal of the matrix, with zeros everywhere
+else.</p>
+<div class="codewrapper sourceCode" id="cb27">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="kw">def</span> show_confusion_matrix(y_true, y_pred, labels<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>    ConfusionMatrixDisplay.from_predictions(y_true, y_pred, display_labels<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>    plt.show()</span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>show_confusion_matrix(y_true, y_pred)</span></code></pre>
+</div>
+<p>This code shows the following matrix:</p>
+<figure><img src="fig/bert_sentiment_matrix.png" class="figure mx-auto d-block"></figure><p>Some of the insights from a confusion matrix include:</p>
+<ul><li>Observe which classes your model handles well and which ones it
+struggles with.</li>
+<li>Observe confusion patterns between classes. By examining the
+off-diagonal cells, you can identify systematic errors your model makes.
+For example, perhaps your sentiment classifier consistently confuses
+neutral statements with positive ones, but rarely mistakes neutral for
+negative.</li>
+<li>Detect Bias, for example by exposing a tendency to over-predict
+certain classes while ignoring others.</li>
+<li>Detect class imbalance. Even if your overall accuracy seems high,
+the confusion matrix might reveal that your model achieves this by
+simply predicting the majority class most of the time.</li>
+</ul></div>
+</section><section><h2 class="section-heading" id="bert-for-token-classification">BERT for Token Classification<a class="anchor" aria-label="anchor" href="#bert-for-token-classification"></a></h2>
+<hr class="half-width"><p>Just as we plugged in a trainable text classifier layer, we can add a
 token-level classifier that assigns a class to each of the tokens
 encoded by a transformer (as opposed to one label for the whole
 sequence). A specific example of this task is Named Entity Recognition,
 but you can basically define any task that requires to
 <em>highlight</em> sub-strings of text and classify them using this
 technique.</p>
-<div class="section level2">
-<h2 id="named-entity-recognition">Named Entity Recognition<a class="anchor" aria-label="anchor" href="#named-entity-recognition"></a></h2>
+<div class="section level3">
+<h3 id="named-entity-recognition">Named Entity Recognition<a class="anchor" aria-label="anchor" href="#named-entity-recognition"></a></h3>
 <p>Named Entity Recognition (NER) is the task of recognizing mentions of
 real-world entities inside a text. The concept of
 <strong>Entity</strong> includes proper names that unequivocally
@@ -939,96 +1369,77 @@ before a beginning B-LOC label). Since the labels of the tokens are
 context dependent, a language model with attention mechanism such as
 BERT is very beneficial for a task like NER.</p>
 <p>Because this is one of the core tasks in NLP, there are dozens of
-pre-trained NER classifiers in HuggingFace that you can use right away.
-We use once again the <code>pipeline()</code> to run the model for
-predictions in your custom data, in this case with
+pre-trained NER classifiers available in HuggingFace that you can use
+right away. We use once again the <code>pipeline()</code> wrapper to
+directly run the model for predictions , in this case with
 <code>task="ner"</code>. For example:</p>
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForTokenClassification</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>model <span class="op">=</span> AutoModelForTokenClassification.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>ner_classifier <span class="op">=</span> pipeline(<span class="st">"token-classification"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer)</span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"My name is Wolfgang Schmid and I live in Berlin"</span></span>
-<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>ner_results <span class="op">=</span> ner_classifier(example)</span>
-<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="cf">for</span> nr <span class="kw">in</span> ner_results:</span>
-<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a>    <span class="bu">print</span>(nr)</span></code></pre>
-</div>
-<p>The code prints the following:</p>
-<pre><code>{'entity': 'B-PER', 'score': 0.9996068, 'index': 4, 'word': 'Wolfgang', 'start': 11, 'end': 19}
-{'entity': 'I-PER', 'score': 0.999582, 'index': 5, 'word': 'Sc', 'start': 20, 'end': 22}
-{'entity': 'I-PER', 'score': 0.9990482, 'index': 6, 'word': '##hm', 'start': 22, 'end': 24}
-{'entity': 'I-PER', 'score': 0.9951691, 'index': 7, 'word': '##id', 'start': 24, 'end': 26}
-{'entity': 'B-LOC', 'score': 0.99956733, 'index': 12, 'word': 'Berlin', 'start': 41, 'end': 47}</code></pre>
-<p>In this case the output of the pipeline is a list of dictionaries,
-each one representing only entity <code>IOB</code> labels at the BERT
-token level. IMPORTANT: this list is per wordPiece and NOT per <em>human
-word</em> even if the provided text is pre-tokenized. You can assume all
-of the tokens that don’t appear in the output were labeled as no-entity,
-that is <code>"O"</code>. To recover the full-word entities you can
-initialize the pipeline with
-<code>aggregation_strategy="first"</code>:</p>
-<div class="codewrapper sourceCode" id="cb19">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>ner_classifier <span class="op">=</span> pipeline(<span class="st">"token-classification"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer, aggregation_strategy<span class="op">=</span><span class="st">"first"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"My name is Wolfgang Schmid and I live in Berlin"</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>ner_results <span class="op">=</span> ner_classifier(example)</span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="cf">for</span> nr <span class="kw">in</span> ner_results:</span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>    <span class="bu">print</span>(nr)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForTokenClassification</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co"># We can also pass to the pipeline the initialized model &amp; tokenizer. </span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co"># This way we have access to both separately if we need them later</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>model <span class="op">=</span> AutoModelForTokenClassification.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a>ner_classifier <span class="op">=</span> pipeline(<span class="st">"token-classification"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer, aggregation_strategy<span class="op">=</span><span class="st">"first"</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"My name is Wolfgang Schmid and I live in Berlin"</span></span>
+<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a>ner_results <span class="op">=</span> ner_classifier(example)</span>
+<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a><span class="cf">for</span> nr <span class="kw">in</span> ner_results:</span>
+<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a>    <span class="bu">print</span>(nr)</span></code></pre>
 </div>
 <p>The code now prints the following:</p>
 <pre><code>{'entity_group': 'PER', 'score': 0.9995944, 'word': 'Wolfgang Schmid', 'start': 11, 'end': 26}
 {'entity_group': 'LOC', 'score': 0.99956733, 'word': 'Berlin', 'start': 41, 'end': 47}</code></pre>
-<p>As you can see, entities aggregated at the Span Leven (instead of the
-Token Level). Word pieces are merged back into <em>human words</em> and
-also multiword entities are assigned a single entity label unifying the
-<code>IOB</code> labels into one. Depending on your use case you can
+<p>As you can see, the outputs contain already the entities aggregated
+at the Span Leven (instead of the Token Level). Word pieces are merged
+back into <em>human words</em> and also multiword entities are assigned
+a single entity unified label. Depending on your use case you can
 request the pipeline to give different
 <code>aggregation_strateg[ies]</code>. More info about the pipeline can
 be found <a href="https://huggingface.co/docs/transformers/main_classes/pipelines" class="external-link">here</a>.</p>
-<p>The next step is crucial: evaluate how does the pre-trained model
-actually performs in <strong>your dataset</strong>. This is important
-since the fine-tuned model could be overfitted to other custom
-benchmarks that do not share the characteristics of your dataset.</p>
-<p>To observe this, we can first see the performance on the test portion
-of the dataset in which this classifier was trained, and then evaluate
-the same pre-trained classifier on a NER dataset form a different
-domain.</p>
+<p>The same evaluation metrics you learned for the text classifier can
+also be applied to this classification task. A common Python library to
+deal with token classification is <a href="https://github.com/chakki-works/seqeval" class="external-link">seqeval</a> or <a href="https://github.com/huggingface/evaluate?tab=readme-ov-file" class="external-link">evaluate</a>.
+Remember to always test on a significant human-labeled dataset to assess
+if the predictions you are getting make sense. If they don’t, more
+advances use of the models, including fine-tuning should be used.</p>
+<p>What did we learn in this lesson?</p>
+<div id="keypoints1" class="callout keypoints">
+<div class="callout-square">
+<i class="callout-icon" data-feather="key"></i>
 </div>
-<div class="section level2">
-<h2 id="model-evaluation">Model Evaluation<a class="anchor" aria-label="anchor" href="#model-evaluation"></a></h2>
-<p>To perform evaluation in your data you can use again the
-<code>seqeval</code> package:</p>
-<div class="codewrapper sourceCode" id="cb21">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="im">from</span> seqeval.metrics <span class="im">import</span> classification_report</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="bu">print</span>(classification_report(gold_labels, model_predictions))</span></code></pre>
+<span class="callout-header">Key Points</span>
+<div class="callout-inner">
+<div class="callout-content">
+<ul><li><p>Static word representations, such as word2vec, still lack of
+enough context to do more advanced tasks, we made this weakness evident
+by studying polysemy.</p></li>
+<li><p>The transformer architecture consists of three main components:
+an <strong>Encoder</strong> to create powerful text representations
+(embeddings), an <strong>Attention Mechanism</strong> to learn more from
+the full sequence context, and a <strong>Decoder</strong>, a generative
+model to predicts the next token based on the context it has so
+far.</p></li>
+<li><p>BERT is a deep encoder that creates rich contextualized
+representations of words and sentences. These representations are very
+powerful features that can be re-used by other machine Learning and deep
+learning models.</p></li>
+<li><p>Several of the core NLP tasks can be solved using
+Transformer-based models. In this episode we covered language modeling
+(fill-in the mask), text classification (sentiment analysis) and token
+classification (named entity recognition).</p></li>
+<li><p>Evaluating the model performance using your own data <strong>for
+your own use case</strong> is crucial to understand possible drawbacks
+when using this model for unknown predictions</p></li>
+</ul></div>
 </div>
-<p>Since we took a classifier that was not trained for the book domain,
-the performance is quite poor. But this example shows us that
-classifiers performing very well on their own domain most of the times
-transfer poorly to other apparently similar datasets.</p>
-<p>The solution in this case is to use another of the great
-characteristics of BERT: fine-tuning for domain adaptation. It is
-possible to train your own classifier with relatively small data (given
-that a lot of linguistic knowledge was already provided during the
-language modeling pre-training). In the following section we will see
-how to train your own NER model and use it for predictions.</p>
 </div>
 </div>
-
-
-
-      </div> <!-- / div.lesson-content -->
+</section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="02-word_representations.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="04-LargeLanguageModels.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
@@ -1086,8 +1497,8 @@ how to train your own NER model and use it for predictions.</p>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/03-transformers.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/03-transformers.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-09-24",
-  "datePublished": "2025-11-18"
+  "dateModified": "2025-11-24",
+  "datePublished": "2025-11-24"
 }
 
   </script><script>

@@ -310,7 +310,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Introduction</h1>
-        <p>Last updated on 2025-10-24 |
+        <p>Last updated on 2025-11-24 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/01-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -377,6 +377,44 @@ languages require different approaches to solve seemingly similar
 problems. We would like to encourage the usage of NLP in other less
 widely known languages, especially if it is a minority language. You can
 read more about this topic in this <a href="https://www.ruder.io/nlp-beyond-english/" class="external-link">blogpost</a>.</p>
+<div id="nlp-in-the-real-world" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="nlp-in-the-real-world" class="callout-inner">
+<h3 class="callout-title">NLP in the real world</h3>
+<div class="callout-content">
+<p>Name three to five tools/products that you use on a daily basis and
+that you think leverage NLP techniques. To do this exercise you may make
+use of the Web.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>These are some of the most popular NLP-based products that we use on
+a daily basis:</p>
+<ul><li>Agentic Chatbots (ChatGPT, Perplexity)</li>
+<li>Voice-based assistants (e.g., Alexa, Siri, Cortana)</li>
+<li>Machine translation (e.g., Google translate, DeepL, Amazon
+translate)</li>
+<li>Search engines (e.g., Google, Bing, DuckDuckGo)</li>
+<li>Keyboard autocompletion on smartphones</li>
+<li>Spam filtering</li>
+<li>Spell and grammar checking apps</li>
+<li>Customer care chatbots</li>
+<li>Text summarization tools (e.g., news aggregators)</li>
+<li>Sentiment analysis tools (e.g., social media monitoring)</li>
+</ul></div>
+</div>
+</div>
+</div>
 <p>We can already find differences between languages in the most basic
 step for processing text. Take the problem of segmenting text into
 meaningful units, most of the times these units are words, in NLP we
@@ -427,17 +465,18 @@ does not use spaces to separate words. This is an example of how the
 idiosyncrasies of human language affects how we can process them with
 computers. We therefore need to use a tokenizer specifically designed
 for Chinese to obtain the list of well-formed words in the text. Here we
-use a “pre-trained” tokenizer called <strong>jieba</strong>, which uses
-a dictionary-based approach to correctly identify the distinct
-words:</p>
+use a “pre-trained” tokenizer called <strong>MicroTokenizer</strong>,
+which uses a dictionary-based approach to correctly identify the
+distinct words:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">import</span> jieba  <span class="co"># A popular Chinese text segmentation library</span></span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">import</span> MicroTokenizer  <span class="co"># A popular Chinese text segmentation library</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>chinese_sentence <span class="op">=</span> <span class="st">"标记化并不总是那么简单"</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>chinese_words <span class="op">=</span> jieba.lcut(chinese_sentence)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>chinese_words <span class="op">=</span> MicroTokenizer.cut(chinese_sentence)</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="bu">print</span>(chinese_words)</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(chinese_words))  <span class="co"># Output: 7</span></span></code></pre>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co"># ['mark', 'transform', 'and', 'no', 'always', 'so', 'simple']</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(chinese_words))  <span class="co"># Output: 7</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -452,38 +491,6 @@ even though they convey the same meaning. This shows the complexity of
 dealing with more than one language at a time, as is the case in task
 such as <strong>Machine Translation</strong> (using computers to
 translate speech or text from one human language to another).</p>
-<div id="pre-trained-models-and-fine-tuning" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div id="pre-trained-models-and-fine-tuning" class="callout-inner">
-<h3 class="callout-title">Pre-trained Models and Fine-tuning</h3>
-<div class="callout-content">
-<p>These two terms frequently arise in discussions of NLP. The notion of
-pre-trained comes from Machine Learning and describes a model that has
-already been optimized on relevant data for a given task. Such a model
-can typically be loaded and applied directly to new datasets, often
-working “out of the box.” without need of further refinement. Ideally,
-publicly released pre-trained models have undergone rigorous testing for
-both generalization and output quality on different textual data that it
-was intended to be used on. Nevertheless, it remains essential to
-carefully review the evaluation methods used before relying on them in
-practice. It is also recommended that you perform your own evaluation of
-the model on text that you intend to use it on.</p>
-<p>Sometimes a pre-trained model is of good quality, but it does not fit
-the nuances of our specific dataset. For example, the model was trained
-on newspaper articles but you are interested in poetry. In this case, it
-is common to perform <em>fine-tuning</em>, this means that instead of
-training your own model from scratch, you start with the knowledge
-obtained in the pre-trained model and adjust it (fine-tune it) to work
-optimally with your specific data. If this is done well it leads to
-increased performance in the specific task you are trying to solve. The
-advantage of fine-tuning is that you often do not need a large amount of
-data to improve the results, hence the popularity of the technique.</p>
-</div>
-</div>
-</div>
 <p>Natural Language Processing deals with the challenges of correctly
 processing and generating text in any language. This can be as simple as
 counting word frequencies to detect different writing styles, using
@@ -598,7 +605,7 @@ look:</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"84_frankenstein_clean.txt"</span>) <span class="im">as</span> f:</span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/84_frankenstein_clean.txt"</span>) <span class="im">as</span> f:</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  text <span class="op">=</span> f.read()</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="bu">print</span>(text[:<span class="dv">100</span>])</span>
@@ -634,8 +641,40 @@ English data. Hence, the model already “knows” how to tokenize into
 English words. When the model processes a string, it does not only do
 the splitting for us but already provides more advanced linguistic
 properties of the tokens (such as part-of-speech tags, or named
-entities). Let’s now import the model and use it to parse our
-document:</p>
+entities). You can check more languages and models in the <a href="https://spacy.io/models" class="external-link">spacy documentation</a></p>
+<div id="pre-trained-models-and-fine-tuning" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="pre-trained-models-and-fine-tuning" class="callout-inner">
+<h3 class="callout-title">Pre-trained Models and Fine-tuning</h3>
+<div class="callout-content">
+<p>These two terms frequently arise in discussions of NLP. The notion of
+pre-trained comes from Machine Learning and describes a model that has
+already been optimized on relevant data for a given task. Such a model
+can typically be loaded and applied directly to new datasets, often
+working “out of the box.” without need of further refinement. Ideally,
+publicly released pre-trained models have undergone rigorous testing for
+both generalization and output quality on different textual data that it
+was intended to be used on. Nevertheless, it remains essential to
+carefully review the evaluation methods used before relying on them in
+practice. It is also recommended that you perform your own evaluation of
+the model on text that you intend to use it on.</p>
+<p>Sometimes a pre-trained model is of good quality, but it does not fit
+the nuances of our specific dataset. For example, the model was trained
+on newspaper articles but you are interested in poetry. In this case, it
+is common to perform <em>fine-tuning</em>, this means that instead of
+training your own model from scratch, you start with the knowledge
+obtained in the pre-trained model and adjust it (fine-tune it) to work
+optimally with your specific data. If this is done well it leads to
+increased performance in the specific task you are trying to solve. The
+advantage of fine-tuning is that you often do not need a large amount of
+data to improve the results, hence the popularity of the technique.</p>
+</div>
+</div>
+</div>
+<p>Let’s now import the model and use it to parse our document:</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -734,41 +773,53 @@ appear when using such models. The biggest advantage of using these
 existing libraries is that they help you transform unstructured plain
 text files into structured data that you can manipulate later for your
 own goals such as training language models.</p>
-<div id="nlp-in-the-real-world" class="callout challenge">
+<div id="computing-stats-with-spacy" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="nlp-in-the-real-world" class="callout-inner">
-<h3 class="callout-title">NLP in the real world</h3>
+<div id="computing-stats-with-spacy" class="callout-inner">
+<h3 class="callout-title">Computing stats with spaCy</h3>
 <div class="callout-content">
-<p>Name three to five tools/products that you use on a daily basis and
-that you think leverage NLP techniques. To do this exercise you may make
-use of the Web.</p>
+<p>Use the spaCy Doc object to compute an aggregate statistic about the
+Frankenstein book. HINT: Use the python <code>set</code>,
+<code>dictionary</code> or <code>Counter</code> objects to hold the
+accumulative counts. For example: - Give the list of the 20 most common
+verbs in the book - How many different Places are identified in the
+book? (Label = GPE) - How many different entity categories are in the
+book? - Who are the 10 most mentioned PERSONs in the book? - Or any
+other similar aggregate you want…</p>
 </div>
 </div>
 </div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<p>These are some of the most popular NLP-based products that we use on
-a daily basis:</p>
-<ul><li>Agentic Chatbots (ChatGPT, Perplexity)</li>
-<li>Voice-based assistants (e.g., Alexa, Siri, Cortana)</li>
-<li>Machine translation (e.g., Google translate, DeepL, Amazon
-translate)</li>
-<li>Search engines (e.g., Google, Bing, DuckDuckGo)</li>
-<li>Keyboard autocompletion on smartphones</li>
-<li>Spam filtering</li>
-<li>Spell and grammar checking apps</li>
-<li>Customer care chatbots</li>
-<li>Text summarization tools (e.g., news aggregators)</li>
-<li>Sentiment analysis tools (e.g., social media monitoring)</li>
-</ul></div>
+<p>Let’s describe the solution to obtain all the different entity
+categories. For that we should iterate the whole text and keep a python
+set with all the seen labels.</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>entity_types <span class="op">=</span> <span class="bu">set</span>()</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="cf">for</span> ent <span class="kw">in</span> doc.ents:</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>    entity_types.add(ent.label_)</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="bu">print</span>(entity_types)</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(entity_types))</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>{'CARDINAL', 'GPE', 'WORK_OF_ART', 'ORDINAL', 'DATE', 'LAW', 'PRODUCT', 'QUANTITY', 'ORG', 'TIME', 'PERSON', 'LOC', 'LANGUAGE', 'FAC', 'NORP'}
+15</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -945,12 +996,12 @@ order to train a supervised model for your chosen task.</p>
 </div>
 </div>
 </div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>Example: the task of Conversational agent. Here are 3 instances to
 provide supervision for a model:</p>
@@ -1019,32 +1070,33 @@ language</div>
 <div class="callout-content">
 <p>Discuss what the following sentences mean. What level of ambiguity do
 they represent?:</p>
-<ul><li>“The door is unlockable from the inside.” vs “Unfortunately, the
-cabinet is unlockable, so we can’t secure it”</li>
-<li>“I saw the <em>cat with the stripes</em>” vs “I saw the cat <em>with
-the telescope</em>”</li>
-<li>“Colorless green ideas sleep furiously”</li>
-<li>“I never said she stole my money.” (re-write this sentence multiple
-times and each time write a different word in italics).</li>
+<ul><li><p>“The door is unlockable from the inside.” vs “Unfortunately, the
+cabinet is unlockable, so we can’t secure it”</p></li>
+<li><p>“I saw the <em>cat with the stripes</em>” vs “I saw the cat
+<em>with the telescope</em>”</p></li>
+<li><p>“Please don’t drive the cat to the vet!” vs “Please don’t drive
+the car tomorrow!”</p></li>
+<li><p>“I never said she stole my money.” (re-write this sentence
+multiple times and each time write a different word in
+italics).</p></li>
 </ul></div>
 </div>
 </div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>This is why the previous statements were difficult:</p>
 <ul><li>“Un-lockable vs Unlock-able” is a <strong>Morphological</strong>
 ambiguity: Same word form, two possible meanings</li>
-<li>“I saw the cat with the telescope” is a <strong>Syntactic</strong>
+<li>“I saw the cat with the telescope” has a <strong>Syntactic</strong>
 ambiguity: Same sentence structure, different properties</li>
-<li>“Colorless green ideas sleep furiously” <strong>Semantic</strong>
-ambiguity: Grammatical but meaningless (ideas do not have color as a
-property. Even if this was true, they would be either colorless or
-green)</li>
+<li>“drive the cat” vs “drive the car” shows a <strong>Semantic</strong>
+ambiguity: Syntactically identical sentences that imply quite different
+actions.</li>
 <li>“I NEVER said she stole MY money.” is a <strong>Pragmatic</strong>
 ambiguity: Meaning relies on word emphasis</li>
 </ul></div>
@@ -1066,52 +1118,52 @@ that if we are hunting for a specific phenomenon, we may often realize
 it barely occurs inside a vast amount of text. Imagine we have the
 following brief text and we are interested in <em>pizzas</em> and
 <em>hamburgers</em>:</p>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># A mini-corpus where our target words appear</span></span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="st">I am hungry. Should I eat delicious pizza?</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="st">Or maybe I should eat a juicy hamburger instead.</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="st">Many people like to eat pizza because is tasty, they think pizza is delicious as hell!</span></span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="st">My friend prefers to eat a hamburger and I agree with him.</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="st">We will drive our car to the restaurant to get the succulent hamburger.</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="st">Right now, our cat sleeps on the mat so we won't take him.</span></span>
-<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="st">I did not wash my car, but at least the car has gasoline.</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="st">Perhaps when we come back we will take out the cat for a walk.</span></span>
-<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="st">The cat will be happy then.</span></span>
-<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="st">"""</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># A mini-corpus where our target words appear</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="st">I am hungry. Should I eat delicious pizza?</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="st">Or maybe I should eat a juicy hamburger instead.</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="st">Many people like to eat pizza because is tasty, they think pizza is delicious as hell!</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="st">My friend prefers to eat a hamburger and I agree with him.</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="st">We will drive our car to the restaurant to get the succulent hamburger.</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="st">Right now, our cat sleeps on the mat so we won't take him.</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="st">I did not wash my car, but at least the car has gasoline.</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="st">Perhaps when we come back we will take out the cat for a walk.</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="st">The cat will be happy then.</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="st">"""</span></span></code></pre>
 </div>
 <p>We can first use spaCy to tokenize the text and do some direct word
 count:</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="im">import</span> spacy</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>doc <span class="op">=</span> nlp(text)</span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>words <span class="op">=</span> [token.lower_ <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> token.is_alpha]  <span class="co"># Filter out punctuation and new lines</span></span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="bu">print</span>(words)</span>
-<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(words))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>doc <span class="op">=</span> nlp(text)</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>words <span class="op">=</span> [token.lower_ <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> token.is_alpha]  <span class="co"># Filter out punctuation and new lines</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="bu">print</span>(words)</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(words))</span></code></pre>
 </div>
 <p>We have in total 104 words, but we actually want to know how many
 times each word appears. For that we use the Python Counter and then we
 can visualize it inside a chart with matplotlib:</p>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>word_count <span class="op">=</span> Counter(words).most_common()</span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>tokens <span class="op">=</span> [item[<span class="dv">0</span>] <span class="cf">for</span> item <span class="kw">in</span> word_count]</span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>frequencies <span class="op">=</span> [item[<span class="dv">1</span>] <span class="cf">for</span> item <span class="kw">in</span> word_count]</span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a></span>
-<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>))</span>
-<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>plt.bar(tokens, frequencies)</span>
-<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">90</span>)</span>
-<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>word_count <span class="op">=</span> Counter(words).most_common()</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>tokens <span class="op">=</span> [item[<span class="dv">0</span>] <span class="cf">for</span> item <span class="kw">in</span> word_count]</span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>frequencies <span class="op">=</span> [item[<span class="dv">1</span>] <span class="cf">for</span> item <span class="kw">in</span> word_count]</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>))</span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a>plt.bar(tokens, frequencies)</span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">90</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p>This bar chart shows us several things about sparsity, even with such
 a small text:</p>
@@ -1125,33 +1177,7 @@ corpus). This number only goes lower as the corpus size
 increases</p></li>
 <li><p>There is a long tail in the distribution, where actually a lot of
 meaningful words are located.</p></li>
-</ul><div id="callout3" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div class="callout-inner">
-<div class="callout-content">
-<p>Sparsity is closely related to what is frequently called
-<strong>domain-specific data</strong>. The discourse context in which
-language is used varies importantly across disciplines (domains). Take
-for example law texts and medical texts which are typically filled with
-domain-specific jargon. We should expect the top part of the
-distribution to contain mostly the same worda as they tend to be stop
-words. But once we remove the stop words, the top of the distirbution
-will contain very different content words. Also, the meaning of concepts
-described in each domain might significantly differ. For example the
-word “trial” refers to a procedure for examining evidence in court, but
-in the medical domain this could refer to a clinical “trial” which is a
-procedure to test the efficacy and safety of treatments on patients. For
-this reason there are specialized models and corpora that model language
-use in specific domains. The concept of fine-tuning a general purpose
-model with domain-specific data is also popular, even when using
-LLMs.</p>
-</div>
-</div>
-</div>
-<div id="stop-words" class="callout">
+</ul><div id="stop-words" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -1167,25 +1193,51 @@ the syntactic information that stop words provide is crucial to solve
 the task.</p>
 <p>SpaCy has a pre-defined list of stopwords per language. To explicitly
 load the English stop words we can do:</p>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="im">from</span> spacy.lang.en.stop_words <span class="im">import</span> STOP_WORDS</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="bu">print</span>(STOP_WORDS)  <span class="co"># a set of common stopwords</span></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(STOP_WORDS)) <span class="co"># There are 326 words considered in this list</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="im">from</span> spacy.lang.en.stop_words <span class="im">import</span> STOP_WORDS</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="bu">print</span>(STOP_WORDS)  <span class="co"># a set of common stopwords</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(STOP_WORDS)) <span class="co"># There are 326 words considered in this list</span></span></code></pre>
 </div>
 <p>You can also manually extend the list of stop words if you are
 interested in ignoring other unlisted terms that you encounter in your
 data.</p>
 <p>Alternatively, you can filter out stop words when iterating your
 tokens (remember the spaCy token properties!) like this:</p>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>doc <span class="op">=</span> nlp(text)</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>content_words <span class="op">=</span> [token.text <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> token.is_alpha <span class="kw">and</span> <span class="kw">not</span> token.is_stop]  <span class="co"># Filter out stop words and punctuation</span></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="bu">print</span>(content_words)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>doc <span class="op">=</span> nlp(text)</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>content_words <span class="op">=</span> [token.text <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> token.is_alpha <span class="kw">and</span> <span class="kw">not</span> token.is_stop]  <span class="co"># Filter out stop words and punctuation</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="bu">print</span>(content_words)</span></code></pre>
 </div>
+</div>
+</div>
+</div>
+<div id="callout4" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Sparsity is closely related to what is frequently called
+<strong>domain-specific data</strong>. The discourse context in which
+language is used varies importantly across disciplines (domains). Take
+for example law texts and medical texts which are typically filled with
+domain-specific jargon. We should expect the top part of the
+distribution to contain mostly the same words as they tend to be stop
+words. But once we remove the stop words, the top of the distribution
+will contain very different content words.</p>
+<p>Also, the meaning of concepts described in each domain might
+significantly differ. For example the word “trial” refers to a procedure
+for examining evidence in court, but in the medical domain this could
+refer to a clinical “trial” which is a procedure to test the efficacy
+and safety of treatments on patients. For this reason there are
+specialized models and corpora that model language use in specific
+domains. The concept of fine-tuning a general purpose model with
+domain-specific data is also popular, even when using LLMs.</p>
 </div>
 </div>
 </div>
@@ -1211,21 +1263,21 @@ co-occurrences (what words are typically located nearby a given word in
 a given corpus of text), to understand how words relate to each
 other.</p>
 <p>Let’s keep using the list of words from our mini corpus:</p>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>words <span class="op">=</span> [token.lower_ <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> token.is_alpha]</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>words <span class="op">=</span> [token.lower_ <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> token.is_alpha]</span></code></pre>
 </div>
 <p>Now we will create a dictionary where we accumulate the words that
 appear around our words of interest. In this case we want to find out,
 according to our corpus, the most frequent words that occur around
 <em>pizza</em>, <em>hamburger</em>, <em>car</em> and <em>cat</em>:</p>
-<div class="codewrapper sourceCode" id="cb26">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>target_words <span class="op">=</span> [<span class="st">"pizza"</span>, <span class="st">"hamburger"</span>, <span class="st">"car"</span>, <span class="st">"cat"</span>] <span class="co"># words we want to analyze</span></span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>co_occurrence <span class="op">=</span> {word: [] <span class="cf">for</span> word <span class="kw">in</span> target_words}</span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>co_occurrence</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>target_words <span class="op">=</span> [<span class="st">"pizza"</span>, <span class="st">"hamburger"</span>, <span class="st">"car"</span>, <span class="st">"cat"</span>] <span class="co"># words we want to analyze</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>co_occurrence <span class="op">=</span> {word: [] <span class="cf">for</span> word <span class="kw">in</span> target_words}</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>co_occurrence</span></code></pre>
 </div>
 <p>We iterate over each word in our corpus, collecting its surrounding
 words within a defined window. A window consists of a set number of
@@ -1233,19 +1285,19 @@ words to the left and right of the target word, as determined by the
 window_size parameter. For example, with <code>window_size = 3</code>, a
 word <code>W</code> has a window of six neighboring words—three
 preceding and three following—excluding <code>W</code> itself:</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>window_size <span class="op">=</span> <span class="dv">3</span> <span class="co"># How many words to look at on each side</span></span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="cf">for</span> i, word <span class="kw">in</span> <span class="bu">enumerate</span>(words):</span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>    <span class="co"># If the current word is one of our target words...</span></span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>    <span class="cf">if</span> word <span class="kw">in</span> target_words:</span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>        start <span class="op">=</span> <span class="bu">max</span>(<span class="dv">0</span>, i <span class="op">-</span> window_size) <span class="co"># get the start index of the window</span></span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>        end <span class="op">=</span> <span class="bu">min</span>(<span class="bu">len</span>(words), i <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> window_size) <span class="co"># get the end index of the window</span></span>
-<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>        context <span class="op">=</span> words[start:i] <span class="op">+</span> words[i<span class="op">+</span><span class="dv">1</span>:end]  <span class="co"># Exclude the target word itself</span></span>
-<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>        co_occurrence[word].extend(context)</span>
-<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a></span>
-<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a><span class="bu">print</span>(co_occurrence)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>window_size <span class="op">=</span> <span class="dv">3</span> <span class="co"># How many words to look at on each side</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="cf">for</span> i, word <span class="kw">in</span> <span class="bu">enumerate</span>(words):</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>    <span class="co"># If the current word is one of our target words...</span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>    <span class="cf">if</span> word <span class="kw">in</span> target_words:</span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>        start <span class="op">=</span> <span class="bu">max</span>(<span class="dv">0</span>, i <span class="op">-</span> window_size) <span class="co"># get the start index of the window</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>        end <span class="op">=</span> <span class="bu">min</span>(<span class="bu">len</span>(words), i <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> window_size) <span class="co"># get the end index of the window</span></span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>        context <span class="op">=</span> words[start:i] <span class="op">+</span> words[i<span class="op">+</span><span class="dv">1</span>:end]  <span class="co"># Exclude the target word itself</span></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a>        co_occurrence[word].extend(context)</span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="bu">print</span>(co_occurrence)</span></code></pre>
 </div>
 <p>We call the words that fall inside this window the
 <code>context</code> of a target word. We can already see other
@@ -1254,37 +1306,37 @@ of non interesting stuff is in there. To obtain even nicer results, we
 can delete the stop words from the context window before adding it to
 the dictionary. You can define your own stop words, here we use the
 STOP_WORDS list provided by spaCy:</p>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="im">from</span> spacy.lang.en.stop_words <span class="im">import</span> STOP_WORDS</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>co_occurrence <span class="op">=</span> {word: [] <span class="cf">for</span> word <span class="kw">in</span> target_words} <span class="co"># Empty the dictionary</span></span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>window_size <span class="op">=</span> <span class="dv">3</span> <span class="co"># How many words to look at on each side</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="cf">for</span> i, word <span class="kw">in</span> <span class="bu">enumerate</span>(words):</span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>    <span class="co"># If the current word is one of our target words...</span></span>
-<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a>    <span class="cf">if</span> word <span class="kw">in</span> target_words:</span>
-<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a>        start <span class="op">=</span> <span class="bu">max</span>(<span class="dv">0</span>, i <span class="op">-</span> window_size) <span class="co"># get the start index of the window</span></span>
-<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a>        end <span class="op">=</span> <span class="bu">min</span>(<span class="bu">len</span>(words), i <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> window_size) <span class="co"># get the end index of the window</span></span>
-<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a>        context <span class="op">=</span> words[start:i] <span class="op">+</span> words[i<span class="op">+</span><span class="dv">1</span>:end]  <span class="co"># Exclude the target word itself</span></span>
-<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a>        context <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> context <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> STOP_WORDS] <span class="co"># Filter out stop words</span></span>
-<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a>        co_occurrence[word].extend(context)</span>
-<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a></span>
-<span id="cb28-15"><a href="#cb28-15" tabindex="-1"></a><span class="bu">print</span>(co_occurrence)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="im">from</span> spacy.lang.en.stop_words <span class="im">import</span> STOP_WORDS</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>co_occurrence <span class="op">=</span> {word: [] <span class="cf">for</span> word <span class="kw">in</span> target_words} <span class="co"># Empty the dictionary</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>window_size <span class="op">=</span> <span class="dv">3</span> <span class="co"># How many words to look at on each side</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a><span class="cf">for</span> i, word <span class="kw">in</span> <span class="bu">enumerate</span>(words):</span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a>    <span class="co"># If the current word is one of our target words...</span></span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>    <span class="cf">if</span> word <span class="kw">in</span> target_words:</span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a>        start <span class="op">=</span> <span class="bu">max</span>(<span class="dv">0</span>, i <span class="op">-</span> window_size) <span class="co"># get the start index of the window</span></span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a>        end <span class="op">=</span> <span class="bu">min</span>(<span class="bu">len</span>(words), i <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> window_size) <span class="co"># get the end index of the window</span></span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a>        context <span class="op">=</span> words[start:i] <span class="op">+</span> words[i<span class="op">+</span><span class="dv">1</span>:end]  <span class="co"># Exclude the target word itself</span></span>
+<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a>        context <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> context <span class="cf">if</span> w <span class="kw">not</span> <span class="kw">in</span> STOP_WORDS] <span class="co"># Filter out stop words</span></span>
+<span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a>        co_occurrence[word].extend(context)</span>
+<span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="#cb30-15" tabindex="-1"></a><span class="bu">print</span>(co_occurrence)</span></code></pre>
 </div>
 <p>Our dictionary keys represent each word of interest, and the values
 are a list of the words that occur within <em>window_size</em> distance
 of the word. Now we use a Counter to get the most common items:</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co"># Print the most common context words for each target word</span></span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Contextual Fingerprints:</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="cf">for</span> word, context_list <span class="kw">in</span> co_occurrence.items():</span>
-<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>    <span class="co"># We use Counter to get a frequency count of context words</span></span>
-<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>    fingerprint <span class="op">=</span> Counter(context_list).most_common(<span class="dv">5</span>)</span>
-<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span>word<span class="sc">}</span><span class="ss">': </span><span class="sc">{</span>fingerprint<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="co"># Print the most common context words for each target word</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Contextual Fingerprints:</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="cf">for</span> word, context_list <span class="kw">in</span> co_occurrence.items():</span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>    <span class="co"># We use Counter to get a frequency count of context words</span></span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>    fingerprint <span class="op">=</span> Counter(context_list).most_common(<span class="dv">5</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span>word<span class="sc">}</span><span class="ss">': </span><span class="sc">{</span>fingerprint<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1468,8 +1520,8 @@ process language as humans do</p></li>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/01-introduction.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/01-introduction.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-10-24",
-  "datePublished": "2025-11-18"
+  "dateModified": "2025-11-24",
+  "datePublished": "2025-11-24"
 }
 
   </script><script>

@@ -358,15 +358,37 @@ process language as humans do</p></li>
 </ul></section><section id="02-word_representations"><h2 class="section-heading"><a href="02-word_representations.html">From words to vectors</a></h2>
 <hr class="half-width">
 <ul>
-<li>We can represent text as vectors of numbers (which makes it
-interpretable for machines)</li>
 <li>We can run a preprocessing pipeline to obtain clear words that can
 be used as features</li>
+<li>We learned how are words converted into vectors of numbers (which
+makes them interpretable for machines)</li>
 <li>We can easily compute how words are similar to each other with the
 cosine similarity</li>
 <li>Using gensim we can train our own word2vec models</li>
-</ul></section><section id="03-transformers"><h2 class="section-heading"><a href="03-transformers.html">Transformers: BERT and BeyondTransformers<a class="anchor" aria-label="anchor" href="#transformers"></a>BERT<a class="anchor" aria-label="anchor" href="#bert"></a>BERT Architecture<a class="anchor" aria-label="anchor" href="#bert-architecture"></a>BERT as a Language Model<a class="anchor" aria-label="anchor" href="#bert-as-a-language-model"></a>BERT for Text Classification<a class="anchor" aria-label="anchor" href="#bert-for-text-classification"></a>BERT for Token Classification<a class="anchor" aria-label="anchor" href="#bert-for-token-classification"></a></a></h2>
-<hr class="half-width"></section><section id="04-LargeLanguageModels"><h2 class="section-heading"><a href="04-LargeLanguageModels.html">Episode 3: Using large language modelsReferences<a class="anchor" aria-label="anchor" href="#references"></a></a></h2>
+</ul></section><section id="03-transformers"><h2 class="section-heading"><a href="03-transformers.html">Transformers: BERT and Beyond</a></h2>
+<hr class="half-width">
+<ul>
+<li><p>Static word representations, such as word2vec, still lack of
+enough context to do more advanced tasks, we made this weakness evident
+by studying polysemy.</p></li>
+<li><p>The transformer architecture consists of three main components:
+an <strong>Encoder</strong> to create powerful text representations
+(embeddings), an <strong>Attention Mechanism</strong> to learn more from
+the full sequence context, and a <strong>Decoder</strong>, a generative
+model to predicts the next token based on the context it has so
+far.</p></li>
+<li><p>BERT is a deep encoder that creates rich contextualized
+representations of words and sentences. These representations are very
+powerful features that can be re-used by other machine Learning and deep
+learning models.</p></li>
+<li><p>Several of the core NLP tasks can be solved using
+Transformer-based models. In this episode we covered language modeling
+(fill-in the mask), text classification (sentiment analysis) and token
+classification (named entity recognition).</p></li>
+<li><p>Evaluating the model performance using your own data <strong>for
+your own use case</strong> is crucial to understand possible drawbacks
+when using this model for unknown predictions</p></li>
+</ul></section><section id="04-LargeLanguageModels"><h2 class="section-heading"><a href="04-LargeLanguageModels.html">Episode 3: Using large language modelsReferences<a class="anchor" aria-label="anchor" href="#references"></a></a></h2>
 <hr class="half-width"></section>
 </div>
     </main>
@@ -415,8 +437,8 @@ cosine similarity</li>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/key-points.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/key-points.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-11-18",
-  "datePublished": "2025-11-18"
+  "dateModified": "2025-11-24",
+  "datePublished": "2025-11-24"
 }
 
   </script><script>

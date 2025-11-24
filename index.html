@@ -342,11 +342,12 @@ agents.</p>
 <p><a href="https://python.org" class="external-link">Python</a> is a popular language for
 scientific computing, and a frequent choice for machine learning as
 well. To install Python, follow the <a href="https://wiki.python.org/moin/BeginnersGuide/Download" class="external-link">Beginner’s
-Guide</a> or head straight to the <a href="https://www.python.org/downloads/" class="external-link">download page</a>.</p>
-<p>Please set up your python environment at least a day in advance of
-the workshop. If you encounter problems with the installation procedure,
-ask your workshop organizers via e-mail for assistance so you are ready
-to go as soon as the workshop begins.</p>
+Guide</a> or head straight to the <a href="https://www.python.org/downloads/" class="external-link">download page</a>.
+<strong>Note:</strong> We will use Python 3.12 for this workshop.</p>
+<p>Please set up your Python environment <strong><em>at least a day in
+advance</em></strong> of the workshop. If you encounter problems with
+the installation procedure, ask your workshop organizers via e-mail for
+assistance so you are ready to go as soon as the workshop begins.</p>
 </div>
 </div>
 </div>
@@ -434,7 +435,7 @@ restart your terminal!</p>
 </button>
 <div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
 <div class="accordion-body">
-<pre class="shell"><code>python3 -m pip install jupyterlab jieba spacy gensim matplotlib transformers  </code></pre>
+<pre class="shell"><code>python3 -m pip install -r requirements.txt</code></pre>
 </div>
 </div>
 </div>
@@ -449,7 +450,7 @@ restart your terminal!</p>
 </button>
 <div id="collapseSpoiler6" class="accordion-collapse collapse" aria-labelledby="headingSpoiler6" data-bs-parent="#accordionSpoiler6">
 <div class="accordion-body">
-<pre class="shell"><code>py -m pip install jupyterlab jieba spacy gensim matplotlib transformers</code></pre>
+<pre class="shell"><code>py -m pip install -r requirements.txt</code></pre>
 </div>
 </div>
 </div>
@@ -472,22 +473,28 @@ Lab documentation</a> for an up-to-date list of supported browsers.</p>
 <p>Next, download the model that we will be using from a terminal
 (Mac/Linux) or Command Prompt (Windows) by typing the command:</p>
 <pre class="shell"><code>ollama pull llama3.2:1b</code></pre>
+<p>NOTE: if the previous command fails, you can pull the model manually
+inside the Ollama graphic interface. Open Ollama and on the right side
+of the “Send a message” prompt you will see a dropdown. Type there
+“llama3.2:1b” and then send any message so Ollama can download (pull)
+the model for you.</p>
 </section><section><h2 class="section-heading" id="data-sets">Data Sets<a class="anchor" aria-label="anchor" href="#data-sets"></a></h2>
 <hr class="half-width"><p>Datasets and example files are placed in the <a href="https://github.com/carpentries-incubator/Natural-language-processing/tree/main/episodes/data" class="external-link">episodes/data/</a>
 directory.</p>
-<p>You can manually download each of the 4 .txt files by clicking on
-them and using the down arrow buttom (“download raw file”) that is on
-the upper right corner of the screen, below the word “History”.</p>
-<p>You should also manually download a notebook template vailable in the
-<a href="https://github.com/carpentries-incubator/Natural-language-processing/blob/main/learners/notebooks/introduction.ipynb" class="external-link">learners/notebook</a>
-directory.</p>
-<p>The 4 text files and the notebook should be placed together in the
-same directory.</p>
+<p>You can manually download the zip file inside that directory by
+clicking on <code>data.zip</code> and then using the down arrow button
+(“download raw file”) that is on the upper right corner of the screen,
+below the word “History”.</p>
+<p><strong>Note:</strong> The text data files in <code>data.zip</code>
+should be placed in a directory called <code>data/</code> in the root of
+the directory where your jupyter notebooks will reside.</p>
 <div class="section level3">
-<h3 id="word2vec">Word2Vec<a class="anchor" aria-label="anchor" href="#word2vec"></a></h3>
-<p>Download Word2Vec models trained on 6 national Dutch newspaper data
-spanning a time period from 1950 to 1989 (Wevers, M., 2019). These
-models are available on <a href="https://zenodo.org/records/3237380" class="external-link">Zenodo</a>.</p>
+<h3 id="word2vec-spacy-english-models">Word2Vec &amp; SpaCy English Models<a class="anchor" aria-label="anchor" href="#word2vec-spacy-english-models"></a></h3>
+<p>To download all models required for the workshop with one simple
+platform-independent command:</p>
+<pre class="shell"><code>invoke init-models</code></pre>
+<p>If this command fails for whatever reason, try the following manual
+approach. Download the Word2Vec model first:</p>
 <div id="accordionSpoiler7" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler7" aria-expanded="false" aria-controls="collapseSpoiler7">
@@ -518,12 +525,8 @@ models are available on <a href="https://zenodo.org/records/3237380" class="exte
 </div>
 </div>
 </div>
-</div>
-<div class="section level3">
-<h3 id="spacy-english">Spacy English<a class="anchor" aria-label="anchor" href="#spacy-english"></a></h3>
-<p>Download the <a href="https://spacy.io/models/en/" class="external-link">trained pipelines
-for English from Spacy</a>. To do so, open a terminal (Mac/Linux) or
-Command Prompt (Windows) and type the command:</p>
+<p>Then, download the <a href="https://spacy.io/models/en/" class="external-link">trained
+pipelines for English from Spacy</a>:</p>
 <div id="accordionSpoiler9" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler9" aria-expanded="false" aria-controls="collapseSpoiler9">
@@ -604,8 +607,8 @@ Command Prompt (Windows) and type the command:</p>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/index.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/index.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-11-18",
-  "datePublished": "2025-11-18"
+  "dateModified": "2025-11-24",
+  "datePublished": "2025-11-24"
 }
 
   </script><script>
