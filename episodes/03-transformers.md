@@ -543,7 +543,7 @@ These 4 metrics range from 0 to 1 (note that sometimes people multiply the score
 ::: challenge
 ### Evaluate Sentiment Classifier
 
-Now it is time to scale things a little but more... Use the same pipeline from the given toy example to run predictions over 100 examples of short book reviews. Then print the classification report for the given *test set*. These examples are given in the `data/sentiment_film_data.tsv` file.
+Now it is time to scale things a little bit more... Use the same pipeline from the given toy example to run predictions over 100 examples of short book reviews. Then print the classification report for the given *test set*. These examples are given in the `data/sentiment_film_data.tsv` file.
 
 You can use the following helper functions, the first one helps you read the file and the second one normalizes the 5-class predictions into the 3-class annotations given in the test set:
 
@@ -585,6 +585,20 @@ y_pred = get_normalized_labels(y_pred)
 
 # Detailed report with all metrics
 print(classification_report(y_true, y_pred))
+```
+
+Here is the classification report:
+
+```output
+              precision    recall  f1-score   support
+
+    negative       0.57      1.00      0.73        23
+     neutral       0.53      0.22      0.31        37
+    positive       0.69      0.78      0.73        40
+
+    accuracy                           0.62       100
+   macro avg       0.60      0.66      0.59       100
+weighted avg       0.61      0.62      0.57       100
 ```
 
 ::::
