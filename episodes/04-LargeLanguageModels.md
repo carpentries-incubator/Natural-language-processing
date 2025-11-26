@@ -6,50 +6,114 @@ exercises: 60
 
 ## Background
 
-Chat assistants like [ChatGPT](https://chatgpt.com/), [Gemini](https://gemini.google.com/) and [Claude](http://claude.ai) are products widely used today for tasks such as content generation, question answering, research and software development among many others. These products, also known as Large Language Modesl (LLMs), are based on the same Transformer architecture, with several enhancements such as feeding considerably large datasets, combining several models to generate an output, and several other post-training techniques that enhance the predictions to fit the product expectations. It is undeniable that the rapid rise of such models has had quite a disruptive and strong impact. But what are these models exactly? How do they work 'under the hood'? And how can one use them programmatically, in a responsible and effective way?
+Chat assistants like [ChatGPT](https://chatgpt.com/), [Gemini](https://gemini.google.com/) and [Claude](http://claude.ai) are products widely used today for tasks such as content generation, question answering, research and software development among many others. These products, also known as Large Language Modesl (LLMs), are based on the Transformer architecture, with several enhancements. It is undeniable that the rapid rise of such models has had quite a disruptive and strong impact. But what are these models exactly? How do they work 'under the hood'? And how can one use them programmatically, in a responsible and effective way?
 
 <img src="fig/llm-logos/anthropic.png" alt="Company A" width="80"/> <img src="fig/llm-logos/alibaba.png" alt="Company B" width="80"/> <img src="fig/llm-logos/xai.jpg" alt="Company C" width="80"/> <img src="fig/llm-logos/zhipu.png" alt="Company C" width="150"/> <img src="fig/llm-logos/google.png" alt="Company C" width="80"/> <img src="fig/llm-logos/openai.jpg" alt="Company C" width="150"/>
 
 <img src="fig/llm-logos/nvidia.png" alt="Company D" width="80"/> <img src="fig/llm-logos/deepseek.png" alt="Company E" width="80"/> <img src="fig/llm-logos/huggingface.png" alt="Company F" width="80"/> <img src="fig/llm-logos/meta.png" alt="Company C" width="150"/>
 
-Now that we know that dealing with written language means extracting structure from unstructured text (NLP Task), we can understand there is a rationale behind the kind of tasks LLMs claim to tackle. Everytime we prompt a chat model, we are assigning them a task that needs to get solved. The question that interests us is not about LLMs being "intelligent" or not (eventhough that could be a very interesting topic on its own, is not the goal of this course); we should rather focus on using LLMs as yet a new *automatic tool*, and like with any other Machine Learning or NLP tool, we are still dealing here with a model that takes an input and delivers an output for that input. The only thing that changed is the complexity of the input-output pairs; hence, the complexity for validating the outputs increased accordingly. 
+Now that we know that dealing with written language means extracting structure from unstructured text (NLP Task), we can understand there is a rationale behind the kind of tasks LLMs could tackle. Everytime we prompt a chat model, we are feeding them a very long list of tokens containing a task that needs to get solved. The question that interests us is not about LLMs being "intelligent" or not (eventhough that could be a very interesting topic on its own, is not the goal of this course); we will rather focus on using LLMs as yet a new *automatic tool*, and like with any other Machine Learning tool, we are still dealing here with a model that takes an input and delivers an output for that input. The only thing that changed is the complexity of the input-output pairs; and hence, the complexity for validating the outputs increased accordingly. 
 
 Our duty as NLP practitioners remains, and we must keep asking the same questions: 
 - How can I shape the task so I obtain the information I need? 
 - How do I measure what proportion of the outputs are right? 
 - How do I know if this will behave as expected with unexpected inputs? 
-- **In short: How do I evaluate?**  
+- **In short: How do I evaluate my task?**  
 
 This episode is a gentle introduction to LLMs which aims to equip you with knowledge of the underpinnings of LLMs based on transformers architecture, as well as practical skills to start programmatically working with LLMs in your own projects, without necessarily relying on proprietary products and platforms.
 
 
 ## What are Large Language Models (LLMs)?
-Large language models (LLMs) are transformer-based language models that are specialised to interpret and generate text, and to converse in a conversational-like manner with humans. The text that they generate are mostly natural language but can, in theory, constitute any character or symbol sequence such as software code. The term *Large* was appended to the well known *Language Model* term to highlight the scale on which this architectures are trained. To give an example, BERT in 2018 was considered a big model and had roughly 100 million parameters; GPT-2 in 2019 had 1.5 billion parameters, and GPT-3 was published in 2020 as a model with 175 billion parameters, and so forth. 
+Large language models (LLMs) are generative transformer-based language models that are trained to interact in a conversational-like manner with humans. The text that they generate are mostly natural language but can, in theory, constitute any sequence of characters and symbols, such as software code. The term *Large* was appended to the well known *Language Model* term to highlight the scale on which this architectures are trained. To give an example, BERT in 2018 was considered a big model and had roughly 100 million parameters; GPT-2 in 2019 had 1.5 billion parameters, and GPT-3 was published in 2020 as a model with 175 billion parameters, and so forth. 
 
 ::: callout
-Since we already learned about the vanilla transformer architecture, in this episode we will focus on the most recent language models, and we will keep calling them LLMs, eventhough they are not necessarily that large anymore. 
+Since we already learned about the vanilla transformer architecture, in this episode we will focus on the most recent language models, and we will keep calling them LLMs, eventhough they are not necessarily that large anymore. In this episode we will cover mostly models that have been fine-tuned to be chat assistants, capable of integrating into the text generation a multi-turn interaction.
 
-Given the hype around the field, people keep calling any new model an LLM, and we will keep using the term to avoid confusion. Have in mind, however, that especially recent models are being published with the particular goal of reducing parameter size while retaining the performance of the larger models, some of them are even less than 1 billion parameters already! This is good news for the open source engineers and researchers, because such advancements mean we can now make use of the new capabilities of language models in our own local servers, and even our laptops, without needing to pay fees or compromise the privacy of our data and experiments.
+Given the hype around the field, people keep calling all new models (and some "old models" as well) an *LLM* or even worse just *AI*. **We will stick here to the term LLM to avoid confusions**. Have in mind, however, that especially recent models are being published with the particular goal of reducing parameter size while retaining the performance of the larger models, some of them are even less than 1 billion parameters already! This is good news for the open source engineers and researchers, because such advancements mean we can now make use of the new capabilities of language models in our own local servers, and even our laptops, without needing to pay fees or compromise the privacy of our data and experiments.
 :::
 
-### Examples of LLMs 
+### Transformers vs. LLMs
+
+To emphasize again, LLMs are also trained using the transformer neural network architecture, including the use of the self-attention mechanism inside the generative Decoder (as discussed in Lesson 3). However, they are three main characteristics that the newest generations of LLMs have:
+
+1. **Scale:** there are three dimensions in which current LLMs exceed general transformer language models in terms of scale. The most important one is the number of **training parameters** (weights) that are used for training models. In current models there are hundreds of billions of parameters up to trillions. The second factor is the **amount of training data** (raw text sequences) used for training. Current LLMs use snapshots of the internet (upwards of hundreds of terabytes in size) as a base for training and possibly augment this with additional manually curated and artificially generated data. The third factor is the **context window** a model can handle, this is the amount of tokens a model can see and process at a time; to give perspective, BERT was able to handle 512 input tokens per interaction, whereas some LLMs are already able to process a couple of million tokens at a time. The sheer scale characteristic of LLMs mean that such models require extremely resource-intensive computation to train. State-of-the-art LLMs require multiple dedicated Graphical Processing Units (GPUs) with tens or hundreds of gigabytes of memory to load and train in reasonable time. GPUs offer high parallelisability in their architecture for data processing which makes them more efficient for training these models.
+
+2. **Post-training:** After training a base language model on textual data, there is an additional step of fine-tuning for enabling conversation in a prompt style of interaction with users, which current LLMs are known for. After the pre-training and neural network training stages we end up with what is called a _base_ model. The base model is a language model which is essentially a token sequence generator optimizad for the netx token prediction (Language Modelling) task. This model by itself is not suitable for the interaction style we see with current LLMs, which can do things like answer questions, interpret instructions from the user, and incorporate feedback to improve responses in conversations. Post-training addicitons include:
+    - Supervised Fine-Tuning (SFT): Training on curated examples of desired input-output pairs to teach instruction-following and helpful responses.
+    - Reinforcement Learning from Human Feedback (RLHF): Using human preference data to align model outputs with what humans find helpful.
+    - "Safety" Training: Include so-called guardrails to avoid generating harmful outputs.
+    - Specialized Capabilities: Often includes training for specific skills like coding, reasoning, or tool use
+
+3. **Generalization:** Because of the wide range of post-training tasks they've been through, LLMs can be "directly applied" across a wide range of NLP tasks such as summarization, translation, question answering, etc., without necessarily the need for fine-tuning or training separate models for different NLP tasks. They are also capable of calling external tools or follow more complicated instructions that go beyond the next word probabilities.
+
+<img src="fig/llm_analogy3.png" alt="llm engine analogy" width="1000" />
+
+What about the relation between BERT, which we learned about in the previous episode, and LLMs? Apart from the differences described above, BERT only makes use of the encoder layer of the transformers architecture because the goal is on creating token representations preserving contextual meaning (Embedding Model). There is no generative component to do something with those representations.
+<br>
+
+<img src="fig/llms_vs_bert2.png" alt="llms vs bert" width="800" />
+
+### The LLM Taxonomy 
 
 Many different LLMs have been, and continue to be, developed. There are both proprietary and open-source varieties. Real open-source varieties should make the whole path of model creation available: inform exactly which data was used to train the model, including filters for data quality; give a detailed explanation of the architecture and hypermarameters, including the code used to train them, and of course make them free, open and accessible online. Unfortunately completely ope source models are scarce, but the partially open source number models keeps growing. Below is a summary of some relevant LLMs together with their creators, chat assistant interfaces, and proprietary status:
 
 <img src="fig/llm_table4.png" alt="LLMs table" width="1000" />
 
 
-### Interacting with an LLM
+#### Openness and Licensing Considerations
 
-Before exploring how we can invoke LLMs programmatically to solve the kinds of tasks abve, let us setup and load our first LLM. We will keep using the `transformers` library, just as with the BERT examples.
+The spectrum of model availability ranges from fully open to completely proprietary:
 
-#### Import Libraries
+**Open-weights** release the trained model parameters while keeping training code or data proprietary. This allows you to run and fine-tune the model locally but if you don't have the code used to train the model or information about the architecture used, it limits your ability to fully understand or replicate the training process.
+
+**Open training data** they release the text data used for pretraining.
+
+**Open architecture** they publish a paper about the neural network architecture and specific configuration they used for training. Or they release the actual source code they used for pretraining.
+
+Ideally, if you want to use a model for empirical academic research you might decide for models that are completely open in all three of the above facets. Although, open training data is quite rare for available state-of-the-art models.
+
+**Commercial/proprietary models** like GPT-4, Claude, or Gemini are accessed only through APIs. While often offering superior performance, they provide no access to internal architecture and may have usage restrictions or costs that scale with volume.
+
+Consider your requirements for:
+- Code modification and customization
+- Data privacy and control
+- Commercial usage rights
+- Research reproducibility
+- Long-term availability guarantees
+
+
+::: callout
+Besides considering the openess of the models, there are several *families* of LLM to consider, which differ not only in training data and scale of parameters but also in training and post-training techniques. Here we show a (non-exhaustive) general list of categories that have branched out from the vanilla generative transformer language models, understanding the difference can also help you choose the proper model.
+
+The two main distinctions of architecture are:
+
+- **Embedder LLM** (BERT, OpenAI Embed, Cohere Embed, Nomic): these are the "encoder only" LLMs which have been optimized for holding representations that help to compute sentence/paragraph similarities.
+- **Base Generative LLM** (GPT, LLama, GPT3): this is the generative "decoder-only" transformer that is trained to generate the most likely token based on the previous tokens.
+
+All the next ones are basically "post-trained" (SFT + RLHF) generative models with a different focus. These are not hard categories, but you will most likely encounter the concepts everywhere in the Web:
+
+- **Domain-specific LLM:** a base model fine-tuned with specialized data like medical papers or legal cases and with RLHF. Couls also be specialized on Question-Answering datasets, etc...
+
+- **LLM-Instruct** (Claude, Llama-Instruct): these are the LLMs that have been fine-tuned with step-by-step human instructions to follow user instructions
+
+- **Reasoning/Thinking LLM** (Cohere Command-R, OpenAI o1, Gemini 2.5, ...): these models have been post-trained to generate "thinking tokens" in between, before providing the final answer to the user, with the aim of improving complex task solving capabilities. This ones can also give structured output, like JSON.
+
+- **Tool Augmented LLMs** (GPT4): these models have been post-trained for calling external tools like Web Search, API calls, Execute code, etc... and then generate a final answer (token output) integrating the tools' results.
+
+:::
+
+
+## Interacting with an LLM
+
+Before exploring how we can invoke LLMs programmatically to solve the kinds of tasks above, let us setup and load our first LLM. We will keep using the `transformers` library, just as with the BERT examples.
+
+### Import Libraries
 ```python
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 ```
 
-#### Load and setup the model (LLM)
+### Load and setup the model (LLM)
 
 Let's load a open source lightweight `SmolLM2-135M-Instruct`, as you might have guessed it is a model with 135M parameters which has been finetuned for following instructions, therefore you can use it as a chat assistant:
 
@@ -65,7 +129,7 @@ model = AutoModelForCausalLM.from_pretrained(model_name)
 print(f"Model loaded! It has {model.num_parameters():,} parameters")
 ```
 
-#### Basic Text Generation
+### Basic Text Generation
 
 Let's perform inference with the LLM to generate some text.
 
@@ -112,7 +176,7 @@ Note that the model "repeats" the question before completing it with the answer.
 
 ![Generative LLMs correspond to the Decoder component of the Transformer architecture](fig/llms_vs_bert2.png)
 
-#### Step 3: Multi-turn Conversation Generation
+### Multi-turn Conversation Generation
 
 When dealing with these kind of *assistant LLMs* it is a better practice to look at the input as a conversation. A conversation can be defined as a list of *messages* that the pipeline knows how to internally tokenize and generate a better answer given the context provided:
 
@@ -170,7 +234,7 @@ Different models might recognize also other roles, but these are the core ones. 
 :::
 
 
-#### Step 4: Hyperparameters for Text Generation
+### Hyperparameters for Text Generation
 
 
 Besides the existence of roles, the `pipeline()` method has several hyperparameters (function arguments) for that help us control better how the `text-generation` task will be done. These are some of the most common:
@@ -252,6 +316,8 @@ print(response)
 # Show content only
 print(response.content)
 ```
+
+### Example: Sentiment Analysis
 
 Let us now try the sentiment analysis task to see how well different models (with different number of parameters perform). Consider the following set of lines from product reviews:
 
@@ -349,8 +415,199 @@ weighted avg       0.55      0.59      0.51       100
 
 :::
 
+### Key Takeaways
 
-### Other NLP tasks
+- **LLMs are generative models** - they predict the next most likely tokens
+- **Prompts matter** - the way you ask affects what you get
+- **Hyperparameters control behavior** - temperature, max_length, etc. tune the output
+- **Models have limitations** - they can be wrong, inconsistent, or biased
+- **Size vs Speed trade-off** - smaller models are faster but less capable
+
+---
+
+## Drawbacks and Biases with LLMs
+
+See [notebooks/responsible.ipynb]()...
+
+
+## Advanced Material
+
+
+### 1. LLM selection criteria
+
+Choosing the right LLM for your specific use case requires consideration of multiple factors. This section will guide you through some decision points that will help you select an appropriate model for your needs.
+
+#### 1.1 Openness and Licensing Considerations
+
+The spectrum of model availability ranges from fully open to completely proprietary:
+
+**Open-weights** release the trained model parameters while keeping training code or data proprietary. This allows you to run and fine-tune the model locally but if you don't have the code used to train the model or information about the architecture used, it limits your ability to fully understand or replicate the training process.
+
+**Open training data** they release the text data used for pretraining.
+
+**Open architecture** they publish a paper about the neural network architecture and specific configuration they used for training. Or they release the actual source code they used for pretraining.
+
+Ideally, if you want to use a model for empirical academic research you might decide for models that are completely open in all three of the above facets. Although, open training data is quite rare for available state-of-the-art models.
+
+**Commercial/proprietary models** like GPT-4, Claude, or Gemini are accessed only through APIs. While often offering superior performance, they provide no access to internal architecture and may have usage restrictions or costs that scale with volume.
+
+Consider your requirements for:
+- Code modification and customization
+- Data privacy and control
+- Commercial usage rights
+- Research reproducibility
+- Long-term availability guarantees
+
+
+#### 1.2 Hardware and Compute Requirements
+
+Your available computational resources significantly constrain your model options:
+
+**Modern GPU access** (RTX 4090, A100, H100, etc.) enables you to run larger models locally. Consider:
+- VRAM requirements: 7B parameter models typically need 14+ GB, 13B models need 26+ GB, 70B models require 140+ GB or multi-GPU setups
+- Inference speed requirements for your application
+- Whether you need real-time responses or can accept slower processing
+
+**CPU-only environments** limit you to smaller models (such as SmolLM2 and SmolLM3) or [quantized](https://ojs.aaai.org/index.php/AAAI/article/view/29908) versions.
+
+**Cloud/API access** removes hardware constraints but introduces ongoing costs and potential latency issues.
+
+#### 1.3 Performance Evaluation
+
+Different models excel at different tasks. Some evaluation criteria include:
+
+**General capability benchmarks** like those found on the [Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) provide standardized comparisons across models for reasoning, knowledge, and language understanding tasks.
+
+**Multilingual performance** varies significantly between models. The [MMLU-Pro benchmark](https://mmluprox.github.io/) offers insights into cross-lingual capabilities if you need support for non-English languages.
+
+**Task-specific performance** should be evaluated based on your particular needs:
+- Code generation
+- Mathematical reasoning
+- Reading comprehension and summarization
+- Creative writing and dialogue quality
+- Scientific and technical domain knowledge
+
+Always validate benchmark performance with your own test cases, as real-world performance may differ from standardized evaluations.
+
+#### 1.4 Purpose or Use Case
+
+**Scientific and research applications** often prioritize reproducibility, transparency, and the ability to modify model behavior. Open-source models with detailed documentation are typically preferred (e.g. SmolLM, LLama, Olmo)
+
+**Applications (mobile or web apps)** may require:
+- Reliable API uptime and support
+- Clear licensing for commercial use
+- Scalability to handle many concurrent users
+- Content filtering and safety features
+
+**Personal or educational use** might emphasize:
+- Cost-effectiveness
+- Ease of setup and use
+
+#### 1.5 Integration and Deployment Considerations
+
+**Software integration** requirements affect model choice:
+- API-based models offer simpler integration but require internet connectivity
+- Local models provide more control but require more complex deployment
+- Consider latency requirements, offline capabilities, and data privacy needs
+
+**Hosting and serving capabilities** determine whether you can run models locally:
+- Do you have the infrastructure to serve models at scale?
+- Are you self-hosting the model?
+
+#### 1.6 Domain-Specific Models
+
+Many models have been fine-tuned for specific domains or tasks. For example:
+
+- Medical and healthcare applications (e.g., [BioGPT](https://huggingface.co/microsoft/biogpt))
+- Legal document processing (e.g., [SaulLM](https://huggingface.co/Equall/Saul-7B-Instruct-v1))
+
+Remember that the LLM landscape evolves rapidly. New models are released frequently, and performance benchmarks should be regularly reassessed. Consider building your system with model-agnostic interfaces to facilitate future transitions between different LLMs as your needs evolve or better options become available.
+
+---
+
+### 2. How are LLMs trained?
+
+Training LLMs involves a series of steps. There are two main phases: pretraining and post training. Pretraining generally involves the following substeps:
+
+#### 2.1 Obtaining and pre-processing textual data for training
+
+- _Downloading and pre-processing text:_ State-of-the-art LLMs include entire snapshots of the internet as the core textual data for training. This data can be sourced from efforts such as [CommonCrawl](https://commoncrawl.org/). Proprietary LLMs may augment or supplement this training data with additional licensed or proprietary textual data (e.g., books) from other sources or companies. The raw web pages are not usable by themselves, we need to extract the raw text from those HTML pages. This requires a preprocessing or data cleaning step.
+
+<img src="fig/html_to_text.png" alt="html to text processing" width="800" />
+
+- _Tokenization:_  As we saw in Lesson 01, the raw text itself cannot be used in the training step, we need a way to tokenize and encode the text for processing by the neural network. As an example of what these encodings look like for OpenAI models like GPT, you can visit [TikTokenizer](https://tiktokenizer.f2api.com/).
+
+<img src="fig/text_to_tokenids.png" alt="tokenization" width="800" />
+
+#### 2.2 Neural network training
+With LLMs the training goal is to predict the next token in a one-dimensional sequence of tokens. This is different from BERT where the goal is to predict masked tokens in the input sequence. BERT is therefore not natively developed for generating text, whereas LLMs are. In the internals of the transformer architecture, this is illustrated by the fact that BERT only makes use of the Encoder component to create its contextualised word embeddings. It does not use the Decoder component to generate new tokens for the input sequence.
+
+<img src="fig/llm_training_goal.png" alt="training goal llms" width="800" />
+
+After training we obtain a _base_ LLM which is predicts or generates token sequences that resemble its training data. However, a post training step is required in order to fine-tune the model to accept instructions, answer questions in a conversational style and to have behavior that is more suitable for interaction with humans.
+
+#### 2.3 Post training
+What does post training for LLMs look like? Why is this step necessary? What would happen if you skip this step and just use the base model trained in Step 2.2 for inference? The answer is that the base model is just a token sequence predictor. It just predicts the most likely next token for an input sequence of tokens. It does not understand how to deal with conversations or to interpret instructions (the intentions and tone behind written communication).
+
+Therefore, you may encounter unexpected conversations like this if interacting with a base LLM:
+
+**Not Following Instructions**
+
+```
+Human: Summarize this paragraph in one sentence: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.
+Raw LLM: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.
+```
+
+In this example interaction, the model was trained to predict text, not to follow instructions. So it might not give expected or correct responses although, statistically, these response tokens are indeed the next most likely tokens.
+
+**Regurgitation**
+
+```
+Human: Donald John Trump (born June 14, 1946) is an American politician,
+Raw LLM: media personality, and businessman who is the 47th president of the United States. A member of the Republican Party, he served as the 45th president from 2017 to 2021...
+```
+<img src="fig/trump.png" alt="tokenization" width="800" />
+
+In this interaction, the model just "regurgitates" verbatim a response from Wikipedia (part of it's training data), instead of creatively formulating a response in its own words. These are just a few examples of the kind of undesirable behavior one might encounter when doing inference with the base model without post training.
+
+Therefore, to avoid issues like this, and to be useful as conversational assistants, LLMs generally have to be fine-tuned on additional unseen conversation datasets (containing on the order of hundreds of thousands of conversations). These datasets are manually created and validated by humans. For proprietary models, these humans are hired professionally to contribute to this dataset from platforms such as Upwork and ScaleAI. There are also open-source efforts to create such datasets such as [OpenAssistant](https://huggingface.co/datasets/OpenAssistant/oasst2).
+
+Once such a dataset is obtained, the conversations need to be represented as a one-dimensional token sequence. Conversations therefore have to be encoded into such representations before being used as input for training. The encoding method for conversations currently differ among LLMs. The figure below shows how GPT-4 tokenizes and encodes input conversations as one dimensional token sequences ([TikTokenizer](https://tiktokenizer.f2api.com/) is a page for visualizing and experimenting with tokenization approaches used by OpenAI LLMs).
+
+<img src="fig/tokenize_conversations.png" alt="tokenization for conversation data" width="800" />
+
+After encoding or tokenization, the conversational data is supplied as input for fine-tuning the base model (replacing the original training data). I.e., the base model's weights or parameters are updated through this process.
+
+Below are some examples of conversational data that one might use to fine-tune an LLM. In general, you want multi-turn conversations where each participant in the conversation gets the opportunity to respond multiple times. Because this is the likely mode of interaction that will take place between humans and LLM-based chat assistants:
+
+```
+**Conversation 1 (Travel Planning):**
+Human: Can you suggest a weekend getaway near Amsterdam?
+LLM: Sure! Giethoorn – Known as the “Venice of the North,” this village has canals, thatched-roof houses, and a peaceful atmosphere. Utrecht, a charming city with medieval streets, beautiful canals, and cozy cafés.
+Human: Which one would be better for a quiet, relaxing trip?
+LLM: Giethoorn would be the quieter option. Unlike Utrecht, which is a bustling city, Giethoorn is a small village with a calm, serene atmosphere, ideal for a peaceful getaway.
+
+**Conversation 2 (Math Help):**
+Human: What's the derivative of 3𝑥^2 + 5𝑥 − 7?
+LLM: The derivative is 6𝑥 + 5.
+Human: Great, and what about the second derivative?
+LLM: The second derivative is 6.
+
+**Conversation 3 (Creative Writing):**
+Human: Give me a one-line horror story.
+LLM: The reflection in the mirror smiled back before I did.
+Human: Can you make it even creepier?
+LLM: The reflection winked, though I was alone in the room.
+```
+---
+
+### 3. LLM Prompting strategies
+
+See [notebooks/prompting.ipynb]()...
+
+---
+
+### 4. Solving NLP tasks with LLMs
 
 Write and execute the following prompts in Python code within Jupyter notebook.
 
@@ -446,217 +703,6 @@ Write and execute the following prompts in Python code within Jupyter notebook.
     print(sorted_numbers)
     ```
 
-### Key Takeaways
-
-- **LLMs are generative models** - they predict the next most likely tokens
-- **Prompts matter** - the way you ask affects what you get
-- **Hyperparameters control behavior** - temperature, max_length, etc. tune the output
-- **Models have limitations** - they can be wrong, inconsistent, or biased
-- **Size vs Speed trade-off** - smaller models are faster but less capable
-
----
-
-## Transformers and LLMs
-
-LLMs are also trained using the transformer neural network architecture, making use of the self-attention mechanism discussion in Lesson 02. This means that an LLM is also a transformer-based language model. However, they are distinct from _general_ transformer-based language models in three main characteristics:
-
-1. **Scale:** there are two dimensions in which current LLMs exceed general transformer language models in terms of scale. The most important one is the number of _training parameters_ (weights) that are used for training models. In current models there are hundreds of billions of parameters up to trillions. The second factor is the _amount of training data_ (raw text sequences) used for training. Current LLMs use snapshots of the internet (upwards of hundreds of terabytes in size) as a base for training and possibly augment this with additional manually curated data. The sheer scale characteristic of LLMs mean that such models require extremely resource-intensive computation to train. State-of-the-art LLMs require multiple dedicated Graphical Processing Units (GPUs) with tens or hundreds of gigabytes of memory to load and train in reasonable time. GPUs offer high parallelisability in their architecture for data processing which makes them more efficient for training these models.
-
-2. **Post-training:** After training a base language model on textual data, there is an additional step of fine-tuning for enabling conversation in a prompt style of interaction with users, which current LLMs are known for. After the pre-training and neural network training stages we end up with what is called a _base_ model. The base model is a language model which is essentially a token sequence generator. This model by itself is not suitable for the interaction style we see with current LLMs, which can do things like answer questions, interpret instructions from the user, and incorporate feedback to improve responses in conversations.
-
-3. **Generalization:** LLMs can be applied across a wide range of NLP tasks such as summarization, translation, question answering, etc., without necessarily the need for fine-tuning or training separate models for different NLP tasks.
-
-<img src="fig/llm_analogy3.png" alt="llm engine analogy" width="1000" />
-
-What about the relation between BERT, which we learned about in Lesson 02, and LLMs? Apart from the differences described above, BERT only makes use of the encoder layer of the transformers architecture because the goal is on creating token representations preserving contextual meaning. There is no generative component to do something with those representations.
-<br>
-
-<img src="fig/llms_vs_bert2.png" alt="llms vs bert" width="800" />
-
----
-
-### 2. How are LLMs trained?
-
-Training LLMs involves a series of steps. There are two main phases: pretraining and post training. Pretraining generally involves the following substeps:
-
-#### 2.1 Obtaining and pre-processing textual data for training
-
-- _Downloading and pre-processing text:_ State-of-the-art LLMs include entire snapshots of the internet as the core textual data for training. This data can be sourced from efforts such as [CommonCrawl](https://commoncrawl.org/). Proprietary LLMs may augment or supplement this training data with additional licensed or proprietary textual data (e.g., books) from other sources or companies. The raw web pages are not usable by themselves, we need to extract the raw text from those HTML pages. This requires a preprocessing or data cleaning step.
-
-<img src="fig/html_to_text.png" alt="html to text processing" width="800" />
-
-- _Tokenization:_  As we saw in Lesson 01, the raw text itself cannot be used in the training step, we need a way to tokenize and encode the text for processing by the neural network. As an example of what these encodings look like for OpenAI models like GPT, you can visit [TikTokenizer](https://tiktokenizer.f2api.com/).
-
-<img src="fig/text_to_tokenids.png" alt="tokenization" width="800" />
-
-#### 2.2 Neural network training
-With LLMs the training goal is to predict the next token in a one-dimensional sequence of tokens. This is different from BERT where the goal is to predict masked tokens in the input sequence. BERT is therefore not natively developed for generating text, whereas LLMs are. In the internals of the transformer architecture, this is illustrated by the fact that BERT only makes use of the Encoder component to create its contextualised word embeddings. It does not use the Decoder component to generate new tokens for the input sequence.
-
-<img src="fig/llm_training_goal.png" alt="training goal llms" width="800" />
-
-After training we obtain a _base_ LLM which is predicts or generates token sequences that resemble its training data. However, a post training step is required in order to fine-tune the model to accept instructions, answer questions in a conversational style and to have behavior that is more suitable for interaction with humans.
-
-#### 2.3 Post training
-What does post training for LLMs look like? Why is this step necessary? What would happen if you skip this step and just use the base model trained in Step 2.2 for inference? The answer is that the base model is just a token sequence predictor. It just predicts the most likely next token for an input sequence of tokens. It does not understand how to deal with conversations or to interpret instructions (the intentions and tone behind written communication).
-
-Therefore, you may encounter unexpected conversations like this if interacting with a base LLM:
-
-**Not Following Instructions**
-
-```
-Human: Summarize this paragraph in one sentence: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.
-Raw LLM: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.
-```
-
-In this example interaction, the model was trained to predict text, not to follow instructions. So it might not give expected or correct responses although, statistically, these response tokens are indeed the next most likely tokens.
-
-**Regurgitation**
-
-```
-Human: Donald John Trump (born June 14, 1946) is an American politician,
-Raw LLM: media personality, and businessman who is the 47th president of the United States. A member of the Republican Party, he served as the 45th president from 2017 to 2021...
-```
-<img src="fig/trump.png" alt="tokenization" width="800" />
-
-In this interaction, the model just "regurgitates" verbatim a response from Wikipedia (part of it's training data), instead of creatively formulating a response in its own words. These are just a few examples of the kind of undesirable behavior one might encounter when doing inference with the base model without post training.
-
-Therefore, to avoid issues like this, and to be useful as conversational assistants, LLMs generally have to be fine-tuned on additional unseen conversation datasets (containing on the order of hundreds of thousands of conversations). These datasets are manually created and validated by humans. For proprietary models, these humans are hired professionally to contribute to this dataset from platforms such as Upwork and ScaleAI. There are also open-source efforts to create such datasets such as [OpenAssistant](https://huggingface.co/datasets/OpenAssistant/oasst2).
-
-Once such a dataset is obtained, the conversations need to be represented as a one-dimensional token sequence. Conversations therefore have to be encoded into such representations before being used as input for training. The encoding method for conversations currently differ among LLMs. The figure below shows how GPT-4 tokenizes and encodes input conversations as one dimensional token sequences ([TikTokenizer](https://tiktokenizer.f2api.com/) is a page for visualizing and experimenting with tokenization approaches used by OpenAI LLMs).
-
-<img src="fig/tokenize_conversations.png" alt="tokenization for conversation data" width="800" />
-
-After encoding or tokenization, the conversational data is supplied as input for fine-tuning the base model (replacing the original training data). I.e., the base model's weights or parameters are updated through this process.
-
-Below are some examples of conversational data that one might use to fine-tune an LLM. In general, you want multi-turn conversations where each participant in the conversation gets the opportunity to respond multiple times. Because this is the likely mode of interaction that will take place between humans and LLM-based chat assistants:
-
-```
-**Conversation 1 (Travel Planning):**
-Human: Can you suggest a weekend getaway near Amsterdam?
-LLM: Sure! Giethoorn – Known as the “Venice of the North,” this village has canals, thatched-roof houses, and a peaceful atmosphere. Utrecht, a charming city with medieval streets, beautiful canals, and cozy cafés.
-Human: Which one would be better for a quiet, relaxing trip?
-LLM: Giethoorn would be the quieter option. Unlike Utrecht, which is a bustling city, Giethoorn is a small village with a calm, serene atmosphere, ideal for a peaceful getaway.
-
-**Conversation 2 (Math Help):**
-Human: What's the derivative of 3𝑥^2 + 5𝑥 − 7?
-LLM: The derivative is 6𝑥 + 5.
-Human: Great, and what about the second derivative?
-LLM: The second derivative is 6.
-
-**Conversation 3 (Creative Writing):**
-Human: Give me a one-line horror story.
-LLM: The reflection in the mirror smiled back before I did.
-Human: Can you make it even creepier?
-LLM: The reflection winked, though I was alone in the room.
-```
----
-
-## Drawbacks and Biases with LLMs
-
-See [notebooks/responsible.ipynb]()...
-
-## Advanced Material
-
-### LLM selection criteria
-
-Choosing the right LLM for your specific use case requires consideration of multiple factors. This section will guide you through some decision points that will help you select an appropriate model for your needs.
-
-#### 1.3.1 Openness and Licensing Considerations
-
-The spectrum of model availability ranges from fully open to completely proprietary:
-
-**Open-weights** release the trained model parameters while keeping training code or data proprietary. This allows you to run and fine-tune the model locally but if you don't have the code used to train the model or information about the architecture used, it limits your ability to fully understand or replicate the training process.
-
-**Open training data** they release the text data used for pretraining.
-
-**Open architecture** they publish a paper about the neural network architecture and specific configuration they used for training. Or they release the actual source code they used for pretraining.
-
-Ideally, if you want to use a model for empirical academic research you might decide for models that are completely open in all three of the above facets. Although, open training data is quite rare for available state-of-the-art models.
-
-**Commercial/proprietary models** like GPT-4, Claude, or Gemini are accessed only through APIs. While often offering superior performance, they provide no access to internal architecture and may have usage restrictions or costs that scale with volume.
-
-Consider your requirements for:
-- Code modification and customization
-- Data privacy and control
-- Commercial usage rights
-- Research reproducibility
-- Long-term availability guarantees
-
-If you wish to build an application that makes use of LLM text generation, and you need accurate results, commercial APIs may be more suitable.
-
-#### 1.3.2 Hardware and Compute Requirements
-
-Your available computational resources significantly constrain your model options:
-
-**Modern GPU access** (RTX 4090, A100, H100, etc.) enables you to run larger models locally. Consider:
-- VRAM requirements: 7B parameter models typically need 14+ GB, 13B models need 26+ GB, 70B models require 140+ GB or multi-GPU setups
-- Inference speed requirements for your application
-- Whether you need real-time responses or can accept slower processing
-
-**CPU-only environments** limit you to smaller models (such as SmolLM2 and SmolLM3) or [quantized](https://ojs.aaai.org/index.php/AAAI/article/view/29908) versions.
-
-**Cloud/API access** removes hardware constraints but introduces ongoing costs and potential latency issues.
-
-#### 1.3.3 Performance Evaluation
-
-Different models excel at different tasks. Some evaluation criteria include:
-
-**General capability benchmarks** like those found on the [Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard) provide standardized comparisons across models for reasoning, knowledge, and language understanding tasks.
-
-**Multilingual performance** varies significantly between models. The [MMLU-Pro benchmark](https://mmluprox.github.io/) offers insights into cross-lingual capabilities if you need support for non-English languages.
-
-**Task-specific performance** should be evaluated based on your particular needs:
-- Code generation
-- Mathematical reasoning
-- Reading comprehension and summarization
-- Creative writing and dialogue quality
-- Scientific and technical domain knowledge
-
-Always validate benchmark performance with your own test cases, as real-world performance may differ from standardized evaluations.
-
-#### 1.3.4 Purpose or Use Case
-
-**Scientific and research applications** often prioritize reproducibility, transparency, and the ability to modify model behavior. Open-source models with detailed documentation are typically preferred (e.g. SmolLM, LLama, Olmo)
-
-**Applications (mobile or web apps)** may require:
-- Reliable API uptime and support
-- Clear licensing for commercial use
-- Scalability to handle many concurrent users
-- Content filtering and safety features
-
-**Personal or educational use** might emphasize:
-- Cost-effectiveness
-- Ease of setup and use
-
-#### 1.3.5 Integration and Deployment Considerations
-
-**Software integration** requirements affect model choice:
-- API-based models offer simpler integration but require internet connectivity
-- Local models provide more control but require more complex deployment
-- Consider latency requirements, offline capabilities, and data privacy needs
-
-**Hosting and serving capabilities** determine whether you can run models locally:
-- Do you have the infrastructure to serve models at scale?
-- Are you self-hosting the model?
-
-#### 1.3.6 Domain-Specific Models
-
-Many models have been fine-tuned for specific domains or tasks. For example:
-
-- Medical and healthcare applications (e.g., [BioGPT](https://huggingface.co/microsoft/biogpt))
-- Legal document processing (e.g., [SaulLM](https://huggingface.co/Equall/Saul-7B-Instruct-v1))
-
-Remember that the LLM landscape evolves rapidly. New models are released frequently, and performance benchmarks should be regularly reassessed. Consider building your system with model-agnostic interfaces to facilitate future transitions between different LLMs as your needs evolve or better options become available.
-
----
-
-### 3. LLM Prompting strategies
-
-See [notebooks/prompting.ipynb]()...
-
----
-
-### 4. Solving NLP tasks with LLMs
 
 See [notebooks/classifandeval.ipynb]()...
 
