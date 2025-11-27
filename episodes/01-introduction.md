@@ -263,6 +263,7 @@ These are just basic tests to demonstrate how you can immediately process the st
 ## Computing stats with spaCy
 
 Use the spaCy Doc object to compute an aggregate statistic about the Frankenstein book. HINT: Use the python `set`, `dictionary` or `Counter` objects to hold the accumulative counts. For example:
+
 - Give the list of the 20 most common verbs in the book
 - How many different Places are identified in the book? (Label = GPE)
 - How many different entity categories are in the book?
@@ -363,8 +364,21 @@ For the purposes of this episode, we will focus on **supervised learning** tasks
 
 Look at the NLP Task taxonomy described above and write down a couple of examples of (Input, Output) instance pairs that you would need in order to train a supervised model for your chosen task.
 
+For Example: the task of labeling an E-mail as spam or not-spam
+
+Label_Set: [SPAM, NO-SPAM]
+
+Training Instances:
+
+**Input:** "Dear Sir, you've been awarded a grant of 10 million Euros and it is only available today. Please contact me ASAP!" **Output:** SPAM
+
+**Input:** "Dear Madam, as agreed by phone here is the sales report for last month." **Output:** NO-SPAM
+
 ::: solution
-Example: the task of Conversational agent. Here are 3 instances to provide supervision for a model:
+
+Example B: the task of Conversational agent. Here are 3 instances to provide supervision for a model:
+
+Label_Set: Output vocabulary. This is: learning to generate token by token a coherent response that addresses the input question.
 
 **Input:** "Hello, how are you?" **Output:** "I am fine thanks!"
 
@@ -406,7 +420,7 @@ Discuss what the following sentences mean. What level of ambiguity do they repre
 -   "I saw the *cat with the stripes*" vs "I saw the cat *with the telescope*"
 -   "Please don’t drive the cat to the vet!" vs "Please don’t drive the car tomorrow!"
 
--   "I never said she stole my money." (re-write this sentence multiple times and each time write a different word in italics).
+-   "I never said she stole my money." (re-write this sentence multiple times and each time emphasize a different word in uppercases).
 
 ::: solution
 This is why the previous statements were difficult:
