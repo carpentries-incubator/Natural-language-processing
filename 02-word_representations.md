@@ -76,8 +76,8 @@ tinues to run across the field.)
 - Remove URLs or phone numbers
 
 ::: callout
-What if I need to extract text from MS Word docs or PDF files or Web pages?
-- There are various Python libraries for helping you extract and manipulate text from these kinds of sources.
+What if I need to extract text from MS Word docs or PDF files or Web pages There are various Python libraries for helping you extract and manipulate text from these kinds of sources.
+
 - For MS Word documents [python-docx](https://python-docx.readthedocs.io/en/latest/) is popular.
 - For (text-based) PDF files [PyPDF2](https://pypi.org/project/PyPDF2/) and [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/) are widely used. Note that some PDF files are encoded as images (pixels) and not text. If the text in these files is digital (as opposed to scanned handwriting), you can use OCR (Optical Character Recognition) libraries such as [pytesseract](https://pypi.org/project/pytesseract/) to convert the image to machine-readable text.
 - For scraping text from websites, [BeautifulSoup](https://pypi.org/project/beautifulsoup4/) and [Scrapy](https://docs.scrapy.org/en/latest/) are some common options.
@@ -321,11 +321,13 @@ df.to_csv('results_naive_rule_classifier.csv', sep='\t')
 
 :::: challenge
 Discuss the pros and cons of the proposed NLP pipeline: 
+
 1. Do you think it will give accurate results?
 2. What do you think about the coverage of this approach? What cases will it miss? 
 3. Think of possible drawbacks of chaining components in a pipeline.
 
 ::: solution
+
 1. This classifier only considers the presence of one word to apply a label. It does not analyze sentence semantics or even syntax.
 2. Given how the rules are defined, if both positive and negative words are present in the same sentence it will assign the `POSITIVE` label. It will generate a lot of false positives because of the simplistic rules
 3. The errors from previous steps get carried over to the next steps increasing the likelihood of noisy outputs.
@@ -454,7 +456,7 @@ The higher similarity score between the hamburger and pizza indicates they are m
 Think of different word pairs and try to guess how close or distant they will be from each other. Use the similarity measure from the word2vec module to compute the metric and discuss if this fits your expectations. If not, can you come up with a reason why this was not the case?
 
 ::: solution
-Interesting cases are synonyms, antonyms and morphologically related words:
+Some interesting cases include synonyms, antonyms and morphologically related words:
 
 ``` python
 print(w2v_model.similarity('democracy', 'democratic'))
@@ -540,9 +542,17 @@ w2v_model.most_similar(positive=['king', 'woman'], negative=['man'])
 The `gensim` package has implemented everything for us, this means we have to focus mostly on obtaining clean data and then calling the `Word2Vec` object to train our own model with our own data. This can be done like follows:
 
 ``` python
-import gensim 
+import spacy
 from gensim.models import Word2Vec 
 
+# Load and Tokenize the Text using spacy
+spacy_model = spacy.load("en_core_web_sm")
+with open("data/84_frankenstein_clean.txt") as f:
+    book_text = f.read()    
+book_doc = spacy_model(book_text)
+clean_tokens = [tok.text.lower() for tok in book_doc if tok.is_alpha and not tok.is_stop]
+
+# Call and Train the Word2Vec model
 model = Word2Vec([clean_tokens], sg=0 , vector_size=300, window=5, min_count=1, workers=4)
 ```
 

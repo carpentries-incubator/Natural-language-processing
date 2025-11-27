@@ -57,9 +57,9 @@ The limitations of Word2Vec became apparent as researchers tackled more complex 
 
 - **FastText** [(Joulin, et. al., 2016)](https://arxiv.org/pdf/1607.01759), developed by Facebook, extended Word2Vec by representing words as bags of character n-grams rather than atomic units. This subword tokenization approach enabled the model to generate embeddings for previously unseen words by combining learned subword representations—for instance, understanding "unhappiness" through its components "un-," "happiness," and "-ness." FastText proved particularly valuable for morphologically rich languages and handling misspellings or rare word forms.
 
-**ELMo** [(Peters, et. al., 2018)](https://aclanthology.org/N18-1202.pdf) marked a paradigm shift by integrating context into the word representations. Unlike Word2Vec's static embeddings, ELMo generated different representations for the same word based on its surrounding context using bidirectional LSTM networks. The model was pretrained on large text corpora using a language modeling objective—predicting words from both left and right contexts simultaneously—and crucially introduced effective transfer learning to NLP. BERT would basically replicate this concept but using a more powerful neural network architecture: the Transformer, which allowed for the scaling of training material. 
+- **ELMo** [(Peters, et. al., 2018)](https://aclanthology.org/N18-1202.pdf) marked a paradigm shift by integrating context into the word representations. Unlike Word2Vec's static embeddings, ELMo generated different representations for the same word based on its surrounding context using bidirectional LSTM networks. The model was pretrained on large text corpora using a language modeling objective—predicting words from both left and right contexts simultaneously—and crucially introduced effective transfer learning to NLP. BERT would basically replicate this concept but using a more powerful neural network architecture: the Transformer, which allowed for the scaling of training material. 
 
-**ULMFiT** [(Howard & Ruder, 2018)](https://aclanthology.org/P18-1031.pdf). Universal Language Model Fine-tuning, also tackled the problem via transfer learning; that is, *re-using the same model* for learning several different tasks and hence enriching word representations after each task was learned. This idea also enriched BERT post-training methodologies.
+- **ULMFiT** [(Howard & Ruder, 2018)](https://aclanthology.org/P18-1031.pdf). Universal Language Model Fine-tuning, also tackled the problem via transfer learning; that is, *re-using the same model* for learning several different tasks and hence enriching word representations after each task was learned. This idea also enriched BERT post-training methodologies.
 
 These intermediate models established several crucial concepts: that subword tokenization could handle vocabulary limitations, that context-dependent representations were superior to static embeddings, that deep bidirectional architectures captured richer linguistic information, and most importantly, that large-scale pretraining followed by task-specific fine-tuning could dramatically improve performance across diverse NLP applications.
 
@@ -81,11 +81,13 @@ As seen in the picture, the original Transformer is an Encoder-Decoder network t
 ### Emulate the Attention Mechanism
 
 Pair with a person who speaks a language different from English (we will call it language B). Think of 1 or 2 simple sentences in English and come up with their translations in the second language. In a piece of paper write down both sentences (one on top of the other with some distance in between) and try to:
+
 1. Draw a mapping of words or phrases from language B to English. Is it always possible to do this one-to-one for words?
 2. Think of how this might relate to attention in transformers?
 
 ::: solution
 Here is an example of a sentence in English and its translation into Spanish. We can look at the final mapping and observe that:
+
 1. Even though they are closely related languages, the translation is not linear
 2. There is also not a direct word-to-word mapping between the sentences
 3. Some words present in the source are not present in the target (and vice versa)
@@ -169,7 +171,7 @@ Output:
 
 `torch.Size([1, 7])`
 
-The output is a 2-dimensional tensor where the first dimension contains 1 element (this dimension represents the batch size), and the second dimension contains 7 elements which are equivalent to the 7 tokens that BERT generated with our string input.
+The output is a 2-dimensional tensor where the first dimension contains 1 element (this dimension represents the batch size), and the second dimension contains 7 elements which are equivalent to the 7 tokens that BERT generated from our string input.
 
 In order to see what these Token IDs represent, we can _translate_ them into human readable strings. This includes converting the tensors into ```numpy``` arrays and converting each ID into its string representation:
 
@@ -365,17 +367,22 @@ When we call the `nlp` pipeline, requesting to return the `top_k` most likely su
 
 In the list of outputs we can observe: the first example shows correctly that the missing token in the first sentence is _capital_, the second example is a bit more ambiguous, but the model at least uses the context to correctly predict a series of items that can be eaten (unfortunately, none of its suggestions sound very tasty); finally, the third example gives almost no useful context so the model plays it safe and only suggests prepositions or punctuation. This already shows some of the weaknesses of the approach.
 
-We will next see the case of combining BERT with a classifier on top.
-
 ::: challenge
-Play with the `fill-mask` pipeline and try to find examples where the model gives bad predictions and examples where the predictions are very good. You can change the `top_k` parameter and even play with the multilingual BERT model to compare. To do this last think you should change the `model` and `tokenizer` parameters to `bert-base-multilingual-cased`
+Play with the `fill-mask` pipeline and try to find examples where the model gives bad predictions and examples where the predictions are very good. You can try: 
+
+- Changing the `top_k` parameter
+- Test the multilingual BERT model to compare. To do this, you should change the `model` and `tokenizer` parameter name to `bert-base-multilingual-cased`
+- Search for bias in completions. For example, compare predictions for "This man works as a [MASK]." vs. "This woman works as a [MASK].".
+
 :::: solution
 This is a free exercise, so anything works. But even by running the same cases with the multilingual models we see some interesting aspects. For example, the predictions are of less quality in English. This is due to the "spread" of information across other languages, including a worse tokenization, since this model tries do predict for around 200 languages.
 
-Another interesting example is searching for **bias in the completions**. Compare the outputs you get for the sentences "This man works as a [MASK]." and "This woman works as a [MASK].".
+Another interesting example is searching for **bias in the completions**, these can be bias in many areas. In this case, comparing the outputs you get for the sentences "This man works as a [MASK]." and "This woman works as a [MASK]." exposes the huge gender biases inside BERT word representations: for 'man' BERT predicts `['lawyer', 'carpenter', 'doctor', 'waiter', 'mechanic']` and for woman it predicts `['nurse', 'waitress', 'teacher', 'main', 'prostitute']`.
 ::::
 
 :::
+
+We will next see the case of combining BERT with a classifier on top.
 
 
 ## BERT for Text Classification
@@ -536,7 +543,7 @@ These 4 metrics range from 0 to 1 (note that sometimes people multiply the score
 ::: challenge
 ### Evaluate Sentiment Classifier
 
-Now it is time to scale things a little but more... Use the same pipeline from the given toy example to run predictions over 100 examples of short book reviews. Then print the classification report for the given *test set*. These examples are given in the `data/sentiment_film_data.tsv` file.
+Now it is time to scale things a little bit more... Use the same pipeline from the given toy example to run predictions over 100 examples of short book reviews. Then print the classification report for the given *test set*. These examples are given in the `data/sentiment_film_data.tsv` file.
 
 You can use the following helper functions, the first one helps you read the file and the second one normalizes the 5-class predictions into the 3-class annotations given in the test set:
 
@@ -578,6 +585,20 @@ y_pred = get_normalized_labels(y_pred)
 
 # Detailed report with all metrics
 print(classification_report(y_true, y_pred))
+```
+
+Here is the classification report:
+
+```output
+              precision    recall  f1-score   support
+
+    negative       0.57      1.00      0.73        23
+     neutral       0.53      0.22      0.31        37
+    positive       0.69      0.78      0.73        40
+
+    accuracy                           0.62       100
+   macro avg       0.60      0.66      0.59       100
+weighted avg       0.61      0.62      0.57       100
 ```
 
 ::::
