@@ -15,6 +15,7 @@ Chat assistants like [ChatGPT](https://chatgpt.com/), [Gemini](https://gemini.go
 Now that we know that dealing with written language means extracting structure from unstructured text (NLP Task), we can understand there is a rationale behind the kind of tasks LLMs could tackle. Everytime we prompt a chat model, we are feeding them a very long list of tokens containing a task that needs to get solved. The question that interests us is not about LLMs being "intelligent" or not (eventhough that could be a very interesting topic on its own, is not the goal of this course); we will rather focus on using LLMs as yet a new *automatic tool*, and like with any other Machine Learning tool, we are still dealing here with a model that takes an input and delivers an output for that input. The only thing that changed is the complexity of the input-output pairs; and hence, the complexity for validating the outputs increased accordingly. 
 
 Our duty as NLP practitioners remains, and we must keep asking the same questions: 
+
 - How can I shape the task so I obtain the information I need? 
 - How do I measure what proportion of the outputs are right? 
 - How do I know if this will behave as expected with unexpected inputs? 
