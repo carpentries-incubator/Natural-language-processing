@@ -277,7 +277,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="04-LargeLanguageModels.html">4. Episode 3: Using large language models</a>
+        <a href="04-LargeLanguageModels.html">4. Using large language models</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -342,7 +342,7 @@
         
 <section id="aio-01-introduction"><p>Content from <a href="01-introduction.html">Introduction</a></p>
 <hr>
-<p>Last updated on 2025-11-24 |
+<p>Last updated on 2025-11-27 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/01-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -428,7 +428,7 @@ use of the Web.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>These are some of the most popular NLP-based products that we use on
 a daily basis:</p>
@@ -825,11 +825,15 @@ own goals such as training language models.</p>
 <p>Use the spaCy Doc object to compute an aggregate statistic about the
 Frankenstein book. HINT: Use the python <code>set</code>,
 <code>dictionary</code> or <code>Counter</code> objects to hold the
-accumulative counts. For example: - Give the list of the 20 most common
-verbs in the book - How many different Places are identified in the
-book? (Label = GPE) - How many different entity categories are in the
-book? - Who are the 10 most mentioned PERSONs in the book? - Or any
-other similar aggregate you want…</p>
+accumulative counts. For example:</p>
+<ul>
+<li>Give the list of the 20 most common verbs in the book</li>
+<li>How many different Places are identified in the book? (Label =
+GPE)</li>
+<li>How many different entity categories are in the book?</li>
+<li>Who are the 10 most mentioned PERSONs in the book?</li>
+<li>Or any other similar aggregate you want…</li>
+</ul>
 </div>
 </div>
 </div>
@@ -838,7 +842,7 @@ other similar aggregate you want…</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Let’s describe the solution to obtain all the different entity
 categories. For that we should iterate the whole text and keep a python
@@ -1051,6 +1055,14 @@ them.</p>
 <p>Look at the NLP Task taxonomy described above and write down a couple
 of examples of (Input, Output) instance pairs that you would need in
 order to train a supervised model for your chosen task.</p>
+<p>For Example: the task of labeling an E-mail as spam or not-spam</p>
+<p>Label_Set: [SPAM, NO-SPAM]</p>
+<p>Training Instances:</p>
+<p><strong>Input:</strong> “Dear Sir, you’ve been awarded a grant of 10
+million Euros and it is only available today. Please contact me ASAP!”
+<strong>Output:</strong> SPAM</p>
+<p><strong>Input:</strong> “Dear Madam, as agreed by phone here is the
+sales report for last month.” <strong>Output:</strong> NO-SPAM</p>
 </div>
 </div>
 </div>
@@ -1059,10 +1071,12 @@ order to train a supervised model for your chosen task.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
-<p>Example: the task of Conversational agent. Here are 3 instances to
+<p>Example B: the task of Conversational agent. Here are 3 instances to
 provide supervision for a model:</p>
+<p>Label_Set: Output vocabulary. This is: learning to generate token by
+token a coherent response that addresses the input question.</p>
 <p><strong>Input:</strong> “Hello, how are you?”
 <strong>Output:</strong> “I am fine thanks!”</p>
 <p><strong>Input:</strong> “Do you know at what time is the World Cup
@@ -1140,8 +1154,8 @@ cabinet is unlockable, so we can’t secure it”</p></li>
 <li><p>“Please don’t drive the cat to the vet!” vs “Please don’t drive
 the car tomorrow!”</p></li>
 <li><p>“I never said she stole my money.” (re-write this sentence
-multiple times and each time write a different word in
-italics).</p></li>
+multiple times and each time emphasize a different word in
+uppercases).</p></li>
 </ul>
 </div>
 </div>
@@ -1151,7 +1165,7 @@ italics).</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>This is why the previous statements were difficult:</p>
 <ul>
@@ -1540,7 +1554,7 @@ process language as humans do</p></li>
 </div>
 </section></section><section id="aio-02-word_representations"><p>Content from <a href="02-word_representations.html">From words to vectors</a></p>
 <hr>
-<p>Last updated on 2025-11-24 |
+<p>Last updated on 2025-11-27 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/02-word_representations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1682,19 +1696,24 @@ over the lazy dog and con- tinues to run across the field.)</li>
 <div class="callout-inner">
 <div class="callout-content">
 <p>What if I need to extract text from MS Word docs or PDF files or Web
-pages? - There are various Python libraries for helping you extract and
-manipulate text from these kinds of sources. - For MS Word documents <a href="https://python-docx.readthedocs.io/en/latest/" class="external-link">python-docx</a> is
-popular. - For (text-based) PDF files <a href="https://pypi.org/project/PyPDF2/" class="external-link">PyPDF2</a> and <a href="https://pymupdf.readthedocs.io/en/latest/" class="external-link">PyMuPDF</a> are widely
+pages There are various Python libraries for helping you extract and
+manipulate text from these kinds of sources.</p>
+<ul>
+<li>For MS Word documents <a href="https://python-docx.readthedocs.io/en/latest/" class="external-link">python-docx</a> is
+popular.</li>
+<li>For (text-based) PDF files <a href="https://pypi.org/project/PyPDF2/" class="external-link">PyPDF2</a> and <a href="https://pymupdf.readthedocs.io/en/latest/" class="external-link">PyMuPDF</a> are widely
 used. Note that some PDF files are encoded as images (pixels) and not
 text. If the text in these files is digital (as opposed to scanned
 handwriting), you can use OCR (Optical Character Recognition) libraries
 such as <a href="https://pypi.org/project/pytesseract/" class="external-link">pytesseract</a>
-to convert the image to machine-readable text. - For scraping text from
-websites, <a href="https://pypi.org/project/beautifulsoup4/" class="external-link">BeautifulSoup</a> and <a href="https://docs.scrapy.org/en/latest/" class="external-link">Scrapy</a> are some common
-options. - LLMs also have something to offer here, and the field is
-moving pretty fast. There are some interesting open source LLM-based
-document parsers and OCR-like extractors such as <a href="https://github.com/datalab-to/marker" class="external-link">Marker</a>, or <a href="https://github.com/pymupdf/PyMuPDF4LLM" class="external-link">PyMuPDF4LLM</a>, just to
-mention a couple.</p>
+to convert the image to machine-readable text.</li>
+<li>For scraping text from websites, <a href="https://pypi.org/project/beautifulsoup4/" class="external-link">BeautifulSoup</a> and <a href="https://docs.scrapy.org/en/latest/" class="external-link">Scrapy</a> are some common
+options.</li>
+<li>LLMs also have something to offer here, and the field is moving
+pretty fast. There are some interesting open source LLM-based document
+parsers and OCR-like extractors such as <a href="https://github.com/datalab-to/marker" class="external-link">Marker</a>, or <a href="https://github.com/pymupdf/PyMuPDF4LLM" class="external-link">PyMuPDF4LLM</a>, just to
+mention a couple.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2106,10 +2125,14 @@ label</li>
 <div class="callout-inner">
 <h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
-<p>Discuss the pros and cons of the proposed NLP pipeline: 1. Do you
-think it will give accurate results? 2. What do you think about the
-coverage of this approach? What cases will it miss? 3. Think of possible
-drawbacks of chaining components in a pipeline.</p>
+<p>Discuss the pros and cons of the proposed NLP pipeline:</p>
+<ol style="list-style-type: decimal">
+<li>Do you think it will give accurate results?</li>
+<li>What do you think about the coverage of this approach? What cases
+will it miss?</li>
+<li>Think of possible drawbacks of chaining components in a
+pipeline.</li>
+</ol>
 </div>
 </div>
 </div>
@@ -2363,8 +2386,8 @@ case?</p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<p>Interesting cases are synonyms, antonyms and morphologically related
-words:</p>
+<p>Some interesting cases include synonyms, antonyms and morphologically
+related words:</p>
 <div class="codewrapper sourceCode" id="cb32">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -2487,10 +2510,18 @@ own data. This can be done like follows:</p>
 <div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="im">import</span> gensim </span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="im">import</span> spacy</span>
 <span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="im">from</span> gensim.models <span class="im">import</span> Word2Vec </span>
 <span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>model <span class="op">=</span> Word2Vec([clean_tokens], sg<span class="op">=</span><span class="dv">0</span> , vector_size<span class="op">=</span><span class="dv">300</span>, window<span class="op">=</span><span class="dv">5</span>, min_count<span class="op">=</span><span class="dv">1</span>, workers<span class="op">=</span><span class="dv">4</span>)</span></code></pre>
+<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a><span class="co"># Load and Tokenize the Text using spacy</span></span>
+<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>spacy_model <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/84_frankenstein_clean.txt"</span>) <span class="im">as</span> f:</span>
+<span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a>    book_text <span class="op">=</span> f.read()    </span>
+<span id="cb40-8"><a href="#cb40-8" tabindex="-1"></a>book_doc <span class="op">=</span> spacy_model(book_text)</span>
+<span id="cb40-9"><a href="#cb40-9" tabindex="-1"></a>clean_tokens <span class="op">=</span> [tok.text.lower() <span class="cf">for</span> tok <span class="kw">in</span> book_doc <span class="cf">if</span> tok.is_alpha <span class="kw">and</span> <span class="kw">not</span> tok.is_stop]</span>
+<span id="cb40-10"><a href="#cb40-10" tabindex="-1"></a></span>
+<span id="cb40-11"><a href="#cb40-11" tabindex="-1"></a><span class="co"># Call and Train the Word2Vec model</span></span>
+<span id="cb40-12"><a href="#cb40-12" tabindex="-1"></a>model <span class="op">=</span> Word2Vec([clean_tokens], sg<span class="op">=</span><span class="dv">0</span> , vector_size<span class="op">=</span><span class="dv">300</span>, window<span class="op">=</span><span class="dv">5</span>, min_count<span class="op">=</span><span class="dv">1</span>, workers<span class="op">=</span><span class="dv">4</span>)</span></code></pre>
 </div>
 <p>With this line code we are configuring our whole Word2Vec training
 schema. We will be using CBOW (<code>sg=0</code> means CBOW,
@@ -2647,7 +2678,7 @@ cosine similarity</li>
 </div>
 </section></section><section id="aio-03-transformers"><p>Content from <a href="03-transformers.html">Transformers: BERT and Beyond</a></p>
 <hr>
-<p>Last updated on 2025-11-24 |
+<p>Last updated on 2025-11-27 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/03-transformers.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2732,7 +2763,7 @@ which of the possible meanings does the word have when you see it?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Two possible examples can be the words ‘fine’ and ‘run’</p>
 <p>Sentences for ‘fine’: - She has a fine watch (fine == high-quality) -
@@ -2763,17 +2794,15 @@ will describe below, was not the first attempt to improve upon the
 drawbacks of Word2Vec. Several intermediate models emerged to address
 the shortcomings. Some prominent models were:</p>
 <ul>
-<li>
-<strong>FastText</strong> <a href="https://arxiv.org/pdf/1607.01759" class="external-link">(Joulin, et. al., 2016)</a>,
+<li><p><strong>FastText</strong> <a href="https://arxiv.org/pdf/1607.01759" class="external-link">(Joulin, et. al., 2016)</a>,
 developed by Facebook, extended Word2Vec by representing words as bags
 of character n-grams rather than atomic units. This subword tokenization
 approach enabled the model to generate embeddings for previously unseen
 words by combining learned subword representations—for instance,
 understanding “unhappiness” through its components “un-,” “happiness,”
 and “-ness.” FastText proved particularly valuable for morphologically
-rich languages and handling misspellings or rare word forms.</li>
-</ul>
-<p><strong>ELMo</strong> <a href="https://aclanthology.org/N18-1202.pdf" class="external-link">(Peters, et. al., 2018)</a>
+rich languages and handling misspellings or rare word forms.</p></li>
+<li><p><strong>ELMo</strong> <a href="https://aclanthology.org/N18-1202.pdf" class="external-link">(Peters, et. al., 2018)</a>
 marked a paradigm shift by integrating context into the word
 representations. Unlike Word2Vec’s static embeddings, ELMo generated
 different representations for the same word based on its surrounding
@@ -2783,13 +2812,14 @@ from both left and right contexts simultaneously—and crucially
 introduced effective transfer learning to NLP. BERT would basically
 replicate this concept but using a more powerful neural network
 architecture: the Transformer, which allowed for the scaling of training
-material.</p>
-<p><strong>ULMFiT</strong> <a href="https://aclanthology.org/P18-1031.pdf" class="external-link">(Howard &amp; Ruder,
+material.</p></li>
+<li><p><strong>ULMFiT</strong> <a href="https://aclanthology.org/P18-1031.pdf" class="external-link">(Howard &amp; Ruder,
 2018)</a>. Universal Language Model Fine-tuning, also tackled the
 problem via transfer learning; that is, <em>re-using the same model</em>
 for learning several different tasks and hence enriching word
 representations after each task was learned. This idea also enriched
-BERT post-training methodologies.</p>
+BERT post-training methodologies.</p></li>
+</ul>
 <p>These intermediate models established several crucial concepts: that
 subword tokenization could handle vocabulary limitations, that
 context-dependent representations were superior to static embeddings,
@@ -2849,10 +2879,12 @@ likely token in the target sequence (in this case Dutch words).</p>
 will call it language B). Think of 1 or 2 simple sentences in English
 and come up with their translations in the second language. In a piece
 of paper write down both sentences (one on top of the other with some
-distance in between) and try to: 1. Draw a mapping of words or phrases
-from language B to English. Is it always possible to do this one-to-one
-for words? 2. Think of how this might relate to attention in
-transformers?</p>
+distance in between) and try to:</p>
+<ol style="list-style-type: decimal">
+<li>Draw a mapping of words or phrases from language B to English. Is it
+always possible to do this one-to-one for words?</li>
+<li>Think of how this might relate to attention in transformers?</li>
+</ol>
 </div>
 </div>
 </div>
@@ -2861,15 +2893,20 @@ transformers?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Here is an example of a sentence in English and its translation into
-Spanish. We can look at the final mapping and observe that: 1. Even
-though they are closely related languages, the translation is not linear
-2. There is also not a direct word-to-word mapping between the sentences
-3. Some words present in the source are not present in the target (and
-vice versa) 4. Some words are not translations of each other but they
-are still very relevant to understand the context</p>
+Spanish. We can look at the final mapping and observe that:</p>
+<ol style="list-style-type: decimal">
+<li>Even though they are closely related languages, the translation is
+not linear</li>
+<li>There is also not a direct word-to-word mapping between the
+sentences</li>
+<li>Some words present in the source are not present in the target (and
+vice versa)</li>
+<li>Some words are not translations of each other but they are still
+very relevant to understand the context</li>
+</ol>
 <figure><img src="fig/trans_attention_mapping.png" class="figure mx-auto d-block"></figure>
 </div>
 </div>
@@ -3021,7 +3058,7 @@ object syntax, such as in the following example:</p>
 <p>The output is a 2-dimensional tensor where the first dimension
 contains 1 element (this dimension represents the batch size), and the
 second dimension contains 7 elements which are equivalent to the 7
-tokens that BERT generated with our string input.</p>
+tokens that BERT generated from our string input.</p>
 <p>In order to see what these Token IDs represent, we can
 <em>translate</em> them into human readable strings. This includes
 converting the tensors into <code>numpy</code> arrays and converting
@@ -3290,35 +3327,56 @@ that can be eaten (unfortunately, none of its suggestions sound very
 tasty); finally, the third example gives almost no useful context so the
 model plays it safe and only suggests prepositions or punctuation. This
 already shows some of the weaknesses of the approach.</p>
-<p>We will next see the case of combining BERT with a classifier on
-top.</p>
-<div id="discussion1" class="callout discussion">
+<div id="challenge3" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
+<span class="callout-header">Challenge</span>
 <div class="callout-inner">
 <h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
 <p>Play with the <code>fill-mask</code> pipeline and try to find
 examples where the model gives bad predictions and examples where the
-predictions are very good. You can change the <code>top_k</code>
-parameter and even play with the multilingual BERT model to compare. To
-do this last think you should change the <code>model</code> and
-<code>tokenizer</code> parameters to
-<code>bert-base-multilingual-cased</code> :::: solution This is a free
-exercise, so anything works. But even by running the same cases with the
-multilingual models we see some interesting aspects. For example, the
-predictions are of less quality in English. This is due to the “spread”
-of information across other languages, including a worse tokenization,
-since this model tries do predict for around 200 languages.</p>
+predictions are very good. You can try:</p>
+<ul>
+<li>Changing the <code>top_k</code> parameter</li>
+<li>Test the multilingual BERT model to compare. To do this, you should
+change the <code>model</code> and <code>tokenizer</code> parameter name
+to <code>bert-base-multilingual-cased</code>
+</li>
+<li>Search for bias in completions. For example, compare predictions for
+“This man works as a [MASK].” vs. “This woman works as a [MASK].”.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div class="accordion-body">
+<p>This is a free exercise, so anything works. But even by running the
+same cases with the multilingual models we see some interesting aspects.
+For example, the predictions are of less quality in English. This is due
+to the “spread” of information across other languages, including a worse
+tokenization, since this model tries do predict for around 200
+languages.</p>
 <p>Another interesting example is searching for <strong>bias in the
-completions</strong>. Compare the outputs you get for the sentences
-“This man works as a [MASK].” and “This woman works as a [MASK].”.</p>
+completions</strong>, these can be bias in many areas. In this case,
+comparing the outputs you get for the sentences “This man works as a
+[MASK].” and “This woman works as a [MASK].” exposes the huge gender
+biases inside BERT word representations: for ‘man’ BERT predicts
+<code>['lawyer', 'carpenter', 'doctor', 'waiter', 'mechanic']</code> and
+for woman it predicts
+<code>['nurse', 'waitress', 'teacher', 'main', 'prostitute']</code>.</p>
 </div>
 </div>
 </div>
-<p>:::</p>
+</div>
+<p>We will next see the case of combining BERT with a classifier on
+top.</p>
 </section><section><h2 class="section-heading" id="bert-for-text-classification">BERT for Text Classification<a class="anchor" aria-label="anchor" href="#bert-for-text-classification"></a>
 </h2>
 <hr class="half-width">
@@ -3593,7 +3651,7 @@ would be zero.</p>
 <div id="evaluate-sentiment-classifier" class="callout-inner">
 <h3 class="callout-title">Evaluate Sentiment Classifier</h3>
 <div class="callout-content">
-<p>Now it is time to scale things a little but more… Use the same
+<p>Now it is time to scale things a little bit more… Use the same
 pipeline from the given toy example to run predictions over 100 examples
 of short book reviews. Then print the classification report for the
 given <em>test set</em>. These examples are given in the
@@ -3627,12 +3685,12 @@ the 3-class annotations given in the test set:</p>
 </div>
 </div>
 </div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3650,6 +3708,20 @@ the 3-class annotations given in the test set:</p>
 <span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a></span>
 <span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a><span class="co"># Detailed report with all metrics</span></span>
 <span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span></code></pre>
+</div>
+<p>Here is the classification report:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>              precision    recall  f1-score   support
+
+    negative       0.57      1.00      0.73        23
+     neutral       0.53      0.22      0.31        37
+    positive       0.69      0.78      0.73        40
+
+    accuracy                           0.62       100
+   macro avg       0.60      0.66      0.59       100
+weighted avg       0.61      0.62      0.57       100</code></pre>
 </div>
 </div>
 </div>
@@ -3669,16 +3741,16 @@ instances that fall into that particular combination of true and
 predicted labels. Perfect predictions would result in all counts
 appearing along the diagonal of the matrix, with zeros everywhere
 else.</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="kw">def</span> show_confusion_matrix(y_true, y_pred, labels<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>    ConfusionMatrixDisplay.from_predictions(y_true, y_pred, display_labels<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>    plt.show()</span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>show_confusion_matrix(y_true, y_pred)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="kw">def</span> show_confusion_matrix(y_true, y_pred, labels<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>    ConfusionMatrixDisplay.from_predictions(y_true, y_pred, display_labels<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>    plt.show()</span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>show_confusion_matrix(y_true, y_pred)</span></code></pre>
 </div>
 <p>This code shows the following matrix:</p>
 <figure><img src="fig/bert_sentiment_matrix.png" class="figure mx-auto d-block"></figure><p>Some of the insights from a confusion matrix include:</p>
@@ -3736,23 +3808,23 @@ pre-trained NER classifiers available in HuggingFace that you can use
 right away. We use once again the <code>pipeline()</code> wrapper to
 directly run the model for predictions , in this case with
 <code>task="ner"</code>. For example:</p>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForTokenClassification</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co"># We can also pass to the pipeline the initialized model &amp; tokenizer. </span></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co"># This way we have access to both separately if we need them later</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>model <span class="op">=</span> AutoModelForTokenClassification.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
-<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a>ner_classifier <span class="op">=</span> pipeline(<span class="st">"token-classification"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer, aggregation_strategy<span class="op">=</span><span class="st">"first"</span>)</span>
-<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"My name is Wolfgang Schmid and I live in Berlin"</span></span>
-<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a></span>
-<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a>ner_results <span class="op">=</span> ner_classifier(example)</span>
-<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a><span class="cf">for</span> nr <span class="kw">in</span> ner_results:</span>
-<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a>    <span class="bu">print</span>(nr)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForTokenClassification</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="co"># We can also pass to the pipeline the initialized model &amp; tokenizer. </span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="co"># This way we have access to both separately if we need them later</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>model <span class="op">=</span> AutoModelForTokenClassification.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a>ner_classifier <span class="op">=</span> pipeline(<span class="st">"token-classification"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer, aggregation_strategy<span class="op">=</span><span class="st">"first"</span>)</span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"My name is Wolfgang Schmid and I live in Berlin"</span></span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a>ner_results <span class="op">=</span> ner_classifier(example)</span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="cf">for</span> nr <span class="kw">in</span> ner_results:</span>
+<span id="cb29-14"><a href="#cb29-14" tabindex="-1"></a>    <span class="bu">print</span>(nr)</span></code></pre>
 </div>
 <p>The code now prints the following:</p>
 <pre><code>{'entity_group': 'PER', 'score': 0.9995944, 'word': 'Wolfgang Schmid', 'start': 11, 'end': 26}
@@ -3804,9 +3876,9 @@ when using this model for unknown predictions</p></li>
 </div>
 </div>
 </div>
-</section></section><section id="aio-04-LargeLanguageModels"><p>Content from <a href="04-LargeLanguageModels.html">Episode 3: Using large language models</a></p>
+</section></section><section id="aio-04-LargeLanguageModels"><p>Content from <a href="04-LargeLanguageModels.html">Using large language models</a></p>
 <hr>
-<p>Last updated on 2025-09-24 |
+<p>Last updated on 2025-11-27 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/04-LargeLanguageModels.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -3815,335 +3887,171 @@ when using this model for unknown predictions</p></li>
 <section><h2 class="section-heading" id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
 </h2>
 <hr class="half-width">
-<p>Chat assistants like <a href="https://chatgpt.com/" class="external-link">ChatGPT</a> and
-<a href="http://claude.ai" class="external-link">Claude</a>, which are based on Large Language
-Models (LLMs) are widely used today for tasks such as content
-generation, question answering, research and software development. The
-rapid rise of such models has had quite a disruptive and strong impact.
-But what are these models exactly? How do they work ‘under the hood’?
-And how can one use them programmatically, in a responsible and
-effective way?</p>
-<p>This episode is a gentle introduction to LLMs which aims to equip you
-with knowledge of the underpinnings of LLMs based on transformers
-architecture, as well as practical skills to programmatically work with
-LLMs in your own projects.</p>
+<p>Chat assistants like <a href="https://chatgpt.com/" class="external-link">ChatGPT</a>, <a href="https://gemini.google.com/" class="external-link">Gemini</a> and <a href="http://claude.ai" class="external-link">Claude</a> are products widely used today for
+tasks such as content generation, question answering, research and
+software development among many others. These products, also known as
+Large Language Modesl (LLMs), are based on the Transformer architecture,
+with several enhancements. It is undeniable that the rapid rise of such
+models has had quite a disruptive and strong impact. But what are these
+models exactly? How do they work ‘under the hood’? And how can one use
+them programmatically, in a responsible and effective way?</p>
 <p><img src="fig/llm-logos/anthropic.png" alt="Company A" width="80" class="figure"><img src="fig/llm-logos/alibaba.png" alt="Company B" width="80" class="figure"><img src="fig/llm-logos/xai.jpg" alt="Company C" width="80" class="figure"><img src="fig/llm-logos/zhipu.png" alt="Company C" width="150" class="figure"><img src="fig/llm-logos/google.png" alt="Company C" width="80" class="figure"><img src="fig/llm-logos/openai.jpg" alt="Company C" width="150" class="figure"></p>
 <p><img src="fig/llm-logos/nvidia.png" alt="Company D" width="80" class="figure"><img src="fig/llm-logos/deepseek.png" alt="Company E" width="80" class="figure"><img src="fig/llm-logos/huggingface.png" alt="Company F" width="80" class="figure"><img src="fig/llm-logos/meta.png" alt="Company C" width="150" class="figure"></p>
-</section><section><h2 class="section-heading" id="what-are-large-language-models-llms">1. What are Large Language Models (LLMs)?<a class="anchor" aria-label="anchor" href="#what-are-large-language-models-llms"></a>
+<p>Now that we know that dealing with written language means extracting
+structure from unstructured text (NLP Task), we can understand there is
+a rationale behind the kind of tasks LLMs could tackle. Everytime we
+prompt a chat model, we are feeding them a very long list of tokens
+containing a task that needs to get solved. The question that interests
+us is not about LLMs being “intelligent” or not (eventhough that could
+be a very interesting topic on its own, is not the goal of this course);
+we will rather focus on using LLMs as yet a new <em>automatic tool</em>,
+and like with any other Machine Learning tool, we are still dealing here
+with a model that takes an input and delivers an output for that input.
+The only thing that changed is the complexity of the input-output pairs;
+and hence, the complexity for validating the outputs increased
+accordingly.</p>
+<p>Our duty as NLP practitioners remains, and we must keep asking the
+same questions:</p>
+<ul>
+<li>How can I shape the task so I obtain the information I need?</li>
+<li>How do I measure what proportion of the outputs are right?</li>
+<li>How do I know if this will behave as expected with unexpected
+inputs?</li>
+<li><strong>In short: How do I evaluate my task?</strong></li>
+</ul>
+<p>This episode is a gentle introduction to LLMs which aims to equip you
+with knowledge of the underpinnings of LLMs based on transformers
+architecture, as well as practical skills to start programmatically
+working with LLMs in your own projects, without necessarily relying on
+proprietary products and platforms.</p>
+</section><section><h2 class="section-heading" id="what-are-large-language-models-llms">What are Large Language Models (LLMs)?<a class="anchor" aria-label="anchor" href="#what-are-large-language-models-llms"></a>
 </h2>
 <hr class="half-width">
-<p>Large language models (LLMs) are transformer-based language models
-that are specialised to interpret and generate text, and to converse in
-a conversational-like manner with humans. The text that they generate
-are mostly natural language but can, in theory, constitute any character
-or symbol sequence such as software code. They represent a significant
-advancement in AI and NLP. and are trained on vast amounts of textual
-data mostly obtained from the internet.</p>
-<div class="section level3">
-<h3 id="examples-of-llms">1.1 Examples of LLMs<a class="anchor" aria-label="anchor" href="#examples-of-llms"></a>
-</h3>
-<p>Many different LLMs have been, and continue to be, developed. There
-are both proprietary and open-source varieties. Open-source varieties
-often make the data that their LLMs are trained on free, open and
-accessible online. Some even make the code they use to train these
-models open-source as well. Below is a summary of some current LLMs
-together with their creators, chat assistant interfaces, and proprietary
-status:</p>
-<figure><img src="fig/llm_table4.png" alt="LLMs table" width="1000" class="figure mx-auto d-block"></figure><hr>
+<p>Large language models (LLMs) are generative transformer-based
+language models that are trained to interact in a conversational-like
+manner with humans. The text that they generate are mostly natural
+language but can, in theory, constitute any sequence of characters and
+symbols, such as software code. The term <em>Large</em> was appended to
+the well known <em>Language Model</em> term to highlight the scale on
+which this architectures are trained. To give an example, BERT in 2018
+was considered a big model and had roughly 100 million parameters; GPT-2
+in 2019 had 1.5 billion parameters, and GPT-3 was published in 2020 as a
+model with 175 billion parameters, and so forth.</p>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Since we already learned about the vanilla transformer architecture,
+in this episode we will focus on the most recent language models, and we
+will keep calling them LLMs, eventhough they are not necessarily that
+large anymore. In this episode we will cover mostly models that have
+been fine-tuned to be chat assistants, capable of integrating into the
+text generation a multi-turn interaction.</p>
+<p>Given the hype around the field, people keep calling all new models
+(and some “old models” as well) an <em>LLM</em> or even worse just
+<em>AI</em>. <strong>We will stick here to the term LLM to avoid
+confusions</strong>. Have in mind, however, that especially recent
+models are being published with the particular goal of reducing
+parameter size while retaining the performance of the larger models,
+some of them are even less than 1 billion parameters already! This is
+good news for the open source engineers and researchers, because such
+advancements mean we can now make use of the new capabilities of
+language models in our own local servers, and even our laptops, without
+needing to pay fees or compromise the privacy of our data and
+experiments.</p>
+</div>
+</div>
 </div>
 <div class="section level3">
-<h3 id="applications-of-llms">1.2 Applications of LLMs<a class="anchor" aria-label="anchor" href="#applications-of-llms"></a>
+<h3 id="transformers-vs--llms">Transformers vs. LLMs<a class="anchor" aria-label="anchor" href="#transformers-vs--llms"></a>
 </h3>
-<p>LLMs can be used for many different helpful tasks. Some common tasks
+<p>To emphasize again, LLMs are also trained using the transformer
+neural network architecture, including the use of the self-attention
+mechanism inside the generative Decoder (as discussed in Lesson 3).
+However, they are three main characteristics that the newest generations
+of LLMs have:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Scale:</strong> there are three dimensions in which
+current LLMs exceed general transformer language models in terms of
+scale. The most important one is the number of <strong>training
+parameters</strong> (weights) that are used for training models. In
+current models there are hundreds of billions of parameters up to
+trillions. The second factor is the <strong>amount of training
+data</strong> (raw text sequences) used for training. Current LLMs use
+snapshots of the internet (upwards of hundreds of terabytes in size) as
+a base for training and possibly augment this with additional manually
+curated and artificially generated data. The third factor is the
+<strong>context window</strong> a model can handle, this is the amount
+of tokens a model can see and process at a time; to give perspective,
+BERT was able to handle 512 input tokens per interaction, whereas some
+LLMs are already able to process a couple of million tokens at a time.
+The sheer scale characteristic of LLMs mean that such models require
+extremely resource-intensive computation to train. State-of-the-art LLMs
+require multiple dedicated Graphical Processing Units (GPUs) with tens
+or hundreds of gigabytes of memory to load and train in reasonable time.
+GPUs offer high parallelisability in their architecture for data
+processing which makes them more efficient for training these
+models.</p></li>
+<li>
+<p><strong>Post-training:</strong> After training a base language
+model on textual data, there is an additional step of fine-tuning for
+enabling conversation in a prompt style of interaction with users, which
+current LLMs are known for. After the pre-training and neural network
+training stages we end up with what is called a <em>base</em> model. The
+base model is a language model which is essentially a token sequence
+generator optimizad for the netx token prediction (Language Modelling)
+task. This model by itself is not suitable for the interaction style we
+see with current LLMs, which can do things like answer questions,
+interpret instructions from the user, and incorporate feedback to
+improve responses in conversations. Post-training addicitons
 include:</p>
 <ul>
-<li>Question Answering</li>
-<li>Text Generation</li>
-<li>Text Summarisation</li>
-<li>Sentiment Analysis</li>
-<li>Machine Translation</li>
-<li>Code Generation</li>
+<li>Supervised Fine-Tuning (SFT): Training on curated examples of
+desired input-output pairs to teach instruction-following and helpful
+responses.</li>
+<li>Reinforcement Learning from Human Feedback (RLHF): Using human
+preference data to align model outputs with what humans find
+helpful.</li>
+<li>“Safety” Training: Include so-called guardrails to avoid generating
+harmful outputs.</li>
+<li>Specialized Capabilities: Often includes training for specific
+skills like coding, reasoning, or tool use</li>
 </ul>
-<div class="section level4">
-<h4 id="exercise-1-your-first-programmatic-llm-interaction-30-minutes">Exercise 1: Your first programmatic LLM interaction (30
-minutes)<a class="anchor" aria-label="anchor" href="#exercise-1-your-first-programmatic-llm-interaction-30-minutes"></a>
-</h4>
-<p>Before exploring how we can invoke LLMs programmatically to solve the
-kinds of tasks abve, let us setup and load our first LLM.</p>
-<div class="section level5">
-<h5 id="step-1--setup-code">Step 1. Setup code<a class="anchor" aria-label="anchor" href="#step-1--setup-code"></a>
-</h5>
-<p>Install required packages <code>transformers</code> and
-<code>torch</code> and import required libraries.</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForCausalLM, AutoTokenizer, pipeline</span></code></pre>
-</div>
-</div>
-<div class="section level5">
-<h5 id="step-2-load-and-setup-an-llm">Step 2: Load and setup an LLM<a class="anchor" aria-label="anchor" href="#step-2-load-and-setup-an-llm"></a>
-</h5>
-<p>Let’s load a lightweight LLM.</p>
-<div class="codewrapper sourceCode" id="cb2">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># We'll use SmolLM-135M - an open, small, fast model</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co"># model_name = "HuggingFaceTB/SmolLM2-135M" # base model</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"HuggingFaceTB/SmolLM2-135M-Instruct"</span> <span class="co"># fine-tuned assistant model</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># model_name = "HuggingFaceTB/SmolLM3-3B-Base" # base model</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co"># model_name = "HuggingFaceTB/SmolLM3-3B" # fine-tuned assistant model</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co"># Load tokenizer and model</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(model_name)</span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>model <span class="op">=</span> AutoModelForCausalLM.from_pretrained(model_name)</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co"># Check if model is loaded correctly</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model loaded! It has </span><span class="sc">{</span>model<span class="sc">.</span>num_parameters()<span class="sc">:,}</span><span class="ss"> parameters"</span>)</span></code></pre>
-</div>
-</div>
-<div class="section level5">
-<h5 id="step-3-basic-text-generation">Step 3: Basic Text Generation<a class="anchor" aria-label="anchor" href="#step-3-basic-text-generation"></a>
-</h5>
-<p>Let’s perform inference with the LLM to generate some text.</p>
-<div class="codewrapper sourceCode" id="cb3">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Set pad_token_id to eos_token_id to avoid warnings</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># if tokenizer.pad_token_id is None:</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#     tokenizer.pad_token = tokenizer.eos_token</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#     model.config.pad_token_id = tokenizer.eos_token_id</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    </span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># Build pipeline</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>llm <span class="op">=</span> pipeline(<span class="st">"text-generation"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer)</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"</span><span class="sc">{}</span><span class="st">"</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>response <span class="op">=</span> llm(prompt, max_new_tokens<span class="op">=</span><span class="dv">100</span>, do_sample<span class="op">=</span><span class="va">True</span>, top_k<span class="op">=</span><span class="dv">50</span>, temperature<span class="op">=</span><span class="fl">0.7</span>)[<span class="dv">0</span>][<span class="st">"generated_text"</span>]</span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Prompt: </span><span class="sc">{</span>prompt<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Response: </span><span class="sc">{</span>response<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
-</div>
-<p><strong><em>max_new_tokens</em>:</strong> sets maximum number of
-tokens (roughly words/word pieces) that the model will generate in
-total. It’s a hard limit - generation stops when this limit is reached,
-even mid-sentence. Useful for controlling cost / time. The more tokens
-you need to generate for an answer the more time it takes. LLMs called
-through paid APIs often charge per a set number of tokens (e.g. $0.008
-per 1000 tokens).</p>
-<p><strong><em>temperature</em>:</strong> positive float value that
-controls the randomness/creativity of the model’s token selection during
-generation. The model predicts probabilities for each possible next
-token, temperature modifies these probabilities before making the final
-choice.</p>
-<p>0.0: Completely deterministic - always picks the most likely token
-1.0+: More random, and “creative”, but potentially less coherent</p>
-<p><strong><em>do_sample</em>:</strong> when do_sample=True, the model
-generates text by sampling from the probability distribution of possible
-next tokens. If do_sample=False, the model uses <a href="https://huggingface.co/docs/transformers/generation_strategies" class="external-link">greedy
-decoding</a> (always picking the most likely next token), which makes
-the output more deterministic but often repetitive.</p>
-<p><strong><em>top_k</em>:</strong> This is a sampling strategy called
-<a href="https://arxiv.org/pdf/1805.04833" class="external-link">Top-K sampling</a>. Instead
-of considering all possible next tokens, the model looks at the k most
-likely tokens (based on their probabilities) and samples only from that
-reduced set. If top_k=50, the model restricts its choices to the top 50
-most probable words at each step.</p>
-</div>
-<div class="section level5">
-<h5 id="step-5--sentiment-analysis">Step 5. Sentiment analysis<a class="anchor" aria-label="anchor" href="#step-5--sentiment-analysis"></a>
-</h5>
-<p>Let us try a sentiment analysis task to see how well different models
-(with different number of parameters perform). Consider the following
-set of lines from product reviews:</p>
-<p><strong>Product reviews:</strong></p>
-<ol style="list-style-type: decimal">
-<li>I love this movie! It was absolutely fantastic and made my day.
-[<strong>positive</strong>]</li>
-<li>This product is terrible. I hate everything about it.
-[<strong>negative</strong>]</li>
-<li>Nothing says quality like a phone that dies after 20 minutes.
-[<strong>negative</strong>]</li>
-<li>The movie was dark and depressing — exactly what I was hoping for.
-[<strong>positive</strong>]</li>
-<li>The food was delicious, but the service was painfully slow.
-[<strong>mixed</strong>]</li>
+</li>
+<li><p><strong>Generalization:</strong> Because of the wide range of
+post-training tasks they’ve been through, LLMs can be “directly applied”
+across a wide range of NLP tasks such as summarization, translation,
+question answering, etc., without necessarily the need for fine-tuning
+or training separate models for different NLP tasks. They are also
+capable of calling external tools or follow more complicated
+instructions that go beyond the next word probabilities.</p></li>
 </ol>
-<p>Set the prompt for this as (substitute the above sentences for
-<a href="https://r-text.org/" class="external-link">text</a> each time):</p>
-<p><code>Classify the sentiment of the following text as either POSITIVE or NEGATIVE. Text: "{text}"</code></p>
-<p>Examine the results afterwards to see which models correctly
-classified them and which didn’t.</p>
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>sentiment_llm <span class="op">=</span> pipeline(<span class="st">"text-generation"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer)</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>sentiment_texts <span class="op">=</span> [</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="st">"I love this movie! It was absolutely fantastic and made my day."</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="st">"This product is terrible. I hate everything about it."</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="st">"Nothing says quality like a phone that dies after 20 minutes."</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="st">"The movie was dark and depressing — exactly what I was hoping for."</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="st">"The food was delicious, but the service was painfully slow."</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>]</span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>text <span class="op">=</span> sentiment_texts[<span class="dv">0</span>]</span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Classify the sentiment of the following text as either POSITIVE or NEGATIVE. Text: "</span>{text}<span class="st">""</span></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>response <span class="op">=</span> sentiment_llm(prompt, max_new_tokens<span class="op">=</span><span class="dv">100</span>, do_sample<span class="op">=</span><span class="va">True</span>, top_k<span class="op">=</span><span class="dv">50</span>, temperature<span class="op">=</span><span class="fl">0.7</span>)[<span class="dv">0</span>][<span class="st">"generated_text"</span>]</span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Prompt: </span><span class="sc">{</span>prompt<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Response: </span><span class="sc">{</span>response<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
-</div>
-</div>
-<div class="section level5">
-<h5 id="discussion-post-exercise-questions">Discussion: Post-exercise questions<a class="anchor" aria-label="anchor" href="#discussion-post-exercise-questions"></a>
-</h5>
-<ol style="list-style-type: decimal">
-<li>
-<strong>What did you notice about the models’ responses?</strong>
-<ul>
-<li>Were they always accurate? Always coherent?</li>
-<li>How did different prompts affect the quality?</li>
-</ul>
-</li>
-<li>
-<strong>Temperature Effects:</strong>
-<ul>
-<li>What happened when temperature was low (e.g. 0.0 or 0.1) vs. high
-(e.g. 1.2)?</li>
-<li>Under which circumstances would you want more random / creative
-responses vs. consistent responses?</li>
-</ul>
-</li>
-<li>
-<strong>Model Size:</strong>
-<ul>
-<li>What were the differences across different models?</li>
-<li>What trade-offs do you think exist between model size and
-performance?</li>
-</ul>
-</li>
-<li>
-<strong>Max Length Effects:</strong>
-<ul>
-<li>Did you notice a difference in speed of responses when adjusting the
-max_length parameter?</li>
-</ul>
-</li>
-</ol>
-</div>
-</div>
-<div class="section level4">
-<h4 id="exercise-2-other-nlp-tasks">Exercise 2: Other NLP tasks<a class="anchor" aria-label="anchor" href="#exercise-2-other-nlp-tasks"></a>
-</h4>
-<p>Write and execute the following prompts in Python code within Jupyter
-notebook.</p>
-<ol style="list-style-type: decimal">
-<li>
-<p><strong>Question answering:</strong></p>
-<ul>
-<li>answering general knowledge questions <br>
-</li>
-</ul>
-<pre><code>Human: What is the longest river in the world?
-LLM: The Nile River in Africa is traditionally considered the longest river in the world, stretching about 6,650 km (4,130 miles) through 11 countries before emptying into the Mediterranean Sea.</code></pre>
-<p><br></p>
-<ul>
-<li>expert advice in a particular domain or scientific field <br>
-</li>
-</ul>
-<pre><code>Human: What are good strategies for film-making on a budget in Night conditions?
-LLM: Night filmmaking can be both creatively rewarding and technically challenging, especially on a budget. Here are some strategies that indie filmmakers often use to maximize image quality and mood without expensive gear:...</code></pre>
-<p><br></p>
-</li>
-<li>
-<p><strong>Text generation:</strong></p>
-<ul>
-<li>Writing essays, business plans and other documents <br>
-</li>
-</ul>
-<pre><code>Human: Write a template cover letter for a mid-level software engineering position at a large AI startup.
-LLM: Dear [Hiring Manager’s Name], I am excited to apply for the Software Engineer position at [Company Name]...</code></pre>
-<p><br></p>
-<ul>
-<li>Creative writing (slogans, poems, fiction, jokes) <br>
-</li>
-</ul>
-<pre><code>Human: Write a two sentence comedy sketch.
-LLM: [Scene: A man sits in a job interview.] Interviewer: "Your resume says you’re fluent in Python?" Candidate: pulls out a snake from his briefcase "She does most of the talking."</code></pre>
-<p><br></p>
-</li>
-<li>
-<p><strong>Text summarisation</strong> <br></p>
-<pre><code>Human: Shorten: "Amsterdam, the capital of the Netherlands, is a city celebrated for its rich history, cultural diversity, and iconic canals. Known as the “Venice of the North,” it is home to a vast network of waterways lined with elegant 17th-century houses, giving the city its distinct charm. Amsterdam seamlessly blends old-world character with modern vibrancy, attracting millions of visitors each year."
-LLM: Amsterdam, the capital of the Netherlands, is known for its history, canals, and 17th-century houses, combining old charm with modern vibrancy that attracts millions each year.</code></pre>
-<p><br></p>
-</li>
-<li>
-<p><strong>Sentiment or text classification</strong> <br></p>
-<pre><code>Sentiment analysis
-Human: Is this a positive, neutral or negative statement about the movie: "Incredible and not in a good way."
-LLM: That’s a negative statement about the movie. The phrase “Incredible” usually suggests something impressive, but the qualifier “not in a good way” makes it clear the speaker means the film was bad or shockingly poor.</code></pre>
-<p><br></p>
-<pre><code>Text classification
-Human: Categorise this statement into either sports, business, or science: "Lionel Messi scored twice to lead Argentina to victory in the World Cup qualifier."
-LLM: This statement falls under Sports. It talks about a soccer player and a match result, which clearly relates to athletic competition.</code></pre>
-<p><br></p>
-</li>
-<li><p><strong>Language translation</strong> <br><code>Human: Translate "I have recently naturalised as a Dutch citizen" into Dutch.     LLM: Ik ben onlangs genaturaliseerd als Nederlands staatsburger.</code>
-<br></p></li>
-<li>
-<p><strong>Generating software code</strong> <br></p>
-<pre><code>Human: Write a short Python function to demonstrate bubble sort
-LLM: ...</code></pre>
-<div class="codewrapper sourceCode" id="cb13">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="kw">def</span> bubble_sort(arr):</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(arr)</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>        <span class="co"># Last i elements are already in place</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n <span class="op">-</span> i <span class="op">-</span> <span class="dv">1</span>):</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>            <span class="cf">if</span> arr[j] <span class="op">&gt;</span> arr[j <span class="op">+</span> <span class="dv">1</span>]:</span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>                <span class="co"># Swap if the element is greater than the next</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>                arr[j], arr[j <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> arr[j <span class="op">+</span> <span class="dv">1</span>], arr[j]</span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>    <span class="cf">return</span> arr</span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co"># Example usage</span></span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">64</span>, <span class="dv">34</span>, <span class="dv">25</span>, <span class="dv">12</span>, <span class="dv">22</span>, <span class="dv">11</span>, <span class="dv">90</span>]</span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>sorted_numbers <span class="op">=</span> bubble_sort(numbers)</span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="bu">print</span>(sorted_numbers)</span></code></pre>
-</div>
-</li>
-</ol>
-</div>
-<div class="section level4">
-<h4 id="key-takeaways">Key Takeaways<a class="anchor" aria-label="anchor" href="#key-takeaways"></a>
-</h4>
-<ul>
-<li>
-<strong>LLMs are generative models</strong> - they predict the next
-most likely tokens</li>
-<li>
-<strong>Prompts matter</strong> - the way you ask affects what you
-get</li>
-<li>
-<strong>Parameters control behavior</strong> - temperature,
-max_length, etc. tune the output</li>
-<li>
-<strong>Models have limitations</strong> - they can be wrong,
-inconsistent, or biased</li>
-<li>
-<strong>Size vs Speed trade-off</strong> - smaller models are faster
-but less capable</li>
-</ul>
-<hr>
-</div>
+<figure><img src="fig/llm_analogy3.png" alt="llm engine analogy" width="1000" class="figure mx-auto d-block"></figure><p>What about the relation between BERT, which we learned about in the
+previous episode, and LLMs? Apart from the differences described above,
+BERT only makes use of the encoder layer of the transformers
+architecture because the goal is on creating token representations
+preserving contextual meaning (Embedding Model). There is no generative
+component to do something with those representations. <br></p>
+<figure><img src="fig/llms_vs_bert2.png" alt="llms vs bert" width="800" class="figure mx-auto d-block"></figure>
 </div>
 <div class="section level3">
-<h3 id="llm-selection-criteria">1.3 LLM selection criteria<a class="anchor" aria-label="anchor" href="#llm-selection-criteria"></a>
+<h3 id="the-llm-taxonomy">The LLM Taxonomy<a class="anchor" aria-label="anchor" href="#the-llm-taxonomy"></a>
 </h3>
-<p>Choosing the right LLM for your specific use case requires
-consideration of multiple factors. This section will guide you through
-some decision points that will help you select an appropriate model for
-your needs.</p>
-<div class="section level4">
-<h4 id="openness-and-licensing-considerations">1.3.1 Openness and Licensing Considerations<a class="anchor" aria-label="anchor" href="#openness-and-licensing-considerations"></a>
+<p>Many different LLMs have been, and continue to be, developed. There
+are both proprietary and open-source varieties. Real open-source
+varieties should make the whole path of model creation available: inform
+exactly which data was used to train the model, including filters for
+data quality; give a detailed explanation of the architecture and
+hypermarameters, including the code used to train them, and of course
+make them free, open and accessible online. Unfortunately completely ope
+source models are scarce, but the partially open source number models
+keeps growing. Below is a summary of some relevant LLMs together with
+their creators, chat assistant interfaces, and proprietary status:</p>
+<figure><img src="fig/llm_table4.png" alt="LLMs table" width="1000" class="figure mx-auto d-block"></figure><div class="section level4">
+<h4 id="openness-and-licensing-considerations">Openness and Licensing Considerations<a class="anchor" aria-label="anchor" href="#openness-and-licensing-considerations"></a>
 </h4>
 <p>The spectrum of model availability ranges from fully open to
 completely proprietary:</p>
@@ -4169,12 +4077,800 @@ have usage restrictions or costs that scale with volume.</p>
 <p>Consider your requirements for: - Code modification and customization
 - Data privacy and control - Commercial usage rights - Research
 reproducibility - Long-term availability guarantees</p>
-<p>If you wish to build an application that makes use of LLM text
-generation, and you need accurate results, commercial APIs may be more
-suitable.</p>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Besides considering the openess of the models, there are several
+<em>families</em> of LLM to consider, which differ not only in training
+data and scale of parameters but also in training and post-training
+techniques. Here we show a (non-exhaustive) general list of categories
+that have branched out from the vanilla generative transformer language
+models, understanding the difference can also help you choose the proper
+model.</p>
+<p>The two main distinctions of architecture are:</p>
+<ul>
+<li>
+<strong>Embedder LLM</strong> (BERT, OpenAI Embed, Cohere Embed,
+Nomic): these are the “encoder only” LLMs which have been optimized for
+holding representations that help to compute sentence/paragraph
+similarities.</li>
+<li>
+<strong>Base Generative LLM</strong> (GPT, LLama, GPT3): this is the
+generative “decoder-only” transformer that is trained to generate the
+most likely token based on the previous tokens.</li>
+</ul>
+<p>All the next ones are basically “post-trained” (SFT + RLHF)
+generative models with a different focus. These are not hard categories,
+but you will most likely encounter the concepts everywhere in the
+Web:</p>
+<ul>
+<li><p><strong>Domain-specific LLM:</strong> a base model fine-tuned
+with specialized data like medical papers or legal cases and with RLHF.
+Couls also be specialized on Question-Answering datasets, etc…</p></li>
+<li><p><strong>LLM-Instruct</strong> (Claude, Llama-Instruct): these are
+the LLMs that have been fine-tuned with step-by-step human instructions
+to follow user instructions</p></li>
+<li><p><strong>Reasoning/Thinking LLM</strong> (Cohere Command-R, OpenAI
+o1, Gemini 2.5, …): these models have been post-trained to generate
+“thinking tokens” in between, before providing the final answer to the
+user, with the aim of improving complex task solving capabilities. This
+ones can also give structured output, like JSON.</p></li>
+<li><p><strong>Tool Augmented LLMs</strong> (GPT4): these models have
+been post-trained for calling external tools like Web Search, API calls,
+Execute code, etc… and then generate a final answer (token output)
+integrating the tools’ results.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="interacting-with-an-llm">Interacting with an LLM<a class="anchor" aria-label="anchor" href="#interacting-with-an-llm"></a>
+</h2>
+<hr class="half-width">
+<p>Before exploring how we can invoke LLMs programmatically to solve the
+kinds of tasks above, let us setup and load our first LLM. We will keep
+using the <code>transformers</code> library, just as with the BERT
+examples.</p>
+<div class="section level3">
+<h3 id="import-libraries">Import Libraries<a class="anchor" aria-label="anchor" href="#import-libraries"></a>
+</h3>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForCausalLM, AutoTokenizer, pipeline</span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="load-and-setup-the-model-llm">Load and setup the model (LLM)<a class="anchor" aria-label="anchor" href="#load-and-setup-the-model-llm"></a>
+</h3>
+<p>Let’s load a open source lightweight
+<code>SmolLM2-135M-Instruct</code>, as you might have guessed it is a
+model with 135M parameters which has been finetuned for following
+instructions, therefore you can use it as a chat assistant:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># We'll use SmolLM-135M - an open, small, fast model</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"HuggingFaceTB/SmolLM2-135M-Instruct"</span> <span class="co"># fine-tuned assistant model</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Load tokenizer and model</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(model_name)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>model <span class="op">=</span> AutoModelForCausalLM.from_pretrained(model_name)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co"># Check if model is loaded correctly</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model loaded! It has </span><span class="sc">{</span>model<span class="sc">.</span>num_parameters()<span class="sc">:,}</span><span class="ss"> parameters"</span>)</span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="basic-text-generation">Basic Text Generation<a class="anchor" aria-label="anchor" href="#basic-text-generation"></a>
+</h3>
+<p>Let’s perform inference with the LLM to generate some text.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Set pad_token_id to eos_token_id to avoid warnings</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># if tokenizer.pad_token_id is None:</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#     tokenizer.pad_token = tokenizer.eos_token</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#     model.config.pad_token_id = tokenizer.eos_token_id</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    </span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># We Build pipeline as usual, this time the task is `text_generation` (a decoder model)</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>llm <span class="op">=</span> pipeline(<span class="st">"text-generation"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Where is Groningen located?"</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># We can first look at how the text is also being converted into a sequence of tokens before generating</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="bu">print</span>(tokenizer(prompt))</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="bu">print</span>(tokenizer.convert_ids_to_tokens(tokenizer(prompt)[<span class="st">"input_ids"</span>]))</span></code></pre>
+</div>
+<p>This gives the following output:</p>
+<pre><code>{'input_ids': [9576, 314, 452, 992, 45670, 3807, 47], 'attention_mask': [1, 1, 1, 1, 1, 1, 1]}
+['Where', 'Ġis', 'ĠG', 'ron', 'ingen', 'Ġlocated', '?']</code></pre>
+<p>Now we ask the pipeline to generate the tokens to complete the given
+input. Remember that the pipeline post-processes the output token for us
+and shows us the text string under <code>generated_text</code>
+field:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>response <span class="op">=</span> llm(prompt)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="bu">print</span>(response)</span></code></pre>
+</div>
+<p>This is not a fully deterministic ouput, so the content of the
+response will vary, but the structure is always the same: a python list,
+containing as first element a dictionary. The keys of the dictionary can
+vary depending on the parameters given to the pipeline, but it will
+always have at least the key <code>generated_text</code> which gives you
+the models ouptut in the form of a python string:</p>
+<pre><code>[{'generated_text': 'Where is Groningen located?\nGroningen is a municipality in the province of Drenthe in the North Holland region of the Netherlands. As of the 2011 census, the municipality had a population of 122,683.\nWhat is the name of the river that connects Groningen to Utrecht?'}]</code></pre>
+<p>We can obtain only the text if we extract it directly:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>text <span class="op">=</span> response[<span class="dv">0</span>][<span class="st">"generated_text"</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="bu">print</span>(text)</span></code></pre>
+</div>
+<p>Note that the model “repeats” the question before completing it with
+the answer. This happens because in reality the LLM is a Transformer
+Decoder, which tokenizes your prompt, processes it token by token, and
+then keeps <em>generating new tokens</em>. Because the model was trained
+to act as an assistant in a conversation, the most likely tokens that
+follow a questions are an answer to that question. But it is possible
+that the model does not reply at all.</p>
+<figure><img src="fig/llms_vs_bert2.png" alt="Generative LLMs correspond to the Decoder component of the Transformer architecture" class="figure mx-auto d-block"><div class="figcaption">Generative LLMs correspond to the Decoder
+component of the Transformer architecture</div>
+</figure>
+</div>
+<div class="section level3">
+<h3 id="multi-turn-conversation-generation">Multi-turn Conversation Generation<a class="anchor" aria-label="anchor" href="#multi-turn-conversation-generation"></a>
+</h3>
+<p>When dealing with these kind of <em>assistant LLMs</em> it is a
+better practice to look at the input as a conversation. A conversation
+can be defined as a list of <em>messages</em> that the pipeline knows
+how to internally tokenize and generate a better answer given the
+context provided:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a helpful assistant. Give short straight answers"</span> },</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Where is Groningen located?"</span> },</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>]</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>response <span class="op">=</span> llm(messages, return_full_text<span class="op">=</span><span class="va">False</span>)[<span class="dv">0</span>][<span class="st">"generated_text"</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="bu">print</span>(response)</span></code></pre>
+</div>
+<p>This method makes it more likely to get an answer everytime the model
+is executed. Remember this is not completely deterministic, so you can
+run it several times. (Spoiler: Expect several falsehoods to be stated
+in the generations). You should get something like:</p>
+<pre><code>Groningen is located in the northwest corner of the Netherlands.</code></pre>
+<p>We set the <code>return_full_text=False</code> flag to False to get
+the response as a string. This parameter is by default set to True and
+in that case it will return the whole conversation so you can keep using
+the history for posterior interactions if you want to:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a helpful assistant. Give short straight answers"</span> },</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Where is Groningen located?"</span> },</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>]</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>response <span class="op">=</span> llm(messages)[<span class="dv">0</span>][<span class="st">"generated_text"</span>]</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="bu">print</span>(response)</span></code></pre>
+</div>
+<p>This gives a multi-turn conversation as a list of string messages,
+such as:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>[{</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    <span class="st">'role'</span>: <span class="st">'system'</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="st">'content'</span>: <span class="st">'You are a helpful assistant. Give short straight answers'</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a> }, </span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a> {</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    <span class="st">'role'</span>: <span class="st">'user'</span>, </span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    <span class="st">'content'</span>: <span class="st">'Where is Groningen located?'</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a> }, </span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a> {</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>    <span class="st">'role'</span>: <span class="st">'assistant'</span>, </span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>    <span class="st">'content'</span>: <span class="st">'Groningen is located in the northern part of the Netherlands.'</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>}]</span></code></pre>
+</div>
+<div id="callout3" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>You may have noticed there are three main <code>roles</code> that
+most LLMs recognize in an interaction:</p>
+<ul>
+<li>
+<strong>System:</strong> This role is normally only used once at the
+beginning of an interaction, it contains the general prompting
+strategies (instructions) that your model should follow. Think of it as
+the user manual (where you explain what the task is) that the LLM will
+read before performing the actual task. This is where <em>prompt
+engineering</em> happens.</li>
+<li>
+<strong>User:</strong> also referred sometimes as
+<strong>Human</strong>, includes all messages <em>human generated</em>
+in the dialogue are given the user role. In a multi-turn dialogue, each
+utterance you submit will be given the user role, to distinguish them
+from the automatically generated sequences. These are quesitons
+submitted ot the model, or <em>input instances</em> for which you expect
+an output.</li>
+<li>
+<strong>Assistant:</strong> All messages <em>automatically
+generated</em> based on the model text generation capabilities, these
+are the <em>model outputs</em>.</li>
+</ul>
+<p>Different models might recognize also other roles, but these are the
+core ones. You can always pass directly a text prompt, even if you do
+only one-turn interactions with the LLMs (which many times is the
+recommended option to avoid biasing model repsonses based on previous
+ones), but it a good practice to follow these roles since the start, to
+make your code more scalable. These roles are internally translated into
+special tokens and processed together as a single sequence. See a <a href="https://tiktokenizer.vercel.app/?model=gpt-4o" class="external-link">tiktokenizer
+example for GPT-4o</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="hyperparameters-for-text-generation">Hyperparameters for Text Generation<a class="anchor" aria-label="anchor" href="#hyperparameters-for-text-generation"></a>
+</h3>
+<p>Besides the existence of roles, the <code>pipeline()</code> method
+has several hyperparameters (function arguments) for that help us
+control better how the <code>text-generation</code> task will be done.
+These are some of the most common:</p>
+<p><strong><em>max_new_tokens</em>:</strong> sets maximum number of
+tokens (roughly words/word pieces) that the model will generate in
+total. It’s a hard limit - generation stops when this limit is reached,
+even mid-sentence. Useful for controlling cost / time. The more tokens
+you need to generate for an answer the more time it takes. LLMs called
+through paid APIs often charge per a set number of tokens (e.g. $0.008
+per 1000 tokens).</p>
+<p><strong><em>temperature</em>:</strong> positive float value that
+controls the randomness/creativity of the model’s token selection during
+generation. The model predicts probabilities for each possible next
+token, temperature modifies these probabilities before making the final
+choice. 0.0: Completely deterministic - always picks the most likely
+token; 1.0+: More random, and “creative”, but potentially less
+coherent.</p>
+<p><strong><em>do_sample</em>:</strong> when do_sample=True, the model
+generates text by sampling from the probability distribution of possible
+next tokens. If do_sample=False, the model uses <a href="https://huggingface.co/docs/transformers/generation_strategies" class="external-link">greedy
+decoding</a> (always picking the most likely next token), which makes
+the output more deterministic but often repetitive.</p>
+<p><strong><em>top_k</em>:</strong> This is a sampling strategy called
+<a href="https://arxiv.org/pdf/1805.04833" class="external-link">Top-K sampling</a>. Instead
+of considering all possible next tokens, the model looks at the k most
+likely tokens (based on their probabilities) and samples only from that
+reduced set. If top_k=50, the model restricts its choices to the top 50
+most probable words at each step.</p>
+<div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Take 10 minutes to play with the hyperparamenters and observe how
+they affect outputs, eventhough you are using exactly the same model
+every time. Try different prompts, messages and values and see if the
+ouptuts match your intuitions. You can manipulate the values explicitly
+in the pipeline such as:</p>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a helpful assistant. Only tell me 'yes' or 'no' and a one-sentence explanation for your answer."</span> },</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Is NLP the best research field?"</span> },</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>]</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>response <span class="op">=</span> llm(messages, max_new_tokens<span class="op">=</span><span class="dv">100</span>, do_sample<span class="op">=</span><span class="va">True</span>, top_k<span class="op">=</span><span class="dv">5</span>, temperature<span class="op">=</span><span class="fl">0.7</span>)[<span class="dv">0</span>][<span class="st">"generated_text"</span>]</span></code></pre>
+</div>
+<p>Some aspects to discuss:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>What did you notice about the models’ responses?</strong>
+<ul>
+<li>Were they always accurate? Always coherent?</li>
+<li>How did different prompts affect the quality?</li>
+</ul>
+</li>
+<li>
+<strong>Temperature Effects:</strong>
+<ul>
+<li>What happened when temperature was low (e.g. 0.0 or 0.1) vs. high
+(e.g. 1.2)?</li>
+<li>Under which circumstances would you want more random / creative
+responses vs. consistent responses?</li>
+</ul>
+</li>
+<li>
+<strong>Max Length Effects:</strong>
+<ul>
+<li>Did you notice a difference in speed of responses when adjusting the
+max_length parameter?</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="prompting-to-solve-nlp-tasks">Prompting to Solve NLP Tasks<a class="anchor" aria-label="anchor" href="#prompting-to-solve-nlp-tasks"></a>
+</h2>
+<hr class="half-width">
+<p>Now we will link some of the funamentals we learned earlier with the
+usage of LLMs. As mentioned before, we can consither the LLM as a
+component that given an input provides an output, thus we can evaluate
+it as any other Machine Learning classifier. We will re-visit the task
+of Sentiment Analysis to see how we can shape the task to make the
+generative model provide the outputs we need.</p>
+<p>But before doing that, we will take the opportunity to introduce <a href="https://github.com/ollama/ollama" class="external-link">Ollama</a>, an open-source tool
+that allows you to run LLMs locally on your own computer, instead of
+having to call remote services such as OpenAI, Gemini, etc. Ollama lets
+you download and execute some of the most popular (semi-)open source
+models, including embedding models (Encoder-based) and generative models
+(Chat-Assistants), “thinking” models, etc… Take a look at the <a href="https://ollama.com/search" class="external-link">whole list</a>. Consider that the size
+of the models you can download and effectively use will depend on how
+powerful your laptop is. You can use Ollama as a standalone applicaiton
+in Windows/Mac/Linux, but you can also call its local API using python
+so you can integrate the LLMs into your scripts.</p>
+<p>We will use Ollama thorugh the <a href="https://docs.langchain.com/" class="external-link">langchain</a> interface to give you
+the opportunity to also get to know this popular python library. Using
+Langchain allows you to write a single piece of code and be flexible to
+use many closed and open source models and even get production-level
+code with minimal modifications, so it is nice to try it. This is a very
+complex library and we will only cover the basics to give you a
+headstart. We are going to test the <a href="https://ollama.com/library/llama3.2:1b" class="external-link">llama3.2:1b</a> model
+which you can download in the Ollama interface, or also from your
+terminal by running:</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">ollama</span> pull llama3.2:1b</span></code></pre>
+</div>
+<p>Let’s see how does the <code>langchain</code> code looks to get
+exactly the same kind of interaction as with the HuggingFace code.</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>llm <span class="op">=</span> ChatOllama(</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    temperature<span class="op">=</span><span class="fl">0.7</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    num_predict<span class="op">=</span><span class="dv">100</span>, <span class="co"># Same as max_new_tokens</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>    top_k<span class="op">=</span><span class="dv">5</span>, <span class="co"># Only consider the first 5 most likely tokens</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>    top_p<span class="op">=</span><span class="fl">0.9</span> <span class="co"># Just consider next tokens form the top_p most likely options. Similar to do_sample</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>)</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co"># Define messages in LangChain format</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>    (<span class="st">"system"</span>, <span class="st">"You are a helpful assistant. Give short straight answers"</span>),</span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>    (<span class="st">"human"</span>, <span class="st">"Where is Groningen located?"</span>),</span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>]</span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co"># Get response</span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>response <span class="op">=</span> llm.invoke(messages)</span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co"># Show the Response object (includes useful metadata stats)</span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="bu">print</span>(response)</span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="co"># Show content only</span></span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="bu">print</span>(response.content)</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="example-sentiment-analysis">Example: Sentiment Analysis<a class="anchor" aria-label="anchor" href="#example-sentiment-analysis"></a>
+</h3>
+<p>Let us now try the sentiment analysis task to see how well different
+models (with different number of parameters perform). Consider the
+following set of lines from product reviews:</p>
+<p><strong>Product reviews:</strong></p>
+<ol style="list-style-type: decimal">
+<li>I love this movie! It was absolutely fantastic and made my day.
+<strong>positive</strong>
+</li>
+<li>This product is terrible. I hate everything about it.
+<strong>negative</strong>
+</li>
+<li>Nothing says quality like a phone that dies after 20 minutes.
+<strong>negative</strong>
+</li>
+<li>The movie was dark and depressing — exactly what I was hoping for.
+<strong>positive</strong>
+</li>
+<li>The food was delicious, but the service was painfully slow.
+<strong>mixed</strong>
+</li>
+</ol>
+<p>Set the prompt for this as (substitute the above sentences for
+<a href="https://r-text.org/" class="external-link">text</a> each time):</p>
+<p><code>Classify the sentiment of the following text as either POSITIVE or NEGATIVE. Text: "{text}"</code></p>
+<p>Examine the results afterwards to see which models correctly
+classified them and which didn’t.</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>sentiment_llm <span class="op">=</span> ChatOllama(</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>    temperature<span class="op">=</span><span class="dv">0</span>, <span class="co"># Want to be as deterministic as possible</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>    num_predict<span class="op">=</span><span class="dv">10</span>, <span class="co"># Keep the answer very short</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>    top_k<span class="op">=</span><span class="dv">1</span>, <span class="co"># Only consider the next most likely token (Greedy)</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>)</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>sentiment_texts <span class="op">=</span> [</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>    <span class="st">"I love this movie! It was absolutely fantastic and made my day."</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>    <span class="st">"This product is terrible. I hate everything about it."</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>    <span class="st">"Nothing says quality like a phone that dies after 20 minutes."</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>    <span class="st">"The movie was dark and depressing — exactly what I was hoping for."</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>    <span class="st">"The food was delicious, but the service was painfully slow."</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>]</span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>general_prompt <span class="op">=</span> <span class="st">"Classify the sentiment of the following text as either POSITIVE or NEGATIVE. Just return the label, nothing else!"</span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="cf">for</span> text <span class="kw">in</span> sentiment_texts:</span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a>    messages <span class="op">=</span> [(<span class="st">"system"</span>, general_prompt), (<span class="st">"human"</span>, text)]</span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a>    response <span class="op">=</span> sentiment_llm.invoke(messages)</span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Example: </span><span class="sc">{</span>text<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Response: </span><span class="sc">{</span>response<span class="sc">.</span>content<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"------"</span>)</span></code></pre>
+</div>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Apply the classifier to the <code>data/sentiment_film_data.tsv</code>
+dataset. Evaluate it using the classification report from scikit-learn.
+you can reuse the code from lesson 3. 1. How does the performance
+compare to the BERT-based classifier? 2. Can you tweak the prompt to
+improve the results?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>Here the code to do the same excercise as lesson 3 but with the
+generative approach:</p>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="kw">def</span> load_data(filename):</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()[<span class="dv">1</span>:] <span class="co"># skip header</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>    sentences, labels <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>(line.strip().split(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> line <span class="kw">in</span> lines))</span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>(sentences), <span class="bu">list</span>(labels)</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>sentiment_llm <span class="op">=</span> ChatOllama(</span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>    temperature<span class="op">=</span><span class="dv">0</span>, <span class="co"># Want to be as deterministic as possible</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>    num_predict<span class="op">=</span><span class="dv">10</span>, <span class="co"># Keep the answer very short</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>    top_k<span class="op">=</span><span class="dv">1</span>, <span class="co"># Only consider the next most likely token (Greedy)</span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>)</span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>sentences, y_true <span class="op">=</span> load_data(<span class="st">'data/sentiment_film_data.tsv'</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>y_pred <span class="op">=</span> []</span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Classify the sentiment of the following text as POSITIVE, NEGATIVE or NEUTRAL. Just return the label, nothing else!"</span></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> sentences:</span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a>    messages <span class="op">=</span> [(<span class="st">"system"</span>, prompt), (<span class="st">"human"</span>, sent)]</span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a>    response <span class="op">=</span> sentiment_llm.invoke(messages)</span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a>    <span class="bu">print</span>(sent, response.content)</span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a>    y_pred.append(response.content.lower())</span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span></code></pre>
+</div>
+<p>Report:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>              precision    recall  f1-score   support
+
+    negative       0.50      1.00      0.67        23
+     neutral       0.43      0.08      0.14        37
+    positive       0.70      0.82      0.76        40
+
+    accuracy                           0.59       100
+   macro avg       0.54      0.64      0.52       100
+weighted avg       0.55      0.59      0.51       100</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="key-takeaways">Key Takeaways<a class="anchor" aria-label="anchor" href="#key-takeaways"></a>
+</h3>
+<ul>
+<li>
+<strong>LLMs are generative models</strong> - they predict the next
+most likely tokens</li>
+<li>
+<strong>Prompts matter</strong> - the way you ask affects what you
+get</li>
+<li>
+<strong>Hyperparameters control behavior</strong> - temperature,
+max_length, etc. tune the output</li>
+<li>
+<strong>Models have limitations</strong> - they can be wrong,
+inconsistent, or biased</li>
+<li>
+<strong>Size vs Speed trade-off</strong> - smaller models are faster
+but less capable</li>
+</ul>
+<hr>
+</div>
+</section><section><h2 class="section-heading" id="drawbacks-and-biases-with-llms">Drawbacks and Biases with LLMs<a class="anchor" aria-label="anchor" href="#drawbacks-and-biases-with-llms"></a>
+</h2>
+<hr class="half-width">
+<p>This section will examine some important behavior or characteristics
+of LLMs that should be taken into account when using them. Most of these
+behaviors are a consequence of:</p>
+<ul>
+<li>The Transformer network architecture itself and the assumptions that
+are made when processing text, as early as the tokenization step.</li>
+<li>The huge amount of data that was fed to these models, since quantity
+was preferred over quality, they have inherited a lot of undesired
+information including misinformation, hate-speech, pornography,
+artificially generated (noisy) data etc…</li>
+<li>The post-training step, which was meant to impose guardrails and
+avoid undesired behaviour, also imposes intentional or indirect bias in
+the manner in which data was labeled, pushing cultural pre-conceptions
+and human biases and labeling errors to be the “preferred answers”.</li>
+</ul>
+<p>It is also important to keep in mind that behavior can vary across
+different LLMs, and since they are constantly being updated and
+improved, some of the limitations may be addressed and some of the
+behaviors may be replaced or modified in the near future. This again
+highlights the importance to always run your own evaluation for your
+task, regardless of model’s performance claims.</p>
+<p>Let’s take a look at some unexpected behaviors. We load the ollama
+model to run the experiments:</p>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>chatbot <span class="op">=</span> ChatOllama(</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    temperature<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    num_predict<span class="op">=</span><span class="dv">512</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>)</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="hallucinations">Hallucinations<a class="anchor" aria-label="anchor" href="#hallucinations"></a>
+</h3>
+<p>Hallucination in LLMs refers to the generation of content that is
+factually incorrect, nonsensical, or not grounded in any specific
+factual source. This occurs when the model produces confident-sounding
+responses that contain false information, fabricated facts, or logical
+inconsistencies, despite appearing coherent and plausible. <a href="https://arxiv.org/abs/2406.04175" class="external-link"><em>Confabulation</em></a> is
+another term for hallucination in LLMs.</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>chatbot <span class="op">=</span> ChatOllama(</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    temperature<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>    num_predict<span class="op">=</span><span class="dv">500</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    top_p<span class="op">=</span><span class="fl">0.9</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>)</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>halluc_prompt <span class="op">=</span> <span class="st">"Who is Railen Ackerby?"</span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>response <span class="op">=</span> chatbot.invoke(halluc_prompt)</span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="bu">print</span>(response.content)</span></code></pre>
+</div>
+<p>Railen Ackerby is a made up name. Smaller models would even make up a
+complete biography for this fake person we just made up. Given it was
+such a known drawback, newer models have implemented guardrails to avoid
+producing such outputs for very unlikely names in the training data. The
+<em>interesting hallucination</em> actually happens even on top of such
+guardrail, because at least llama3.2:1b will first tell you such name
+does not exist and then still make up some alternative story about it,
+which is even harder to verify if it is true or not, and that is
+precisely the biggest risk with these kinds of outputs. Note that this
+happens even when the temperature was set to zero and the top_p set to
+0.9, which supposedly make more truthful answers.</p>
+</div>
+<div class="section level3">
+<h3 id="non-determinism">Non-determinism<a class="anchor" aria-label="anchor" href="#non-determinism"></a>
+</h3>
+<p>By now we know that setting the temperature to 0.0 will get us the
+same answer if we run the experiment <em>under the same
+circumstances</em>. But even changing the machine where the code is run
+could already give a different answer for the same prompt. Moreover,
+setting the temperature to 0.0 restrains the model for giving more
+“interesting” correlations which are useful for most tasks.</p>
+</div>
+<div class="section level3">
+<h3 id="biases-and-fairness">Biases and fairness<a class="anchor" aria-label="anchor" href="#biases-and-fairness"></a>
+</h3>
+<p>LLMs can be biased towards certain stereotypes represented in the
+pretraining data. Let’s look again at an example of gender bias. E.g.,
+stereotype of nurses usually being female.</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>bias_prompt <span class="op">=</span> <span class="st">"Write a two paragraph story where a nurse, a pilot, and a CEO are having lunch together."</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>response <span class="op">=</span> chatbot.invoke(bias_prompt)</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="bu">print</span>(response.content)</span></code></pre>
+</div>
+<p>If this example works, a short story should be generated by the LLM
+about a nurse and most likely it will be a female nuerse, either marked
+by usage of words such as “she” and “her” to reveal gender or even
+giving her a name. We never gave any gender explicitly to the model. In
+our example we got the following story:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>As the sun shone down on the bustling airport, Nurse Emma sat across from Pilot Jack at a small café, sipping on a cup of coffee. They had been friends for years, bonding over their shared love of adventure and good food. Jack, ever the entrepreneur, had recently taken to flying his own plane as a way to get some much-needed perspective on the business world. Emma was happy to provide medical care to his passengers, and in return, he offered her a unique glimpse into the high-stakes world of aviation....</code></pre>
+</div>
+<p>Another common case is asking for apparently equivalent facts about
+different entities. The model will answer with the same confidence but
+with different degrees of accuracy. For example:</p>
+<div class="codewrapper sourceCode" id="cb22">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># Hint: John Adams (1797 - 1801)</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>biased_prompt <span class="op">=</span> <span class="st">"Who was the second president of the United States?"</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>response <span class="op">=</span> chatbot.invoke(outdated_prompt)</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="bu">print</span>(response.content)</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>The second president of the United States was John Adams. He served from 1797 to 1801, succeeding George Washington.</code></pre>
+</div>
+<p>we get a factually correct and confident answer. Let’s try exactly
+the same question for a different country:</p>
+<div class="codewrapper sourceCode" id="cb24">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># Hint: Vicente Guerrero (April 1829 - December 1829)</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>biased_prompt <span class="op">=</span> <span class="st">"Who was the second president of Mexico?"</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>response <span class="op">=</span> chatbot.invoke(outdated_prompt)</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="bu">print</span>(response.content)</span></code></pre>
+</div>
+<p>we got his answer:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>The second president of Mexico was Antonio López de Santa Anna. He served from 1833 to 1835 and again from 1838 to 1841.</code></pre>
+</div>
+<p>Initially we see the same confident syntax to answer the question,
+but it is factually incorrect. The results of course will vary per model
+and configuration of prompts. But beware that prompts that involve the
+anglosphere in particular will be more accurately responded, whereas the
+more you deviate from the “western standards” the less accuracy you will
+get. In the case of Mexico it is particularly dissapointing as even the
+English Wikipedia page has that information in a prominent place.</p>
+</div>
+<div class="section level3">
+<h3 id="outdated-knowledge">Outdated Knowledge<a class="anchor" aria-label="anchor" href="#outdated-knowledge"></a>
+</h3>
+<p>Another common drawback is that models have a cut-off training date.
+Again, guardrails are supposed to be in place and they do seem to work
+for obvious cases:</p>
+<div class="codewrapper sourceCode" id="cb26">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>outdated_prompt <span class="op">=</span> <span class="st">"Who is the president of the United States?"</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>response <span class="op">=</span> chatbot.invoke(outdated_prompt)</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="bu">print</span>(response.content)</span></code></pre>
+</div>
+<p>with the following output:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>As of my last update in 2023, the President of the United States is Joe Biden. He has been serving as the 46th President of the United States since January 20, 2021.</code></pre>
+</div>
+<p>The model warns us that its latest data is from 2023. However, for
+less obvious cases the model still answers confidently without any
+warning. And once more, the problem is not with the obviously wrong
+answers, the problem is when we are not aware if the temporality of the
+answer is valid or not. For example:</p>
+<div class="codewrapper sourceCode" id="cb28">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>outdated_prompt <span class="op">=</span> <span class="st">"When was the last time Argentina won the World Cup?"</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>response <span class="op">=</span> chatbot.invoke(outdated_prompt)</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="bu">print</span>(response.content)</span></code></pre>
+</div>
+<p>We got this output, which is incorrect since Argentina won again in
+2024. This time the model doesn’t warn us:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Argentina has not won the FIFA World Cup since 1986, when they defeated West Germany 3-2 in a penalty shootout after the game ended 0-0.</code></pre>
+</div>
+<div id="keypoints1" class="callout keypoints">
+<div class="callout-square">
+<i class="callout-icon" data-feather="key"></i>
+</div>
+<span class="callout-header">Key Points</span>
+<div class="callout-inner">
+<div class="callout-content">
+<ul>
+<li>We learned how are so called LLMs different from the first
+generation of Transformers</li>
+<li>There are different kinds of LLMs and understanding their
+differences and limitations are a key aspect for choosing the best model
+for your case</li>
+<li>We learned how to use HuggingFace pipeline with SmolLMv2, an open
+source model.</li>
+<li>We learned how to use Ollama to run conversational models in our
+laptop</li>
+<li>Classification tasks can be done using generative models if we
+define the prompt in a careful way</li>
+<li>Hidden biases will always be present when using LLMs, we should be
+aware of those before we draw conclusions from the outputs.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="advanced-material">Advanced Material<a class="anchor" aria-label="anchor" href="#advanced-material"></a>
+</h2>
+<hr class="half-width">
+<div class="section level3">
+<h3 id="llm-selection-criteria">1. LLM selection criteria<a class="anchor" aria-label="anchor" href="#llm-selection-criteria"></a>
+</h3>
+<p>Choosing the right LLM for your specific use case requires
+consideration of multiple factors. This section will guide you through
+some decision points that will help you select an appropriate model for
+your needs.</p>
+<div class="section level4">
+<h4 id="openness-and-licensing-considerations-1">1.1 Openness and Licensing Considerations<a class="anchor" aria-label="anchor" href="#openness-and-licensing-considerations-1"></a>
+</h4>
+<p>The spectrum of model availability ranges from fully open to
+completely proprietary:</p>
+<p><strong>Open-weights</strong> release the trained model parameters
+while keeping training code or data proprietary. This allows you to run
+and fine-tune the model locally but if you don’t have the code used to
+train the model or information about the architecture used, it limits
+your ability to fully understand or replicate the training process.</p>
+<p><strong>Open training data</strong> they release the text data used
+for pretraining.</p>
+<p><strong>Open architecture</strong> they publish a paper about the
+neural network architecture and specific configuration they used for
+training. Or they release the actual source code they used for
+pretraining.</p>
+<p>Ideally, if you want to use a model for empirical academic research
+you might decide for models that are completely open in all three of the
+above facets. Although, open training data is quite rare for available
+state-of-the-art models.</p>
+<p><strong>Commercial/proprietary models</strong> like GPT-4, Claude, or
+Gemini are accessed only through APIs. While often offering superior
+performance, they provide no access to internal architecture and may
+have usage restrictions or costs that scale with volume.</p>
+<p>Consider your requirements for: - Code modification and customization
+- Data privacy and control - Commercial usage rights - Research
+reproducibility - Long-term availability guarantees</p>
 </div>
 <div class="section level4">
-<h4 id="hardware-and-compute-requirements">1.3.2 Hardware and Compute Requirements<a class="anchor" aria-label="anchor" href="#hardware-and-compute-requirements"></a>
+<h4 id="hardware-and-compute-requirements">1.2 Hardware and Compute Requirements<a class="anchor" aria-label="anchor" href="#hardware-and-compute-requirements"></a>
 </h4>
 <p>Your available computational resources significantly constrain your
 model options:</p>
@@ -4191,7 +4887,7 @@ versions.</p>
 introduces ongoing costs and potential latency issues.</p>
 </div>
 <div class="section level4">
-<h4 id="performance-evaluation">1.3.3 Performance Evaluation<a class="anchor" aria-label="anchor" href="#performance-evaluation"></a>
+<h4 id="performance-evaluation">1.3 Performance Evaluation<a class="anchor" aria-label="anchor" href="#performance-evaluation"></a>
 </h4>
 <p>Different models excel at different tasks. Some evaluation criteria
 include:</p>
@@ -4211,7 +4907,7 @@ quality - Scientific and technical domain knowledge</p>
 real-world performance may differ from standardized evaluations.</p>
 </div>
 <div class="section level4">
-<h4 id="purpose-or-use-case">1.3.4 Purpose or Use Case<a class="anchor" aria-label="anchor" href="#purpose-or-use-case"></a>
+<h4 id="purpose-or-use-case">1.4 Purpose or Use Case<a class="anchor" aria-label="anchor" href="#purpose-or-use-case"></a>
 </h4>
 <p><strong>Scientific and research applications</strong> often
 prioritize reproducibility, transparency, and the ability to modify
@@ -4225,7 +4921,7 @@ safety features</p>
 Cost-effectiveness - Ease of setup and use</p>
 </div>
 <div class="section level4">
-<h4 id="integration-and-deployment-considerations">1.3.5 Integration and Deployment Considerations<a class="anchor" aria-label="anchor" href="#integration-and-deployment-considerations"></a>
+<h4 id="integration-and-deployment-considerations">1.5 Integration and Deployment Considerations<a class="anchor" aria-label="anchor" href="#integration-and-deployment-considerations"></a>
 </h4>
 <p><strong>Software integration</strong> requirements affect model
 choice: - API-based models offer simpler integration but require
@@ -4237,7 +4933,7 @@ you can run models locally: - Do you have the infrastructure to serve
 models at scale? - Are you self-hosting the model?</p>
 </div>
 <div class="section level4">
-<h4 id="domain-specific-models">1.3.6 Domain-Specific Models<a class="anchor" aria-label="anchor" href="#domain-specific-models"></a>
+<h4 id="domain-specific-models">1.6 Domain-Specific Models<a class="anchor" aria-label="anchor" href="#domain-specific-models"></a>
 </h4>
 <p>Many models have been fine-tuned for specific domains or tasks. For
 example:</p>
@@ -4252,54 +4948,6 @@ to facilitate future transitions between different LLMs as your needs
 evolve or better options become available.</p>
 <hr>
 </div>
-</div>
-<div class="section level3">
-<h3 id="transformers-and-llms">1.4 Transformers and LLMs<a class="anchor" aria-label="anchor" href="#transformers-and-llms"></a>
-</h3>
-<p>LLMs are also trained using the transformer neural network
-architecture, making use of the self-attention mechanism discussion in
-Lesson 02. This means that an LLM is also a transformer-based language
-model. However, they are distinct from <em>general</em>
-transformer-based language models in three main characteristics:</p>
-<ol style="list-style-type: decimal">
-<li><p><strong>Scale:</strong> there are two dimensions in which current
-LLMs exceed general transformer language models in terms of scale. The
-most important one is the number of <em>training parameters</em>
-(weights) that are used for training models. In current models there are
-hundreds of billions of parameters up to trillions. The second factor is
-the <em>amount of training data</em> (raw text sequences) used for
-training. Current LLMs use snapshots of the internet (upwards of
-hundreds of terabytes in size) as a base for training and possibly
-augment this with additional manually curated data. The sheer scale
-characteristic of LLMs mean that such models require extremely
-resource-intensive computation to train. State-of-the-art LLMs require
-multiple dedicated Graphical Processing Units (GPUs) with tens or
-hundreds of gigabytes of memory to load and train in reasonable time.
-GPUs offer high parallelisability in their architecture for data
-processing which makes them more efficient for training these
-models.</p></li>
-<li><p><strong>Post-training:</strong> After training a base language
-model on textual data, there is an additional step of fine-tuning for
-enabling conversation in a prompt style of interaction with users, which
-current LLMs are known for. After the pre-training and neural network
-training stages we end up with what is called a <em>base</em> model. The
-base model is a language model which is essentially a token sequence
-generator. This model by itself is not suitable for the interaction
-style we see with current LLMs, which can do things like answer
-questions, interpret instructions from the user, and incorporate
-feedback to improve responses in conversations.</p></li>
-<li><p><strong>Generalization:</strong> LLMs can be applied across a
-wide range of NLP tasks such as summarization, translation, question
-answering, etc., without necessarily the need for fine-tuning or
-training separate models for different NLP tasks.</p></li>
-</ol>
-<figure><img src="fig/llm_analogy3.png" alt="llm engine analogy" width="1000" class="figure mx-auto d-block"></figure><p>What about the relation between BERT, which we learned about in
-Lesson 02, and LLMs? Apart from the differences described above, BERT
-only makes use of the encoder layer of the transformers architecture
-because the goal is on creating token representations preserving
-contextual meaning. There is no generative component to do something
-with those representations. <br></p>
-<figure><img src="fig/llms_vs_bert2.png" alt="llms vs bert" width="800" class="figure mx-auto d-block"></figure><hr>
 </div>
 <div class="section level3">
 <h3 id="how-are-llms-trained">2. How are LLMs trained?<a class="anchor" aria-label="anchor" href="#how-are-llms-trained"></a>
@@ -4429,6 +5077,86 @@ LLM: The reflection winked, though I was alone in the room.</code></pre>
 <div class="section level3">
 <h3 id="solving-nlp-tasks-with-llms">4. Solving NLP tasks with LLMs<a class="anchor" aria-label="anchor" href="#solving-nlp-tasks-with-llms"></a>
 </h3>
+<p>Write and execute the following prompts in Python code within Jupyter
+notebook.</p>
+<ol style="list-style-type: decimal">
+<li>
+<p><strong>Question answering:</strong></p>
+<ul>
+<li>answering general knowledge questions <br>
+</li>
+</ul>
+<pre><code>Human: What is the longest river in the world?
+LLM: The Nile River in Africa is traditionally considered the longest river in the world, stretching about 6,650 km (4,130 miles) through 11 countries before emptying into the Mediterranean Sea.</code></pre>
+<p><br></p>
+<ul>
+<li>expert advice in a particular domain or scientific field <br>
+</li>
+</ul>
+<pre><code>Human: What are good strategies for film-making on a budget in Night conditions?
+LLM: Night filmmaking can be both creatively rewarding and technically challenging, especially on a budget. Here are some strategies that indie filmmakers often use to maximize image quality and mood without expensive gear:...</code></pre>
+<p><br></p>
+</li>
+<li>
+<p><strong>Text generation:</strong></p>
+<ul>
+<li>Writing essays, business plans and other documents <br>
+</li>
+</ul>
+<pre><code>Human: Write a template cover letter for a mid-level software engineering position at a large AI startup.
+LLM: Dear [Hiring Manager’s Name], I am excited to apply for the Software Engineer position at [Company Name]...</code></pre>
+<p><br></p>
+<ul>
+<li>Creative writing (slogans, poems, fiction, jokes) <br>
+</li>
+</ul>
+<pre><code>Human: Write a two sentence comedy sketch.
+LLM: [Scene: A man sits in a job interview.] Interviewer: "Your resume says you’re fluent in Python?" Candidate: pulls out a snake from his briefcase "She does most of the talking."</code></pre>
+<p><br></p>
+</li>
+<li>
+<p><strong>Text summarisation</strong> <br></p>
+<pre><code>Human: Shorten: "Amsterdam, the capital of the Netherlands, is a city celebrated for its rich history, cultural diversity, and iconic canals. Known as the “Venice of the North,” it is home to a vast network of waterways lined with elegant 17th-century houses, giving the city its distinct charm. Amsterdam seamlessly blends old-world character with modern vibrancy, attracting millions of visitors each year."
+LLM: Amsterdam, the capital of the Netherlands, is known for its history, canals, and 17th-century houses, combining old charm with modern vibrancy that attracts millions each year.</code></pre>
+<p><br></p>
+</li>
+<li>
+<p><strong>Sentiment or text classification</strong> <br></p>
+<pre><code>Sentiment analysis
+Human: Is this a positive, neutral or negative statement about the movie: "Incredible and not in a good way."
+LLM: That’s a negative statement about the movie. The phrase “Incredible” usually suggests something impressive, but the qualifier “not in a good way” makes it clear the speaker means the film was bad or shockingly poor.</code></pre>
+<p><br></p>
+<pre><code>Text classification
+Human: Categorise this statement into either sports, business, or science: "Lionel Messi scored twice to lead Argentina to victory in the World Cup qualifier."
+LLM: This statement falls under Sports. It talks about a soccer player and a match result, which clearly relates to athletic competition.</code></pre>
+<p><br></p>
+</li>
+<li><p><strong>Language translation</strong> <br><code>Human: Translate "I have recently naturalised as a Dutch citizen" into Dutch.     LLM: Ik ben onlangs genaturaliseerd als Nederlands staatsburger.</code>
+<br></p></li>
+<li>
+<p><strong>Generating software code</strong> <br></p>
+<pre><code>Human: Write a short Python function to demonstrate bubble sort
+LLM: ...</code></pre>
+<div class="codewrapper sourceCode" id="cb41">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="kw">def</span> bubble_sort(arr):</span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(arr)</span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>        <span class="co"># Last i elements are already in place</span></span>
+<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n <span class="op">-</span> i <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a>            <span class="cf">if</span> arr[j] <span class="op">&gt;</span> arr[j <span class="op">+</span> <span class="dv">1</span>]:</span>
+<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a>                <span class="co"># Swap if the element is greater than the next</span></span>
+<span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a>                arr[j], arr[j <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> arr[j <span class="op">+</span> <span class="dv">1</span>], arr[j]</span>
+<span id="cb41-9"><a href="#cb41-9" tabindex="-1"></a>    <span class="cf">return</span> arr</span>
+<span id="cb41-10"><a href="#cb41-10" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb41-12"><a href="#cb41-12" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">64</span>, <span class="dv">34</span>, <span class="dv">25</span>, <span class="dv">12</span>, <span class="dv">22</span>, <span class="dv">11</span>, <span class="dv">90</span>]</span>
+<span id="cb41-13"><a href="#cb41-13" tabindex="-1"></a>sorted_numbers <span class="op">=</span> bubble_sort(numbers)</span>
+<span id="cb41-14"><a href="#cb41-14" tabindex="-1"></a><span class="bu">print</span>(sorted_numbers)</span></code></pre>
+</div>
+</li>
+</ol>
 <p>See <a href="">notebooks/classifandeval.ipynb</a>…</p>
 <hr>
 </div>
@@ -4436,20 +5164,14 @@ LLM: The reflection winked, though I was alone in the room.</code></pre>
 <h3 id="creating-your-own-chat-assistant">5. Creating your own chat assistant<a class="anchor" aria-label="anchor" href="#creating-your-own-chat-assistant"></a>
 </h3>
 <p>See <a href="">notebooks/chatbot.ipynb</a>…</p>
-<hr>
 </div>
 <div class="section level3">
-<h3 id="drawbacks-and-biases-with-llms">6. Drawbacks and Biases with LLMs<a class="anchor" aria-label="anchor" href="#drawbacks-and-biases-with-llms"></a>
+<h3 id="biases-with-llms">6. Biases with LLMs<a class="anchor" aria-label="anchor" href="#biases-with-llms"></a>
 </h3>
 <p>See <a href="">notebooks/responsible.ipynb</a>…</p>
+<hr>
 </div>
-</section><div class="section level1">
-<h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
-</h1>
-<p>Comprehensive overview of LLMs: <a href="https://dl.acm.org/doi/abs/10.1145/3744746" class="external-link uri">https://dl.acm.org/doi/abs/10.1145/3744746</a></p>
-<p>Andrej Karpathy deep dive into LLMs: <a href="https://www.youtube.com/watch?v=7xTGNNLPyMI" class="external-link uri">https://www.youtube.com/watch?v=7xTGNNLPyMI</a></p>
-<p>Multilingual benchmark for LLMs: <a href="https://mmluprox.github.io/" class="external-link uri">https://mmluprox.github.io/</a></p>
-</div></section>
+</section></section>
 </div>
     </main>
 </div>
@@ -4497,8 +5219,8 @@ LLM: The reflection winked, though I was alone in the room.</code></pre>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/aio.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/aio.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-11-25",
-  "datePublished": "2025-11-25"
+  "dateModified": "2025-11-27",
+  "datePublished": "2025-11-27"
 }
 
   </script><script>

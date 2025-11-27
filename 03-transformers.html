@@ -117,11 +117,11 @@
   Fundamentals of Natural Language Processing (NLP) in Python
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 57%" class="percentage">
-    57%
+<aside class="col-md-12 lesson-progress"><div style="width: 50%" class="percentage">
+    50%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 57%" aria-valuenow="57" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar incubator" role="progressbar" style="width: 50%" aria-valuenow="50" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -250,7 +250,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="04-LargeLanguageModels.html">4. Episode 3: Using large language models</a>
+        <a href="04-LargeLanguageModels.html">4. Using large language models</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -308,13 +308,13 @@
           Previous: From words to
         </a>
         <a class="chapter-link float-end" href="04-LargeLanguageModels.html" rel="next">
-          Next: Episode 3: Using...
+          Next: Using large language...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Transformers: BERT and Beyond</h1>
-        <p>Last updated on 2025-11-24 |
+        <p>Last updated on 2025-11-27 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/03-transformers.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -401,7 +401,7 @@ which of the possible meanings does the word have when you see it?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Two possible examples can be the words ‘fine’ and ‘run’</p>
 <p>Sentences for ‘fine’: - She has a fine watch (fine == high-quality) -
@@ -431,16 +431,15 @@ more complex natural language understanding tasks. BERT, the model we
 will describe below, was not the first attempt to improve upon the
 drawbacks of Word2Vec. Several intermediate models emerged to address
 the shortcomings. Some prominent models were:</p>
-<ul><li>
-<strong>FastText</strong> <a href="https://arxiv.org/pdf/1607.01759" class="external-link">(Joulin, et. al., 2016)</a>,
+<ul><li><p><strong>FastText</strong> <a href="https://arxiv.org/pdf/1607.01759" class="external-link">(Joulin, et. al., 2016)</a>,
 developed by Facebook, extended Word2Vec by representing words as bags
 of character n-grams rather than atomic units. This subword tokenization
 approach enabled the model to generate embeddings for previously unseen
 words by combining learned subword representations—for instance,
 understanding “unhappiness” through its components “un-,” “happiness,”
 and “-ness.” FastText proved particularly valuable for morphologically
-rich languages and handling misspellings or rare word forms.</li>
-</ul><p><strong>ELMo</strong> <a href="https://aclanthology.org/N18-1202.pdf" class="external-link">(Peters, et. al., 2018)</a>
+rich languages and handling misspellings or rare word forms.</p></li>
+<li><p><strong>ELMo</strong> <a href="https://aclanthology.org/N18-1202.pdf" class="external-link">(Peters, et. al., 2018)</a>
 marked a paradigm shift by integrating context into the word
 representations. Unlike Word2Vec’s static embeddings, ELMo generated
 different representations for the same word based on its surrounding
@@ -450,14 +449,14 @@ from both left and right contexts simultaneously—and crucially
 introduced effective transfer learning to NLP. BERT would basically
 replicate this concept but using a more powerful neural network
 architecture: the Transformer, which allowed for the scaling of training
-material.</p>
-<p><strong>ULMFiT</strong> <a href="https://aclanthology.org/P18-1031.pdf" class="external-link">(Howard &amp; Ruder,
+material.</p></li>
+<li><p><strong>ULMFiT</strong> <a href="https://aclanthology.org/P18-1031.pdf" class="external-link">(Howard &amp; Ruder,
 2018)</a>. Universal Language Model Fine-tuning, also tackled the
 problem via transfer learning; that is, <em>re-using the same model</em>
 for learning several different tasks and hence enriching word
 representations after each task was learned. This idea also enriched
-BERT post-training methodologies.</p>
-<p>These intermediate models established several crucial concepts: that
+BERT post-training methodologies.</p></li>
+</ul><p>These intermediate models established several crucial concepts: that
 subword tokenization could handle vocabulary limitations, that
 context-dependent representations were superior to static embeddings,
 that deep bidirectional architectures captured richer linguistic
@@ -514,11 +513,11 @@ likely token in the target sequence (in this case Dutch words).</p>
 will call it language B). Think of 1 or 2 simple sentences in English
 and come up with their translations in the second language. In a piece
 of paper write down both sentences (one on top of the other with some
-distance in between) and try to: 1. Draw a mapping of words or phrases
-from language B to English. Is it always possible to do this one-to-one
-for words? 2. Think of how this might relate to attention in
-transformers?</p>
-</div>
+distance in between) and try to:</p>
+<ol style="list-style-type: decimal"><li>Draw a mapping of words or phrases from language B to English. Is it
+always possible to do this one-to-one for words?</li>
+<li>Think of how this might relate to attention in transformers?</li>
+</ol></div>
 </div>
 </div>
 <div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
@@ -526,16 +525,19 @@ transformers?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Here is an example of a sentence in English and its translation into
-Spanish. We can look at the final mapping and observe that: 1. Even
-though they are closely related languages, the translation is not linear
-2. There is also not a direct word-to-word mapping between the sentences
-3. Some words present in the source are not present in the target (and
-vice versa) 4. Some words are not translations of each other but they
-are still very relevant to understand the context</p>
-<figure><img src="fig/trans_attention_mapping.png" class="figure mx-auto d-block"></figure></div>
+Spanish. We can look at the final mapping and observe that:</p>
+<ol style="list-style-type: decimal"><li>Even though they are closely related languages, the translation is
+not linear</li>
+<li>There is also not a direct word-to-word mapping between the
+sentences</li>
+<li>Some words present in the source are not present in the target (and
+vice versa)</li>
+<li>Some words are not translations of each other but they are still
+very relevant to understand the context</li>
+</ol><figure><img src="fig/trans_attention_mapping.png" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
 </div>
@@ -676,7 +678,7 @@ object syntax, such as in the following example:</p>
 <p>The output is a 2-dimensional tensor where the first dimension
 contains 1 element (this dimension represents the batch size), and the
 second dimension contains 7 elements which are equivalent to the 7
-tokens that BERT generated with our string input.</p>
+tokens that BERT generated from our string input.</p>
 <p>In order to see what these Token IDs represent, we can
 <em>translate</em> them into human readable strings. This includes
 converting the tensors into <code>numpy</code> arrays and converting
@@ -942,35 +944,54 @@ that can be eaten (unfortunately, none of its suggestions sound very
 tasty); finally, the third example gives almost no useful context so the
 model plays it safe and only suggests prepositions or punctuation. This
 already shows some of the weaknesses of the approach.</p>
-<p>We will next see the case of combining BERT with a classifier on
-top.</p>
-<div id="discussion1" class="callout discussion">
+<div id="challenge3" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
+<span class="callout-header">Challenge</span>
 <div class="callout-inner">
 <h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
 <p>Play with the <code>fill-mask</code> pipeline and try to find
 examples where the model gives bad predictions and examples where the
-predictions are very good. You can change the <code>top_k</code>
-parameter and even play with the multilingual BERT model to compare. To
-do this last think you should change the <code>model</code> and
-<code>tokenizer</code> parameters to
-<code>bert-base-multilingual-cased</code> :::: solution This is a free
-exercise, so anything works. But even by running the same cases with the
-multilingual models we see some interesting aspects. For example, the
-predictions are of less quality in English. This is due to the “spread”
-of information across other languages, including a worse tokenization,
-since this model tries do predict for around 200 languages.</p>
+predictions are very good. You can try:</p>
+<ul><li>Changing the <code>top_k</code> parameter</li>
+<li>Test the multilingual BERT model to compare. To do this, you should
+change the <code>model</code> and <code>tokenizer</code> parameter name
+to <code>bert-base-multilingual-cased</code>
+</li>
+<li>Search for bias in completions. For example, compare predictions for
+“This man works as a [MASK].” vs. “This woman works as a [MASK].”.</li>
+</ul></div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div class="accordion-body">
+<p>This is a free exercise, so anything works. But even by running the
+same cases with the multilingual models we see some interesting aspects.
+For example, the predictions are of less quality in English. This is due
+to the “spread” of information across other languages, including a worse
+tokenization, since this model tries do predict for around 200
+languages.</p>
 <p>Another interesting example is searching for <strong>bias in the
-completions</strong>. Compare the outputs you get for the sentences
-“This man works as a [MASK].” and “This woman works as a [MASK].”.</p>
+completions</strong>, these can be bias in many areas. In this case,
+comparing the outputs you get for the sentences “This man works as a
+[MASK].” and “This woman works as a [MASK].” exposes the huge gender
+biases inside BERT word representations: for ‘man’ BERT predicts
+<code>['lawyer', 'carpenter', 'doctor', 'waiter', 'mechanic']</code> and
+for woman it predicts
+<code>['nurse', 'waitress', 'teacher', 'main', 'prostitute']</code>.</p>
 </div>
 </div>
 </div>
-<p>:::</p>
+</div>
+<p>We will next see the case of combining BERT with a classifier on
+top.</p>
 </section><section><h2 class="section-heading" id="bert-for-text-classification">BERT for Text Classification<a class="anchor" aria-label="anchor" href="#bert-for-text-classification"></a></h2>
 <hr class="half-width"><p>The task of text classification is assigning a label to a whole
 sequence of tokens, for example a sentence. With the parameter
@@ -1236,7 +1257,7 @@ would be zero.</p>
 <div id="evaluate-sentiment-classifier" class="callout-inner">
 <h3 class="callout-title">Evaluate Sentiment Classifier</h3>
 <div class="callout-content">
-<p>Now it is time to scale things a little but more… Use the same
+<p>Now it is time to scale things a little bit more… Use the same
 pipeline from the given toy example to run predictions over 100 examples
 of short book reviews. Then print the classification report for the
 given <em>test set</em>. These examples are given in the
@@ -1270,12 +1291,12 @@ the 3-class annotations given in the test set:</p>
 </div>
 </div>
 </div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1294,6 +1315,20 @@ the 3-class annotations given in the test set:</p>
 <span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a><span class="co"># Detailed report with all metrics</span></span>
 <span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span></code></pre>
 </div>
+<p>Here is the classification report:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>              precision    recall  f1-score   support
+
+    negative       0.57      1.00      0.73        23
+     neutral       0.53      0.22      0.31        37
+    positive       0.69      0.78      0.73        40
+
+    accuracy                           0.62       100
+   macro avg       0.60      0.66      0.59       100
+weighted avg       0.61      0.62      0.57       100</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1311,16 +1346,16 @@ instances that fall into that particular combination of true and
 predicted labels. Perfect predictions would result in all counts
 appearing along the diagonal of the matrix, with zeros everywhere
 else.</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="kw">def</span> show_confusion_matrix(y_true, y_pred, labels<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>    ConfusionMatrixDisplay.from_predictions(y_true, y_pred, display_labels<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>    plt.show()</span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>show_confusion_matrix(y_true, y_pred)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="kw">def</span> show_confusion_matrix(y_true, y_pred, labels<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>    ConfusionMatrixDisplay.from_predictions(y_true, y_pred, display_labels<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>    plt.show()</span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>show_confusion_matrix(y_true, y_pred)</span></code></pre>
 </div>
 <p>This code shows the following matrix:</p>
 <figure><img src="fig/bert_sentiment_matrix.png" class="figure mx-auto d-block"></figure><p>Some of the insights from a confusion matrix include:</p>
@@ -1373,23 +1408,23 @@ pre-trained NER classifiers available in HuggingFace that you can use
 right away. We use once again the <code>pipeline()</code> wrapper to
 directly run the model for predictions , in this case with
 <code>task="ner"</code>. For example:</p>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForTokenClassification</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co"># We can also pass to the pipeline the initialized model &amp; tokenizer. </span></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co"># This way we have access to both separately if we need them later</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>model <span class="op">=</span> AutoModelForTokenClassification.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
-<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a>ner_classifier <span class="op">=</span> pipeline(<span class="st">"token-classification"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer, aggregation_strategy<span class="op">=</span><span class="st">"first"</span>)</span>
-<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"My name is Wolfgang Schmid and I live in Berlin"</span></span>
-<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a></span>
-<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a>ner_results <span class="op">=</span> ner_classifier(example)</span>
-<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a><span class="cf">for</span> nr <span class="kw">in</span> ner_results:</span>
-<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a>    <span class="bu">print</span>(nr)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForTokenClassification</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="co"># We can also pass to the pipeline the initialized model &amp; tokenizer. </span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="co"># This way we have access to both separately if we need them later</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>model <span class="op">=</span> AutoModelForTokenClassification.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a>ner_classifier <span class="op">=</span> pipeline(<span class="st">"token-classification"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer, aggregation_strategy<span class="op">=</span><span class="st">"first"</span>)</span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>example <span class="op">=</span> <span class="st">"My name is Wolfgang Schmid and I live in Berlin"</span></span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a>ner_results <span class="op">=</span> ner_classifier(example)</span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="cf">for</span> nr <span class="kw">in</span> ner_results:</span>
+<span id="cb29-14"><a href="#cb29-14" tabindex="-1"></a>    <span class="bu">print</span>(nr)</span></code></pre>
 </div>
 <p>The code now prints the following:</p>
 <pre><code>{'entity_group': 'PER', 'score': 0.9995944, 'word': 'Wolfgang Schmid', 'start': 11, 'end': 26}
@@ -1451,7 +1486,7 @@ when using this model for unknown predictions</p></li>
           Previous: From words to
         </a>
         <a class="chapter-link float-end" href="04-LargeLanguageModels.html" rel="next">
-          Next: Episode 3: Using...
+          Next: Using large language...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -1497,8 +1532,8 @@ when using this model for unknown predictions</p></li>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/03-transformers.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/03-transformers.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-11-24",
-  "datePublished": "2025-11-25"
+  "dateModified": "2025-11-27",
+  "datePublished": "2025-11-27"
 }
 
   </script><script>
