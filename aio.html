@@ -428,7 +428,7 @@ use of the Web.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>These are some of the most popular NLP-based products that we use on
 a daily basis:</p>
@@ -843,7 +843,7 @@ GPE)</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Let’s describe the solution to obtain all the different entity
 categories. For that we should iterate the whole text and keep a python
@@ -1072,7 +1072,7 @@ sales report for last month.” <strong>Output:</strong> NO-SPAM</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>Example B: the task of Conversational agent. Here are 3 instances to
 provide supervision for a model:</p>
@@ -1166,7 +1166,7 @@ uppercases).</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <p>This is why the previous statements were difficult:</p>
 <ul>
@@ -1555,7 +1555,7 @@ process language as humans do</p></li>
 </div>
 </section></section><section id="aio-02-word_representations"><p>Content from <a href="02-word_representations.html">From words to vectors</a></p>
 <hr>
-<p>Last updated on 2025-11-27 |
+<p>Last updated on 2025-12-01 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/02-word_representations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1921,12 +1921,26 @@ can represent proper nouns that map into Entities, for example:</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># Preserving uppercase characters increases the likelihood that an NER model</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co"># will correctly identify Apple and Will as a company (ORG) and a person (PER)</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co"># respectively.</span></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>str1 <span class="op">=</span> <span class="st">"My next laptop will be from Apple, Will said."</span> </span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co"># Lowercasing can reduce the likelihood of accurate labeling</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>str2 <span class="op">=</span> <span class="st">"my next laptop will be from apple, will said."</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co"># Preserving uppercase characters increases the likelihood that an NER model</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co"># will correctly identify Apple and Will as a company (ORG) and a person (PER)</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co"># respectively.</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>str1 <span class="op">=</span> <span class="st">"My next laptop will be from Apple, Will said."</span> </span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co"># Lowercasing can reduce the likelihood of accurate labeling</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>str2 <span class="op">=</span> <span class="st">"my next laptop will be from apple, will said."</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>ents1 <span class="op">=</span> [ent.text <span class="cf">for</span> ent <span class="kw">in</span> nlp(str1).ents]</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>ents2 <span class="op">=</span> [ent.text <span class="cf">for</span> ent <span class="kw">in</span> nlp(str2).ents]</span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="bu">print</span>(ents1)</span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="bu">print</span>(ents2)</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>['Apple', 'Will']
+[]</code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -1945,11 +1959,11 @@ also an NLP task on its own, with different algorithms for it. Therefore
 we also tend to use pre-trained models to perform lemmatization. Using
 spaCy we can access the lemmmatized version of each token with the
 <code>lemma_</code> property (notice the underscore!):</p>
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>lemmas <span class="op">=</span> [token.lemma_ <span class="cf">for</span> token <span class="kw">in</span> doc]</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="bu">print</span>(lemmas)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>lemmas <span class="op">=</span> [token.lemma_ <span class="cf">for</span> token <span class="kw">in</span> doc]</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="bu">print</span>(lemmas[:<span class="dv">50</span>])</span></code></pre>
 </div>
 <p>Note that the list of lemmas is now a list of strings.</p>
 <p>Having a lemmatized text allows us to merge the different surface
@@ -1981,41 +1995,41 @@ semantic value on their own: articles (‘the’, ‘a’, ‘an’), conjunctio
 ‘am’), pronouns (‘he’, ‘which’), or any highly frequent word that might
 not be of interest in several <em>content-only</em> related tasks. Let’s
 define a small list of stop words for this specific case:</p>
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>STOP_WORDS <span class="op">=</span> [<span class="st">"the"</span>, <span class="st">"you"</span>, <span class="st">"will"</span>] <span class="co"># This list can be customized to your needs...</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>STOP_WORDS <span class="op">=</span> [<span class="st">"the"</span>, <span class="st">"you"</span>, <span class="st">"will"</span>] <span class="co"># This list can be customized to your needs...</span></span></code></pre>
 </div>
 <p>Using Python directly, we need to manually define a list of what we
 consider to be stop words and directly filter the tokens that match
 this. Notice that lemmatization was a crucial step to get more coverage
 with the stop word filtering:</p>
-<div class="codewrapper sourceCode" id="cb18">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>lemmas <span class="op">=</span> [token.lemma_ <span class="cf">for</span> token <span class="kw">in</span> doc]</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>content_words <span class="op">=</span> []</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="cf">for</span> lemma <span class="kw">in</span> lemmas:</span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    <span class="cf">if</span> lemma <span class="kw">not</span> <span class="kw">in</span> STOP_WORDS:</span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>        content_words.append(lemma)</span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="bu">print</span>(content_words[:<span class="dv">20</span>])</span></code></pre>
-</div>
-<p>Using spaCy we can filter the stop words based on the token
-properties:</p>
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>tokens_nostop <span class="op">=</span> [token <span class="cf">for</span> token <span class="kw">in</span> tokens <span class="cf">if</span> <span class="kw">not</span> token.is_stop]</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="bu">print</span>(tokens[:<span class="dv">15</span>])</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>lemmas <span class="op">=</span> [token.lemma_ <span class="cf">for</span> token <span class="kw">in</span> doc]</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>content_words <span class="op">=</span> []</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="cf">for</span> lemma <span class="kw">in</span> lemmas:</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>    <span class="cf">if</span> lemma <span class="kw">not</span> <span class="kw">in</span> STOP_WORDS:</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>        content_words.append(lemma)</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="bu">print</span>(content_words[:<span class="dv">20</span>])</span></code></pre>
+</div>
+<p>Using spaCy we can filter the stop words based on the token
+properties:</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>tokens_nostop <span class="op">=</span> [token <span class="cf">for</span> token <span class="kw">in</span> tokens <span class="cf">if</span> <span class="kw">not</span> token.is_stop]</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="bu">print</span>(tokens[:<span class="dv">15</span>])</span></code></pre>
 </div>
 <p>There is no canonical definition of stop words because what you
 consider to be a stop word is directly linked to the objective of your
 task at hand. For example, pronouns are usually considered stopwords,
 but if you want to do gender bias analysis then pronouns are actually a
 key element of your text processing pipeline. Similarly, removing
-articles such as prepositions from text is obviously not advised if you
-are doing <em>dependency parsing</em> (the task of identifying the parts
-of speech in a given text).</p>
+articles and prepositions from text is obviously not advised if you are
+doing <em>dependency parsing</em> (the task of identifying the parts of
+speech in a given text).</p>
 <p>Another special case is the word ‘not’ which may encode the semantic
 notion of <em>negation</em>. Removing such tokens can drastically change
 the meaning of sentences and therefore affect the accuracy of models for
@@ -2062,61 +2076,61 @@ label</li>
 <ol style="list-style-type: decimal">
 <li>Read the text and normalize it into a single line</li>
 </ol>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="im">import</span> spacy</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"data/84_frankenstein_or_the_modern_prometheus.txt"</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>    text <span class="op">=</span> <span class="bu">file</span>.read()</span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a>text <span class="op">=</span> text.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>) <span class="co"># some cleaning by removing new line characters</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"data/84_frankenstein_or_the_modern_prometheus.txt"</span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>    text <span class="op">=</span> <span class="bu">file</span>.read()</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>text <span class="op">=</span> text.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">" "</span>) <span class="co"># some cleaning by removing new line characters</span></span></code></pre>
 </div>
 <ol start="2" style="list-style-type: decimal">
 <li>Apply Sentence segmentation</li>
 </ol>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>doc <span class="op">=</span> nlp(text)</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>sentences <span class="op">=</span> [sent.text <span class="cf">for</span> sent <span class="kw">in</span> doc.sents]</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>doc <span class="op">=</span> nlp(text)</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>sentences <span class="op">=</span> [sent.text <span class="cf">for</span> sent <span class="kw">in</span> doc.sents]</span></code></pre>
 </div>
 <ol start="3" style="list-style-type: decimal">
 <li>Define the positive and negative words you care about:</li>
 </ol>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>positive_words <span class="op">=</span> [<span class="st">"happy"</span>, <span class="st">"excited"</span>, <span class="st">"delighted"</span>, <span class="st">"content"</span>, <span class="st">"love"</span>, <span class="st">"enjoyment"</span>]</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>negative_words <span class="op">=</span> [<span class="st">"unhappy"</span>, <span class="st">"sad"</span>, <span class="st">"anxious"</span>, <span class="st">"miserable"</span>, <span class="st">"fear"</span>, <span class="st">"horror"</span>]</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>positive_words <span class="op">=</span> [<span class="st">"happy"</span>, <span class="st">"excited"</span>, <span class="st">"delighted"</span>, <span class="st">"content"</span>, <span class="st">"love"</span>, <span class="st">"enjoyment"</span>]</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>negative_words <span class="op">=</span> [<span class="st">"unhappy"</span>, <span class="st">"sad"</span>, <span class="st">"anxious"</span>, <span class="st">"miserable"</span>, <span class="st">"fear"</span>, <span class="st">"horror"</span>]</span></code></pre>
 </div>
 <ol start="4" style="list-style-type: decimal">
 <li>Apply the rules to each sentence and collect the labels</li>
 </ol>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>classified_sentences <span class="op">=</span> []</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> sentences:</span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">any</span>(word <span class="kw">in</span> sent.lower() <span class="cf">for</span> word <span class="kw">in</span> positive_words):</span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>        classified_sentences.append((sent, <span class="st">'POSITIVE'</span>))</span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>    <span class="cf">elif</span> <span class="bu">any</span>(word <span class="kw">in</span> sent.lower() <span class="cf">for</span> word <span class="kw">in</span> negative_words):</span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>        classified_sentences.append((sent, <span class="st">'NEGATIVE'</span>))</span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>        classified_sentences.append((sent, <span class="st">'NEUTRAL'</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>classified_sentences <span class="op">=</span> []</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> sentences:</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">any</span>(word <span class="kw">in</span> sent.lower() <span class="cf">for</span> word <span class="kw">in</span> positive_words):</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>        classified_sentences.append((sent, <span class="st">'POSITIVE'</span>))</span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>    <span class="cf">elif</span> <span class="bu">any</span>(word <span class="kw">in</span> sent.lower() <span class="cf">for</span> word <span class="kw">in</span> negative_words):</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>        classified_sentences.append((sent, <span class="st">'NEGATIVE'</span>))</span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a>        classified_sentences.append((sent, <span class="st">'NEUTRAL'</span>))</span></code></pre>
 </div>
 <ol start="5" style="list-style-type: decimal">
 <li>Save the classified data</li>
 </ol>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(classified_sentences, columns<span class="op">=</span>[<span class="st">'sentence'</span>, <span class="st">'label'</span>])</span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>df.to_csv(<span class="st">'results_naive_rule_classifier.csv'</span>, sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(classified_sentences, columns<span class="op">=</span>[<span class="st">'sentence'</span>, <span class="st">'label'</span>])</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>df.to_csv(<span class="st">'results_naive_rule_classifier.csv'</span>, sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>)</span></code></pre>
 </div>
 <div id="challenge1" class="callout challenge">
 <div class="callout-square">
@@ -2258,30 +2272,30 @@ our own Word2vec models and save them.</p>
 </h3>
 <p>The library <code>gensim</code> has a repository with English
 pre-trained models. We can take a look at the models:</p>
-<div class="codewrapper sourceCode" id="cb25">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="im">import</span> gensim.downloader</span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>available_models <span class="op">=</span> gensim.downloader.info()[<span class="st">'models'</span>].keys()</span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">list</span>(available_models))</span></code></pre>
-</div>
-<p>We will download the google News model with:</p>
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>w2v_model <span class="op">=</span> gensim.downloader.load(<span class="st">'word2vec-google-news-300'</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="im">import</span> gensim.downloader</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>available_models <span class="op">=</span> gensim.downloader.info()[<span class="st">'models'</span>].keys()</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">list</span>(available_models))</span></code></pre>
+</div>
+<p>We will download the google News model with:</p>
+<div class="codewrapper sourceCode" id="cb27">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>w2v_model <span class="op">=</span> gensim.downloader.load(<span class="st">'word2vec-google-news-300'</span>)</span></code></pre>
 </div>
 <p>We can do some basic checkups such as showing how many words are in
 the vocabulary (i.e., for how many words do we have an available
 vector), what is the total number of dimensions in each vector, and
 print the components of a vector for a given word:</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(w2v_model.key_to_index.keys())) <span class="co"># 3 million words</span></span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="bu">print</span>(w2v_model.vector_size) <span class="co"># 300 dimensions. This can be chosen when training your own model</span></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="bu">print</span>(w2v_model[<span class="st">'car'</span>][:<span class="dv">10</span>]) <span class="co"># The first 10 dimensions of the vector representing 'car'.</span></span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="bu">print</span>(w2v_model[<span class="st">'cat'</span>][:<span class="dv">10</span>]) <span class="co"># The first 10 dimensions of the vector representing 'cat'.</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(w2v_model.key_to_index.keys())) <span class="co"># 3 million words</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="bu">print</span>(w2v_model.vector_size) <span class="co"># 300 dimensions. This can be chosen when training your own model</span></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="bu">print</span>(w2v_model[<span class="st">'car'</span>][:<span class="dv">10</span>]) <span class="co"># The first 10 dimensions of the vector representing 'car'.</span></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="bu">print</span>(w2v_model[<span class="st">'cat'</span>][:<span class="dv">10</span>]) <span class="co"># The first 10 dimensions of the vector representing 'cat'.</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2298,10 +2312,10 @@ the dimensionality chosen at training time was 300, thus each word will
 have a 300-dimension vector associated with it.</p>
 <p>Even with such a big vocabulary we can always find a word that won’t
 be in there:</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="bu">print</span>(w2v_model[<span class="st">'bazzinga'</span>][:<span class="dv">10</span>])</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="bu">print</span>(w2v_model[<span class="st">'bazzinga'</span>][:<span class="dv">10</span>])</span></code></pre>
 </div>
 <p>This will throw a <code>KeyError</code> as the model does not know
 that word. Unfortunately this is a limitation of Word2vec - unseen words
@@ -2335,26 +2349,26 @@ Numpy to compute the cosine similarity of vectors.</p>
 </div>
 <p>We can use <code>sklearn</code> learn to measure any pair of
 high-dimensional vectors:</p>
-<div class="codewrapper sourceCode" id="cb30">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>car_vector <span class="op">=</span> w2v_model[<span class="st">'car'</span>]</span>
-<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>cat_vector <span class="op">=</span> w2v_model[<span class="st">'cat'</span>]</span>
-<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>similarity <span class="op">=</span> cosine_similarity([car_vector], [cat_vector])</span>
-<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cosine similarity between 'car' and 'cat': </span><span class="sc">{</span>similarity[<span class="dv">0</span>][<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a>similarity <span class="op">=</span> cosine_similarity([w2v_model[<span class="st">'hamburger'</span>]], [w2v_model[<span class="st">'pizza'</span>]])</span>
-<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cosine similarity between 'hamburger' and 'pizza': </span><span class="sc">{</span>similarity[<span class="dv">0</span>][<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
-</div>
 <div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a></span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>Cosine similarity between <span class="st">'car'</span> <span class="kw">and</span> <span class="st">'cat'</span>: <span class="fl">0.21528185904026031</span></span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>Cosine similarity between <span class="st">'hamburger'</span> <span class="kw">and</span> <span class="st">'pizza'</span>: <span class="fl">0.6153676509857178</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>car_vector <span class="op">=</span> w2v_model[<span class="st">'car'</span>]</span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>cat_vector <span class="op">=</span> w2v_model[<span class="st">'cat'</span>]</span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>similarity <span class="op">=</span> cosine_similarity([car_vector], [cat_vector])</span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cosine similarity between 'car' and 'cat': </span><span class="sc">{</span>similarity[<span class="dv">0</span>][<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a>similarity <span class="op">=</span> cosine_similarity([w2v_model[<span class="st">'hamburger'</span>]], [w2v_model[<span class="st">'pizza'</span>]])</span>
+<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cosine similarity between 'hamburger' and 'pizza': </span><span class="sc">{</span>similarity[<span class="dv">0</span>][<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb32">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>Cosine similarity between <span class="st">'car'</span> <span class="kw">and</span> <span class="st">'cat'</span>: <span class="fl">0.21528185904026031</span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>Cosine similarity between <span class="st">'hamburger'</span> <span class="kw">and</span> <span class="st">'pizza'</span>: <span class="fl">0.6153676509857178</span></span></code></pre>
 </div>
 <p>Or you can use directly the
 <code>w2v_model.similarity('car', 'cat')</code> function which gives the
@@ -2389,13 +2403,13 @@ case?</p>
 <div class="accordion-body">
 <p>Some interesting cases include synonyms, antonyms and morphologically
 related words:</p>
-<div class="codewrapper sourceCode" id="cb32">
+<div class="codewrapper sourceCode" id="cb33">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="bu">print</span>(w2v_model.similarity(<span class="st">'democracy'</span>, <span class="st">'democratic'</span>))</span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="bu">print</span>(w2v_model.similarity(<span class="st">'queen'</span>, <span class="st">'princess'</span>))</span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="bu">print</span>(w2v_model.similarity(<span class="st">'love'</span>, <span class="st">'hate'</span>)) <span class="co">#!! (think of "I love X" and "I hate X")</span></span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="bu">print</span>(w2v_model.similarity(<span class="st">'love'</span>, <span class="st">'lover'</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="bu">print</span>(w2v_model.similarity(<span class="st">'democracy'</span>, <span class="st">'democratic'</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="bu">print</span>(w2v_model.similarity(<span class="st">'queen'</span>, <span class="st">'princess'</span>))</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a><span class="bu">print</span>(w2v_model.similarity(<span class="st">'love'</span>, <span class="st">'hate'</span>)) <span class="co">#!! (think of "I love X" and "I hate X")</span></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a><span class="bu">print</span>(w2v_model.similarity(<span class="st">'love'</span>, <span class="st">'lover'</span>))</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2418,10 +2432,10 @@ of vectors that are close to a given word. This is analogous to
 retrieving semantically related terms to a target term. Let’s explore
 the neighborhood around `pizza` using the <code>most_similar()</code>
 method:</p>
-<div class="codewrapper sourceCode" id="cb34">
+<div class="codewrapper sourceCode" id="cb35">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="bu">print</span>(w2v_model.most_similar(<span class="st">'pizza'</span>, topn<span class="op">=</span><span class="dv">10</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="bu">print</span>(w2v_model.most_similar(<span class="st">'pizza'</span>, topn<span class="op">=</span><span class="dv">10</span>))</span></code></pre>
 </div>
 <p>This returns a list of ranked tuples with the form (word,
 similarity_score). The list is already ordered in descent, so the first
@@ -2446,11 +2460,11 @@ closer (or not so much). Take the case of <em>love</em> and
 <em>lover</em>, originally we might think these should be very close to
 each other but by looking at their neighborhoods we understand why this
 is not the case:</p>
-<div class="codewrapper sourceCode" id="cb36">
+<div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="bu">print</span>(w2v_model.most_similar(<span class="st">'love'</span>, topn<span class="op">=</span><span class="dv">10</span>))</span>
-<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="bu">print</span>(w2v_model.most_similar(<span class="st">'lover'</span>, topn<span class="op">=</span><span class="dv">10</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="bu">print</span>(w2v_model.most_similar(<span class="st">'love'</span>, topn<span class="op">=</span><span class="dv">10</span>))</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a><span class="bu">print</span>(w2v_model.most_similar(<span class="st">'lover'</span>, topn<span class="op">=</span><span class="dv">10</span>))</span></code></pre>
 </div>
 <p>This returns a list of ranked tuples with the form (word,
 similarity_score). The list is already ordered in descent, so the first
@@ -2479,12 +2493,12 @@ relationships, for example king is to queen as man is to woman. We can
 mimic this operations directly on the vectors using the
 <code>most_similar()</code> method with the <code>positive</code> and
 <code>negative</code> parameters:</p>
-<div class="codewrapper sourceCode" id="cb38">
+<div class="codewrapper sourceCode" id="cb39">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="co"># king is to man as what is to woman?</span></span>
-<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="co"># king + woman - man = queen</span></span>
-<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>w2v_model.most_similar(positive<span class="op">=</span>[<span class="st">'king'</span>, <span class="st">'woman'</span>], negative<span class="op">=</span>[<span class="st">'man'</span>])</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="co"># king is to man as what is to woman?</span></span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a><span class="co"># king + woman - man = queen</span></span>
+<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>w2v_model.most_similar(positive<span class="op">=</span>[<span class="st">'king'</span>, <span class="st">'woman'</span>], negative<span class="op">=</span>[<span class="st">'man'</span>])</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2508,21 +2522,21 @@ mimic this operations directly on the vectors using the
 this means we have to focus mostly on obtaining clean data and then
 calling the <code>Word2Vec</code> object to train our own model with our
 own data. This can be done like follows:</p>
-<div class="codewrapper sourceCode" id="cb40">
+<div class="codewrapper sourceCode" id="cb41">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="im">import</span> spacy</span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="im">from</span> gensim.models <span class="im">import</span> Word2Vec </span>
-<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a><span class="co"># Load and Tokenize the Text using spacy</span></span>
-<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>spacy_model <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
-<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/84_frankenstein_clean.txt"</span>) <span class="im">as</span> f:</span>
-<span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a>    book_text <span class="op">=</span> f.read()    </span>
-<span id="cb40-8"><a href="#cb40-8" tabindex="-1"></a>book_doc <span class="op">=</span> spacy_model(book_text)</span>
-<span id="cb40-9"><a href="#cb40-9" tabindex="-1"></a>clean_tokens <span class="op">=</span> [tok.text.lower() <span class="cf">for</span> tok <span class="kw">in</span> book_doc <span class="cf">if</span> tok.is_alpha <span class="kw">and</span> <span class="kw">not</span> tok.is_stop]</span>
-<span id="cb40-10"><a href="#cb40-10" tabindex="-1"></a></span>
-<span id="cb40-11"><a href="#cb40-11" tabindex="-1"></a><span class="co"># Call and Train the Word2Vec model</span></span>
-<span id="cb40-12"><a href="#cb40-12" tabindex="-1"></a>model <span class="op">=</span> Word2Vec([clean_tokens], sg<span class="op">=</span><span class="dv">0</span> , vector_size<span class="op">=</span><span class="dv">300</span>, window<span class="op">=</span><span class="dv">5</span>, min_count<span class="op">=</span><span class="dv">1</span>, workers<span class="op">=</span><span class="dv">4</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a><span class="im">from</span> gensim.models <span class="im">import</span> Word2Vec </span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a><span class="co"># Load and Tokenize the Text using spacy</span></span>
+<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>spacy_model <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/84_frankenstein_clean.txt"</span>) <span class="im">as</span> f:</span>
+<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a>    book_text <span class="op">=</span> f.read()    </span>
+<span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a>book_doc <span class="op">=</span> spacy_model(book_text)</span>
+<span id="cb41-9"><a href="#cb41-9" tabindex="-1"></a>clean_tokens <span class="op">=</span> [tok.text.lower() <span class="cf">for</span> tok <span class="kw">in</span> book_doc <span class="cf">if</span> tok.is_alpha <span class="kw">and</span> <span class="kw">not</span> tok.is_stop]</span>
+<span id="cb41-10"><a href="#cb41-10" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" tabindex="-1"></a><span class="co"># Call and Train the Word2Vec model</span></span>
+<span id="cb41-12"><a href="#cb41-12" tabindex="-1"></a>model <span class="op">=</span> Word2Vec([clean_tokens], sg<span class="op">=</span><span class="dv">0</span> , vector_size<span class="op">=</span><span class="dv">300</span>, window<span class="op">=</span><span class="dv">5</span>, min_count<span class="op">=</span><span class="dv">1</span>, workers<span class="op">=</span><span class="dv">4</span>)</span></code></pre>
 </div>
 <p>With this line code we are configuring our whole Word2Vec training
 schema. We will be using CBOW (<code>sg=0</code> means CBOW,
@@ -2540,10 +2554,10 @@ for more training options.</p>
 <p>Once your model is trained it is useful to save the checkpoint in
 order to retrieve it next time instead of having to train it every time.
 You can save it with:</p>
-<div class="codewrapper sourceCode" id="cb41">
+<div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>model.save(<span class="st">"word2vec_mini_books.model"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>model.save(<span class="st">"word2vec_mini_books.model"</span>)</span></code></pre>
 </div>
 <p>Let’s put everything together. We have now the following NLP task:
 train our own Word2Vec model. We are interested on having vectors for
@@ -2553,13 +2567,13 @@ manipulate the most relevant conceptual words as individual numeric
 representations.</p>
 <p>To load back the pre-trained vectors you just created you can use the
 following code:</p>
-<div class="codewrapper sourceCode" id="cb42">
+<div class="codewrapper sourceCode" id="cb43">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>model <span class="op">=</span> Word2Vec.load(<span class="st">"word2vec_mini_books.model"</span>)</span>
-<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>w2v <span class="op">=</span> model.wv</span>
-<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a><span class="co"># Test:</span></span>
-<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>w2v.most_similar(<span class="st">'monster'</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>model <span class="op">=</span> Word2Vec.load(<span class="st">"word2vec_mini_books.model"</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>w2v <span class="op">=</span> model.wv</span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a><span class="co"># Test:</span></span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>w2v.most_similar(<span class="st">'monster'</span>)</span></code></pre>
 </div>
 <div id="challenge3" class="callout challenge">
 <div class="callout-square">
@@ -2597,34 +2611,34 @@ model. The proposed pipeline for this task is:</p>
 </button>
 <div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb43">
+<div class="codewrapper sourceCode" id="cb44">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="im">import</span> spacy</span>
-<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a><span class="im">from</span> gensim.models <span class="im">import</span> Word2Vec </span>
-<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a></span>
-<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a><span class="kw">def</span> process_book(book_filename: <span class="bu">str</span>, spacy_model: spacy.lang) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">str</span>]:</span>
-<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(book_filename) <span class="im">as</span> f:</span>
-<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a>        book_text <span class="op">=</span> f.read()</span>
-<span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a>    </span>
-<span id="cb43-8"><a href="#cb43-8" tabindex="-1"></a>    book_doc <span class="op">=</span> spacy_model(book_text)</span>
-<span id="cb43-9"><a href="#cb43-9" tabindex="-1"></a>    valid_tokens <span class="op">=</span> [tok <span class="cf">for</span> tok <span class="kw">in</span> book_doc <span class="cf">if</span> tok.is_alpha <span class="kw">and</span> <span class="kw">not</span> tok.is_stop]</span>
-<span id="cb43-10"><a href="#cb43-10" tabindex="-1"></a>    lemmas <span class="op">=</span> [tok.lemma_ <span class="cf">for</span> tok <span class="kw">in</span> valid_tokens] </span>
-<span id="cb43-11"><a href="#cb43-11" tabindex="-1"></a>    <span class="cf">return</span> lemmas</span>
-<span id="cb43-12"><a href="#cb43-12" tabindex="-1"></a>    </span>
-<span id="cb43-13"><a href="#cb43-13" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
-<span id="cb43-14"><a href="#cb43-14" tabindex="-1"></a></span>
-<span id="cb43-15"><a href="#cb43-15" tabindex="-1"></a><span class="co"># Load the Tokens</span></span>
-<span id="cb43-16"><a href="#cb43-16" tabindex="-1"></a>franken_tokens <span class="op">=</span> process_book(<span class="st">"data/84_frankenstein_clean.txt"</span>, nlp)</span>
-<span id="cb43-17"><a href="#cb43-17" tabindex="-1"></a>dracula_tokens <span class="op">=</span> process_book(<span class="st">"data/345_dracula_clean.txt"</span>, nlp)</span>
-<span id="cb43-18"><a href="#cb43-18" tabindex="-1"></a></span>
-<span id="cb43-19"><a href="#cb43-19" tabindex="-1"></a><span class="co"># Train our own model</span></span>
-<span id="cb43-20"><a href="#cb43-20" tabindex="-1"></a>spooky_model <span class="op">=</span> Word2Vec([franken_tokens, dracula_tokens], sg<span class="op">=</span><span class="dv">0</span> , vector_size<span class="op">=</span><span class="dv">50</span>, window<span class="op">=</span><span class="dv">5</span>, min_count<span class="op">=</span><span class="dv">1</span>, workers<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb43-21"><a href="#cb43-21" tabindex="-1"></a></span>
-<span id="cb43-22"><a href="#cb43-22" tabindex="-1"></a><span class="co"># Test the vectors</span></span>
-<span id="cb43-23"><a href="#cb43-23" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(spooky_model.wv[<span class="st">'Frankenstein'</span>]))</span>
-<span id="cb43-24"><a href="#cb43-24" tabindex="-1"></a><span class="bu">print</span>(spooky_model.wv[<span class="st">'Frankenstein'</span>][:<span class="dv">30</span>])</span>
-<span id="cb43-25"><a href="#cb43-25" tabindex="-1"></a><span class="bu">print</span>(spooky_model.wv.most_similar(<span class="st">"Frankenstein"</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a><span class="im">from</span> gensim.models <span class="im">import</span> Word2Vec </span>
+<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a><span class="kw">def</span> process_book(book_filename: <span class="bu">str</span>, spacy_model: spacy.lang) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">str</span>]:</span>
+<span id="cb44-5"><a href="#cb44-5" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(book_filename) <span class="im">as</span> f:</span>
+<span id="cb44-6"><a href="#cb44-6" tabindex="-1"></a>        book_text <span class="op">=</span> f.read()</span>
+<span id="cb44-7"><a href="#cb44-7" tabindex="-1"></a>    </span>
+<span id="cb44-8"><a href="#cb44-8" tabindex="-1"></a>    book_doc <span class="op">=</span> spacy_model(book_text)</span>
+<span id="cb44-9"><a href="#cb44-9" tabindex="-1"></a>    valid_tokens <span class="op">=</span> [tok <span class="cf">for</span> tok <span class="kw">in</span> book_doc <span class="cf">if</span> tok.is_alpha <span class="kw">and</span> <span class="kw">not</span> tok.is_stop]</span>
+<span id="cb44-10"><a href="#cb44-10" tabindex="-1"></a>    lemmas <span class="op">=</span> [tok.lemma_ <span class="cf">for</span> tok <span class="kw">in</span> valid_tokens] </span>
+<span id="cb44-11"><a href="#cb44-11" tabindex="-1"></a>    <span class="cf">return</span> lemmas</span>
+<span id="cb44-12"><a href="#cb44-12" tabindex="-1"></a>    </span>
+<span id="cb44-13"><a href="#cb44-13" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb44-14"><a href="#cb44-14" tabindex="-1"></a></span>
+<span id="cb44-15"><a href="#cb44-15" tabindex="-1"></a><span class="co"># Load the Tokens</span></span>
+<span id="cb44-16"><a href="#cb44-16" tabindex="-1"></a>franken_tokens <span class="op">=</span> process_book(<span class="st">"data/84_frankenstein_clean.txt"</span>, nlp)</span>
+<span id="cb44-17"><a href="#cb44-17" tabindex="-1"></a>dracula_tokens <span class="op">=</span> process_book(<span class="st">"data/345_dracula_clean.txt"</span>, nlp)</span>
+<span id="cb44-18"><a href="#cb44-18" tabindex="-1"></a></span>
+<span id="cb44-19"><a href="#cb44-19" tabindex="-1"></a><span class="co"># Train our own model</span></span>
+<span id="cb44-20"><a href="#cb44-20" tabindex="-1"></a>spooky_model <span class="op">=</span> Word2Vec([franken_tokens, dracula_tokens], sg<span class="op">=</span><span class="dv">0</span> , vector_size<span class="op">=</span><span class="dv">50</span>, window<span class="op">=</span><span class="dv">5</span>, min_count<span class="op">=</span><span class="dv">1</span>, workers<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb44-21"><a href="#cb44-21" tabindex="-1"></a></span>
+<span id="cb44-22"><a href="#cb44-22" tabindex="-1"></a><span class="co"># Test the vectors</span></span>
+<span id="cb44-23"><a href="#cb44-23" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(spooky_model.wv[<span class="st">'Frankenstein'</span>]))</span>
+<span id="cb44-24"><a href="#cb44-24" tabindex="-1"></a><span class="bu">print</span>(spooky_model.wv[<span class="st">'Frankenstein'</span>][:<span class="dv">30</span>])</span>
+<span id="cb44-25"><a href="#cb44-25" tabindex="-1"></a><span class="bu">print</span>(spooky_model.wv.most_similar(<span class="st">"Frankenstein"</span>))</span></code></pre>
 </div>
 </div>
 </div>
@@ -2764,7 +2778,7 @@ which of the possible meanings does the word have when you see it?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Two possible examples can be the words ‘fine’ and ‘run’</p>
 <p>Sentences for ‘fine’: - She has a fine watch (fine == high-quality) -
@@ -2894,7 +2908,7 @@ always possible to do this one-to-one for words?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Here is an example of a sentence in English and its translation into
 Spanish. We can look at the final mapping and observe that:</p>
@@ -3360,7 +3374,7 @@ to <code>bert-base-multilingual-cased</code>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>This is a free exercise, so anything works. But even by running the
 same cases with the multilingual models we see some interesting aspects.
@@ -3695,7 +3709,7 @@ the 3-class annotations given in the test set:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4546,7 +4560,7 @@ improve the results?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Here the code to do the same excercise as lesson 3 but with the
 generative approach:</p>
