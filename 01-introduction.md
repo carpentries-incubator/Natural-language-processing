@@ -93,7 +93,7 @@ print(len(chinese_words))  # Output: 7
 7
 ```
 
-We can trust that the output is valid because we are using a verified library - jieba, even though we don't speak Chinese. Another interesting aspect is that the Chinese sentence has more words than the English one, even though they convey the same meaning. This shows the complexity of dealing with more than one language at a time, as is the case in task such as **Machine Translation** (using computers to translate speech or text from one human language to another).
+We can trust that the output is valid because we are using a verified library - `MicroTokenizer`, even though we don't speak Chinese. Another interesting aspect is that the Chinese sentence has more words than the English one, even though they convey the same meaning. This shows the complexity of dealing with more than one language at a time, as is the case in task such as **Machine Translation** (using computers to translate speech or text from one human language to another).
 
 
 Natural Language Processing deals with the challenges of correctly processing and generating text in any language. This can be as simple as counting word frequencies to detect different writing styles, using statistical methods to classify texts into different categories, or using **deep neural networks** to generate human-like text by exploiting word co-occurrences in large amounts of texts.
@@ -602,7 +602,7 @@ As our mini experiment demonstrates, discreteness can be combatted with statisti
 
 ### NLP Libraries
 
-Related to the need of shaping our problems into a known task, there are several existing NLP libraries which provide a wide range of models that we can use out-of-the-box (without further need of modification). We already saw simple examples using SpaCy for English and jieba for Chinese. Again, as a non-exhaustive list, we mention some widely used NLP libraries in Python:
+Related to the need of shaping our problems into a known task, there are several existing NLP libraries which provide a wide range of models that we can use out-of-the-box (without further need of modification). We already saw simple examples using `spaCy` for English and `MicroTokenizer` for Chinese. Again, as a non-exhaustive list, we mention some widely used NLP libraries in Python:
 
 -   [NLTK](https://github.com/nltk/nltk)
 -   [spaCy](https://github.com/explosion/spaCy)
