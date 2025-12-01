@@ -207,10 +207,11 @@
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
         <ul><li><a href="#software-setup">Software Setup</a></li>
-<li><a href="#installing-the-required-packages">Installing the required packages</a></li>
-<li><a href="#jupyter-lab">Jupyter Lab</a></li>
-<li><a href="#ollama">Ollama</a></li>
-<li><a href="#data-sets">Data Sets</a></li>
+<li><a href="#download-the-workshop-materials">2. Download the workshop materials</a></li>
+<li><a href="#create-a-python-virtual-environment">3. Create a Python Virtual Environment</a></li>
+<li><a href="#install-the-required-python-packages">4. Install the required Python packages</a></li>
+<li><a href="#download-the-required-nlp-models">5. Download the required NLP models</a></li>
+<li><a href="#start-jupyter-lab">6. Start Jupyter Lab</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -331,34 +332,52 @@ agents.</p>
 </div>
 
 </section><section id="setup"><section><h2 class="section-heading" id="software-setup">Software Setup<a class="anchor" aria-label="anchor" href="#software-setup"></a></h2>
-<hr class="half-width"><div id="installing-python" class="callout discussion">
+<hr class="half-width"><div id="install-python" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
 <span class="callout-header">Discussion</span>
-<div id="installing-python" class="callout-inner">
-<h3 class="callout-title">Installing Python</h3>
+<div id="install-python" class="callout-inner">
+<h3 class="callout-title">1. Install Python</h3>
 <div class="callout-content">
 <p><a href="https://python.org" class="external-link">Python</a> is a popular language for
-scientific computing, and a frequent choice for machine learning as
-well. To install Python, follow the <a href="https://wiki.python.org/moin/BeginnersGuide/Download" class="external-link">Beginner’s
-Guide</a> or head straight to the <a href="https://www.python.org/downloads/" class="external-link">download page</a>.
-<strong>Note:</strong> We will use Python 3.12 for this workshop.</p>
+scientific computing, and a frequent choice for Natural Language
+Processing as well.</p>
+<p>To install Python, follow the <a href="https://wiki.python.org/moin/BeginnersGuide/Download" class="external-link">Beginner’s
+Guide</a> or head straight to the <a href="https://www.python.org/downloads/" class="external-link">download page</a>.</p>
+<p><strong>Note:</strong> We will support <strong>Python 3.10 -
+3.12</strong> for this workshop.</p>
 <p>Please set up your Python environment <strong><em>at least a day in
-advance</em></strong> of the workshop. If you encounter problems with
-the installation procedure, ask your workshop organizers via e-mail for
-assistance so you are ready to go as soon as the workshop begins.</p>
+advance</em></strong> of the workshop.</p>
+<p>If you encounter problems with the installation procedure, ask your
+workshop organizers via e-mail for assistance so you are ready to go as
+soon as the workshop begins.</p>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="installing-the-required-packages">Installing the required packages<a class="anchor" aria-label="anchor" href="#installing-the-required-packages"></a></h2>
+</section><section><h2 class="section-heading" id="download-the-workshop-materials">2. Download the workshop materials<a class="anchor" aria-label="anchor" href="#download-the-workshop-materials"></a></h2>
+<hr class="half-width"><p>Follow these steps to download all the workshop materials:</p>
+<ol style="list-style-type: decimal"><li><p>Navigate to <a href="https://github.com/carpentries-incubator/Natural-language-processing" class="external-link">https://github.com/carpentries-incubator/Natural-language-processing</a>{:target=“_blank”}
+in your browser.</p></li>
+<li><p>Click on the large green button at the top right of the page
+called “Code”. Make sure you are on the “Local” tab and click on the
+“Download ZIP” link at the bottom of the tab. This will download all the
+workshop materials in a ZIP archive.</p></li>
+</ol><figure><img src="fig/download_materials.png" alt="download materials" width="700" class="figure mx-auto d-block"></figure><ol start="3" style="list-style-type: decimal"><li><p>Place the ZIP archive in a chosen location in your file system
+and extract its contents. A directory with the name
+“Natural-language-processing-main” will be extracted from the
+archive.</p></li>
+<li><p>Open a terminal (Mac/Linux) or Command Prompt (Windows) and
+navigate to the newly extracted directory
+“Natural-language-processing-main” in the terminal or command
+prompt.</p></li>
+</ol></section><section><h2 class="section-heading" id="create-a-python-virtual-environment">3. Create a Python Virtual Environment<a class="anchor" aria-label="anchor" href="#create-a-python-virtual-environment"></a></h2>
 <hr class="half-width"><p><a href="https://pip.pypa.io/en/stable/" class="external-link">Pip</a> is the package
-management system built into Python. Pip should be available in your
-system once you installed Python successfully. Please note that
-installing the packages can take some time, in particular on
-Windows.</p>
-<p>Open a terminal (Mac/Linux) or Command Prompt (Windows) and run the
-following commands.</p>
+management system built into Python. We will use this to install all
+required packages for the workshop. Pip should be available in your
+system once you installed Python successfully. <strong>Please
+note:</strong> installing the packages can take some time, in particular
+on Windows.</p>
 <ol style="list-style-type: decimal"><li>Create a <a href="https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments" class="external-link">virtual
 environment</a> called <code>nlp_workshop</code>:</li>
 </ol><div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
@@ -422,10 +441,13 @@ environment</a> called <code>nlp_workshop</code>:</li>
 </div>
 </div>
 </div>
-<p>Remember that you need to activate your environment every time you
-restart your terminal!</p>
-<ol start="3" style="list-style-type: decimal"><li>Install the required packages:</li>
-</ol><div id="accordionSpoiler5" class="accordion spoiler-accordion accordion-flush">
+<p><strong>Note:</strong> you need to activate your environment every
+time you restart your terminal!</p>
+</section><section><h2 class="section-heading" id="install-the-required-python-packages">4. Install the required Python packages<a class="anchor" aria-label="anchor" href="#install-the-required-python-packages"></a></h2>
+<hr class="half-width"><p>Ensure that in your terminal or command prompt that your working
+directory is the newly extracted “Natural-language-processing-main”.
+Then execute the following command:</p>
+<div id="accordionSpoiler5" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler5" aria-expanded="false" aria-controls="collapseSpoiler5">
   <h3 class="accordion-header" id="headingSpoiler5">
@@ -455,46 +477,12 @@ restart your terminal!</p>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="jupyter-lab">Jupyter Lab<a class="anchor" aria-label="anchor" href="#jupyter-lab"></a></h2>
-<hr class="half-width"><p>We will teach using Python in <a href="http://jupyter.org/" class="external-link">Jupyter
-Lab</a>, a programming environment that runs in a web browser. Jupyter
-Lab is compatible with Firefox, Chrome, Safari and Chromium-based
-browsers. Note that Internet Explorer and Edge are <em>not</em>
-supported. See the <a href="https://jupyterlab.readthedocs.io/en/latest/getting_started/accessibility.html#compatibility-with-browsers-and-assistive-technology" class="external-link">Jupyter
-Lab documentation</a> for an up-to-date list of supported browsers.</p>
-<p>To start Jupyter Lab, open a terminal (Mac/Linux) or Command Prompt
-(Windows) and type the command:</p>
-<pre class="shell"><code>jupyter lab</code></pre>
-</section><section><h2 class="section-heading" id="ollama">Ollama<a class="anchor" aria-label="anchor" href="#ollama"></a></h2>
-<hr class="half-width"><p>We will use Ollama to run large language models. The installer
-(available for Linux/Windows/Mac OS) can be downloaded here:</p>
-<p><a href="https://ollama.com/download" class="external-link uri">https://ollama.com/download</a></p>
-<p>Run the installer and follow the instructions on screen.</p>
-<p>Next, download the model that we will be using from a terminal
-(Mac/Linux) or Command Prompt (Windows) by typing the command:</p>
-<pre class="shell"><code>ollama pull llama3.2:1b</code></pre>
-<p>NOTE: if the previous command fails, you can pull the model manually
-inside the Ollama graphic interface. Open Ollama and on the right side
-of the “Send a message” prompt you will see a dropdown. Type there
-“llama3.2:1b” and then send any message so Ollama can download (pull)
-the model for you.</p>
-</section><section><h2 class="section-heading" id="data-sets">Data Sets<a class="anchor" aria-label="anchor" href="#data-sets"></a></h2>
-<hr class="half-width"><p>Datasets and example files are placed in the <a href="https://github.com/carpentries-incubator/Natural-language-processing/tree/main/episodes/data" class="external-link">episodes/data/</a>
-directory.</p>
-<p>You can manually download the zip file inside that directory by
-clicking on <code>data.zip</code> and then using the down arrow button
-(“download raw file”) that is on the upper right corner of the screen,
-below the word “History”.</p>
-<p><strong>Note:</strong> The text data files in <code>data.zip</code>
-should be placed in a directory called <code>data/</code> in the root of
-the directory where your jupyter notebooks will reside.</p>
-<div class="section level3">
-<h3 id="word2vec-spacy-english-models">Word2Vec &amp; SpaCy English Models<a class="anchor" aria-label="anchor" href="#word2vec-spacy-english-models"></a></h3>
-<p>To download all models required for the workshop with one simple
+</section><section><h2 class="section-heading" id="download-the-required-nlp-models">5. Download the required NLP models<a class="anchor" aria-label="anchor" href="#download-the-required-nlp-models"></a></h2>
+<hr class="half-width"><p>To download models required for the workshop with one simple
 platform-independent command:</p>
 <pre class="shell"><code>invoke init-models</code></pre>
-<p>If this command fails for whatever reason, try the following manual
-approach. Download the Word2Vec model first:</p>
+<p>If this command fails for whatever reason, download them separately
+as follows. Download the Word2Vec model first:</p>
 <div id="accordionSpoiler7" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler7" aria-expanded="false" aria-controls="collapseSpoiler7">
@@ -557,7 +545,32 @@ pipelines for English from Spacy</a>:</p>
 </div>
 </div>
 </div>
-</div>
+<p>We will use <a href="https://ollama.com/" class="external-link">Ollama</a> to run large
+language models in Episode 4 of the workshop. The installer (available
+for Linux/Windows/Mac OS) can be downloaded here:</p>
+<p><a href="https://ollama.com/download" class="external-link uri">https://ollama.com/download</a></p>
+<p>Run the installer and follow the instructions on screen.</p>
+<p>Next, download the model that we will be using from a terminal
+(Mac/Linux) or Command Prompt (Windows) by typing the command:</p>
+<pre class="shell"><code>ollama pull llama3.2:1b</code></pre>
+<p><strong>Note:</strong> if the previous command fails, you can
+download the model manually inside the Ollama graphic interface. Open
+Ollama and on the right side of the “Send a message” prompt you will see
+a dropdown. Type “llama3.2:1b” there and send any message so Ollama can
+download (pull) the model for you.</p>
+<figure><img src="fig/ollama.png" alt="ollama" width="700" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="start-jupyter-lab">6. Start Jupyter Lab<a class="anchor" aria-label="anchor" href="#start-jupyter-lab"></a></h2>
+<hr class="half-width"><p>We will teach using Python in <a href="http://jupyter.org/" class="external-link">Jupyter
+Lab</a>, a programming environment that runs in a web browser.</p>
+<p>Jupyter Lab is compatible with Firefox, Chrome, Safari and
+Chromium-based browsers. Note that Internet Explorer and Edge are
+<em>not</em> supported.</p>
+<p>See the <a href="https://jupyterlab.readthedocs.io/en/latest/getting_started/accessibility.html#compatibility-with-browsers-and-assistive-technology" class="external-link">Jupyter
+Lab documentation</a> for an up-to-date list of supported browsers.</p>
+<p>To start Jupyter Lab, navigate to the
+“Natural-language-processing-main” directory you just extracted in a
+terminal (Mac/Linux) or Command Prompt (Windows). Then type the
+command:</p>
+<pre class="shell"><code>jupyter lab</code></pre>
 </section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link float-end" href="01-introduction.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
@@ -607,8 +620,8 @@ pipelines for English from Spacy</a>:</p>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/index.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/index.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-11-28",
-  "datePublished": "2025-11-28"
+  "dateModified": "2025-12-01",
+  "datePublished": "2025-12-01"
 }
 
   </script><script>
