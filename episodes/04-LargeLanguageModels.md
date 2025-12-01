@@ -367,6 +367,12 @@ Here the code to do the same excercise as lesson 3 but with the generative appro
 
 ```python
 from sklearn.metrics import classification_report
+from sklearn.metrics import ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+
+def show_confusion_matrix(y_true, y_pred, labels=None):
+    ConfusionMatrixDisplay.from_predictions(y_true, y_pred, display_labels=labels, cmap='Blues')
+    plt.show()
 
 def load_data(filename):
     with open(filename, 'r') as f:
@@ -392,6 +398,8 @@ for sent in sentences:
     y_pred.append(response.content.lower())
 
 print(classification_report(y_true, y_pred))
+
+show_confusion_matrix(y_true, y_pred)
 ```
 
 Report:
