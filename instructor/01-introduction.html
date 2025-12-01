@@ -309,7 +309,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Introduction</h1>
-        <p>Last updated on 2025-11-27 |
+        <p>Last updated on 2025-12-01 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/01-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -397,7 +397,7 @@ use of the Web.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>These are some of the most popular NLP-based products that we use on
 a daily basis:</p>
@@ -486,12 +486,13 @@ distinct words:</p>
 7</code></pre>
 </div>
 <p>We can trust that the output is valid because we are using a verified
-library - jieba, even though we don’t speak Chinese. Another interesting
-aspect is that the Chinese sentence has more words than the English one,
-even though they convey the same meaning. This shows the complexity of
-dealing with more than one language at a time, as is the case in task
-such as <strong>Machine Translation</strong> (using computers to
-translate speech or text from one human language to another).</p>
+library - <code>MicroTokenizer</code>, even though we don’t speak
+Chinese. Another interesting aspect is that the Chinese sentence has
+more words than the English one, even though they convey the same
+meaning. This shows the complexity of dealing with more than one
+language at a time, as is the case in task such as <strong>Machine
+Translation</strong> (using computers to translate speech or text from
+one human language to another).</p>
 <p>Natural Language Processing deals with the challenges of correctly
 processing and generating text in any language. This can be as simple as
 counting word frequencies to detect different writing styles, using
@@ -800,7 +801,7 @@ GPE)</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Let’s describe the solution to obtain all the different entity
 categories. For that we should iterate the whole text and keep a python
@@ -1012,7 +1013,7 @@ sales report for last month.” <strong>Output:</strong> NO-SPAM</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>Example B: the task of Conversational agent. Here are 3 instances to
 provide supervision for a model:</p>
@@ -1100,7 +1101,7 @@ uppercases).</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>This is why the previous statements were difficult:</p>
 <ul><li>“Un-lockable vs Unlock-able” is a <strong>Morphological</strong>
@@ -1377,9 +1378,9 @@ idea behind most modern semantic representation models in NLP.</p>
 <p>Related to the need of shaping our problems into a known task, there
 are several existing NLP libraries which provide a wide range of models
 that we can use out-of-the-box (without further need of modification).
-We already saw simple examples using SpaCy for English and jieba for
-Chinese. Again, as a non-exhaustive list, we mention some widely used
-NLP libraries in Python:</p>
+We already saw simple examples using <code>spaCy</code> for English and
+<code>MicroTokenizer</code> for Chinese. Again, as a non-exhaustive
+list, we mention some widely used NLP libraries in Python:</p>
 <ul><li><a href="https://github.com/nltk/nltk" class="external-link">NLTK</a></li>
 <li><a href="https://github.com/explosion/spaCy" class="external-link">spaCy</a></li>
 <li><a href="https://github.com/RaRe-Technologies/gensim" class="external-link">Gensim</a></li>
@@ -1533,7 +1534,7 @@ process language as humans do</p></li>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/01-introduction.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/01-introduction.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-11-27",
+  "dateModified": "2025-12-01",
   "datePublished": "2025-12-01"
 }
 

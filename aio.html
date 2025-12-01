@@ -342,7 +342,7 @@
         
 <section id="aio-01-introduction"><p>Content from <a href="01-introduction.html">Introduction</a></p>
 <hr>
-<p>Last updated on 2025-11-27 |
+<p>Last updated on 2025-12-01 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/01-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -428,7 +428,7 @@ use of the Web.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>These are some of the most popular NLP-based products that we use on
 a daily basis:</p>
@@ -519,12 +519,13 @@ distinct words:</p>
 7</code></pre>
 </div>
 <p>We can trust that the output is valid because we are using a verified
-library - jieba, even though we don’t speak Chinese. Another interesting
-aspect is that the Chinese sentence has more words than the English one,
-even though they convey the same meaning. This shows the complexity of
-dealing with more than one language at a time, as is the case in task
-such as <strong>Machine Translation</strong> (using computers to
-translate speech or text from one human language to another).</p>
+library - <code>MicroTokenizer</code>, even though we don’t speak
+Chinese. Another interesting aspect is that the Chinese sentence has
+more words than the English one, even though they convey the same
+meaning. This shows the complexity of dealing with more than one
+language at a time, as is the case in task such as <strong>Machine
+Translation</strong> (using computers to translate speech or text from
+one human language to another).</p>
 <p>Natural Language Processing deals with the challenges of correctly
 processing and generating text in any language. This can be as simple as
 counting word frequencies to detect different writing styles, using
@@ -842,7 +843,7 @@ GPE)</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Let’s describe the solution to obtain all the different entity
 categories. For that we should iterate the whole text and keep a python
@@ -1071,7 +1072,7 @@ sales report for last month.” <strong>Output:</strong> NO-SPAM</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>Example B: the task of Conversational agent. Here are 3 instances to
 provide supervision for a model:</p>
@@ -1165,7 +1166,7 @@ uppercases).</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>This is why the previous statements were difficult:</p>
 <ul>
@@ -1448,9 +1449,9 @@ idea behind most modern semantic representation models in NLP.</p>
 <p>Related to the need of shaping our problems into a known task, there
 are several existing NLP libraries which provide a wide range of models
 that we can use out-of-the-box (without further need of modification).
-We already saw simple examples using SpaCy for English and jieba for
-Chinese. Again, as a non-exhaustive list, we mention some widely used
-NLP libraries in Python:</p>
+We already saw simple examples using <code>spaCy</code> for English and
+<code>MicroTokenizer</code> for Chinese. Again, as a non-exhaustive
+list, we mention some widely used NLP libraries in Python:</p>
 <ul>
 <li><a href="https://github.com/nltk/nltk" class="external-link">NLTK</a></li>
 <li><a href="https://github.com/explosion/spaCy" class="external-link">spaCy</a></li>
@@ -2141,7 +2142,7 @@ pipeline.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>This classifier only considers the presence of one word to apply a
@@ -2384,7 +2385,7 @@ case?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Some interesting cases include synonyms, antonyms and morphologically
 related words:</p>
@@ -2594,7 +2595,7 @@ model. The proposed pipeline for this task is:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb43">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2678,7 +2679,7 @@ cosine similarity</li>
 </div>
 </section></section><section id="aio-03-transformers"><p>Content from <a href="03-transformers.html">Transformers: BERT and Beyond</a></p>
 <hr>
-<p>Last updated on 2025-11-27 |
+<p>Last updated on 2025-12-01 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/03-transformers.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2763,7 +2764,7 @@ which of the possible meanings does the word have when you see it?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Two possible examples can be the words ‘fine’ and ‘run’</p>
 <p>Sentences for ‘fine’: - She has a fine watch (fine == high-quality) -
@@ -2893,7 +2894,7 @@ always possible to do this one-to-one for words?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Here is an example of a sentence in English and its translation into
 Spanish. We can look at the final mapping and observe that:</p>
@@ -2940,18 +2941,21 @@ model generalization.</p>
 <h3 class="callout-title">Pretraining BERT</h3>
 <div class="callout-content">
 <p>To obtain the BERT vector representations the Encoder is pre-trained
-with two different tasks: - <strong>Masked Language Model:</strong> for
-each sentence, mask one token at a time and predict which token is
-missing based on the context from both sides. A training input example
-would be “Maria [MASK] Groningen” and the model should predict the word
-“loves”. - <strong>Next Sentence Prediction:</strong> the Encoder gets a
+with two different tasks:</p>
+<ul>
+<li><p><strong>Masked Language Model:</strong> for each sentence, mask
+one token at a time and predict which token is missing based on the
+context from both sides. A training input example would be “Maria [MASK]
+Groningen” and the model should predict the word “loves”.</p></li>
+<li><p><strong>Next Sentence Prediction:</strong> the Encoder gets a
 linear binary classifier on top, which is trained to decide for each
 pair of sequences A and B, if sequence A precedes sequence B in a text.
 For the sentence pair: “Maria loves Groningen.” and “This is a city in
 the Netherlands.” the output of the classifier is “True” and for the
 pair “Maria loves Groningen.” and “It was a tasty cake.” the output
 should be “false” as there is no obvious continuation between the two
-sentences.</p>
+sentences.</p></li>
+</ul>
 <p>Already the second pre-training task gives us an idea of the power of
 BERT: after it has been pretrained on hundreds of thousands of texts,
 one can plug-in a classifier on top and re-use the <em>linguistic</em>
@@ -3154,14 +3158,15 @@ encoded vectors belonging to each <code>note</code> token:</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Encode the sentence and extract the vector belonging to each 'note' token</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    bert_output <span class="op">=</span> model(<span class="op">**</span>tokenized_text)</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>note_vector_1 <span class="op">=</span> bert_output.last_hidden_state[<span class="dv">0</span>][note_index_1].detach().numpy()</span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>note_vector_2 <span class="op">=</span> bert_output.last_hidden_state[<span class="dv">0</span>][note_index_2].detach().numpy()</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="bu">print</span>(note_vector_1[:<span class="dv">5</span>])</span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="bu">print</span>(note_vector_2[:<span class="dv">5</span>])</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co"># Encode the sentence and extract the vector belonging to each 'note' token</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    bert_output <span class="op">=</span> model(<span class="op">**</span>tokenized_text)</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>note_vector_1 <span class="op">=</span> bert_output.last_hidden_state[<span class="dv">0</span>][note_index_1].detach().numpy()</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>note_vector_2 <span class="op">=</span> bert_output.last_hidden_state[<span class="dv">0</span>][note_index_2].detach().numpy()</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="bu">print</span>(note_vector_1[:<span class="dv">5</span>])</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="bu">print</span>(note_vector_2[:<span class="dv">5</span>])</span></code></pre>
 </div>
 <pre><code>[1.0170387  0.93691176 0.30571502 0.33091038 0.73093796]
 [0.17840035 0.65847856 0.22412607 0.21162085 0.5393072 ]</code></pre>
@@ -3355,7 +3360,7 @@ to <code>bert-base-multilingual-cased</code>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>This is a free exercise, so anything works. But even by running the
 same cases with the multilingual models we see some interesting aspects.
@@ -3690,7 +3695,7 @@ the 3-class annotations given in the test set:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4541,7 +4546,7 @@ improve the results?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Here the code to do the same excercise as lesson 3 but with the
 generative approach:</p>
@@ -4549,31 +4554,39 @@ generative approach:</p>
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="kw">def</span> load_data(filename):</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()[<span class="dv">1</span>:] <span class="co"># skip header</span></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>    sentences, labels <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>(line.strip().split(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> line <span class="kw">in</span> lines))</span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>(sentences), <span class="bu">list</span>(labels)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="kw">def</span> show_confusion_matrix(y_true, y_pred, labels<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>    ConfusionMatrixDisplay.from_predictions(y_true, y_pred, display_labels<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    plt.show()</span>
 <span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>sentiment_llm <span class="op">=</span> ChatOllama(</span>
-<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
-<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>    temperature<span class="op">=</span><span class="dv">0</span>, <span class="co"># Want to be as deterministic as possible</span></span>
-<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>    num_predict<span class="op">=</span><span class="dv">10</span>, <span class="co"># Keep the answer very short</span></span>
-<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>    top_k<span class="op">=</span><span class="dv">1</span>, <span class="co"># Only consider the next most likely token (Greedy)</span></span>
-<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>)</span>
-<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a></span>
-<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>sentences, y_true <span class="op">=</span> load_data(<span class="st">'data/sentiment_film_data.tsv'</span>)</span>
-<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a></span>
-<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>y_pred <span class="op">=</span> []</span>
-<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Classify the sentiment of the following text as POSITIVE, NEGATIVE or NEUTRAL. Just return the label, nothing else!"</span></span>
-<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> sentences:</span>
-<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a>    messages <span class="op">=</span> [(<span class="st">"system"</span>, prompt), (<span class="st">"human"</span>, sent)]</span>
-<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a>    response <span class="op">=</span> sentiment_llm.invoke(messages)</span>
-<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a>    <span class="bu">print</span>(sent, response.content)</span>
-<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a>    y_pred.append(response.content.lower())</span>
-<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a></span>
-<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span></code></pre>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="kw">def</span> load_data(filename):</span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()[<span class="dv">1</span>:] <span class="co"># skip header</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>    sentences, labels <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>(line.strip().split(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> line <span class="kw">in</span> lines))</span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>(sentences), <span class="bu">list</span>(labels)</span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a>sentiment_llm <span class="op">=</span> ChatOllama(</span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a>    temperature<span class="op">=</span><span class="dv">0</span>, <span class="co"># Want to be as deterministic as possible</span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>    num_predict<span class="op">=</span><span class="dv">10</span>, <span class="co"># Keep the answer very short</span></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a>    top_k<span class="op">=</span><span class="dv">1</span>, <span class="co"># Only consider the next most likely token (Greedy)</span></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a>)</span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a>sentences, y_true <span class="op">=</span> load_data(<span class="st">'data/sentiment_film_data.tsv'</span>)</span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a>y_pred <span class="op">=</span> []</span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Classify the sentiment of the following text as POSITIVE, NEGATIVE or NEUTRAL. Just return the label, nothing else!"</span></span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> sentences:</span>
+<span id="cb16-27"><a href="#cb16-27" tabindex="-1"></a>    messages <span class="op">=</span> [(<span class="st">"system"</span>, prompt), (<span class="st">"human"</span>, sent)]</span>
+<span id="cb16-28"><a href="#cb16-28" tabindex="-1"></a>    response <span class="op">=</span> sentiment_llm.invoke(messages)</span>
+<span id="cb16-29"><a href="#cb16-29" tabindex="-1"></a>    <span class="bu">print</span>(sent, response.content)</span>
+<span id="cb16-30"><a href="#cb16-30" tabindex="-1"></a>    y_pred.append(response.content.lower())</span>
+<span id="cb16-31"><a href="#cb16-31" tabindex="-1"></a></span>
+<span id="cb16-32"><a href="#cb16-32" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span>
+<span id="cb16-33"><a href="#cb16-33" tabindex="-1"></a></span>
+<span id="cb16-34"><a href="#cb16-34" tabindex="-1"></a>show_confusion_matrix(y_true, y_pred)</span></code></pre>
 </div>
 <p>Report:</p>
 <div class="codewrapper">

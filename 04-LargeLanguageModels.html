@@ -939,7 +939,7 @@ improve the results?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Here the code to do the same excercise as lesson 3 but with the
 generative approach:</p>
@@ -947,31 +947,39 @@ generative approach:</p>
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="kw">def</span> load_data(filename):</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()[<span class="dv">1</span>:] <span class="co"># skip header</span></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>    sentences, labels <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>(line.strip().split(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> line <span class="kw">in</span> lines))</span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>(sentences), <span class="bu">list</span>(labels)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="kw">def</span> show_confusion_matrix(y_true, y_pred, labels<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>    ConfusionMatrixDisplay.from_predictions(y_true, y_pred, display_labels<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    plt.show()</span>
 <span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>sentiment_llm <span class="op">=</span> ChatOllama(</span>
-<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
-<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>    temperature<span class="op">=</span><span class="dv">0</span>, <span class="co"># Want to be as deterministic as possible</span></span>
-<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>    num_predict<span class="op">=</span><span class="dv">10</span>, <span class="co"># Keep the answer very short</span></span>
-<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>    top_k<span class="op">=</span><span class="dv">1</span>, <span class="co"># Only consider the next most likely token (Greedy)</span></span>
-<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>)</span>
-<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a></span>
-<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>sentences, y_true <span class="op">=</span> load_data(<span class="st">'data/sentiment_film_data.tsv'</span>)</span>
-<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a></span>
-<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>y_pred <span class="op">=</span> []</span>
-<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Classify the sentiment of the following text as POSITIVE, NEGATIVE or NEUTRAL. Just return the label, nothing else!"</span></span>
-<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> sentences:</span>
-<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a>    messages <span class="op">=</span> [(<span class="st">"system"</span>, prompt), (<span class="st">"human"</span>, sent)]</span>
-<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a>    response <span class="op">=</span> sentiment_llm.invoke(messages)</span>
-<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a>    <span class="bu">print</span>(sent, response.content)</span>
-<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a>    y_pred.append(response.content.lower())</span>
-<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a></span>
-<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span></code></pre>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="kw">def</span> load_data(filename):</span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()[<span class="dv">1</span>:] <span class="co"># skip header</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>    sentences, labels <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>(line.strip().split(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> line <span class="kw">in</span> lines))</span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>(sentences), <span class="bu">list</span>(labels)</span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a>sentiment_llm <span class="op">=</span> ChatOllama(</span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a>    temperature<span class="op">=</span><span class="dv">0</span>, <span class="co"># Want to be as deterministic as possible</span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>    num_predict<span class="op">=</span><span class="dv">10</span>, <span class="co"># Keep the answer very short</span></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a>    top_k<span class="op">=</span><span class="dv">1</span>, <span class="co"># Only consider the next most likely token (Greedy)</span></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a>)</span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a>sentences, y_true <span class="op">=</span> load_data(<span class="st">'data/sentiment_film_data.tsv'</span>)</span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a>y_pred <span class="op">=</span> []</span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Classify the sentiment of the following text as POSITIVE, NEGATIVE or NEUTRAL. Just return the label, nothing else!"</span></span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> sentences:</span>
+<span id="cb16-27"><a href="#cb16-27" tabindex="-1"></a>    messages <span class="op">=</span> [(<span class="st">"system"</span>, prompt), (<span class="st">"human"</span>, sent)]</span>
+<span id="cb16-28"><a href="#cb16-28" tabindex="-1"></a>    response <span class="op">=</span> sentiment_llm.invoke(messages)</span>
+<span id="cb16-29"><a href="#cb16-29" tabindex="-1"></a>    <span class="bu">print</span>(sent, response.content)</span>
+<span id="cb16-30"><a href="#cb16-30" tabindex="-1"></a>    y_pred.append(response.content.lower())</span>
+<span id="cb16-31"><a href="#cb16-31" tabindex="-1"></a></span>
+<span id="cb16-32"><a href="#cb16-32" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span>
+<span id="cb16-33"><a href="#cb16-33" tabindex="-1"></a></span>
+<span id="cb16-34"><a href="#cb16-34" tabindex="-1"></a>show_confusion_matrix(y_true, y_pred)</span></code></pre>
 </div>
 <p>Report:</p>
 <div class="codewrapper">
