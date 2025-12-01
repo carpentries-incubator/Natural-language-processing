@@ -247,7 +247,6 @@
 <li><a href="#interacting-with-an-llm">Interacting with an LLM</a></li>
 <li><a href="#prompting-to-solve-nlp-tasks">Prompting to Solve NLP Tasks</a></li>
 <li><a href="#drawbacks-and-biases-with-llms">Drawbacks and Biases with LLMs</a></li>
-<li><a href="#advanced-material">Advanced Material</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -312,7 +311,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Using large language models</h1>
-        <p>Last updated on 2025-11-27 |
+        <p>Last updated on 2025-12-01 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/04-LargeLanguageModels.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -328,7 +327,7 @@
 <hr class="half-width"><p>Chat assistants like <a href="https://chatgpt.com/" class="external-link">ChatGPT</a>, <a href="https://gemini.google.com/" class="external-link">Gemini</a> and <a href="http://claude.ai" class="external-link">Claude</a> are products widely used today for
 tasks such as content generation, question answering, research and
 software development among many others. These products, also known as
-Large Language Modesl (LLMs), are based on the Transformer architecture,
+Large Language Models (LLMs), are based on the Transformer architecture,
 with several enhancements. It is undeniable that the rapid rise of such
 models has had quite a disruptive and strong impact. But what are these
 models exactly? How do they work ‘under the hood’? And how can one use
@@ -337,19 +336,19 @@ them programmatically, in a responsible and effective way?</p>
 <p><img src="fig/llm-logos/nvidia.png" alt="Company D" width="80" class="figure"><img src="fig/llm-logos/deepseek.png" alt="Company E" width="80" class="figure"><img src="fig/llm-logos/huggingface.png" alt="Company F" width="80" class="figure"><img src="fig/llm-logos/meta.png" alt="Company C" width="150" class="figure"></p>
 <p>Now that we know that dealing with written language means extracting
 structure from unstructured text (NLP Task), we can understand there is
-a rationale behind the kind of tasks LLMs could tackle. Everytime we
+a rationale behind the kind of tasks LLMs could tackle. Every time we
 prompt a chat model, we are feeding them a very long list of tokens
-containing a task that needs to get solved. The question that interests
-us is not about LLMs being “intelligent” or not (eventhough that could
-be a very interesting topic on its own, is not the goal of this course);
-we will rather focus on using LLMs as yet a new <em>automatic tool</em>,
-and like with any other Machine Learning tool, we are still dealing here
-with a model that takes an input and delivers an output for that input.
-The only thing that changed is the complexity of the input-output pairs;
-and hence, the complexity for validating the outputs increased
-accordingly.</p>
-<p>Our duty as NLP practitioners remains, and we must keep asking the
-same questions:</p>
+containing a task that needs to be solved. The question that interests
+us is not whether LLMs are “intelligent” or not (even though that could
+be a very interesting topic on its own, its not the goal of this
+course); we will rather focus on using LLMs as yet a new <em>automated
+tool</em>. And, like any other Machine Learning tool, we are still
+dealing here with a model that takes an input and delivers an output for
+that input. The only thing that changed is the complexity of the
+input-output pairs; and hence, the complexity of validating the outputs
+increased accordingly.</p>
+<p>Our duty as responsible NLP practitioners remains, and we must keep
+asking the same questions:</p>
 <ul><li>How can I shape the task so I obtain the information I need?</li>
 <li>How do I measure what proportion of the outputs are right?</li>
 <li>How do I know if this will behave as expected with unexpected
@@ -380,7 +379,7 @@ model with 175 billion parameters, and so forth.</p>
 <div class="callout-content">
 <p>Since we already learned about the vanilla transformer architecture,
 in this episode we will focus on the most recent language models, and we
-will keep calling them LLMs, eventhough they are not necessarily that
+will keep calling them LLMs, even though they are not necessarily that
 large anymore. In this episode we will cover mostly models that have
 been fine-tuned to be chat assistants, capable of integrating into the
 text generation a multi-turn interaction.</p>
@@ -434,12 +433,11 @@ enabling conversation in a prompt style of interaction with users, which
 current LLMs are known for. After the pre-training and neural network
 training stages we end up with what is called a <em>base</em> model. The
 base model is a language model which is essentially a token sequence
-generator optimizad for the netx token prediction (Language Modelling)
+generator optimized for the next token prediction (Language Modelling)
 task. This model by itself is not suitable for the interaction style we
 see with current LLMs, which can do things like answer questions,
 interpret instructions from the user, and incorporate feedback to
-improve responses in conversations. Post-training addicitons
-include:</p>
+improve responses in conversations. Post-training additions include:</p>
 <ul><li>Supervised Fine-Tuning (SFT): Training on curated examples of
 desired input-output pairs to teach instruction-following and helpful
 responses.</li>
@@ -472,7 +470,7 @@ are both proprietary and open-source varieties. Real open-source
 varieties should make the whole path of model creation available: inform
 exactly which data was used to train the model, including filters for
 data quality; give a detailed explanation of the architecture and
-hypermarameters, including the code used to train them, and of course
+hyper-parameters, including the code used to train them, and of course
 make them free, open and accessible online. Unfortunately completely ope
 source models are scarce, but the partially open source number models
 keeps growing. Below is a summary of some relevant LLMs together with
@@ -510,7 +508,7 @@ reproducibility - Long-term availability guarantees</p>
 <span class="callout-header">Callout</span>
 <div class="callout-inner">
 <div class="callout-content">
-<p>Besides considering the openess of the models, there are several
+<p>Besides considering the openness of the models, there are several
 <em>families</em> of LLM to consider, which differ not only in training
 data and scale of parameters but also in training and post-training
 techniques. Here we show a (non-exhaustive) general list of categories
@@ -533,7 +531,7 @@ but you will most likely encounter the concepts everywhere in the
 Web:</p>
 <ul><li><p><strong>Domain-specific LLM:</strong> a base model fine-tuned
 with specialized data like medical papers or legal cases and with RLHF.
-Couls also be specialized on Question-Answering datasets, etc…</p></li>
+Could also be specialized on Question-Answering datasets, etc…</p></li>
 <li><p><strong>LLM-Instruct</strong> (Claude, Llama-Instruct): these are
 the LLMs that have been fine-tuned with step-by-step human instructions
 to follow user instructions</p></li>
@@ -569,7 +567,7 @@ examples.</p>
 <h3 id="load-and-setup-the-model-llm">Load and setup the model (LLM)<a class="anchor" aria-label="anchor" href="#load-and-setup-the-model-llm"></a></h3>
 <p>Let’s load a open source lightweight
 <code>SmolLM2-135M-Instruct</code>, as you might have guessed it is a
-model with 135M parameters which has been finetuned for following
+model with 135M parameters which has been fine-tuned for following
 instructions, therefore you can use it as a chat assistant:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -591,18 +589,13 @@ instructions, therefore you can use it as a chat assistant:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Set pad_token_id to eos_token_id to avoid warnings</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># if tokenizer.pad_token_id is None:</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#     tokenizer.pad_token = tokenizer.eos_token</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#     model.config.pad_token_id = tokenizer.eos_token_id</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    </span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># We Build pipeline as usual, this time the task is `text_generation` (a decoder model)</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>llm <span class="op">=</span> pipeline(<span class="st">"text-generation"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer)</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Where is Groningen located?"</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># We can first look at how the text is also being converted into a sequence of tokens before generating</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="bu">print</span>(tokenizer(prompt))</span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="bu">print</span>(tokenizer.convert_ids_to_tokens(tokenizer(prompt)[<span class="st">"input_ids"</span>]))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># We Build pipeline as usual, this time the task is `text_generation` (a decoder model)</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>llm <span class="op">=</span> pipeline(<span class="st">"text-generation"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Where is Groningen located?"</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co"># We can first look at how the text is also being converted into a sequence of tokens before generating</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="bu">print</span>(tokenizer(prompt))</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="bu">print</span>(tokenizer.convert_ids_to_tokens(tokenizer(prompt)[<span class="st">"input_ids"</span>]))</span></code></pre>
 </div>
 <p>This gives the following output:</p>
 <pre><code>{'input_ids': [9576, 314, 452, 992, 45670, 3807, 47], 'attention_mask': [1, 1, 1, 1, 1, 1, 1]}
@@ -617,12 +610,12 @@ field:</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>response <span class="op">=</span> llm(prompt)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="bu">print</span>(response)</span></code></pre>
 </div>
-<p>This is not a fully deterministic ouput, so the content of the
+<p>This is not a fully deterministic output, so the content of the
 response will vary, but the structure is always the same: a python list,
 containing as first element a dictionary. The keys of the dictionary can
 vary depending on the parameters given to the pipeline, but it will
 always have at least the key <code>generated_text</code> which gives you
-the models ouptut in the form of a python string:</p>
+the models output in the form of a python string:</p>
 <pre><code>[{'generated_text': 'Where is Groningen located?\nGroningen is a municipality in the province of Drenthe in the North Holland region of the Netherlands. As of the 2011 census, the municipality had a population of 122,683.\nWhat is the name of the river that connects Groningen to Utrecht?'}]</code></pre>
 <p>We can obtain only the text if we extract it directly:</p>
 <div class="codewrapper sourceCode" id="cb7">
@@ -658,10 +651,10 @@ context provided:</p>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>response <span class="op">=</span> llm(messages, return_full_text<span class="op">=</span><span class="va">False</span>)[<span class="dv">0</span>][<span class="st">"generated_text"</span>]</span>
 <span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="bu">print</span>(response)</span></code></pre>
 </div>
-<p>This method makes it more likely to get an answer everytime the model
-is executed. Remember this is not completely deterministic, so you can
-run it several times. (Spoiler: Expect several falsehoods to be stated
-in the generations). You should get something like:</p>
+<p>This method makes it more likely to get an answer every time the
+model is executed. Remember this is not completely deterministic, so you
+can run it several times. (Spoiler: Expect several falsehoods to be
+stated in the generations). You should get something like:</p>
 <pre><code>Groningen is located in the northwest corner of the Netherlands.</code></pre>
 <p>We set the <code>return_full_text=False</code> flag to False to get
 the response as a string. This parameter is by default set to True and
@@ -716,7 +709,7 @@ engineering</em> happens.</li>
 <strong>Human</strong>, includes all messages <em>human generated</em>
 in the dialogue are given the user role. In a multi-turn dialogue, each
 utterance you submit will be given the user role, to distinguish them
-from the automatically generated sequences. These are quesitons
+from the automatically generated sequences. These are questions
 submitted ot the model, or <em>input instances</em> for which you expect
 an output.</li>
 <li>
@@ -726,7 +719,7 @@ are the <em>model outputs</em>.</li>
 </ul><p>Different models might recognize also other roles, but these are the
 core ones. You can always pass directly a text prompt, even if you do
 only one-turn interactions with the LLMs (which many times is the
-recommended option to avoid biasing model repsonses based on previous
+recommended option to avoid biasing model responses based on previous
 ones), but it a good practice to follow these roles since the start, to
 make your code more scalable. These roles are internally translated into
 special tokens and processed together as a single sequence. See a <a href="https://tiktokenizer.vercel.app/?model=gpt-4o" class="external-link">tiktokenizer
@@ -738,7 +731,7 @@ example for GPT-4o</a></p>
 <div class="section level3">
 <h3 id="hyperparameters-for-text-generation">Hyperparameters for Text Generation<a class="anchor" aria-label="anchor" href="#hyperparameters-for-text-generation"></a></h3>
 <p>Besides the existence of roles, the <code>pipeline()</code> method
-has several hyperparameters (function arguments) for that help us
+has several hyper-parameters (function arguments) for that help us
 control better how the <code>text-generation</code> task will be done.
 These are some of the most common:</p>
 <p><strong><em>max_new_tokens</em>:</strong> sets maximum number of
@@ -774,10 +767,10 @@ most probable words at each step.</p>
 <div class="callout-inner">
 <h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
-<p>Take 10 minutes to play with the hyperparamenters and observe how
-they affect outputs, eventhough you are using exactly the same model
+<p>Take 10 minutes to play with the hyper-parameters and observe how
+they affect outputs, even though you are using exactly the same model
 every time. Try different prompts, messages and values and see if the
-ouptuts match your intuitions. You can manipulate the values explicitly
+outputs match your intuitions. You can manipulate the values explicitly
 in the pipeline such as:</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -813,8 +806,8 @@ max_length parameter?</li>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="prompting-to-solve-nlp-tasks">Prompting to Solve NLP Tasks<a class="anchor" aria-label="anchor" href="#prompting-to-solve-nlp-tasks"></a></h2>
-<hr class="half-width"><p>Now we will link some of the funamentals we learned earlier with the
-usage of LLMs. As mentioned before, we can consither the LLM as a
+<hr class="half-width"><p>Now we will link some of the fundamentals we learned earlier with the
+usage of LLMs. As mentioned before, we can consider the LLM as a
 component that given an input provides an output, thus we can evaluate
 it as any other Machine Learning classifier. We will re-visit the task
 of Sentiment Analysis to see how we can shape the task to make the
@@ -826,16 +819,16 @@ you download and execute some of the most popular (semi-)open source
 models, including embedding models (Encoder-based) and generative models
 (Chat-Assistants), “thinking” models, etc… Take a look at the <a href="https://ollama.com/search" class="external-link">whole list</a>. Consider that the size
 of the models you can download and effectively use will depend on how
-powerful your laptop is. You can use Ollama as a standalone applicaiton
+powerful your laptop is. You can use Ollama as a standalone application
 in Windows/Mac/Linux, but you can also call its local API using python
 so you can integrate the LLMs into your scripts.</p>
-<p>We will use Ollama thorugh the <a href="https://docs.langchain.com/" class="external-link">langchain</a> interface to give you
+<p>We will use Ollama through the <a href="https://docs.langchain.com/" class="external-link">langchain</a> interface to give you
 the opportunity to also get to know this popular python library. Using
 Langchain allows you to write a single piece of code and be flexible to
 use many closed and open source models and even get production-level
 code with minimal modifications, so it is nice to try it. This is a very
-complex library and we will only cover the basics to give you a
-headstart. We are going to test the <a href="https://ollama.com/library/llama3.2:1b" class="external-link">llama3.2:1b</a> model
+complex library and we will only cover the basics to give you a head
+start. We are going to test the <a href="https://ollama.com/library/llama3.2:1b" class="external-link">llama3.2:1b</a> model
 which you can download in the Ollama interface, or also from your
 terminal by running:</p>
 <div class="codewrapper sourceCode" id="cb13">
@@ -946,7 +939,7 @@ improve the results?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Here the code to do the same excercise as lesson 3 but with the
 generative approach:</p>
@@ -1008,7 +1001,7 @@ most likely tokens</li>
 <strong>Prompts matter</strong> - the way you ask affects what you
 get</li>
 <li>
-<strong>Hyperparameters control behavior</strong> - temperature,
+<strong>Hyper-parameters control behavior</strong> - temperature,
 max_length, etc. tune the output</li>
 <li>
 <strong>Models have limitations</strong> - they can be wrong,
@@ -1028,7 +1021,7 @@ was preferred over quality, they have inherited a lot of undesired
 information including misinformation, hate-speech, pornography,
 artificially generated (noisy) data etc…</li>
 <li>The post-training step, which was meant to impose guardrails and
-avoid undesired behaviour, also imposes intentional or indirect bias in
+avoid undesired behavior, also imposes intentional or indirect bias in
 the manner in which data was labeled, pushing cultural pre-conceptions
 and human biases and labeling errors to be the “preferred answers”.</li>
 </ul><p>It is also important to keep in mind that behavior can vary across
@@ -1037,7 +1030,7 @@ improved, some of the limitations may be addressed and some of the
 behaviors may be replaced or modified in the near future. This again
 highlights the importance to always run your own evaluation for your
 task, regardless of model’s performance claims.</p>
-<p>Let’s take a look at some unexpected behaviors. We load the ollama
+<p>Let’s take a look at some unexpected behaviors. We load the Ollama
 model to run the experiments:</p>
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1104,7 +1097,7 @@ stereotype of nurses usually being female.</p>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="bu">print</span>(response.content)</span></code></pre>
 </div>
 <p>If this example works, a short story should be generated by the LLM
-about a nurse and most likely it will be a female nuerse, either marked
+about a nurse and most likely it will be a female nurse, either marked
 by usage of words such as “she” and “her” to reveal gender or even
 giving her a name. We never gave any gender explicitly to the model. In
 our example we got the following story:</p>
@@ -1122,7 +1115,7 @@ with different degrees of accuracy. For example:</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># Hint: John Adams (1797 - 1801)</span></span>
 <span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>biased_prompt <span class="op">=</span> <span class="st">"Who was the second president of the United States?"</span></span>
 <span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>response <span class="op">=</span> chatbot.invoke(outdated_prompt)</span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>response <span class="op">=</span> chatbot.invoke(biased_prompt)</span>
 <span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="bu">print</span>(response.content)</span></code></pre>
 </div>
 <div class="codewrapper">
@@ -1138,7 +1131,7 @@ the same question for a different country:</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># Hint: Vicente Guerrero (April 1829 - December 1829)</span></span>
 <span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>biased_prompt <span class="op">=</span> <span class="st">"Who was the second president of Mexico?"</span></span>
 <span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>response <span class="op">=</span> chatbot.invoke(outdated_prompt)</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>response <span class="op">=</span> chatbot.invoke(biased_prompt)</span>
 <span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="bu">print</span>(response.content)</span></code></pre>
 </div>
 <p>we got his answer:</p>
@@ -1150,10 +1143,12 @@ the same question for a different country:</p>
 <p>Initially we see the same confident syntax to answer the question,
 but it is factually incorrect. The results of course will vary per model
 and configuration of prompts. But beware that prompts that involve the
-anglosphere in particular will be more accurately responded, whereas the
-more you deviate from the “western standards” the less accuracy you will
-get. In the case of Mexico it is particularly dissapointing as even the
-English Wikipedia page has that information in a prominent place.</p>
+<a href="https://en.wikipedia.org/wiki/Anglosphere" class="external-link">anglosphere</a>
+(Anglo American World) in particular will be more accurately responded,
+whereas the more you deviate from the “western standards” the less
+accuracy you will get. In the case of Mexico it is particularly
+disappointing as even the English Wikipedia page has that information in
+a prominent place.</p>
 </div>
 <div class="section level3">
 <h3 id="outdated-knowledge">Outdated Knowledge<a class="anchor" aria-label="anchor" href="#outdated-knowledge"></a></h3>
@@ -1216,303 +1211,6 @@ aware of those before we draw conclusions from the outputs.</li>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="advanced-material">Advanced Material<a class="anchor" aria-label="anchor" href="#advanced-material"></a></h2>
-<hr class="half-width"><div class="section level3">
-<h3 id="llm-selection-criteria">1. LLM selection criteria<a class="anchor" aria-label="anchor" href="#llm-selection-criteria"></a></h3>
-<p>Choosing the right LLM for your specific use case requires
-consideration of multiple factors. This section will guide you through
-some decision points that will help you select an appropriate model for
-your needs.</p>
-<div class="section level4">
-<h4 id="openness-and-licensing-considerations-1">1.1 Openness and Licensing Considerations<a class="anchor" aria-label="anchor" href="#openness-and-licensing-considerations-1"></a></h4>
-<p>The spectrum of model availability ranges from fully open to
-completely proprietary:</p>
-<p><strong>Open-weights</strong> release the trained model parameters
-while keeping training code or data proprietary. This allows you to run
-and fine-tune the model locally but if you don’t have the code used to
-train the model or information about the architecture used, it limits
-your ability to fully understand or replicate the training process.</p>
-<p><strong>Open training data</strong> they release the text data used
-for pretraining.</p>
-<p><strong>Open architecture</strong> they publish a paper about the
-neural network architecture and specific configuration they used for
-training. Or they release the actual source code they used for
-pretraining.</p>
-<p>Ideally, if you want to use a model for empirical academic research
-you might decide for models that are completely open in all three of the
-above facets. Although, open training data is quite rare for available
-state-of-the-art models.</p>
-<p><strong>Commercial/proprietary models</strong> like GPT-4, Claude, or
-Gemini are accessed only through APIs. While often offering superior
-performance, they provide no access to internal architecture and may
-have usage restrictions or costs that scale with volume.</p>
-<p>Consider your requirements for: - Code modification and customization
-- Data privacy and control - Commercial usage rights - Research
-reproducibility - Long-term availability guarantees</p>
-</div>
-<div class="section level4">
-<h4 id="hardware-and-compute-requirements">1.2 Hardware and Compute Requirements<a class="anchor" aria-label="anchor" href="#hardware-and-compute-requirements"></a></h4>
-<p>Your available computational resources significantly constrain your
-model options:</p>
-<p><strong>Modern GPU access</strong> (RTX 4090, A100, H100, etc.)
-enables you to run larger models locally. Consider: - VRAM requirements:
-7B parameter models typically need 14+ GB, 13B models need 26+ GB, 70B
-models require 140+ GB or multi-GPU setups - Inference speed
-requirements for your application - Whether you need real-time responses
-or can accept slower processing</p>
-<p><strong>CPU-only environments</strong> limit you to smaller models
-(such as SmolLM2 and SmolLM3) or <a href="https://ojs.aaai.org/index.php/AAAI/article/view/29908" class="external-link">quantized</a>
-versions.</p>
-<p><strong>Cloud/API access</strong> removes hardware constraints but
-introduces ongoing costs and potential latency issues.</p>
-</div>
-<div class="section level4">
-<h4 id="performance-evaluation">1.3 Performance Evaluation<a class="anchor" aria-label="anchor" href="#performance-evaluation"></a></h4>
-<p>Different models excel at different tasks. Some evaluation criteria
-include:</p>
-<p><strong>General capability benchmarks</strong> like those found on
-the <a href="https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard" class="external-link">Open
-LLM Leaderboard</a> provide standardized comparisons across models for
-reasoning, knowledge, and language understanding tasks.</p>
-<p><strong>Multilingual performance</strong> varies significantly
-between models. The <a href="https://mmluprox.github.io/" class="external-link">MMLU-Pro
-benchmark</a> offers insights into cross-lingual capabilities if you
-need support for non-English languages.</p>
-<p><strong>Task-specific performance</strong> should be evaluated based
-on your particular needs: - Code generation - Mathematical reasoning -
-Reading comprehension and summarization - Creative writing and dialogue
-quality - Scientific and technical domain knowledge</p>
-<p>Always validate benchmark performance with your own test cases, as
-real-world performance may differ from standardized evaluations.</p>
-</div>
-<div class="section level4">
-<h4 id="purpose-or-use-case">1.4 Purpose or Use Case<a class="anchor" aria-label="anchor" href="#purpose-or-use-case"></a></h4>
-<p><strong>Scientific and research applications</strong> often
-prioritize reproducibility, transparency, and the ability to modify
-model behavior. Open-source models with detailed documentation are
-typically preferred (e.g. SmolLM, LLama, Olmo)</p>
-<p><strong>Applications (mobile or web apps)</strong> may require: -
-Reliable API uptime and support - Clear licensing for commercial use -
-Scalability to handle many concurrent users - Content filtering and
-safety features</p>
-<p><strong>Personal or educational use</strong> might emphasize: -
-Cost-effectiveness - Ease of setup and use</p>
-</div>
-<div class="section level4">
-<h4 id="integration-and-deployment-considerations">1.5 Integration and Deployment Considerations<a class="anchor" aria-label="anchor" href="#integration-and-deployment-considerations"></a></h4>
-<p><strong>Software integration</strong> requirements affect model
-choice: - API-based models offer simpler integration but require
-internet connectivity - Local models provide more control but require
-more complex deployment - Consider latency requirements, offline
-capabilities, and data privacy needs</p>
-<p><strong>Hosting and serving capabilities</strong> determine whether
-you can run models locally: - Do you have the infrastructure to serve
-models at scale? - Are you self-hosting the model?</p>
-</div>
-<div class="section level4">
-<h4 id="domain-specific-models">1.6 Domain-Specific Models<a class="anchor" aria-label="anchor" href="#domain-specific-models"></a></h4>
-<p>Many models have been fine-tuned for specific domains or tasks. For
-example:</p>
-<ul><li>Medical and healthcare applications (e.g., <a href="https://huggingface.co/microsoft/biogpt" class="external-link">BioGPT</a>)</li>
-<li>Legal document processing (e.g., <a href="https://huggingface.co/Equall/Saul-7B-Instruct-v1" class="external-link">SaulLM</a>)</li>
-</ul><p>Remember that the LLM landscape evolves rapidly. New models are
-released frequently, and performance benchmarks should be regularly
-reassessed. Consider building your system with model-agnostic interfaces
-to facilitate future transitions between different LLMs as your needs
-evolve or better options become available.</p>
-<hr></div>
-</div>
-<div class="section level3">
-<h3 id="how-are-llms-trained">2. How are LLMs trained?<a class="anchor" aria-label="anchor" href="#how-are-llms-trained"></a></h3>
-<p>Training LLMs involves a series of steps. There are two main phases:
-pretraining and post training. Pretraining generally involves the
-following substeps:</p>
-<div class="section level4">
-<h4 id="obtaining-and-pre-processing-textual-data-for-training">2.1 Obtaining and pre-processing textual data for training<a class="anchor" aria-label="anchor" href="#obtaining-and-pre-processing-textual-data-for-training"></a></h4>
-<ul><li>
-<em>Downloading and pre-processing text:</em> State-of-the-art LLMs
-include entire snapshots of the internet as the core textual data for
-training. This data can be sourced from efforts such as <a href="https://commoncrawl.org/" class="external-link">CommonCrawl</a>. Proprietary LLMs may
-augment or supplement this training data with additional licensed or
-proprietary textual data (e.g., books) from other sources or companies.
-The raw web pages are not usable by themselves, we need to extract the
-raw text from those HTML pages. This requires a preprocessing or data
-cleaning step.</li>
-</ul><figure><img src="fig/html_to_text.png" alt="html to text processing" width="800" class="figure mx-auto d-block"></figure><ul><li>
-<em>Tokenization:</em> As we saw in Lesson 01, the raw text itself
-cannot be used in the training step, we need a way to tokenize and
-encode the text for processing by the neural network. As an example of
-what these encodings look like for OpenAI models like GPT, you can visit
-<a href="https://tiktokenizer.f2api.com/" class="external-link">TikTokenizer</a>.</li>
-</ul><figure><img src="fig/text_to_tokenids.png" alt="tokenization" width="800" class="figure mx-auto d-block"></figure></div>
-<div class="section level4">
-<h4 id="neural-network-training">2.2 Neural network training<a class="anchor" aria-label="anchor" href="#neural-network-training"></a></h4>
-<p>With LLMs the training goal is to predict the next token in a
-one-dimensional sequence of tokens. This is different from BERT where
-the goal is to predict masked tokens in the input sequence. BERT is
-therefore not natively developed for generating text, whereas LLMs are.
-In the internals of the transformer architecture, this is illustrated by
-the fact that BERT only makes use of the Encoder component to create its
-contextualised word embeddings. It does not use the Decoder component to
-generate new tokens for the input sequence.</p>
-<figure><img src="fig/llm_training_goal.png" alt="training goal llms" width="800" class="figure mx-auto d-block"></figure><p>After training we obtain a <em>base</em> LLM which is predicts or
-generates token sequences that resemble its training data. However, a
-post training step is required in order to fine-tune the model to accept
-instructions, answer questions in a conversational style and to have
-behavior that is more suitable for interaction with humans.</p>
-</div>
-<div class="section level4">
-<h4 id="post-training">2.3 Post training<a class="anchor" aria-label="anchor" href="#post-training"></a></h4>
-<p>What does post training for LLMs look like? Why is this step
-necessary? What would happen if you skip this step and just use the base
-model trained in Step 2.2 for inference? The answer is that the base
-model is just a token sequence predictor. It just predicts the most
-likely next token for an input sequence of tokens. It does not
-understand how to deal with conversations or to interpret instructions
-(the intentions and tone behind written communication).</p>
-<p>Therefore, you may encounter unexpected conversations like this if
-interacting with a base LLM:</p>
-<p><strong>Not Following Instructions</strong></p>
-<pre><code>Human: Summarize this paragraph in one sentence: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.
-Raw LLM: The Nile is the longest river in Africa and flows through 11 countries before emptying into the Mediterranean Sea.</code></pre>
-<p>In this example interaction, the model was trained to predict text,
-not to follow instructions. So it might not give expected or correct
-responses although, statistically, these response tokens are indeed the
-next most likely tokens.</p>
-<p><strong>Regurgitation</strong></p>
-<pre><code>Human: Donald John Trump (born June 14, 1946) is an American politician,
-Raw LLM: media personality, and businessman who is the 47th president of the United States. A member of the Republican Party, he served as the 45th president from 2017 to 2021...</code></pre>
-<figure><img src="fig/trump.png" alt="tokenization" width="800" class="figure mx-auto d-block"></figure><p>In this interaction, the model just “regurgitates” verbatim a
-response from Wikipedia (part of it’s training data), instead of
-creatively formulating a response in its own words. These are just a few
-examples of the kind of undesirable behavior one might encounter when
-doing inference with the base model without post training.</p>
-<p>Therefore, to avoid issues like this, and to be useful as
-conversational assistants, LLMs generally have to be fine-tuned on
-additional unseen conversation datasets (containing on the order of
-hundreds of thousands of conversations). These datasets are manually
-created and validated by humans. For proprietary models, these humans
-are hired professionally to contribute to this dataset from platforms
-such as Upwork and ScaleAI. There are also open-source efforts to create
-such datasets such as <a href="https://huggingface.co/datasets/OpenAssistant/oasst2" class="external-link">OpenAssistant</a>.</p>
-<p>Once such a dataset is obtained, the conversations need to be
-represented as a one-dimensional token sequence. Conversations therefore
-have to be encoded into such representations before being used as input
-for training. The encoding method for conversations currently differ
-among LLMs. The figure below shows how GPT-4 tokenizes and encodes input
-conversations as one dimensional token sequences (<a href="https://tiktokenizer.f2api.com/" class="external-link">TikTokenizer</a> is a page for
-visualizing and experimenting with tokenization approaches used by
-OpenAI LLMs).</p>
-<figure><img src="fig/tokenize_conversations.png" alt="tokenization for conversation data" width="800" class="figure mx-auto d-block"></figure><p>After encoding or tokenization, the conversational data is supplied
-as input for fine-tuning the base model (replacing the original training
-data). I.e., the base model’s weights or parameters are updated through
-this process.</p>
-<p>Below are some examples of conversational data that one might use to
-fine-tune an LLM. In general, you want multi-turn conversations where
-each participant in the conversation gets the opportunity to respond
-multiple times. Because this is the likely mode of interaction that will
-take place between humans and LLM-based chat assistants:</p>
-<pre><code>**Conversation 1 (Travel Planning):**
-Human: Can you suggest a weekend getaway near Amsterdam?
-LLM: Sure! Giethoorn – Known as the “Venice of the North,” this village has canals, thatched-roof houses, and a peaceful atmosphere. Utrecht, a charming city with medieval streets, beautiful canals, and cozy cafés.
-Human: Which one would be better for a quiet, relaxing trip?
-LLM: Giethoorn would be the quieter option. Unlike Utrecht, which is a bustling city, Giethoorn is a small village with a calm, serene atmosphere, ideal for a peaceful getaway.
-
-**Conversation 2 (Math Help):**
-Human: What's the derivative of 3𝑥^2 + 5𝑥 − 7?
-LLM: The derivative is 6𝑥 + 5.
-Human: Great, and what about the second derivative?
-LLM: The second derivative is 6.
-
-**Conversation 3 (Creative Writing):**
-Human: Give me a one-line horror story.
-LLM: The reflection in the mirror smiled back before I did.
-Human: Can you make it even creepier?
-LLM: The reflection winked, though I was alone in the room.</code></pre>
-<hr></div>
-</div>
-<div class="section level3">
-<h3 id="llm-prompting-strategies">3. LLM Prompting strategies<a class="anchor" aria-label="anchor" href="#llm-prompting-strategies"></a></h3>
-<p>See <a href="">notebooks/prompting.ipynb</a>…</p>
-<hr></div>
-<div class="section level3">
-<h3 id="solving-nlp-tasks-with-llms">4. Solving NLP tasks with LLMs<a class="anchor" aria-label="anchor" href="#solving-nlp-tasks-with-llms"></a></h3>
-<p>Write and execute the following prompts in Python code within Jupyter
-notebook.</p>
-<ol style="list-style-type: decimal"><li>
-<p><strong>Question answering:</strong></p>
-<ul><li>answering general knowledge questions <br></li>
-</ul><pre><code>Human: What is the longest river in the world?
-LLM: The Nile River in Africa is traditionally considered the longest river in the world, stretching about 6,650 km (4,130 miles) through 11 countries before emptying into the Mediterranean Sea.</code></pre>
-<p><br></p>
-<ul><li>expert advice in a particular domain or scientific field <br></li>
-</ul><pre><code>Human: What are good strategies for film-making on a budget in Night conditions?
-LLM: Night filmmaking can be both creatively rewarding and technically challenging, especially on a budget. Here are some strategies that indie filmmakers often use to maximize image quality and mood without expensive gear:...</code></pre>
-<p><br></p>
-</li>
-<li>
-<p><strong>Text generation:</strong></p>
-<ul><li>Writing essays, business plans and other documents <br></li>
-</ul><pre><code>Human: Write a template cover letter for a mid-level software engineering position at a large AI startup.
-LLM: Dear [Hiring Manager’s Name], I am excited to apply for the Software Engineer position at [Company Name]...</code></pre>
-<p><br></p>
-<ul><li>Creative writing (slogans, poems, fiction, jokes) <br></li>
-</ul><pre><code>Human: Write a two sentence comedy sketch.
-LLM: [Scene: A man sits in a job interview.] Interviewer: "Your resume says you’re fluent in Python?" Candidate: pulls out a snake from his briefcase "She does most of the talking."</code></pre>
-<p><br></p>
-</li>
-<li>
-<p><strong>Text summarisation</strong> <br></p>
-<pre><code>Human: Shorten: "Amsterdam, the capital of the Netherlands, is a city celebrated for its rich history, cultural diversity, and iconic canals. Known as the “Venice of the North,” it is home to a vast network of waterways lined with elegant 17th-century houses, giving the city its distinct charm. Amsterdam seamlessly blends old-world character with modern vibrancy, attracting millions of visitors each year."
-LLM: Amsterdam, the capital of the Netherlands, is known for its history, canals, and 17th-century houses, combining old charm with modern vibrancy that attracts millions each year.</code></pre>
-<p><br></p>
-</li>
-<li>
-<p><strong>Sentiment or text classification</strong> <br></p>
-<pre><code>Sentiment analysis
-Human: Is this a positive, neutral or negative statement about the movie: "Incredible and not in a good way."
-LLM: That’s a negative statement about the movie. The phrase “Incredible” usually suggests something impressive, but the qualifier “not in a good way” makes it clear the speaker means the film was bad or shockingly poor.</code></pre>
-<p><br></p>
-<pre><code>Text classification
-Human: Categorise this statement into either sports, business, or science: "Lionel Messi scored twice to lead Argentina to victory in the World Cup qualifier."
-LLM: This statement falls under Sports. It talks about a soccer player and a match result, which clearly relates to athletic competition.</code></pre>
-<p><br></p>
-</li>
-<li><p><strong>Language translation</strong> <br><code>Human: Translate "I have recently naturalised as a Dutch citizen" into Dutch.     LLM: Ik ben onlangs genaturaliseerd als Nederlands staatsburger.</code>
-<br></p></li>
-<li>
-<p><strong>Generating software code</strong> <br></p>
-<pre><code>Human: Write a short Python function to demonstrate bubble sort
-LLM: ...</code></pre>
-<div class="codewrapper sourceCode" id="cb41">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="kw">def</span> bubble_sort(arr):</span>
-<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(arr)</span>
-<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>        <span class="co"># Last i elements are already in place</span></span>
-<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n <span class="op">-</span> i <span class="op">-</span> <span class="dv">1</span>):</span>
-<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a>            <span class="cf">if</span> arr[j] <span class="op">&gt;</span> arr[j <span class="op">+</span> <span class="dv">1</span>]:</span>
-<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a>                <span class="co"># Swap if the element is greater than the next</span></span>
-<span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a>                arr[j], arr[j <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> arr[j <span class="op">+</span> <span class="dv">1</span>], arr[j]</span>
-<span id="cb41-9"><a href="#cb41-9" tabindex="-1"></a>    <span class="cf">return</span> arr</span>
-<span id="cb41-10"><a href="#cb41-10" tabindex="-1"></a></span>
-<span id="cb41-11"><a href="#cb41-11" tabindex="-1"></a><span class="co"># Example usage</span></span>
-<span id="cb41-12"><a href="#cb41-12" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">64</span>, <span class="dv">34</span>, <span class="dv">25</span>, <span class="dv">12</span>, <span class="dv">22</span>, <span class="dv">11</span>, <span class="dv">90</span>]</span>
-<span id="cb41-13"><a href="#cb41-13" tabindex="-1"></a>sorted_numbers <span class="op">=</span> bubble_sort(numbers)</span>
-<span id="cb41-14"><a href="#cb41-14" tabindex="-1"></a><span class="bu">print</span>(sorted_numbers)</span></code></pre>
-</div>
-</li>
-</ol><p>See <a href="">notebooks/classifandeval.ipynb</a>…</p>
-<hr></div>
-<div class="section level3">
-<h3 id="creating-your-own-chat-assistant">5. Creating your own chat assistant<a class="anchor" aria-label="anchor" href="#creating-your-own-chat-assistant"></a></h3>
-<p>See <a href="">notebooks/chatbot.ipynb</a>…</p>
-</div>
-<div class="section level3">
-<h3 id="biases-with-llms">6. Biases with LLMs<a class="anchor" aria-label="anchor" href="#biases-with-llms"></a></h3>
-<p>See <a href="">notebooks/responsible.ipynb</a>…</p>
-<hr></div>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="03-transformers.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
@@ -1571,7 +1269,7 @@ LLM: ...</code></pre>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/04-LargeLanguageModels.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/04-LargeLanguageModels.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-11-27",
+  "dateModified": "2025-12-01",
   "datePublished": "2025-12-01"
 }
 
