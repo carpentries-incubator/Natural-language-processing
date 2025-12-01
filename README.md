@@ -20,9 +20,9 @@ Do you have an idea on how to contribute to this lesson? Check out the current [
 Check our [Contribution Guide](https://github.com/esciencecenter-digital-skills/Natural-language-processing/blob/main/CONTRIBUTING.md) and the [Carpentries Guidelines](https://carpentries.github.io/lesson-example/) for tips on rendering pages, formatting and understanding the Carpentries template. You can also learn more about [developing curriculum content](https://carpentries.github.io/curriculum-development/).
 
 ## Authors and Maintainers
+- [Angel Daza][angel_escience]
 - [Laura Ootes][laura_escience]
 - [Eva Viviani][eva_escience]
-- [Angel Daza][angel_escience]
 - [Kody Moodley][kody_escience]
 - [Thijs Vroegh][thijs_escience]
 

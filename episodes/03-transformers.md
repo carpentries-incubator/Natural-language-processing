@@ -107,7 +107,9 @@ Next, we will see how BERT exploits the idea of a **Transformer Encoder** to per
 ::: callout
 ### Pretraining BERT
 To obtain the BERT vector representations the Encoder is pre-trained with two different tasks:
+
 - **Masked Language Model:** for each sentence, mask one token at a time and predict which token is missing based on the context from both sides. A training input example would be "Maria [MASK] Groningen" and the model should predict the word "loves".
+
 - **Next Sentence Prediction:** the Encoder gets a linear binary classifier on top, which is trained to decide for each pair of sequences A and B, if sequence A precedes sequence B in a text. For the sentence pair: "Maria loves Groningen." and "This is a city in the Netherlands." the output of the classifier is "True" and for the pair "Maria loves Groningen." and "It was a tasty cake." the output should be "false" as there is no obvious continuation between the two sentences.
 
 Already the second pre-training task gives us an idea of the power of BERT: after it has been pretrained on hundreds of thousands of texts, one can plug-in a classifier on top and re-use the *linguistic* knowledge previously acquired to fine-tune it for a specific task, without needing to learn the weights of the whole network from scratch all over again. In the next sections we will describe the components of BERT and show how to use it. This model and hundreds of related transformer-based pre-trained encoders can also be found on [Hugging Face](https://huggingface.co/google-bert/bert-base-cased).
@@ -255,6 +257,7 @@ print(string_tokens[note_index_1], string_tokens[note_index_2])
 We now pass the sentence through the BERT encoder and extract the encoded vectors belonging to each `note` token:
 
 ```python
+import torch
 # Encode the sentence and extract the vector belonging to each 'note' token
 with torch.no_grad():
     bert_output = model(**tokenized_text)
