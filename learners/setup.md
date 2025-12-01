@@ -24,7 +24,7 @@ If you encounter problems with the installation procedure, ask your workshop org
 
 Follow these steps to download all the workshop materials:
 
-1. Navigate to [https://github.com/carpentries-incubator/Natural-language-processing](https://github.com/carpentries-incubator/Natural-language-processing){:target="_blank"} in your browser.
+1. Navigate to [https://github.com/carpentries-incubator/Natural-language-processing](https://github.com/carpentries-incubator/Natural-language-processing) in your browser.
 
 2. Click on the large green button at the top right of the page called "Code". Make sure you are on the "Local" tab and click on the "Download ZIP" link at the bottom of the tab. This will download all the workshop materials in a ZIP archive.
 

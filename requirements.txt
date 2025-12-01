@@ -9,4 +9,5 @@ torch
 transformers
 langchain
 langchain-ollama
+pandas
 invoke
