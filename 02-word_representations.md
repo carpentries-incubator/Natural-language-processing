@@ -198,12 +198,25 @@ lower_text[:10] # Beware that this is a list of strings now!
 In other tasks, such as Named Entity Recognition (NER), lowercasing before training can actually lower the performance of your model. This is because words that start with an uppercase (not preceded by a period) can represent proper nouns that map into Entities, for example:
 
 ```python
+import spacy
 # Preserving uppercase characters increases the likelihood that an NER model
 # will correctly identify Apple and Will as a company (ORG) and a person (PER)
 # respectively.
 str1 = "My next laptop will be from Apple, Will said." 
 # Lowercasing can reduce the likelihood of accurate labeling
 str2 = "my next laptop will be from apple, will said."
+
+nlp = spacy.load("en_core_web_sm")
+ents1 = [ent.text for ent in nlp(str1).ents]
+ents2 = [ent.text for ent in nlp(str2).ents]
+
+print(ents1)
+print(ents2)
+```
+
+```output
+['Apple', 'Will']
+[]
 ```
 
 ### Lemmatization 
@@ -213,7 +226,7 @@ Lemmatization is not only a possible preprocessing step in NLP but also an NLP t
 
 ```python
 lemmas = [token.lemma_ for token in doc]
-print(lemmas)
+print(lemmas[:50])
 ```
 
 Note that the list of lemmas is now a list of strings.
@@ -247,7 +260,7 @@ tokens_nostop = [token for token in tokens if not token.is_stop]
 print(tokens[:15])
 ```
 
-There is no canonical definition of stop words because what you consider to be a stop word is directly linked to the objective of your task at hand. For example, pronouns are usually considered stopwords, but if you want to do gender bias analysis then pronouns are actually a key element of your text processing pipeline. Similarly, removing articles such as prepositions from text is obviously not advised if you are doing _dependency parsing_ (the task of identifying the parts of speech in a given text).
+There is no canonical definition of stop words because what you consider to be a stop word is directly linked to the objective of your task at hand. For example, pronouns are usually considered stopwords, but if you want to do gender bias analysis then pronouns are actually a key element of your text processing pipeline. Similarly, removing articles and prepositions from text is obviously not advised if you are doing _dependency parsing_ (the task of identifying the parts of speech in a given text).
 
 Another special case is the word 'not' which may encode the semantic notion of _negation_. Removing such tokens can drastically change the meaning of sentences and therefore affect the accuracy of models for which negation is important to preserve (e.g., sentiment classification "this movie was NOT great" vs. "this movie was great").
 
