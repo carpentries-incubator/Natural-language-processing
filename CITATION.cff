@@ -10,6 +10,10 @@ message: >-
   training material.
 type: dataset
 authors:
+  - given-names: Angel
+    family-names: Daza
+    email: j.daza@esciencecenter.nl
+    affiliation: Netherlands eScience center
   - given-names: Laura
     family-names: Ootes
     email: l.ootes@esciencecenter.nl
@@ -18,9 +22,13 @@ authors:
     family-names: Viviani
     email: e.viviani@esciencecenter.nl
     affiliation: Netherlands eScience center
-  - given-names: Angel
-    family-names: Daza
-    email: j.daza@esciencecenter.nl
+  - given-names: Kody
+    family-names: Moodley
+    email: k.moodley@esciencecenter.nl
+    affiliation: Netherlands eScience center
+  - given-names: Carsten
+    family-names: Schnober
+    email: c.schnober@esciencecenter.nl
     affiliation: Netherlands eScience center
   - given-names: Thijs
     family-names: Vroegh
@@ -33,9 +41,9 @@ identifiers:
       https://github.com/esciencecenter-digital-skills/Natural-language-processing
     description: Repository-code
 repository-code: >-
-  https://github.com/esciencecenter-digital-skills/Natural-language-processing
+  https://github.com/carpentries-incubator/Natural-language-processing
 url: >-
-  https://esciencecenter-digital-skills.github.io/Natural-language-processing/
+  https://carpentries-incubator.github.io/Natural-language-processing/
 abstract: >+
   This lesson is about the fundamentals of Natural Language
   Processing (NLP) in Python.
@@ -44,6 +52,6 @@ keywords:
   - nlp
   - python
 license: CC-BY-4.0
-commit: first draft release
-version: 0.0.1
-date-released: '2024-04-29'
+commit: first release
+version: 1.0.0
+date-released: '2025-12-02'

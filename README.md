@@ -34,3 +34,26 @@ Check our [Contribution Guide](https://github.com/esciencecenter-digital-skills/
 
 ## Citation
 To cite this lesson, please consult with [CITATION.cff](https://github.com/esciencecenter-digital-skills/Natural-language-processing/blob/main/CITATION.cff). This also holds a list of contributors to the lesson.
+
+Or if you prefer:
+
+**Plain text:**
+```
+Daza, A., Ootes, L., Viviani, E., Moodley, K., Schnober, C., & Vroegh, T. (2025). 
+Introduction to Natural Language Processing (Version 1.0.0). The Carpentries Incubator. 
+https://carpentries-incubator.github.io/Natural-language-processing/
+```
+
+**BibTeX:**
+```bibtex
+@misc{daza2025nlp,
+  title = {Introduction to Natural Language Processing},
+  author = {Daza, Angel and Ootes, Laura and Viviani, Eva and Moodley, Kody and Schnober, Carsten and Vroegh, Thijs},
+  year = {2025},
+  month = {dec},
+  publisher = {The Carpentries Incubator},
+  version = {1.0.0},
+  url = {https://carpentries-incubator.github.io/Natural-language-processing/},
+  note = {Lesson on the fundamentals of Natural Language Processing in Python}
+}
+```
