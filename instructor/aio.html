@@ -343,7 +343,7 @@
         
 <section id="aio-01-introduction"><p>Content from <a href="01-introduction.html">Introduction</a></p>
 <hr>
-<p>Last updated on 2025-12-01 |
+<p>Last updated on 2026-03-23 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/01-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 120 minutes</p>
@@ -390,9 +390,9 @@ to NLP</li>
 application that focuses on making human languages processable for
 computers, so that they can perform useful tasks. It is therefore not a
 single method, but a collection of techniques that help us deal with
-linguistic inputs. The range of techniques spans simple word counts, to
-Machine Learning (ML) methods, all the way up to complex Deep Learning
-(DL) architectures.</p>
+linguistic inputs. The range of techniques spans from simple word
+counts, to Machine Learning (ML) methods, all the way up to complex Deep
+Learning (DL) architectures.</p>
 <p>We use the term “natural language”, as opposed to “artificial
 language” such as programming languages, which are by design constructed
 to be easily formalized into machine-readable instructions. In contrast
@@ -402,7 +402,7 @@ process. To complicate matters, there is not only a single <em>human
 language</em>. More than 7000 languages are spoken around the world,
 each with its own grammar, vocabulary, and cultural context.</p>
 <p>In this course we will mainly focus on written language, specifically
-written English, we leave out audio and speech, as they require a
+written English. We leave out audio and speech, as they require a
 different kind of input processing. But consider that we use English
 only as a convenience so we can address the technical aspects of
 processing textual data. While ideally most of the concepts from NLP
@@ -479,7 +479,23 @@ similar goal through tokenization. Let’s see how can we segment or
 formed words (we have punctuation with the period after “trivial” and
 also special cases such as the abbreviation of “is not” into “isn’t”).
 But at least we get a rough count of the number of words present in the
-sentence. Let’s now look at the same example in Chinese:</p>
+sentence.</p>
+<div id="a-short-history-of-word-separation" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="a-short-history-of-word-separation" class="callout-inner">
+<h3 class="callout-title">A short history of word separation</h3>
+<div class="callout-content">
+<p>As any historian knows, word separation in written texts is a
+relatively new development. You can check this yourself next time you
+visit a city with ancient monuments. Word separation, as oddly as it
+might sound today, is an example of technology.</p>
+</div>
+</div>
+</div>
+<p>Let’s now look at the same example in Chinese:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -539,7 +555,7 @@ by exploiting word co-occurrences in large amounts of texts.</p>
 <hr class="half-width">
 <p>In the past decade, NLP has evolved significantly, especially in the
 field of deep learning, to the point that it has become embedded in our
-daily lives, one just needs to look at the term Large Language Models
+daily lives. One just needs to look at the term Large Language Models
 (LLMs), the latest generation of NLP models, which is now ubiquitous in
 news media and tech products we use on a daily basis.</p>
 <p>The term LLM now is often (and wrongly) used as a synonym of
@@ -557,13 +573,13 @@ optimizing for language modeling. Once they are trained, they are used
 to generate human-like text or fine-tunned to perform much more advanced
 tasks. Indeed, the surprising and fascinating properties that emerge
 from training models at this scale allows us to solve different complex
-tasks such as answer elaborate questions, translate languages, solve
-complex problems, generate narratives that emulate reasoning, and many
-more, all of this with a single tool.</p>
+tasks such as answering elaborate questions, translating languages,
+solving complex problems, generating narratives that emulate reasoning,
+and many more. All of this with a single tool.</p>
 <p>It is important, however, to pay attention to what is happening
 behind the scenes in order to be able <strong>trace sources of errors
 and biases</strong> that get hidden in the complexity of these models.
-The purpose of this course is precisely to take a step back, and
+The purpose of this course is precisely to take a step back and
 understand that:</p>
 <ul>
 <li>There are a wide variety of tools available, beyond LLMs, that do
@@ -608,11 +624,11 @@ statistical techniques to linguistic data. This is a key factor, since
 we need a structured dataset with a well defined set of features in
 order to manipulate it numerically. Your first task as an NLP
 practitioner is to <strong>understand what aspects of textual data are
-relevant for your application</strong> and apply techniques to
-systematically extract meaningful features from unstructured data (if
-using statistics or Machine Learning) or choose an appropriate neural
-architecture (if using Deep Learning) that can help solve our problem at
-hand.</p>
+relevant for your application</strong>. Afterwards you can apply
+techniques to systematically extract meaningful features from
+unstructured data (if using statistics or Machine Learning) or choose an
+appropriate neural architecture (if using Deep Learning) that can help
+solve our problem at hand.</p>
 <div class="section level3">
 <h3 id="what-is-a-word">What is a word?<a class="anchor" aria-label="anchor" href="#what-is-a-word"></a>
 </h3>
@@ -620,7 +636,7 @@ hand.</p>
 deal with sequences of words and with how they relate to each other to
 generate meaning in text pieces. Thus, our first step will be to load a
 text file and provide it with structure by splitting it into valid words
-(tokenization)!</p>
+(this is known as tokenization)!</p>
 <div id="token-vs-word" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -634,12 +650,13 @@ text file and provide it with structure by splitting it into valid words
 always have the same granularity. Originally the concept of token
 comprised dictionary words, numeric symbols and punctuation. Nowadays,
 tokenization has also evolved and became an optimization task on its own
-(How can we segment text in a way that neural networks learn optimally
-from text?). Tokenizers allow one to reconstruct or revert back to the
-original pre-tokenized form of tokens or words, hence we can afford to
-use <em>token</em> and <em>word</em> as synonyms. If you are curious,
-you can visualize how different state-of-the-art tokenizers split text
-<a href="https://tiktokenizer.vercel.app/" class="external-link">in this WebApp</a></p>
+(<em>How can we segment text in a way that neural networks learn
+optimally from text?</em>). Tokenizers allow one to reconstruct or
+revert back to the original pre-tokenized form of tokens or words, hence
+we can afford to use <em>token</em> and <em>word</em> as synonyms. If
+you are curious, you can visualize how different state-of-the-art
+tokenizers split text <a href="https://tiktokenizer.vercel.app/" class="external-link">in this
+WebApp</a></p>
 </div>
 </div>
 </div>
@@ -775,9 +792,9 @@ alphanumerical tokens:</p>
 </div>
 <p>SpaCy also predicts the sentences under the hood for us. It might
 seem trivial to you as a human reader to recognize where a sentence
-begins and ends but for a machine, just like finding words, finding
+begins and ends. But for a machine, just like finding words, finding
 sentences is a task on its own, for which sentence-segmentation models
-exist. In the case of Spacy, we can access the sentences like this:</p>
+exist. In the case of spaCy, we can access the sentences like this:</p>
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1105,7 +1122,7 @@ it is compositional, ambiguous, discrete and sparse</strong>.</p>
 </h3>
 <p>The basic elements of written languages are characters, a sequence of
 characters form words, and words in turn denote objects, concepts,
-events, actions and ideas (Goldberg, 2016). Subsequently words form
+events, actions and ideas (Goldberg, 2016). Subsequently, words form
 phrases and sentences which are used in communication and depend on the
 context in which they are used. We as humans derive the meaning of
 utterances from interpreting contextual information that is present at
@@ -1124,8 +1141,8 @@ task at hand.</p>
 <h3 id="ambiguity">Ambiguity<a class="anchor" aria-label="anchor" href="#ambiguity"></a>
 </h3>
 <p>The disambiguation of meaning is usually a by-product of the context
-in which utterances are expressed and also the historic accumulation of
-interactions which are transmitted across generations (think for
+in which utterances are expressed and also of the historic accumulation
+of interactions which are transmitted across generations (think for
 instance to idioms – these are usually meaningless phrases that acquire
 meaning only if situated within their historical and societal context).
 These characteristics make NLP a particularly challenging field to work
@@ -1301,7 +1318,7 @@ tokens (remember the spaCy token properties!) like this:</p>
 </div>
 </div>
 </div>
-<div id="callout4" class="callout">
+<div id="callout5" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -2159,7 +2176,7 @@ pipeline.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>This classifier only considers the presence of one word to apply a
@@ -2402,7 +2419,7 @@ case?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Some interesting cases include synonyms, antonyms and morphologically
 related words:</p>
@@ -2612,7 +2629,7 @@ model. The proposed pipeline for this task is:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb44">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2782,7 +2799,7 @@ which of the possible meanings does the word have when you see it?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Two possible examples can be the words ‘fine’ and ‘run’</p>
 <p>Sentences for ‘fine’: - She has a fine watch (fine == high-quality) -
@@ -2912,7 +2929,7 @@ always possible to do this one-to-one for words?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Here is an example of a sentence in English and its translation into
 Spanish. We can look at the final mapping and observe that:</p>
@@ -3378,7 +3395,7 @@ to <code>bert-base-multilingual-cased</code>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>This is a free exercise, so anything works. But even by running the
 same cases with the multilingual models we see some interesting aspects.
@@ -3713,7 +3730,7 @@ the 3-class annotations given in the test set:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4565,7 +4582,7 @@ improve the results?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Here the code to do the same excercise as lesson 3 but with the
 generative approach:</p>
@@ -4909,8 +4926,8 @@ aware of those before we draw conclusions from the outputs.</li>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/aio.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/aio.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2026-03-17",
-  "datePublished": "2026-03-17"
+  "dateModified": "2026-03-23",
+  "datePublished": "2026-03-23"
 }
 
   </script><script>
