@@ -10,14 +10,12 @@ exercises: 60
 -   What makes text different from other data?
 -   Why not just learn Large Language Models?
 -   What linguistic properties should we consider when dealing with texts?
--   How does NLP relates to Deep Learning methodologies?
 :::
 
 ::: objectives
 -   Define Natural Language Processing
 -   Show the most relevant NLP tasks and applications in practice
 -   Learn how to handle Linguistic Data and how is Linguistics relevant to NLP
--   Learn a general workflow for solving NLP tasks
 :::
 
 ## What is NLP?
@@ -28,7 +26,28 @@ We use the term "natural language", as opposed to "artificial language" such as 
 
 In this course we will mainly focus on written language, specifically written English. We leave out audio and speech, as they require a different kind of input processing. But consider that we use English only as a convenience so we can address the technical aspects of processing textual data. While ideally most of the concepts from NLP apply to most languages, one should always be aware that certain languages require different approaches to solve seemingly similar problems. We would like to encourage the usage of NLP in other less widely known languages, especially if it is a minority language. You can read more about this topic in this [blogpost](https://www.ruder.io/nlp-beyond-english/).
 
-We can already find differences between languages in the most basic step for processing text. Take the problem of segmenting text into meaningful units. Most of the times these units are words. In NLP we call this task **tokenization**. A naive approach is to obtain individual words by splitting text by spaces, as it seems obvious that we always separate words with spaces. Just as human beings break up sentences into words, phrases and other units in order to learn about grammar and other structures of a language, NLP techniques achieve a similar goal through tokenization. Let's see how can we segment or **tokenize** a sentence in English:
+:::: challenge
+### NLP in the real world
+
+Name three to five tools/products that you use on a daily basis and that you think leverage NLP techniques. To do this exercise you may make use of the Web.
+
+::: solution
+These are some of the most popular NLP-based products that we use on a daily basis:
+
+-   Agentic Chatbots (ChatGPT, Perplexity)
+-   Voice-based assistants (e.g., Alexa, Siri, Cortana)
+-   Machine translation (e.g., Google translate, DeepL, Amazon translate)
+-   Search engines (e.g., Google, Bing, DuckDuckGo)
+-   Keyboard autocompletion on smartphones
+-   Spam filtering
+-   Spell and grammar checking apps
+-   Customer care chatbots
+-   Text summarization tools (e.g., news aggregators)
+-   Sentiment analysis tools (e.g., social media monitoring)
+:::
+::::
+
+We can already find differences between languages in the most basic step for processing text. Take the problem of segmenting text into meaningful units, most of the times these units are words, in NLP we call this task **tokenization**. A naive approach is to obtain individual words by splitting text by spaces, as it seems obvious that we always separate words with spaces. Just as human beings break up sentences into words, phrases and other units in order to learn about grammar and other structures of a language, NLP techniques achieve a similar goal through tokenization. Let's see how can we segment or **tokenize** a sentence in English:
 
 ``` python
 english_sentence = "Tokenization isn't always trivial."
@@ -65,13 +84,14 @@ print(len(chinese_words))
 1
 ```
 
-The same example however did not work in Chinese, because Chinese does not use spaces to separate words. This is an example of how the idiosyncrasies of human language affects how we can process them with computers. We therefore need to use a tokenizer specifically designed for Chinese to obtain the list of well-formed words in the text. Here we use a "pre-trained" tokenizer called **jieba**, which uses a dictionary-based approach to correctly identify the distinct words:
+The same example however did not work in Chinese, because Chinese does not use spaces to separate words. This is an example of how the idiosyncrasies of human language affects how we can process them with computers. We therefore need to use a tokenizer specifically designed for Chinese to obtain the list of well-formed words in the text. Here we use a "pre-trained" tokenizer called **MicroTokenizer**, which uses a dictionary-based approach to correctly identify the distinct words:
 
 ``` python
-import jieba  # A popular Chinese text segmentation library
+import MicroTokenizer  # A popular Chinese text segmentation library
 chinese_sentence = "标记化并不总是那么简单"
-chinese_words = jieba.lcut(chinese_sentence)
+chinese_words = MicroTokenizer.cut(chinese_sentence)
 print(chinese_words)
+# ['mark', 'transform', 'and', 'no', 'always', 'so', 'simple']
 print(len(chinese_words))  # Output: 7
 ```
 
@@ -80,15 +100,8 @@ print(len(chinese_words))  # Output: 7
 7
 ```
 
-We can trust that the output is valid because we are using a verified library - jieba, even though we don't speak Chinese. Another interesting aspect is that the Chinese sentence has more words than the English one, even though they convey the same meaning. This shows the complexity of dealing with more than one language at a time, as is the case in task such as **Machine Translation** (using computers to translate speech or text from one human language to another).
+We can trust that the output is valid because we are using a verified library - `MicroTokenizer`, even though we don't speak Chinese. Another interesting aspect is that the Chinese sentence has more words than the English one, even though they convey the same meaning. This shows the complexity of dealing with more than one language at a time, as is the case in task such as **Machine Translation** (using computers to translate speech or text from one human language to another).
 
-::: callout
-### Pre-trained Models and Fine-tuning
-
-These two terms frequently arise in discussions of NLP. The notion of pre-trained comes from Machine Learning and describes a model that has already been optimized on relevant data for a given task. Such a model can typically be loaded and applied directly to new datasets, often working “out of the box.” without need of further refinement. Ideally, publicly released pre-trained models have undergone rigorous testing for both generalization and output quality on different textual data that it was intended to be used on. Nevertheless, it remains essential to carefully review the evaluation methods used before relying on them in practice. It is also recommended that you perform your own evaluation of the model on text that you intend to use it on.
-
-Sometimes a pre-trained model is of good quality, but it does not fit the nuances of our specific dataset. For example, the model was trained on newspaper articles but you are interested in poetry. In this case, it is common to perform *fine-tuning*, this means that instead of training your own model from scratch, you start with the knowledge obtained in the pre-trained model and adjust it (fine-tune it) to work optimally with your specific data. If this is done well it leads to increased performance in the specific task you are trying to solve. The advantage of fine-tuning is that you often do not need a large amount of data to improve the results, hence the popularity of the technique.
-:::
 
 Natural Language Processing deals with the challenges of correctly processing and generating text in any language. This can be as simple as counting word frequencies to detect different writing styles, using statistical methods to classify texts into different categories, or using **deep neural networks** to generate human-like text by exploiting word co-occurrences in large amounts of texts.
 
@@ -138,7 +151,7 @@ For simplicity, in the rest of the course we will use the terms "word" and "toke
 Let's open a file, read it into a string and split it by spaces. We will print the original text and the list of "words" to see how they look:
 
 ``` python
-with open("84_frankenstein_clean.txt") as f:
+with open("data/84_frankenstein_clean.txt") as f:
   text = f.read()
 
 print(text[:100])
@@ -164,7 +177,17 @@ Splitting by white space is possible but needs several extra steps to separate o
 ! python -m spacy download en_core_web_sm
 ```
 
-This is a model that spaCy already trained for us on a subset of web English data. Hence, the model already "knows" how to tokenize into English words. When the model processes a string, it does not only do the splitting for us but already provides more advanced linguistic properties of the tokens (such as part-of-speech tags, or named entities). Let's now import the model and use it to parse our document:
+This is a model that spaCy already trained for us on a subset of web English data. Hence, the model already "knows" how to tokenize into English words. When the model processes a string, it does not only do the splitting for us but already provides more advanced linguistic properties of the tokens (such as part-of-speech tags, or named entities). You can check more languages and models in the [spacy documentation](https://spacy.io/models)
+
+::: callout
+### Pre-trained Models and Fine-tuning
+
+These two terms frequently arise in discussions of NLP. The notion of pre-trained comes from Machine Learning and describes a model that has already been optimized on relevant data for a given task. Such a model can typically be loaded and applied directly to new datasets, often working “out of the box.” without need of further refinement. Ideally, publicly released pre-trained models have undergone rigorous testing for both generalization and output quality on different textual data that it was intended to be used on. Nevertheless, it remains essential to carefully review the evaluation methods used before relying on them in practice. It is also recommended that you perform your own evaluation of the model on text that you intend to use it on.
+
+Sometimes a pre-trained model is of good quality, but it does not fit the nuances of our specific dataset. For example, the model was trained on newspaper articles but you are interested in poetry. In this case, it is common to perform *fine-tuning*, this means that instead of training your own model from scratch, you start with the knowledge obtained in the pre-trained model and adjust it (fine-tune it) to work optimally with your specific data. If this is done well it leads to increased performance in the specific task you are trying to solve. The advantage of fine-tuning is that you often do not need a large amount of data to improve the results, hence the popularity of the technique.
+:::
+
+Let's now import the model and use it to parse our document:
 
 ``` python
 import spacy
@@ -240,26 +263,40 @@ GPE England
 DATE yesterday
 ```
 
+
 These are just basic tests to demonstrate how you can immediately process the structure of text using existing NLP libraries. The spaCy models we used are simpler relative to state of the art approaches. So the more complex the input text and task, the more errors are likely to appear when using such models. The biggest advantage of using these existing libraries is that they help you transform unstructured plain text files into structured data that you can manipulate later for your own goals such as training language models.
 
 :::: challenge
-### NLP in the real world
+## Computing stats with spaCy
 
-Name three to five tools/products that you use on a daily basis and that you think leverage NLP techniques. To do this exercise you may make use of the Web.
+Use the spaCy Doc object to compute an aggregate statistic about the Frankenstein book. HINT: Use the python `set`, `dictionary` or `Counter` objects to hold the accumulative counts. For example:
+
+- Give the list of the 20 most common verbs in the book
+- How many different Places are identified in the book? (Label = GPE)
+- How many different entity categories are in the book?
+- Who are the 10 most mentioned PERSONs in the book?
+- Or any other similar aggregate you want...
+
 
 ::: solution
-These are some of the most popular NLP-based products that we use on a daily basis:
 
--   Agentic Chatbots (ChatGPT, Perplexity)
--   Voice-based assistants (e.g., Alexa, Siri, Cortana)
--   Machine translation (e.g., Google translate, DeepL, Amazon translate)
--   Search engines (e.g., Google, Bing, DuckDuckGo)
--   Keyboard autocompletion on smartphones
--   Spam filtering
--   Spell and grammar checking apps
--   Customer care chatbots
--   Text summarization tools (e.g., news aggregators)
--   Sentiment analysis tools (e.g., social media monitoring)
+Let's describe the solution to obtain all the different entity categories. For that we should iterate the whole text and keep a python set with all the seen labels.
+
+```python
+entity_types = set()
+
+for ent in doc.ents:
+    entity_types.add(ent.label_)
+
+print(entity_types)
+print(len(entity_types))
+```
+
+```output
+{'CARDINAL', 'GPE', 'WORK_OF_ART', 'ORDINAL', 'DATE', 'LAW', 'PRODUCT', 'QUANTITY', 'ORG', 'TIME', 'PERSON', 'LOC', 'LANGUAGE', 'FAC', 'NORP'}
+15
+```
+
 :::
 ::::
 
@@ -334,8 +371,21 @@ For the purposes of this episode, we will focus on **supervised learning** tasks
 
 Look at the NLP Task taxonomy described above and write down a couple of examples of (Input, Output) instance pairs that you would need in order to train a supervised model for your chosen task.
 
+For Example: the task of labeling an E-mail as spam or not-spam
+
+Label_Set: [SPAM, NO-SPAM]
+
+Training Instances:
+
+**Input:** "Dear Sir, you've been awarded a grant of 10 million Euros and it is only available today. Please contact me ASAP!" **Output:** SPAM
+
+**Input:** "Dear Madam, as agreed by phone here is the sales report for last month." **Output:** NO-SPAM
+
 ::: solution
-Example: the task of Conversational agent. Here are 3 instances to provide supervision for a model:
+
+Example B: the task of Conversational agent. Here are 3 instances to provide supervision for a model:
+
+Label_Set: Output vocabulary. This is: learning to generate token by token a coherent response that addresses the input question.
 
 **Input:** "Hello, how are you?" **Output:** "I am fine thanks!"
 
@@ -345,35 +395,8 @@ Example: the task of Conversational agent. Here are 3 instances to provide super
 :::
 ::::
 
-::: callout
-### NLP Libraries
 
-Related to the need of shaping our problems into a known task, there are several existing NLP libraries which provide a wide range of models that we can use out-of-the-box (without further need of modification). We already saw simple examples using SpaCy for English and jieba for Chinese. Again, as a non-exhaustive list, we mention some widely used NLP libraries in Python:
-
--   [NLTK](https://github.com/nltk/nltk)
--   [spaCy](https://github.com/explosion/spaCy)
--   [Gensim](https://github.com/RaRe-Technologies/gensim)
--   [Stanza](https://github.com/stanfordnlp/stanza)
--   [Flair](https://github.com/flairNLP/flair)
--   [FastText](https://github.com/facebookresearch/fastText)
--   [HuggingFace Transformers](https://github.com/huggingface/transformers)
-
-### Linguistic Resources
-
-There are also several curated resources (textual data) that can help solve your NLP-related tasks, specifically when you need highly specialized definitions. An exhaustive list would be impossible as there are thousands of them, and also them being language and domain dependent. Below we mention some of the most prominent, just to give you an idea of the kind of resources you can find, so you don't need to reinvent the wheel every time you start a project:
-
--   [HuggingFace Datasets](https://huggingface.co/datasets): A large collection of datasets for NLP tasks, including text classification, question answering, and language modeling.
--   [WordNet](https://wordnet.princeton.edu/): A large lexical database of English, where words are grouped into sets of synonyms (synsets) and linked by semantic relations.
--   [Europarl](https://www.europarl.europa.eu/ep-search/search.do?language=en): A parallel corpus of the proceedings of the European Parliament, available in 21 languages, which can be used for machine translation and cross-lingual NLP tasks.
--   [Universal Dependencies](https://universaldependencies.org/): A collection of syntactically annotated treebanks across 100+ languages, providing a consistent annotation scheme for syntactic and morphological properties of words, which can be used for cross-lingual NLP tasks.
--   [PropBank](https://propbank.github.io/): A corpus of texts annotated with information about basic semantic propositions, which can be used for English semantic tasks.
--   [FrameNet](https://framenet.icsi.berkeley.edu/fndrupal/): A lexical resource that provides information about the semantic frames that underlie the meanings of words (mainly verbs and nouns), including their roles and relations.
--   [BabelNet](https://babelnet.org/): A multilingual lexical resource that combines WordNet and Wikipedia, providing a large number of concepts and their relations in multiple languages.
--   [Wikidata](https://www.wikidata.org/): A free and open knowledge base initially derived from Wikipedia, that contains structured data about entities, their properties and relations, which can be used to enrich NLP applications.
--   [Dolma](https://github.com/allenai/dolma): An open dataset of 3 trillion tokens from a diverse mix of clean web content, academic publications, code, books, and encyclopedic materials, used to train English large language models.
-:::
-
-## Relevant Linguistic Aspects
+## A Primer on Linguistics
 
 Natural language exhibits a set of properties that make it more challenging to process than other types of data such as tables, spreadsheets or time series. **Language is hard to process because it is compositional, ambiguous, discrete and sparse**.
 
@@ -402,15 +425,16 @@ Discuss what the following sentences mean. What level of ambiguity do they repre
 
 -   "The door is unlockable from the inside." vs "Unfortunately, the cabinet is unlockable, so we can't secure it"
 -   "I saw the *cat with the stripes*" vs "I saw the cat *with the telescope*"
--   "Colorless green ideas sleep furiously"
--   "I never said she stole my money." (re-write this sentence multiple times and each time write a different word in italics).
+-   "Please don’t drive the cat to the vet!" vs "Please don’t drive the car tomorrow!"
+
+-   "I never said she stole my money." (re-write this sentence multiple times and each time emphasize a different word in uppercases).
 
 ::: solution
 This is why the previous statements were difficult:
 
 -   "Un-lockable vs Unlock-able" is a **Morphological** ambiguity: Same word form, two possible meanings
--   "I saw the cat with the telescope" is a **Syntactic** ambiguity: Same sentence structure, different properties
--   "Colorless green ideas sleep furiously" **Semantic** ambiguity: Grammatical but meaningless (ideas do not have color as a property. Even if this was true, they would be either colorless or green)
+-   "I saw the cat with the telescope" has a **Syntactic** ambiguity: Same sentence structure, different properties
+-   "drive the cat" vs "drive the car" shows a **Semantic** ambiguity: Syntactically identical sentences that imply quite different actions.
 -   "I NEVER said she stole MY money." is a **Pragmatic** ambiguity: Meaning relies on word emphasis
 :::
 ::::
@@ -472,9 +496,6 @@ This bar chart shows us several things about sparsity, even with such a small te
 
 -   There is a long tail in the distribution, where actually a lot of meaningful words are located.
 
-::: callout
-Sparsity is closely related to what is frequently called **domain-specific data**. The discourse context in which language is used varies importantly across disciplines (domains). Take for example law texts and medical texts which are typically filled with domain-specific jargon. We should expect the top part of the distribution to contain mostly the same worda as they tend to be stop words. But once we remove the stop words, the top of the distirbution will contain very different content words. Also, the meaning of concepts described in each domain might significantly differ. For example the word "trial" refers to a procedure for examining evidence in court, but in the medical domain this could refer to a clinical "trial" which is a procedure to test the efficacy and safety of treatments on patients. For this reason there are specialized models and corpora that model language use in specific domains. The concept of fine-tuning a general purpose model with domain-specific data is also popular, even when using LLMs.
-:::
 
 ::: callout
 ## Stop Words
@@ -498,6 +519,12 @@ doc = nlp(text)
 content_words = [token.text for token in doc if token.is_alpha and not token.is_stop]  # Filter out stop words and punctuation
 print(content_words)
 ```
+:::
+
+::: callout
+Sparsity is closely related to what is frequently called **domain-specific data**. The discourse context in which language is used varies importantly across disciplines (domains). Take for example law texts and medical texts which are typically filled with domain-specific jargon. We should expect the top part of the distribution to contain mostly the same words as they tend to be stop words. But once we remove the stop words, the top of the distribution will contain very different content words. 
+
+Also, the meaning of concepts described in each domain might significantly differ. For example the word "trial" refers to a procedure for examining evidence in court, but in the medical domain this could refer to a clinical "trial" which is a procedure to test the efficacy and safety of treatments on patients. For this reason there are specialized models and corpora that model language use in specific domains. The concept of fine-tuning a general purpose model with domain-specific data is also popular, even when using LLMs.
 :::
 
 ### Discreteness
@@ -577,60 +604,39 @@ Contextual Fingerprints:
 
 As our mini experiment demonstrates, discreteness can be combatted with statistical co-occurrence: words with similar meaning will occur around similar concepts, giving us an idea of similarity that has nothing to do with syntactic or lexical form of words. This is the core idea behind most modern semantic representation models in NLP.
 
-:::: challenge
-### Your first NLP Script
 
-Choose one book file: dracula or frankenstein. Use what you have learned so far to count how many times the words "love" and "hate" appear in the book. What does this tell you about sparsity?
+::: callout
 
-Then replicate the word co-occurrence experiment using the book you chose.
+### NLP Libraries
 
-Pair with someone that chose a different book and compare the most common words appearing around the two target terms. What can you conclude from this?
+Related to the need of shaping our problems into a known task, there are several existing NLP libraries which provide a wide range of models that we can use out-of-the-box (without further need of modification). We already saw simple examples using `spaCy` for English and `MicroTokenizer` for Chinese. Again, as a non-exhaustive list, we mention some widely used NLP libraries in Python:
 
-To do this experiment you should:
+-   [NLTK](https://github.com/nltk/nltk)
+-   [spaCy](https://github.com/explosion/spaCy)
+-   [Gensim](https://github.com/RaRe-Technologies/gensim)
+-   [Stanza](https://github.com/stanfordnlp/stanza)
+-   [Flair](https://github.com/flairNLP/flair)
+-   [FastText](https://github.com/facebookresearch/fastText)
+-   [HuggingFace Transformers](https://github.com/huggingface/transformers)
 
-1.  Read the file and save it into a text variable
-2.  Use spaCy to load the text into a Doc object.
-3.  Iterate through the tokens in the document and keep all tokens that are alphanumeric (use the token.is_alpha property), and are not stopwords (use the property token.is_stop).
-4.  Lowercase all the tokens to merge the instances of "Love" and "love" into a single one.
-5.  Iterate through the tokens and count how many of them are exactly "love"
-6.  Iterate through the tokens and count how many of them are exactly "hate"
-7.  You may use the following function to compute co-occurrence. Experiment with the values for `window_size` or `most_common_words` and observe how the results change.
-
-``` python
-def populate_co_occurrence(words, target_words, window_size=3, most_common_words=5):
-    co_occurrence = {word: [] for word in target_words}
-    for i, word in enumerate(words):
-        if word in target_words:
-            start = max(0, i - window_size)
-            end = min(len(words), i + 1 + window_size)
-            context = words[start:i] + words[i+1:end]
-            context = [w for w in context if w not in STOP_WORDS]
-            co_occurrence[word].extend(context)
-    # Print the most common context words for each target word
-    print("Contextual Fingerprints:\n")
-    for word, context_list in co_occurrence.items():
-        fingerprint = Counter(context_list).most_common(most_common_words)
-        print(f"'{word}': {fingerprint}")
-```
-
-::: solution
-Following our preprocessing procedure with the *frankenstein book*, there are **30,500 content words**. The word **love appears 59 times** and the word **hate appears only 9 times**. These are 0.22% of the total words in the text. Even though intuitively one might expect these words to appear quite frequently in the text, in reality they occur only a handful of times. Code:
-
-``` python
-with open("84_frankenstein_clean.txt") as f:
-  text = f.read()
-
-doc = nlp(text)  # Process the text with SpaCy
-words = [token.lower_ for token in doc if token.is_alpha and not token.is_stop]
-print("Total Words:", len(words))
-
-love_words = [word for word in words if "love" == word]
-hate_words = [word for word in words if "hate" == word]
-
-print("Love and Hate percentage:", (len(love_words) + len(hate_words)) / len(words) * 100, "% of content words")
-```
 :::
-::::
+
+::: callout
+### Linguistic Resources
+
+There are also several curated resources (textual data) that can help solve your NLP-related tasks, specifically when you need highly specialized definitions. An exhaustive list would be impossible as there are thousands of them, and also them being language and domain dependent. Below we mention some of the most prominent, just to give you an idea of the kind of resources you can find, so you don't need to reinvent the wheel every time you start a project:
+
+-   [HuggingFace Datasets](https://huggingface.co/datasets): A large collection of datasets for NLP tasks, including text classification, question answering, and language modeling.
+-   [WordNet](https://wordnet.princeton.edu/): A large lexical database of English, where words are grouped into sets of synonyms (synsets) and linked by semantic relations.
+-   [Europarl](https://www.europarl.europa.eu/ep-search/search.do?language=en): A parallel corpus of the proceedings of the European Parliament, available in 21 languages, which can be used for machine translation and cross-lingual NLP tasks.
+-   [Universal Dependencies](https://universaldependencies.org/): A collection of syntactically annotated treebanks across 100+ languages, providing a consistent annotation scheme for syntactic and morphological properties of words, which can be used for cross-lingual NLP tasks.
+-   [PropBank](https://propbank.github.io/): A corpus of texts annotated with information about basic semantic propositions, which can be used for English semantic tasks.
+-   [FrameNet](https://framenet.icsi.berkeley.edu/fndrupal/): A lexical resource that provides information about the semantic frames that underlie the meanings of words (mainly verbs and nouns), including their roles and relations.
+-   [BabelNet](https://babelnet.org/): A multilingual lexical resource that combines WordNet and Wikipedia, providing a large number of concepts and their relations in multiple languages.
+-   [Wikidata](https://www.wikidata.org/): A free and open knowledge base initially derived from Wikipedia, that contains structured data about entities, their properties and relations, which can be used to enrich NLP applications.
+-   [Dolma](https://github.com/allenai/dolma): An open dataset of 3 trillion tokens from a diverse mix of clean web content, academic publications, code, books, and encyclopedic materials, used to train English large language models.
+:::
+
 
 What did we learn in this lesson?
 

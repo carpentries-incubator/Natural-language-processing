@@ -1,0 +1,13 @@
+jupyterlab
+MicroTokenizer
+spacy
+gensim
+matplotlib
+numpy==1.26.4
+scikit-learn
+torch
+transformers
+langchain
+langchain-ollama
+pandas
+invoke

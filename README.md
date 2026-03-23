@@ -20,15 +20,33 @@ Do you have an idea on how to contribute to this lesson? Check out the current [
 Check our [Contribution Guide](https://github.com/esciencecenter-digital-skills/Natural-language-processing/blob/main/CONTRIBUTING.md) and the [Carpentries Guidelines](https://carpentries.github.io/lesson-example/) for tips on rendering pages, formatting and understanding the Carpentries template. You can also learn more about [developing curriculum content](https://carpentries.github.io/curriculum-development/).
 
 ## Authors and Maintainers
+- [Angel Daza][angel_escience]
 - [Laura Ootes][laura_escience]
 - [Eva Viviani][eva_escience]
-- [Angel Daza][angel_escience]
+- [Kody Moodley][kody_escience]
 - [Thijs Vroegh][thijs_escience]
 
 [laura_escience]: https://www.esciencecenter.nl/team/dr-laura-ootes/
 [eva_escience]: https://www.esciencecenter.nl/team/eva-viviani/
 [angel_escience]: https://www.esciencecenter.nl/team/angel-daza/
+[kody_escience]: https://www.esciencecenter.nl/team/kody-moodley/
 [thijs_escience]: https://www.esciencecenter.nl/team/thijs-vroegh/
 
 ## Citation
 To cite this lesson, please consult with [CITATION.cff](https://github.com/esciencecenter-digital-skills/Natural-language-processing/blob/main/CITATION.cff). This also holds a list of contributors to the lesson.
+
+Or if you prefer:
+
+**BibTeX:**
+```bibtex
+@misc{daza2025nlp,
+  title = {Fundamentals of natural language processing with Python},
+  author = {Daza, Angel and Ootes, Laura and Viviani, Eva and Moodley, Kody and Schnober, Carsten and Vroegh, Thijs},
+  year = {2025},
+  month = {dec},
+  publisher = {The Carpentries Incubator},
+  version = {1.0.0},
+  url = {https://carpentries-incubator.github.io/Natural-language-processing/},
+  note = {Lesson on the fundamentals of Natural Language Processing in Python}
+}
+```
