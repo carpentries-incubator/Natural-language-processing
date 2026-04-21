@@ -6,16 +6,16 @@ exercises: 60
 
 ::: questions
 -   What is Natural Language Processing?
--   What are some common applications of NLP?
--   What makes text different from other data?
 -   Why not just learn Large Language Models?
--   What linguistic properties should we consider when dealing with texts?
+-   How is text different from other data?
+-   How can we extract structure from text?
 :::
 
 ::: objectives
 -   Define Natural Language Processing
--   Show the most relevant NLP tasks and applications in practice
--   Learn how to handle Linguistic Data and how is Linguistics relevant to NLP
+-   Show the most relevant NLP tasks and applications
+-   Understand the importance of NLP fundamentals
+-   Learn how to manipulate linguistic data
 :::
 
 ## What is NLP?
@@ -140,7 +140,7 @@ From a more technical perspective, NLP focuses on applying advanced statistical 
 
 ### What is a word?
 
-When dealing with language our basic data unit is usually a word. We deal with sequences of words and with how they relate to each other to generate meaning in text pieces. Thus, our first step will be to load a text file and provide it with structure by splitting it into valid words (this is known as tokenization)!
+When dealing with language our basic data unit is usually a word. We deal with sequences of words and with how they relate to each other to generate meaning in text pieces. Thus, our first step will be to load a text file and provide it with basic structure by splitting it into valid words (this is known as tokenization)!
 
 ::: callout
 ### Token vs Word
@@ -151,63 +151,178 @@ For simplicity, in the rest of the course we will use the terms "word" and "toke
 Let's open a file, read it into a string and split it by spaces. We will print the original text and the list of "words" to see how they look:
 
 ``` python
-with open("data/84_frankenstein_clean.txt") as f:
+with open("data/84_frankenstein_or_the_modern_prometheus.txt") as f:
   text = f.read()
 
-print(text[:100])
-print("Length:", len(text))
+print(text[:150])
+print("\nLength:", len(text))
 
-proto_tokens = text.split()
-print(proto_tokens[:40])
+print("\nProto-Tokens:")
+proto_tokens = text.split(" ")
+print(proto_tokens[:50])
 print(len(proto_tokens))
 ```
 
 ``` output
-Letter 1 St. Petersburgh, Dec. 11th, 17-- TO Mrs. Saville, England You will rejoice to hear that no disaster has accompanied the commencement of an en
-Length: 417931
+Letter 1
+
+
+St. Petersburgh, Dec. 11th, 17--
+
+TO Mrs. Saville, England
+
+You will rejoice to hear that no disaster has accompanied the
+commencement of a
+
+Length: 421419
 
 Proto-Tokens:
-['Letter', '1', 'St.', 'Petersburgh,', 'Dec.', '11th,', '17--', 'TO', 'Mrs.', 'Saville,', 'England', 'You', 'will', 'rejoice', 'to', 'hear', 'that', 'no', 'disaster', 'has', 'accompanied', 'the', 'commencement', 'of', 'an', 'enterprise', 'which', 'you', 'have', 'regarded', 'with', 'such', 'evil', 'forebodings.', 'I', 'arrived', 'here', 'yesterday,', 'and', 'my']
+['Letter', '1\n\n\nSt.', 'Petersburgh,', 'Dec.', '11th,', '17--\n\nTO', 'Mrs.', 'Saville,', 'England\n\nYou', 'will', 'rejoice', 'to', 'hear', 'that', 'no', 'disaster', 'has', 'accompanied', 'the\ncommencement', 'of', 'an', 'enterprise', 'which', 'you', 'have', 'regarded', 'with', 'such', 'evil\nforebodings.', '', 'I', 'arrived', 'here', 'yesterday,', 'and', 'my', 'first', 'task', 'is', 'to', 'assure\nmy', 'dear', 'sister', 'of', 'my', 'welfare', 'and', 'increasing', 'confidence', 'in']
+71197
+```
+
+Splitting by white space is possible but needs several extra steps to get clean words as we know them. We can also use the python `split()` function, which will basically strip any whitespace-like character (including new lines) and get some improvements:
+
+``` python
+print("\nProto-Tokens:")
+proto_tokens = text.split()
+print(proto_tokens[:50])
+print(len(proto_tokens))
+```
+
+``` output
+Proto-Tokens:
+['Letter', '1', 'St.', 'Petersburgh,', 'Dec.', '11th,', '17--', 'TO', 'Mrs.', 'Saville,', 'England', 'You', 'will', 'rejoice', 'to', 'hear', 'that', 'no', 'disaster', 'has', 'accompanied', 'the', 'commencement', 'of', 'an', 'enterprise', 'which', 'you', 'have', 'regarded', 'with', 'such', 'evil', 'forebodings.', 'I', 'arrived', 'here', 'yesterday,', 'and', 'my', 'first', 'task', 'is', 'to', 'assure', 'my', 'dear', 'sister', 'of', 'my']
 74942
 ```
 
-Splitting by white space is possible but needs several extra steps to separate out punctuation appropriately. A more sophisticated approach is to use the [spaCy](https://github.com/explosion/spaCy) library to segment the text into human-readable tokens. First we will download the pre-trained model, in this case we only need the small English version:
+however still several extra steps are needed to separate out punctuation appropriately, and perhaps the rules become cumbersome. 
+
+::: callout
+### Data Formatting
+Text comes from various sources and are available in different formats (e.g., Microsoft Word documents, PDF documents, ePub files, plain text files, Web pages etc...). The first step is to obtain a clean text representation that can be transferred into python UTF-8 strings that our scripts can manipulate.
+
+Data formatting operations might include:
+
+- Removal of special or noisy characters. For example:
+    - Random symbols: "The total cost is $120.00#" → remove #
+    - Incorrectly recognized letters or numbers: 1 misread as l, 0 as O, etc. Example: "l0ve" → should be "love"
+    - Control or formatting characters: \n, \t, \r appearing in the middle of sentences. Example: "Please\nsubmit\tyour form." → "Please submit your form."
+    - Non-standard Unicode characters: �, �, or other placeholder symbols where OCR failed. Example: "Th� quick brown fox" → "The quick brown fox"
+- Remove HTML tags (e.g., if you are extracting text from Web pages)
+- Strip non-meaningful punctuation (e.g., "The quick brown fox jumps over the lazy dog and con-
+tinues to run across the field.)
+- Strip footnotes, headers, tables, images etc.
+- Remove URLs or phone numbers
+
+And what if you need to extract text from MS Word docs or PDF files or Web pages? There are various Python libraries for helping you extract and manipulate text from these kinds of sources.
+
+- For MS Word documents [python-docx](https://python-docx.readthedocs.io/en/latest/) is popular.
+- For (text-based) PDF files [PyPDF2](https://pypi.org/project/PyPDF2/) and [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/) are widely used. Note that some PDF files are encoded as images (pixels) and not text. If the text in these files is digital (as opposed to scanned handwriting), you can use OCR (Optical Character Recognition) libraries such as [pytesseract](https://pypi.org/project/pytesseract/) to convert the image to machine-readable text.
+- For scraping text from websites, [BeautifulSoup](https://pypi.org/project/beautifulsoup4/) and [Scrapy](https://docs.scrapy.org/en/latest/) are some common options.
+- LLMs also have something to offer here, and the field is moving pretty fast. There are some interesting open source LLM-based document parsers and OCR-like extractors such as [Marker](https://github.com/datalab-to/marker), or [PyMuPDF4LLM](https://github.com/pymupdf/PyMuPDF4LLM), just to mention a couple.
+:::
+
+### The spaCy NLP Library
+
+A more sophisticated approach is to use specialized NLP libraries to handle these basic operations. One of the most popular NLP libraries is [spaCy](https://github.com/explosion/spaCy). It has a lot of advanced functionalities, but we will start by using it to segment the text into human-readable tokens. To start, we need to download the pre-trained model, in this case we only need the small English version:
 
 ``` python
 ! python -m spacy download en_core_web_sm
 ```
 
-This is a model that spaCy already trained for us on a subset of web English data. Hence, the model already "knows" how to tokenize into English words. When the model processes a string, it does not only do the splitting for us but already provides more advanced linguistic properties of the tokens (such as part-of-speech tags, or named entities). You can check more languages and models in the [spacy documentation](https://spacy.io/models)
+This is a model that spaCy already trained for us on a subset of web English data. Hence, the model already "knows" how to obtain clean tokens from English text. When the model processes a string, it does not only do the splitting for us but already provides more advanced linguistic properties of the tokens (such as part-of-speech tags, or named entities). You can check more languages and models in the [spacy documentation](https://spacy.io/models)
 
-::: callout
-### Pre-trained Models and Fine-tuning
 
-These two terms frequently arise in discussions of NLP. The notion of pre-trained comes from Machine Learning and describes a model that has already been optimized on relevant data for a given task. Such a model can typically be loaded and applied directly to new datasets, often working “out of the box.” without need of further refinement. Ideally, publicly released pre-trained models have undergone rigorous testing for both generalization and output quality on different textual data that it was intended to be used on. Nevertheless, it remains essential to carefully review the evaluation methods used before relying on them in practice. It is also recommended that you perform your own evaluation of the model on text that you intend to use it on.
+### Tokenization 
 
-Sometimes a pre-trained model is of good quality, but it does not fit the nuances of our specific dataset. For example, the model was trained on newspaper articles but you are interested in poetry. In this case, it is common to perform *fine-tuning*, this means that instead of training your own model from scratch, you start with the knowledge obtained in the pre-trained model and adjust it (fine-tune it) to work optimally with your specific data. If this is done well it leads to increased performance in the specific task you are trying to solve. The advantage of fine-tuning is that you often do not need a large amount of data to improve the results, hence the popularity of the technique.
-:::
+Tokenization is a foundational operation in NLP, as it helps to create structure from raw text. This structure is a basic requirement and input for modern NLP algorithms to attribute and interpret meaning from text. This operation involves the segmentation of the text into smaller units referred to as `tokens`. Tokens can be sentences (e.g. `'the happy cat'`), words (`'the', 'happy', 'cat'`), subwords (`'un', 'happiness'`) or characters (`'c','a', 't'`). Different NLP algorithms may require different choices for the token unit. And different languages may require different approaches to identify or segment these tokens.
 
-Let's now import the model and use it to parse our document:
+To see how tokenization works using spaCy, let's now import the model and use it to parse our document:
 
 ``` python
 import spacy
 
 nlp = spacy.load("en_core_web_sm") # we load the small English model for efficiency
 
-doc = nlp(text) # Doc is a python object with several methods to retrieve linguistic properties
-
-# SpaCy-Tokens
-tokens = [token.text for token in doc] # Note that spacy tokens are also python objects 
-print(tokens[:40])
-print(len(tokens))
+doc = nlp(text)
+print(type(doc))  # Should be <class 'spacy.tokens.doc.Doc'>
+print(len(doc)) # the length of the doc is the number of tokens
+print(doc[:50]) # however if we print the doc we get the "raw" text of the first 50 tokens, not the tokens themselves
 ```
 
 ``` output
-['Letter', '1', 'St.', 'Petersburgh', ',', 'Dec.', '11th', ',', '17', '-', '-', 'TO', 'Mrs.', 'Saville', ',', 'England', 'You', 'will', 'rejoice', 'to', 'hear', 'that', 'no', 'disaster', 'has', 'accompanied', 'the', 'commencement', 'of', 'an', 'enterprise', 'which', 'you', 'have', 'regarded', 'with', 'such', 'evil', 'forebodings', '.']
-85713
+<class 'spacy.tokens.doc.Doc'>
+94553
+Letter 1
+
+
+St. Petersburgh, Dec. 11th, 17--
+
+TO Mrs. Saville, England
+
+You will rejoice to hear that no disaster has accompanied the
+commencement of an enterprise which you have regarded with such evil
+forebodings.  I arrived here yesterday
 ```
 
-The differences look subtle at the beginning, but if we carefully inspect the way spaCy splits the text, we can see the advantage of using a specialized tokenizer. There are also several useful features that spaCy provides us with. For example, we can choose to extract only symbols, or only alphanumerical tokens, and more advanced linguistic properties, for example we can remove punctuation and only keep alphanumerical tokens:
+Now let's access the tokens with spaCy and see what we get: 
+```python
+# SpaCy-Tokens
+tokens = [token.text for token in doc] # Note that spacy tokens are actually python objects 
+print(tokens[:50])
+print(len(tokens))
+```
+
+
+``` output
+['Letter', '1', '\n\n\n', 'St.', 'Petersburgh', ',', 'Dec.', '11th', ',', '17', '-', '-', '\n\n', 'TO', 'Mrs.', 'Saville', ',', 'England', '\n\n', 'You', 'will', 'rejoice', 'to', 'hear', 'that', 'no', 'disaster', 'has', 'accompanied', 'the', '\n', 'commencement', 'of', 'an', 'enterprise', 'which', 'you', 'have', 'regarded', 'with', 'such', 'evil', '\n', 'forebodings', '.', ' ', 'I', 'arrived', 'here', 'yesterday']
+94553
+```
+
+
+::: callout
+A good word tokenizer for example, does not simply break up a text based on spaces and punctuation, but it should be able to distinguish:
+
+-   abbreviations that include points (e.g.: *e.g.*)
+-   times (*11:15*) and dates written in various formats (*01/01/2024* or *01-01-2024*)
+-   word contractions such as *don't*, these should be split into *do* and *n't*
+-   URLs
+
+Many older tokenizers are rule-based, meaning that they iterate over a number of predefined rules to split the text into tokens, which is useful for splitting text into word tokens for example. Modern large language models use subword tokenization, which learn to break text into pieces that are statistically convenient, this makes them more flexible but less human-readable.
+:::
+
+
+The differences look subtle at the beginning, but if we carefully inspect the way spaCy splits the text, we can see the advantage of using a specialized tokenizer. 
+
+::: callout
+
+We do not have to depend necessarily on the `Doc` and `Token` spaCy objects. Once we tokenized the text with the spaCy model, we can extract the list of words as a list of strings and continue our text analysis:
+
+```python
+token_list = [token.text for token in doc if "\n" not in token.text]
+print(token_list[:50])
+```
+
+We can even glue it back into a single string and work with a tokenized and "clean version" of our text:
+
+```python
+tokenized_text = " ".join(token_list)
+print(tokenized_text)
+```
+
+and recover the list of tokens if we need them:
+
+```python
+token_list = tokenized_text.split(" ")
+print(token_list)
+```
+
+:::
+
+### Text Properties
+
+There are several useful features that spaCy provides us with, beyond word tokenization.  Again, it all depends on what your requirements are. For example, we can choose to extract only symbols, or only alphanumerical tokens, and more advanced linguistic properties, for example we can remove punctuation and only keep alphanumerical tokens (or "normal words"):
 
 ``` python
 only_words = [token for token in doc if token.is_alpha]  # Only alphanumerical tokens
@@ -233,6 +348,18 @@ print(len(only_verbs))
 10148
 ```
 
+::: callout
+Another important choice at the data formatting level is to decide at what granularity do you need to perform the NLP task: 
+
+- Are you analyzing phenomena at the **word level**? For example, detecting abusive language (based on a known vocabulary).
+- Do you need to first extract sentences from the text and do analysis at the **sentence level**? For example, extracting entities in each sentence.
+- Do you need full **chunks of text**? (e.g. paragraphs or chapters?) For example, summarizing each paragraph in a document.
+- Or perhaps you want to extract patterns at the **document level**? For example each full book should have one genre tag (Romance, History, Poetry).
+
+Sometimes your data will be already available at the desired granularity level. If this is not the case, then during the tokenization step you will need to figure out how to obtain the desired granularity level.
+:::
+
+
 SpaCy also predicts the sentences under the hood for us. It might seem trivial to you as a human reader to recognize where a sentence begins and ends. But for a machine, just like finding words, finding sentences is a task on its own, for which sentence-segmentation models exist. In the case of spaCy, we can access the sentences like this:
 
 ``` python
@@ -246,7 +373,18 @@ print(len(sentences))
 3317
 ```
 
-We can also see what named entities the model predicted:
+Note that in this case each sentence is a python object, and the property `.text` returns an untokenized string (in terms of words). But we can still access the list of word tokens inside each sentence object if we want:
+
+```python
+sents_sample = list(doc.sents)[:10]
+for sent in sents_sample:
+    print("Sentence:", sent.text)
+    for token in sent:
+        print("\tToken:", token.text)
+```
+
+
+We can also see what named entities the model predicted based on the tokens:
 
 ``` python
 print(len(doc.ents))
@@ -263,11 +401,48 @@ GPE England
 DATE yesterday
 ```
 
+### Lowercasing
 
-These are just basic tests to demonstrate how you can immediately process the structure of text using existing NLP libraries. The spaCy models we used are simpler relative to state of the art approaches. So the more complex the input text and task, the more errors are likely to appear when using such models. The biggest advantage of using these existing libraries is that they help you transform unstructured plain text files into structured data that you can manipulate later for your own goals such as training language models.
+Removing uppercases to e.g. avoid treating "Dog" and "dog" as two different words is also a common step, for example to train word vector representations, we want to merge both occurrences as they represent exactly the same concept. Lowercasing can be done with Python directly as:
+
+```python
+lower_text = text_flat.lower()
+lower_text[:100] # Beware that this is a python string operation
+```
+
+Beware that lowercasing the whole string as a first step might affect the tokenizer behavior since tokenization benefits from information provided by case-sensitive strings. We can therefore tokenize first using spaCy and then obtain the lowercase strings of each token using the `.lower_` property:
+
+```python
+lower_text = [token.lower_ for token in doc]
+lower_text[:10] # Beware that this is a list of strings now!
+```
+
+In other tasks, such as Named Entity Recognition (NER), lowercasing before training can actually lower the performance of your model. This is because words that start with an uppercase (not preceded by a period) can represent proper nouns that map into Entities, for example:
+
+```python
+import spacy
+# Preserving uppercase characters increases the likelihood that an NER model
+# will correctly identify Apple and Will as a company (ORG) and a person (PER)
+# respectively.
+str1 = "My next laptop will be from Apple, Will said." 
+# Lowercasing can reduce the likelihood of accurate labeling
+str2 = "my next laptop will be from apple, will said."
+
+nlp = spacy.load("en_core_web_sm")
+ents1 = [ent.text for ent in nlp(str1).ents]
+ents2 = [ent.text for ent in nlp(str2).ents]
+
+print(ents1)
+print(ents2)
+```
+
+```output
+['Apple', 'Will']
+[]
+```
 
 :::: challenge
-## Computing stats with spaCy
+### Computing stats with spaCy
 
 Use the spaCy Doc object to compute an aggregate statistic about the Frankenstein book. HINT: Use the python `set`, `dictionary` or `Counter` objects to hold the accumulative counts. For example:
 
@@ -300,309 +475,19 @@ print(len(entity_types))
 :::
 ::::
 
-### NLP tasks
+### Lemmatization 
+Although it has become less widely used in modern NLP approaches, normalizing words into their *dictionary form* can help to focus on relevant aspects of text. Consider how "eating", "ate", "eaten" are all variations of the root verb "eat". Each variation is sometimes known as an _inflection_ of the root word. Conversely, we say that the word "eat" is the _lemma_ for the words "eating", "eats", "eaten", "ate" etc. Lemmatization is therefore the process of rewriting each token or word in a given input text as its lemma.
 
-The previous exercise shows that a great deal of NLP techniques are embedded in our daily life. Indeed NLP is an important component in a wide range of software applications that we use in our day to day activities.
+Lemmatization is not only a possible preprocessing step in NLP but also an NLP task on its own, with different algorithms for it. Therefore we also tend to use pre-trained models to perform lemmatization. Using spaCy we can access the lemmmatized version of each token with the `lemma_` property (notice the underscore!):
 
-There are several ways to describe the tasks that NLP solves. From the Machine Learning perspective, we have:
-
--   Unsupervised tasks: exploiting existing patterns from large amounts of text.
-
-![Unsupervised Learning](fig/intro_unsupervised.png){width="582"}
-
--   Supervised tasks: learning to classify texts given a labeled set of examples
-
-![Supervised Learning](fig/intro_supervised.png){width="605"}
-
-The Deep Learning perspective usually involves the selection of the right model among different neural network architectures to tackle an NLP task, such as:
-
--   Multi-layer Perceptron
-
--   Recurrent Neural Network
-
--   Convolutional Neural Network
-
--   Long-Short Term Memory Networks (LSTMs)
-
--   Transformer (including LLMs!)
-
-Regardless of the chosen method, below we show one possible taxonomy of NLP tasks. The tasks are grouped together with some of their most prominent applications. This is definitely a non-exhaustive list, as in reality there are hundreds of them, but it is a good start:
-
-![A taxonomy of NLP Tasks](fig/intro_taxonomy.png){width="630"}
-
--   **Text Classification**: Assign one or more labels to a given piece of text. This text is usually referred to as a *document* and in our context this can be a sentence, a paragraph, a book chapter, etc...
-
-    -   **Language Identification**: determining the language in which a particular input text is written.
-    -   **Spam Filtering**: classifying emails into spam or not spam based on their content.
-    -   **Authorship Attribution**: determining the author of a text based on its style and content (based on the assumption that each author has a unique writing style).
-    -   **Sentiment Analysis**: classifying text into positive, negative or neutral sentiment. For example, in the sentence "I love this product!", the model would classify it as positive sentiment.
-
--   **Token Classification**: The task of individually assigning one label to each word in a document. This is a one-to-one mapping; however, because words do not occur in isolation and their meaning depend on the sequence of words to the left or the right of them, this is also called Word-In-Context Classification or Sequence Labeling and usually involves syntactic and semantic analysis.
-
-    -   **Part-Of-Speech Tagging**: is the task of assigning a part-of-speech label (e.g., noun, verb, adjective) to each word in a sentence.
-    -   **Chunking**: splitting a running text into "chunks" of words that together represent a meaningful unit: phrases, sentences, paragraphs, etc.
-    -   **Word Sense Disambiguation**: based on the context what does a word mean (think of "book" in "I read a book." vs "I want to book a flight.")
-    -   **Named Entity Recognition**: recognize world entities in text, e.g. Persons, Locations, Book Titles, or many others. For example "Mary Shelley" is a person, "Frankenstein or the Modern Prometheus" is a book, etc.
-    -   **Semantic Role Labeling**: the task of finding out "Who did what to whom?" in a sentence: information from events such as agents, participants, circumstances, subject-verb-object triples etc.
-    -   **Relation Extraction**: the task of identifying named relationships between entities in a text, e.g. "Apple is based in California" has the relation (Apple, based_in, California).
-    -   **Co-reference Resolution**: the task of determining which words refer to the same entity in a text, e.g. "Mary is a doctor. She works at the hospital." Here "She" refers to "Mary".
-    -   **Entity Linking**: the task of disambiguation of named entities in a text, linking them to their corresponding entries in a knowledge base, e.g. Mary Shelley's biography in Wikipedia.
-
--   **Language Modeling**: Given a sequence of words, the model predicts the next word. For example, in the sentence "The capital of France is \_\_\_\_\_", the model should predict "Paris" based on the context. This task was initially useful for building solutions that require speech and optical character recognition (even handwriting), language translation and spelling correction. Nowadays this has scaled up to the LLMs that we know. A byproduct of pre-trained Language Modeling is the **vectorized representation** of texts which allows to perform specific tasks such as:
-
-    -   **Text Similarity**: The task of determining how similar two pieces of text are.
-    -   **Plagiarism detection**: determining whether a piece of text, B, is close enough to another known piece of text, A, which increases the likelihood that it was plagiarized.
-    -   **Document clustering**: grouping similar texts together based on their content.
-    -   **Topic modelling**: a specific instance of clustering, here we automatically identify abstract "topics" that occur in a set of documents, where each topic is represented as a cluster of words that frequently appear together.
-    -   **Information Retrieval**: this is the task of finding relevant information or documents from a large collection of unstructured data based on user's query, e.g., "What's the best restaurant near me?".
-
--   **Text Generation**: the task of generating text based on a given input. This is usually done by generating the output word by word, conditioned on both the input and the output so far. The difference with Language Modeling is that for generation there are higher-level generation objectives such as:
-
-    -   **Machine Translation**: translating text from one language to another, e.g., "Hello" in English to "Que tal" in Spanish.
-    -   **Summarization**: generating a concise summary of a longer text. It can be abstractive (generating new sentences that capture the main ideas of the original text) but also extractive (selecting important sentences from the original text).
-    -   **Paraphrasing**: generating a new sentence that conveys the same meaning as the original sentence, e.g., "The cat is on the mat." to "The mat has a cat on it.".
-    -   **Question Answering**: given a question and a context, the model generates an answer. For example, given the question "What is the capital of France?" and the Wikipedia article about France as the context, the model should answer "Paris". This task can be approached as a text classification problem (where the answer is one of the predefined options) or as a generative task (where the model generates the answer from scratch).
-    -   **Conversational Agent (ChatBot)**: Building a system that interacts with a user via natural language, e.g., "What's the weather today, Siri?". These agents are widely used to improve user experience in customer service, personal assistance and many other domains.
-
-For the purposes of this episode, we will focus on **supervised learning** tasks and we will emphasize how the **Transformer architecture** is used to tackle some of them.
-
-:::: challenge
-## Inputs and Outputs
-
-Look at the NLP Task taxonomy described above and write down a couple of examples of (Input, Output) instance pairs that you would need in order to train a supervised model for your chosen task.
-
-For Example: the task of labeling an E-mail as spam or not-spam
-
-Label_Set: [SPAM, NO-SPAM]
-
-Training Instances:
-
-**Input:** "Dear Sir, you've been awarded a grant of 10 million Euros and it is only available today. Please contact me ASAP!" **Output:** SPAM
-
-**Input:** "Dear Madam, as agreed by phone here is the sales report for last month." **Output:** NO-SPAM
-
-::: solution
-
-Example B: the task of Conversational agent. Here are 3 instances to provide supervision for a model:
-
-Label_Set: Output vocabulary. This is: learning to generate token by token a coherent response that addresses the input question.
-
-**Input:** "Hello, how are you?" **Output:** "I am fine thanks!"
-
-**Input:** "Do you know at what time is the World Cup final today?" **Output:** "Yes, the World Cup final will be at 6pm CET"
-
-**Input:** "What color is my shirt?" **Output:** "Sorry, I am unable to see what you are wearing."
-:::
-::::
-
-
-## A Primer on Linguistics
-
-Natural language exhibits a set of properties that make it more challenging to process than other types of data such as tables, spreadsheets or time series. **Language is hard to process because it is compositional, ambiguous, discrete and sparse**.
-
-### Compositionality
-
-The basic elements of written languages are characters, a sequence of characters form words, and words in turn denote objects, concepts, events, actions and ideas (Goldberg, 2016). Subsequently, words form phrases and sentences which are used in communication and depend on the context in which they are used. We as humans derive the meaning of utterances from interpreting contextual information that is present at different levels at the same time:
-
-![Levels of Language](fig/intro2_levels_lang.svg){width="573"}
-
-The first two levels refer to spoken language only, and the other four levels are present in both speech and text. Because in principle machines do not have access to the same levels of information that we do (they can only have independent audio, textual or visual inputs), we need to come up with clever methods to overcome this significant limitation. Knowing the levels of language is important so we consider what kind of problems we are facing when attempting to solve our NLP task at hand.
-
-### Ambiguity
-
-The disambiguation of meaning is usually a by-product of the context in which utterances are expressed and also of the historic accumulation of interactions which are transmitted across generations (think for instance to idioms -- these are usually meaningless phrases that acquire meaning only if situated within their historical and societal context). These characteristics make NLP a particularly challenging field to work in.
-
-We cannot expect a machine to process human language and simply understand it as it is. We need a systematic, scientific approach to deal with it. It's within this premise that the field of NLP is born, primarily interested in converting the building blocks of human/natural language into something that a machine can understand.
-
-The image below shows how the levels of language relate to a few NLP applications:
-
-![Diagram showing building blocks of language](fig/intro3_levels_nlp.png)
-
-:::: challenge
-## Levels of ambiguity
-
-Discuss what the following sentences mean. What level of ambiguity do they represent?:
-
--   "The door is unlockable from the inside." vs "Unfortunately, the cabinet is unlockable, so we can't secure it"
--   "I saw the *cat with the stripes*" vs "I saw the cat *with the telescope*"
--   "Please don’t drive the cat to the vet!" vs "Please don’t drive the car tomorrow!"
-
--   "I never said she stole my money." (re-write this sentence multiple times and each time emphasize a different word in uppercases).
-
-::: solution
-This is why the previous statements were difficult:
-
--   "Un-lockable vs Unlock-able" is a **Morphological** ambiguity: Same word form, two possible meanings
--   "I saw the cat with the telescope" has a **Syntactic** ambiguity: Same sentence structure, different properties
--   "drive the cat" vs "drive the car" shows a **Semantic** ambiguity: Syntactically identical sentences that imply quite different actions.
--   "I NEVER said she stole MY money." is a **Pragmatic** ambiguity: Meaning relies on word emphasis
-:::
-::::
-
-Whenever you are solving a specific task, you should ask yourself what kind of ambiguity can affect your results, and to what degrees? At what level are your assumptions operating when defining your research questions? Having the answers to this can save you a lot of time when debugging your models. Sometimes the most innocent assumptions (for example using the wrong tokenizer) can create enormous performance drops even when the higher level assumptions were correct.
-
-### Sparsity
-
-Another key property of linguistic data is its sparsity. This means that if we are hunting for a specific phenomenon, we may often realize it barely occurs inside a vast amount of text. Imagine we have the following brief text and we are interested in *pizzas* and *hamburgers*:
-
-``` python
-# A mini-corpus where our target words appear
-text = """
-I am hungry. Should I eat delicious pizza?
-Or maybe I should eat a juicy hamburger instead.
-Many people like to eat pizza because is tasty, they think pizza is delicious as hell!
-My friend prefers to eat a hamburger and I agree with him.
-We will drive our car to the restaurant to get the succulent hamburger.
-Right now, our cat sleeps on the mat so we won't take him.
-I did not wash my car, but at least the car has gasoline.
-Perhaps when we come back we will take out the cat for a walk.
-The cat will be happy then.
-"""
+```python
+lemmas = [token.lemma_ for token in doc]
+print(lemmas[:50])
 ```
 
-We can first use spaCy to tokenize the text and do some direct word count:
+Note that the list of lemmas is now a list of strings.
 
-``` python
-import spacy
-nlp = spacy.load("en_core_web_sm")
-
-doc = nlp(text)
-words = [token.lower_ for token in doc if token.is_alpha]  # Filter out punctuation and new lines
-print(words)
-print(len(words))
-```
-
-We have in total 104 words, but we actually want to know how many times each word appears. For that we use the Python Counter and then we can visualize it inside a chart with matplotlib:
-
-``` python
-from collections import Counter
-import matplotlib.pyplot as plt
-
-word_count = Counter(words).most_common()
-tokens = [item[0] for item in word_count]
-frequencies = [item[1] for item in word_count]
-
-plt.figure(figsize=(18, 6))
-plt.bar(tokens, frequencies)
-plt.xticks(rotation=90)
-plt.show()
-```
-
-This bar chart shows us several things about sparsity, even with such a small text:
-
--   The most common words are filler words such as "the", "of", "not" etc. These are known as **stopwords** because such words by themselves generally do not hold a lot of information about the meaning of the piece of text.
-
--   The two concepts (hamburger and pizza) we are interested in, appear only 3 times each, out of 104 words (comprising only \~3% of our corpus). This number only goes lower as the corpus size increases
-
--   There is a long tail in the distribution, where actually a lot of meaningful words are located.
-
-
-::: callout
-## Stop Words
-
-**Stop words** are extremely frequent syntactic filler words that do not provide relevant semantic information for our use case. For some use cases it is better to ignore them in order to fight the sparsity phenomenon. However, consider that in many other use cases the syntactic information that stop words provide is crucial to solve the task.
-
-SpaCy has a pre-defined list of stopwords per language. To explicitly load the English stop words we can do:
-
-``` python
-from spacy.lang.en.stop_words import STOP_WORDS
-print(STOP_WORDS)  # a set of common stopwords
-print(len(STOP_WORDS)) # There are 326 words considered in this list
-```
-
-You can also manually extend the list of stop words if you are interested in ignoring other unlisted terms that you encounter in your data.
-
-Alternatively, you can filter out stop words when iterating your tokens (remember the spaCy token properties!) like this:
-
-``` python
-doc = nlp(text)
-content_words = [token.text for token in doc if token.is_alpha and not token.is_stop]  # Filter out stop words and punctuation
-print(content_words)
-```
-:::
-
-::: callout
-Sparsity is closely related to what is frequently called **domain-specific data**. The discourse context in which language is used varies importantly across disciplines (domains). Take for example law texts and medical texts which are typically filled with domain-specific jargon. We should expect the top part of the distribution to contain mostly the same words as they tend to be stop words. But once we remove the stop words, the top of the distribution will contain very different content words. 
-
-Also, the meaning of concepts described in each domain might significantly differ. For example the word "trial" refers to a procedure for examining evidence in court, but in the medical domain this could refer to a clinical "trial" which is a procedure to test the efficacy and safety of treatments on patients. For this reason there are specialized models and corpora that model language use in specific domains. The concept of fine-tuning a general purpose model with domain-specific data is also popular, even when using LLMs.
-:::
-
-### Discreteness
-
-There is no inherent relationship between the form of a word and its meaning. For this reason, by syntactic or lexical analysis alone, there is no automatic way of knowing if two words are similar in meaning or how they relate semantically to each other. For example, "car" and "cat" appear to be very closely related at the morphological level, only one letter needs to change to convert one word into the other. But the two words represent concepts or entities in the world which are very different. Conversely, "pizza" and "hamburger" look very different (they only share one letter in common) but are more closely related semantically, because they both refer to typical fast foods.
-
-How can we automatically know that "pizza" and "hamburger" share more semantic properties than "car" and "cat"? One way is by looking at the **context** (neighboring words) of these words. This idea is the principle behind **distributional semantics**, and aims to look at the statistical properties of language, such as word co-occurrences (what words are typically located nearby a given word in a given corpus of text), to understand how words relate to each other.
-
-Let's keep using the list of words from our mini corpus:
-
-``` python
-words = [token.lower_ for token in doc if token.is_alpha]
-```
-
-Now we will create a dictionary where we accumulate the words that appear around our words of interest. In this case we want to find out, according to our corpus, the most frequent words that occur around *pizza*, *hamburger*, *car* and *cat*:
-
-``` python
-target_words = ["pizza", "hamburger", "car", "cat"] # words we want to analyze
-co_occurrence = {word: [] for word in target_words}
-co_occurrence
-```
-
-We iterate over each word in our corpus, collecting its surrounding words within a defined window. A window consists of a set number of words to the left and right of the target word, as determined by the window_size parameter. For example, with `window_size = 3`, a word `W` has a window of six neighboring words—three preceding and three following—excluding `W` itself:
-
-``` python
-window_size = 3 # How many words to look at on each side
-for i, word in enumerate(words):
-    # If the current word is one of our target words...
-    if word in target_words:
-        start = max(0, i - window_size) # get the start index of the window
-        end = min(len(words), i + 1 + window_size) # get the end index of the window
-        context = words[start:i] + words[i+1:end]  # Exclude the target word itself
-        co_occurrence[word].extend(context)
-
-print(co_occurrence)
-```
-
-We call the words that fall inside this window the `context` of a target word. We can already see other interesting related words in the context of each target word, but a lot of non interesting stuff is in there. To obtain even nicer results, we can delete the stop words from the context window before adding it to the dictionary. You can define your own stop words, here we use the STOP_WORDS list provided by spaCy:
-
-``` python
-from spacy.lang.en.stop_words import STOP_WORDS
-
-co_occurrence = {word: [] for word in target_words} # Empty the dictionary
-
-window_size = 3 # How many words to look at on each side
-for i, word in enumerate(words):
-    # If the current word is one of our target words...
-    if word in target_words:
-        start = max(0, i - window_size) # get the start index of the window
-        end = min(len(words), i + 1 + window_size) # get the end index of the window
-        context = words[start:i] + words[i+1:end]  # Exclude the target word itself
-        context = [w for w in context if w not in STOP_WORDS] # Filter out stop words
-        co_occurrence[word].extend(context)
-
-print(co_occurrence)
-```
-
-Our dictionary keys represent each word of interest, and the values are a list of the words that occur within *window_size* distance of the word. Now we use a Counter to get the most common items:
-
-``` python
-# Print the most common context words for each target word
-print("Contextual Fingerprints:\n")
-for word, context_list in co_occurrence.items():
-    # We use Counter to get a frequency count of context words
-    fingerprint = Counter(context_list).most_common(5)
-    print(f"'{word}': {fingerprint}")
-```
-
-``` output
-Contextual Fingerprints:
-
-'pizza': [('eat', 2), ('delicious', 2), ('tasty', 2), ('maybe', 1), ('like', 1)]
-'hamburger': [('eat', 2), ('juicy', 1), ('instead', 1), ('people', 1), ('agree', 1)]
-'car': [('drive', 1), ('restaurant', 1), ('wash', 1), ('gasoline', 1)]
-'cat': [('walk', 2), ('right', 1), ('sleeps', 1), ('happy', 1)]
-```
-
-As our mini experiment demonstrates, discreteness can be combatted with statistical co-occurrence: words with similar meaning will occur around similar concepts, giving us an idea of similarity that has nothing to do with syntactic or lexical form of words. This is the core idea behind most modern semantic representation models in NLP.
+Having a lemmatized text allows us to merge the different surface occurrences of the same concept into a single token. This can be very useful for count-based NLP methods such as topic modelling approaches which count the frequency of certain words to see how prevalent a given topic is within a document. If you condense "eat", "eating", "ate", "eaten" to the same token "eat" then you can count four occurrences of the same "topic" in a text, instead of treating these four tokens as distinct or unrelated topics just because they are spelled differently. You can also use lemmatization for generating word embeddings. For example, you can have a single vector for `eat` instead of one vector per verb tense. 
 
 
 ::: callout
@@ -621,34 +506,14 @@ Related to the need of shaping our problems into a known task, there are several
 
 :::
 
-::: callout
-### Linguistic Resources
-
-There are also several curated resources (textual data) that can help solve your NLP-related tasks, specifically when you need highly specialized definitions. An exhaustive list would be impossible as there are thousands of them, and also them being language and domain dependent. Below we mention some of the most prominent, just to give you an idea of the kind of resources you can find, so you don't need to reinvent the wheel every time you start a project:
-
--   [HuggingFace Datasets](https://huggingface.co/datasets): A large collection of datasets for NLP tasks, including text classification, question answering, and language modeling.
--   [WordNet](https://wordnet.princeton.edu/): A large lexical database of English, where words are grouped into sets of synonyms (synsets) and linked by semantic relations.
--   [Europarl](https://www.europarl.europa.eu/ep-search/search.do?language=en): A parallel corpus of the proceedings of the European Parliament, available in 21 languages, which can be used for machine translation and cross-lingual NLP tasks.
--   [Universal Dependencies](https://universaldependencies.org/): A collection of syntactically annotated treebanks across 100+ languages, providing a consistent annotation scheme for syntactic and morphological properties of words, which can be used for cross-lingual NLP tasks.
--   [PropBank](https://propbank.github.io/): A corpus of texts annotated with information about basic semantic propositions, which can be used for English semantic tasks.
--   [FrameNet](https://framenet.icsi.berkeley.edu/fndrupal/): A lexical resource that provides information about the semantic frames that underlie the meanings of words (mainly verbs and nouns), including their roles and relations.
--   [BabelNet](https://babelnet.org/): A multilingual lexical resource that combines WordNet and Wikipedia, providing a large number of concepts and their relations in multiple languages.
--   [Wikidata](https://www.wikidata.org/): A free and open knowledge base initially derived from Wikipedia, that contains structured data about entities, their properties and relations, which can be used to enrich NLP applications.
--   [Dolma](https://github.com/allenai/dolma): An open dataset of 3 trillion tokens from a diverse mix of clean web content, academic publications, code, books, and encyclopedic materials, used to train English large language models.
-:::
-
 
 What did we learn in this lesson?
 
 
 ::: keypoints
-- NLP is a subfield of Artificial Intelligence (AI) that, using the help of Linguistics, deals with approaches to process, understand and generate natural language 
+- NLP is a subfield of Artificial Intelligence (AI) that, with the help of Linguistics, deals with approaches to process, understand and generate natural language 
 
 - Linguistic Data has special properties that we should consider when modeling our solutions 
-
-- Key tasks include language modeling, text classification, token classification and text generation 
-
-- Deep learning has significantly advanced NLP, but the challenge remains in processing the discrete and ambiguous nature of language 
 
 - The ultimate goal of NLP is to enable machines to understand and process language as humans do 
 :::
