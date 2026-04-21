@@ -387,54 +387,57 @@ Another interesting example is searching for **bias in the completions**, these 
 
 We will next see the case of combining BERT with a classifier on top.
 
-
 ## BERT for Text Classification
 
-The task of text classification is assigning a label to a whole sequence of tokens, for example a sentence. With the parameter `task="text_classification"` the `pipeline()` function will load the base model and automatically add a linear layer with a softmax on top. This layer can be fine-tuned with our own labeled data or we can also directly load the fully pre-trained text classification models that are already available in HuggingFace.
+The task of text classification is assigning a label to a whole sequence of tokens, for example a sentence. With the parameter `task="text_classification"` the `pipeline()` function will load the base model and automatically add a task-specific layer.
 
+The labels or categories depend on the task the model has been trained for, hence the data.
+There are **binary** classification tasks, e.g. *spam* or *no spam*, or **multiclass** tasks, e.g. various emotions such as `anger`, `love`, `confusion` etc.
+
+Depending on the task, a model can assign exactly one label to each instance, or multiple. The latter is called a **multi-label** classification task.
+
+### Example: Emotion Classification
 
 ![BERT as an Emotion Classifier](fig/bert4.png)
 
-
-Let's see the example of a ready pre-trained emotion classifier based on `RoBERTa` model. This model was fine-tuned in the Go emotions [dataset](https://huggingface.co/datasets/google-research-datasets/go_emotions), taken from English Reddit and labeled for 28 different emotions at the sentence level. The fine-tuned model is called [roberta-base-go_emotions](https://huggingface.co/SamLowe/roberta-base-go_emotions). This model takes a sentence as input and outputs a probability distribution over the 28 possible emotions that might be conveyed in the text. For example:
+Let's see the example of a emotion classifier based on `RoBERTa` model. The [roberta-base-go_emotions](https://huggingface.co/SamLowe/roberta-base-go_emotions) model was trained on the [GoEmotions dataset](https://huggingface.co/datasets/google-research-datasets/go_emotions), taken from English Reddit and labelled for 28 different emotions at the sentence level. This model takes a sentence as input and outputs a score for each of the 28 possible emotions that might be conveyed in the text. For example:
 
 ```python
 
 classifier = pipeline(task="text-classification", model="SamLowe/roberta-base-go_emotions", top_k=3)
 
-sentences = ["I am not having a great day", "This is a lovely and innocent sentence", "Maria loves Groningen"]
+sentences = ["I am not having a great day.", "This is a lovely and innocent sentence.", "Maria loves Groningen."]
 model_outputs = classifier(sentences)
 
 pretty_print_outputs(sentences, model_outputs)
+
+=====	 I am not having a great day.
+{'label': 'disappointment', 'score': 0.5044488906860352}
+{'label': 'sadness', 'score': 0.3469431400299072}
+{'label': 'annoyance', 'score': 0.08485794812440872}
+
+=====	 This is a lovely and innocent sentence.
+{'label': 'admiration', 'score': 0.7667419910430908}
+{'label': 'approval', 'score': 0.4139412045478821}
+{'label': 'love', 'score': 0.1130351722240448}
+
+=====	 Maria loves Groningen.
+{'label': 'love', 'score': 0.9160982370376587}
+{'label': 'neutral', 'score': 0.07024713605642319}
+{'label': 'approval', 'score': 0.02595525234937668}
 ```
 
-```
-=====	 I am not having a great day
-{'label': 'disappointment', 'score': 0.46669483184814453}
-{'label': 'sadness', 'score': 0.39849498867988586}
-{'label': 'annoyance', 'score': 0.06806594133377075}
-
-=====	 This is a lovely and innocent sentence
-{'label': 'admiration', 'score': 0.6457845568656921}
-{'label': 'approval', 'score': 0.5112180113792419}
-{'label': 'love', 'score': 0.09214121848344803}
-
-=====	 Maria loves Groningen
-{'label': 'love', 'score': 0.8922032117843628}
-{'label': 'neutral', 'score': 0.10132959485054016}
-{'label': 'approval', 'score': 0.02525361441075802}
-```
-
-This code outputs again a list of dictionaries with the `top-k` (`k=3`) emotions that each of the two sentences convey. In this case, the first sentence evokes (in order of likelihood) *disappointment*, *sadness* and *annoyance*; whereas the second sentence evokes *love*, *neutral* and *approval*. Note however that the likelihood of each prediction decreases dramatically below the top choice, so perhaps this specific classifier is only useful for the top emotion.
+For each sentence, this code outputs a list with the `top-k` (`k=3`) emotions to which the model has assigned the highest scores.
+Because it is trained on a multi-label dataset, multiple labels can have a high score.
 
 ::: callout
 
-Fine-tuning BERT is very cheap, because we only need to train the _classifier_ layer,  a very small neural network, that can learn to choose between the classes (labels) for your custom classification problem, without needing a big amount of annotated data. This classifier is a one-layer neural layer that assigns a score that can be translated to the probability over a set of labels, given the input features provided by BERT, which already _encodes_ the meaning of the entire sequence in its hidden states. Unfortunately fine-tuning is out of the scope of this course but you can learn more about fine-tuning BERT-like models in [this HuggingFace tutorial](https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning)
+In the process of fine-tuning, a generic language model like BERT is adapted to a specific task like text classification.
+This is faster than training a whole model, because we only need to train the _classifier_ layer, a small neural network, that can learn to choose between the classes (labels) for your custom classification problem.
+This classifier is a one-layer neural layer that assigns scores over a set of labels. It uses the input features provided by BERT, which already _encodes_ the meaning of the entire sequence in its hidden states. You can learn more about fine-tuning BERT-like models in [this HuggingFace tutorial](https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning).
 :::
 
-
 ![BERT as an Emotion Classifier](fig/bert4b.png)
-
 
 ## Model Evaluation
 
@@ -474,7 +477,9 @@ Deciding which metric is the most relevant to your case depends on your specific
 
 In Python, the `scikit-learn` package already provides us with these (and many other) evaluation metrics. All we need to do is prepare an ordered list with the `true_labels` and a list with the corresponding `predicted_labels` for each example in our data. 
 
-To illustrate the usage of evaluation, we will use a simpler sentiment model that predicts 5 classes: `Very positive`, `positive`, `neutral`, `negative` and `very negative`. Here is an example of the model predictions for four toy examples:
+### Example: Sentiment Analysis
+
+To illustrate the usage of evaluation, we will use a sentiment model that predicts 5 classes: `very positive`, `positive`, `neutral`, `negative` and `very negative`. Here is an example of the model predictions for four toy examples:
 
 ```python
 from transformers import pipeline
@@ -516,7 +521,7 @@ for res in result:
 We can see that the model predicts correctly the 4 examples we gave. This is unsurprising as they are incredibly obvious examples. We can also print the results and inspect them because they are only 4 instances, but it is clearly not a scalable approach. 
 
 ::: callout
-Note that many models will provide a confidence `score`, with their predictions. It is very tempting to interpret these scores as a proxy to "how certain is the model of prediction X". However, you should be very careful, this score is only a relative confidence measure with respect to the training data, and it does not always translate well to unseen data. Most of the times it is better to just ignore it, especially if it is a model that you didn't train yourself.
+Note that many models will provide a score, with their predictions. It is very tempting to interpret these scores as a proxy to "how certain is the model of prediction X". However, this score is only a relative measure with respect to the training data, and it does not always translate well to unseen data.
 :::
 
 We can obtain an automated evaluation report, including the basic evaluation metrics, from `scikit-learn` by calling:
@@ -560,7 +565,7 @@ def load_data(filename):
     return list(sentences), list(labels)
 
 def get_normalized_labels(predictions):
-    # predicitons is a list with dicts such as {'label': 'positive', 'score': 0.95}
+    # predictions is a list with dicts such as {'label': 'positive', 'score': 0.95}
     # We also need to normalize the labels to match the true labels (which are only 'positive' and 'negative')
     normalized = []
     for pred in predictions:
@@ -616,6 +621,8 @@ The confusion matrix is another direct and informative tool for understanding yo
 
 
 ```python
+import matplotlib.pyplot as plt
+
 from sklearn.metrics import ConfusionMatrixDisplay
 
 def show_confusion_matrix(y_true, y_pred, labels=None):
