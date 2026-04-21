@@ -450,12 +450,13 @@ If you are using out-of-the-box models, evaluation is also mandatory, as you mus
 
 Several metrics are commonly used to evaluate NLP models, each offering different insights into performance. Here we will describe the 4 most used in suervised learning classifiers
 
-Let's give the toy example of classifying photographs of cats and dogs. In this task, there are 2 classes: `cat` and `dog`, and we have a model that return the label `cat` or `dog` given an input photograph. If we want to evaluate how good is our model at recognizing `dog`s (our *positive class* in this example), there are 4 possibilities when comparing with the ground truth (your labeled data): 
+Let's give the toy example of classifying sentiments conveyed in texts.
+ In this task, there are three classes: `positive`, `neutral`, and `negative`. We have a model that return the label `positive`,`neutral` or `dog` given an input text. If we want to evaluate how good is our model at recognizing `positive`s, there are 4 possibilities when comparing with the ground truth (your labelled data): 
 
-1. **True Positives (TP):** the number of `dog` photographs the model *correctly* labeled as `dog`. 
-2. **True Negatives (TN):** the number of non-`dog` photographs *correctly* labeled as something else.
-3. **False Positives (FP):** the number of non-`dog` photographs the model *mistakenly* labeled as `dog`.
-4. **False Negatives (FN):** the number of `dog` photographs *mistakenly* labeled as something else.
+1. **True Positives (TP):** the number of `positive` texts the model *correctly* labelled as `positive`.
+2. **True Negatives (TN):** the number of non-`positive` texts *correctly* labelled as something else.
+3. **False Positives (FP):** the number of non-`positive` texts the model *mistakenly* labelled as `positive`.
+4. **False Negatives (FN):** the number of `positive` texts *mistakenly* labelled as something else.
 
 Based on this simple counts, we can derive four metrics that inform us at scale about the performance of our classifiers: 
 
