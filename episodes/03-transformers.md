@@ -466,7 +466,8 @@ Based on this simple counts, we can derive four metrics that inform us at scale 
 
 Deciding which metric is the most relevant to your case depends on your specific task, but having a view at all of the metrics is always insightful.
 
-![An example for a classifier of Cats and Dogs. Source: Wikipedia](fig/bert_precisionRecall.png)
+![](fig/03-true-false-positive-negative.png)
+![](fig/03-precision-recall.png)
 
 **It's important to remember that a high accuracy score doesn't always indicate a good model**. For example, if you're classifying rare events that occur only 5% of the time, a naive model that always predicts "no event" would achieve 95% accuracy while being completely useless. This is why examining multiple metrics and understanding your data's characteristics is essential for proper model evaluation.
 
