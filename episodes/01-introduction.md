@@ -207,7 +207,7 @@ Data formatting operations might include:
     - Random symbols: "The total cost is $120.00#" → remove #
     - Incorrectly recognized letters or numbers: 1 misread as l, 0 as O, etc. Example: "l0ve" → should be "love"
     - Control or formatting characters: \n, \t, \r appearing in the middle of sentences. Example: "Please\nsubmit\tyour form." → "Please submit your form."
-    - Non-standard Unicode characters: �, �, or other placeholder symbols where OCR failed. Example: "Th� quick brown fox" → "The quick brown fox"
+    - Non-displayable characters: �, �, or other placeholder symbols where OCR failed. Example: "Th� quick brown fox" → "The quick brown fox"
 - Remove HTML tags (e.g., if you are extracting text from Web pages)
 - Strip non-meaningful punctuation (e.g., "The quick brown fox jumps over the lazy dog and con-
 tinues to run across the field.)
