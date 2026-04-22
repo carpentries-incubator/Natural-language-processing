@@ -179,14 +179,6 @@ Splitting by white space is possible but needs several extra steps to separate o
 
 This is a model that spaCy already trained for us on a subset of web English data. Hence, the model already "knows" how to tokenize into English words. When the model processes a string, it does not only do the splitting for us but already provides more advanced linguistic properties of the tokens (such as part-of-speech tags, or named entities). You can check more languages and models in the [spacy documentation](https://spacy.io/models)
 
-::: callout
-### Pre-trained Models and Fine-tuning
-
-These two terms frequently arise in discussions of NLP. The notion of pre-trained comes from Machine Learning and describes a model that has already been optimized on relevant data for a given task. Such a model can typically be loaded and applied directly to new datasets, often working “out of the box.” without need of further refinement. Ideally, publicly released pre-trained models have undergone rigorous testing for both generalization and output quality on different textual data that it was intended to be used on. Nevertheless, it remains essential to carefully review the evaluation methods used before relying on them in practice. It is also recommended that you perform your own evaluation of the model on text that you intend to use it on.
-
-Sometimes a pre-trained model is of good quality, but it does not fit the nuances of our specific dataset. For example, the model was trained on newspaper articles but you are interested in poetry. In this case, it is common to perform *fine-tuning*, this means that instead of training your own model from scratch, you start with the knowledge obtained in the pre-trained model and adjust it (fine-tune it) to work optimally with your specific data. If this is done well it leads to increased performance in the specific task you are trying to solve. The advantage of fine-tuning is that you often do not need a large amount of data to improve the results, hence the popularity of the technique.
-:::
-
 Let's now import the model and use it to parse our document:
 
 ``` python
