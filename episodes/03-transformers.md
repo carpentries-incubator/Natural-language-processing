@@ -106,13 +106,22 @@ Next, we will see how BERT exploits the idea of a **Transformer Encoder** to per
 
 ::: callout
 ### Pretraining BERT
-To obtain the BERT vector representations the Encoder is pre-trained with two different tasks:
+
+The notion of 'pre-trained' describes a model that has already been optimized on relevant data for a given task. Such a model can typically be loaded and applied directly to new datasets, often working “out of the box.” without need of further refinement. Ideally, publicly released pre-trained models have undergone rigorous testing for both generalization and output quality on different textual data that it was intended to be used on. Nevertheless, it remains essential to carefully review the evaluation methods used before relying on them in practice. It is also recommended that you perform your own evaluation of the model on text that you intend to use it on.
+
+A pre-trained model can be of good quality for some data, but might not fit the nuances of our specific dataset. For example, the model was trained on newspaper articles but you are interested in poetry. In this case, it is common to perform *fine-tuning*: instead of training your own model from scratch, you start with the knowledge obtained in the pre-trained model and adjust (fine-tune) it to your specific data to increase its performance on the specific task you are trying to solve. The advantage of fine-tuning is that you often do not need a large amount of data to improve the results, hence the popularity of the technique.
+
+BERT models have been pre-trained with the goal of obtaining vector representation through two tasks:
 
 - **Masked Language Model:** for each sentence, mask one token at a time and predict which token is missing based on the context from both sides. A training input example would be "Maria [MASK] Groningen" and the model should predict the word "loves".
 
 - **Next Sentence Prediction:** the Encoder gets a linear binary classifier on top, which is trained to decide for each pair of sequences A and B, if sequence A precedes sequence B in a text. For the sentence pair: "Maria loves Groningen." and "This is a city in the Netherlands." the output of the classifier is "True" and for the pair "Maria loves Groningen." and "It was a tasty cake." the output should be "false" as there is no obvious continuation between the two sentences.
 
-Already the second pre-training task gives us an idea of the power of BERT: after it has been pretrained on hundreds of thousands of texts, one can plug-in a classifier on top and re-use the *linguistic* knowledge previously acquired to fine-tune it for a specific task, without needing to learn the weights of the whole network from scratch all over again. In the next sections we will describe the components of BERT and show how to use it. This model and hundreds of related transformer-based pre-trained encoders can also be found on [Hugging Face](https://huggingface.co/google-bert/bert-base-cased).
+Already the second pre-training task gives us an idea of the power of BERT: after it has been trained on hundreds of thousands of texts, one can plug-in a classifier on top and re-use the *linguistic* knowledge previously acquired to fine-tune it for a specific task, without needing to learn the weights of the whole network from scratch all over again.
+
+This model and hundreds of related transformer-based pre-trained encoders can also be found on [Hugging Face](https://huggingface.co/google-bert/bert-base-cased).
+
+
 :::
 
 ## BERT Architecture
