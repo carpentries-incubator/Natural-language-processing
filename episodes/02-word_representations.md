@@ -19,9 +19,9 @@ exercises: 60
 After following this lesson, learners will be able to:
 
 - Implement a basic NLP Pipeline.
-- Explain the motivation for vectorization in modern NLP.
+- Explain the motivation for vectorisation in modern NLP.
 - Train a custom Word2Vec model by using the [Gensim](https://radimrehurek.com/gensim/) library.
-- Apply a Word2Vec model to interpret and analyze semantics of text (either a pre-trained model or a custom model).
+- Apply a Word2Vec model to interpret and analyse the semantics of text (either a pre-trained model or a custom model).
 - Describe the kinds of semantic relationships captured by Word2Vec, and identify NLP tasks it is suitable for.
 - Explain, with examples, what the limitations are for the Word2Vec representation.
 
@@ -42,8 +42,8 @@ The concept of NLP pipeline refers to the sequence of operations that we apply t
 Imagine that we want to build a very lightweight sentiment classifier. A basic approach is to design the following pipeline:
 
 1. Clean the original text file (as we saw in the Data Formatting section)
-2. Apply a sentence segmentation or tokenization model
-3. Define a set of positive and negative words (a hard coded dictionary)
+2. Apply a sentence segmentation or tokenisation model
+3. Define a set of positive and negative words (a hardcoded dictionary)
 4. For each sentence:
     - If it contains one or more of the positive words, classify as `POSITIVE`
     - If it contains one or more of the negative words, classify as `NEGATIVE`
@@ -52,7 +52,7 @@ Imagine that we want to build a very lightweight sentiment classifier. A basic a
 
 This is implemented with the following code:
 
-1. Read the text and normalize it into a single line
+1. Read the text and normalise it into a single line
 
 ```python
 import spacy
@@ -65,7 +65,7 @@ with open(filename, 'r', encoding='utf-8') as file:
 text = text.replace("\n", " ") # some cleaning by removing new line characters
 ```
 
-2. Apply Sentence segmentation
+2. Apply sentence segmentation
 
 ```python
 doc = nlp(text)
@@ -128,9 +128,9 @@ This concept is powerful for enabling, for example, the measurement of semantic 
 
 ### Reminder: Neural Networks
 
-Understanding how neural networks (NNs) work is out of the scope of this course. For our purposes, we will simplify the explanation in order to conceptually understand how NNs work. A NN is a pattern-finding machine with layers (a _deep_ NN is the same concept but scaled to dozens or even hundreds of layers). In a NN, each layer has several interconnected _neurons_, each one corresponding to a random number initially. The deeper the network is, the more complex patterns it can learn. As the neural netork gets trained (that is, as it sees several labeled examples that we provide), each neuron value will be updated in order to maximize the probability of getting the answers right. A well-trained NN will be able to predict the right labels on completely new data with a certain accuracy.
+Understanding how neural networks (NNs) work is out of the scope of this course. For our purposes, we will simplify the explanation in order to conceptually understand how NNs work. A NN is a pattern-finding machine with layers (a _deep_ NN is the same concept but scaled to dozens or even hundreds of layers). In a NN, each layer has several interconnected _neurons_, each one corresponding to a random number initially. The deeper the network is, the more complex patterns it can learn. As the NN gets trained (that is, as it sees several labelled examples that we provide), each neuron value will be updated in order to maximise the probability of getting the answers right. A well-trained NN will be able to predict the right labels on completely new data with a certain accuracy.
 
-![After seeing thousands of examples, each layer represents different “features” that maximize the success of the task, but they are not human-readable. The last layer acts as a classifier and outputs the most likely label given the input](fig/emb_neuralnet.png)
+![After seeing thousands of examples, each layer represents different “features” that maximise the success of the task, but they are not human-readable. The last layer acts as a classifier and outputs the most likely label given the input](fig/emb_neuralnet.png)
 
 The main difference with traditional machine learning models is that we do not need to design explicitly any features, rather the network will _adjust itself_ by looking at the data alone and executing the back-propagation algorithm. The main job when using NNs is to encode our data properly so it can be fed into the network.
 
@@ -140,7 +140,7 @@ The main difference with traditional machine learning models is that we do not n
 
 ![](fig/emb_embeddings.png)
 
-To obtained the word embeddings, a shallow NN is optimized with the task of language modeling. The final hidden layer inside the trained network holds the fixed-size vectors whose values can be mapped into linguistic properties (since the training objective was language modeling). Since similar words occur in similar contexts, or have same characteristics, a properly trained model will learn to assign similar vectors to similar words.
+To obtained the word embeddings, a shallow NN is optimised with the task of language modeling. The final hidden layer inside the trained network holds the fixed-size vectors whose values can be mapped into linguistic properties (since the training objective was language modeling). Since similar words occur in similar contexts, or have same characteristics, a properly trained model will learn to assign similar vectors to similar words.
 
 By representing words with vectors, we can mathematically manipulate them through vector arithmetic and express semantic similarity in terms of vector distance. Because the size of the learned vectors is not proportional to the amount of documents we can learn the representations from larger collections of texts, obtaining more robust representations, that are less corpus-dependent.
 
@@ -201,7 +201,7 @@ print(w2v_model['bazzinga'][:10])
 
 This will throw a `KeyError` as the model does not know that word. Unfortunately, this is a limitation of Word2vec - unseen words (words that were not included in the training data) cannot be interpreted by the model.
 
-Now, let's talk about the vectors themselves. They are not easy to interpret as they are a bunch of floating point numbers. These are the weights that the network learned when optimizing for language modelling. As the vectors are hard to interpret, we rely on a mathematical method to compute how similar two vectors are. Generally speaking, the recommended metric for measuring similarity between two high-dimensional vectors is [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) .
+Now, let's talk about the vectors themselves. They are not easy to interpret as they are a bunch of floating point numbers. These are the weights that the network learned when optimising for language modelling. As the vectors are hard to interpret, we rely on a mathematical method to compute how similar two vectors are. Generally speaking, the recommended metric for measuring similarity between two high-dimensional vectors is [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) .
 
 ::: callout
 [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) ranges between [`-1` and `1`]. It is the cosine of the angle between two vectors, divided by the product of their lengths. Mathematically speaking, when two vectors point in exactly the same direction, their cosine similarity will be 1, and when they point in the opposite directions, their cosine similarity will be -1. In Python, we can use SKLearn to compute the cosine similarity of vectors.
@@ -422,7 +422,7 @@ Write the code to follow the proposed pipeline and train the Word2Vec models. Th
 
 - Create two separate corpora: one containing books from the 18th century and another containing books from the 20th century.
 - Keep all alphanumerical tokens (including stop words).
-- Lemmatize words during the preprocessing step.
+- Lemmatise words during the preprocessing step.
 - Train a Word2Vec model for each corpus (feed the clean tokens to the `Word2Vec` object) with `vector_size=50`.
 - Save the trained models.
 
