@@ -139,7 +139,7 @@ From a more technical perspective, NLP focuses on applying advanced statistical 
 
 ### What is a word?
 
-When dealing with language our basic data unit is usually a word. We deal with sequences of words and with how they relate to each other to generate meaning in text pieces. Thus, our first step will be to load a text file and provide it with basic structure by splitting it into valid words (this is known as tokenization)!
+When dealing with language, our basic data unit is usually a word. We deal with sequences of words and with how they relate to each other to generate meaning in text pieces. Thus, our first step will be to load a text file and provide it with basic structure by splitting it into valid words (this is known as tokenization)!
 
 ::: callout
 ### Token vs Word
