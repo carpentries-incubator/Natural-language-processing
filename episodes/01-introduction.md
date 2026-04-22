@@ -403,7 +403,7 @@ print(lemmas[:50])
 Note that the list of lemmas is now a list of strings.
 
 ### Named Entities
-The spaCy pipeline already runs by default more advanced task, such as Named Entity Recognition (NER), the task of identifying words or prhases that refer to unique real-world instances (normally proper nouns). You can access the entities with:
+The default spaCy pipeline already runs more advanced tasks, such as Named Entity Recognition (NER), the task of identifying words or phrases that refer to unique real-world instances (normally proper nouns). You can access the entities with:
 
 We can also see what named entities the model predicted based on the tokens:
 
