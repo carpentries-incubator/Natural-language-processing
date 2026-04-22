@@ -215,7 +215,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="02-word_representations.html">2. From words to vectors</a>
+        <a href="01b-linguistic_primer.html">2. A Primer on Linguistics</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -224,7 +224,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="03-transformers.html">3. Transformers: BERT and Beyond</a>
+        <a href="02-word_representations.html">3. From words to vectors</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -233,7 +233,16 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="04-LargeLanguageModels.html">4. Using large language models</a>
+        <a href="03-transformers.html">4. Transformers: BERT and Beyond</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush6">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading6">
+        <a href="04-LargeLanguageModels.html">5. Using large language models</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -339,16 +348,26 @@ a new issue. We also value any feedback on the lesson!</p>
  1. <a href="01-introduction.html">Introduction</a>
 </td>
 <td>
-What is Natural Language Processing?<br>What are some common
-applications of NLP?<br>What makes text different from other
-data?<br>Why not just learn Large Language Models?<br>What linguistic
-properties should we consider when dealing with texts?<br>:::
+What is Natural Language Processing?<br>Why not just learn Large
+Language Models?<br>How is text different from other data?<br>How can
+we extract structure from text?<br>:::
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>02h 00m
+<span class="visually-hidden">Duration: </span>01h 30m
 </td>
 <td>
- 2. <a href="02-word_representations.html">From words to vectors</a>
+ 2. <a href="01b-linguistic_primer.html">A Primer on Linguistics</a>
+</td>
+<td>
+How is language approached from a Machine Learning perspective?<br>What
+makes text different from other data?<br>What linguistic properties
+should we consider when dealing with texts?<br>:::
+</td>
+</tr><tr><td>
+<span class="visually-hidden">Duration: </span>02h 30m
+</td>
+<td>
+ 3. <a href="02-word_representations.html">From words to vectors</a>
 </td>
 <td>
 Why do we need to preprocess text in NLP?<br>What are the most common
@@ -358,10 +377,10 @@ word2vec model?<br>What insights can I get from word
 embeddings?<br>How do I train my own word2vec model?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>04h 00m
+<span class="visually-hidden">Duration: </span>04h 30m
 </td>
 <td>
- 3. <a href="03-transformers.html">Transformers: BERT and Beyond</a>
+ 4. <a href="03-transformers.html">Transformers: BERT and Beyond</a>
 </td>
 <td>
 What are some drawbacks of static word embeddings?<br>What are
@@ -370,16 +389,16 @@ BERT to solve supervised NLP tasks?<br>How should I evaluate my
 classifiers?<br>:::
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>06h 00m
+<span class="visually-hidden">Duration: </span>06h 30m
 </td>
 <td>
- 4. <a href="04-LargeLanguageModels.html">Using large language
+ 5. <a href="04-LargeLanguageModels.html">Using large language
 models</a>
 </td>
 <td>
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>08h 00m
+<span class="visually-hidden">Duration: </span>08h 30m
 </td>
 <td>
 Finish
@@ -446,7 +465,7 @@ environment</a> called <code>nlp_workshop</code>:</li>
   On Linux/macOs
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <pre class="shell"><code>python3 -m venv nlp_workshop</code></pre>
 </div>
@@ -461,7 +480,7 @@ environment</a> called <code>nlp_workshop</code>:</li>
   On Windows
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <pre class="shell"><code>py -m venv nlp_workshop</code></pre>
 </div>
@@ -477,7 +496,7 @@ environment</a> called <code>nlp_workshop</code>:</li>
   On Linux/macOs
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <pre class="shell"><code>source nlp_workshop/bin/activate</code></pre>
 </div>
@@ -492,7 +511,7 @@ environment</a> called <code>nlp_workshop</code>:</li>
   On Windows
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
 <div class="accordion-body">
 <pre class="shell"><code>nlp_workshop\Scripts\activate</code></pre>
 </div>
@@ -513,7 +532,7 @@ Then execute the following command:</p>
   On Linux/macOs
   </h3>
 </button>
-<div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
+<div id="collapseSpoiler5" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler5" aria-labelledby="headingSpoiler5">
 <div class="accordion-body">
 <pre class="shell"><code>python3 -m pip install -r requirements.txt</code></pre>
 </div>
@@ -528,7 +547,7 @@ Then execute the following command:</p>
   On Windows
   </h3>
 </button>
-<div id="collapseSpoiler6" class="accordion-collapse collapse" aria-labelledby="headingSpoiler6" data-bs-parent="#accordionSpoiler6">
+<div id="collapseSpoiler6" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler6" aria-labelledby="headingSpoiler6">
 <div class="accordion-body">
 <pre class="shell"><code>py -m pip install -r requirements.txt</code></pre>
 </div>
@@ -549,7 +568,7 @@ as follows. Download the Word2Vec model first:</p>
   On Linux/macOs
   </h3>
 </button>
-<div id="collapseSpoiler7" class="accordion-collapse collapse" aria-labelledby="headingSpoiler7" data-bs-parent="#accordionSpoiler7">
+<div id="collapseSpoiler7" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler7" aria-labelledby="headingSpoiler7">
 <div class="accordion-body">
 <pre class="shell"><code>python3 -m gensim.downloader --download word2vec-google-news-300 </code></pre>
 </div>
@@ -564,7 +583,7 @@ as follows. Download the Word2Vec model first:</p>
   On Windows
   </h3>
 </button>
-<div id="collapseSpoiler8" class="accordion-collapse collapse" aria-labelledby="headingSpoiler8" data-bs-parent="#accordionSpoiler8">
+<div id="collapseSpoiler8" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler8" aria-labelledby="headingSpoiler8">
 <div class="accordion-body">
 <pre class="shell"><code>py -m gensim.downloader --download word2vec-google-news-300</code></pre>
 </div>
@@ -581,7 +600,7 @@ pipelines for English from Spacy</a>:</p>
   On Linux/macOs
   </h3>
 </button>
-<div id="collapseSpoiler9" class="accordion-collapse collapse" aria-labelledby="headingSpoiler9" data-bs-parent="#accordionSpoiler9">
+<div id="collapseSpoiler9" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler9" aria-labelledby="headingSpoiler9">
 <div class="accordion-body">
 <pre class="shell"><code>python3 -m spacy download en_core_web_sm</code></pre>
 </div>
@@ -596,7 +615,7 @@ pipelines for English from Spacy</a>:</p>
   On Windows
   </h3>
 </button>
-<div id="collapseSpoiler10" class="accordion-collapse collapse" aria-labelledby="headingSpoiler10" data-bs-parent="#accordionSpoiler10">
+<div id="collapseSpoiler10" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler10" aria-labelledby="headingSpoiler10">
 <div class="accordion-body">
 <pre class="shell"><code>py -m spacy download en_core_web_sm</code></pre>
 </div>
@@ -680,8 +699,8 @@ command:</p>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/index.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/index.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2026-04-21",
-  "datePublished": "2026-04-21"
+  "dateModified": "2026-04-22",
+  "datePublished": "2026-04-22"
 }
 
   </script><script>

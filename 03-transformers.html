@@ -116,11 +116,11 @@
     -->
     <a id="search-button" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
-</nav><aside class="col-md-12 lesson-progress"><div style="width: 50%" class="percentage">
-    50%
+</nav><aside class="col-md-12 lesson-progress"><div style="width: 53%" class="percentage">
+    53%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" style="width: 50%">
+    <div class="progress-bar incubator" role="progressbar" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="53" style="width: 53%">
     </div>
   </div>
 </aside><div class="container">
@@ -211,7 +211,16 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="02-word_representations.html">2. From words to vectors</a>
+        <a href="01b-linguistic_primer.html">2. A Primer on Linguistics</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush4">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading4">
+        <a href="02-word_representations.html">3. From words to vectors</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -223,7 +232,7 @@
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
-        3. Transformers: BERT and Beyond
+        4. Transformers: BERT and Beyond
         </span>
       </button>
     </div><!--/div.accordion-header-->
@@ -244,10 +253,10 @@
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
 
-<div class="accordion accordion-flush" id="accordionFlush5">
+<div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
-    <div class="accordion-header" id="flush-heading5">
-        <a href="04-LargeLanguageModels.html">4. Using large language models</a>
+    <div class="accordion-header" id="flush-heading6">
+        <a href="04-LargeLanguageModels.html">5. Using large language models</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -311,7 +320,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Transformers: BERT and Beyond</h1>
-        <p>Last updated on 2025-12-01 |
+        <p>Last updated on 2026-04-22 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/03-transformers.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -995,52 +1004,56 @@ top.</p>
 <hr class="half-width"><p>The task of text classification is assigning a label to a whole
 sequence of tokens, for example a sentence. With the parameter
 <code>task="text_classification"</code> the <code>pipeline()</code>
-function will load the base model and automatically add a linear layer
-with a softmax on top. This layer can be fine-tuned with our own labeled
-data or we can also directly load the fully pre-trained text
-classification models that are already available in HuggingFace.</p>
+function will load the base model and automatically add a task-specific
+layer.</p>
+<p>The labels or categories depend on the task the model has been
+trained for, hence the data. There are <strong>binary</strong>
+classification tasks, e.g. <em>spam</em> or <em>no spam</em>, or
+<strong>multiclass</strong> tasks, e.g. various emotions such as
+<code>anger</code>, <code>love</code>, <code>confusion</code> etc.</p>
+<p>Depending on the task, a model can assign exactly one label to each
+instance, or multiple. The latter is called a
+<strong>multi-label</strong> classification task.</p>
+<div class="section level3">
+<h3 id="example-emotion-classification">Example: Emotion Classification<a class="anchor" aria-label="anchor" href="#example-emotion-classification"></a></h3>
 <figure><img src="fig/bert4.png" alt="BERT as an Emotion Classifier" class="figure mx-auto d-block"><div class="figcaption">BERT as an Emotion Classifier</div>
-</figure><p>Let’s see the example of a ready pre-trained emotion classifier based
-on <code>RoBERTa</code> model. This model was fine-tuned in the Go
-emotions <a href="https://huggingface.co/datasets/google-research-datasets/go_emotions" class="external-link">dataset</a>,
-taken from English Reddit and labeled for 28 different emotions at the
-sentence level. The fine-tuned model is called <a href="https://huggingface.co/SamLowe/roberta-base-go_emotions" class="external-link">roberta-base-go_emotions</a>.
-This model takes a sentence as input and outputs a probability
-distribution over the 28 possible emotions that might be conveyed in the
-text. For example:</p>
+</figure><p>Let’s see the example of a emotion classifier based on
+<code>RoBERTa</code> model. The <a href="https://huggingface.co/SamLowe/roberta-base-go_emotions" class="external-link">roberta-base-go_emotions</a>
+model was trained on the <a href="https://huggingface.co/datasets/google-research-datasets/go_emotions" class="external-link">GoEmotions
+dataset</a>, taken from English Reddit and labelled for 28 different
+emotions at the sentence level. This model takes a sentence as input and
+outputs a score for each of the 28 possible emotions that might be
+conveyed in the text. For example:</p>
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a></span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1" aria-label="code-block-19-2"></a>classifier <span class="op">=</span> pipeline(task<span class="op">=</span><span class="st">"text-classification"</span>, model<span class="op">=</span><span class="st">"SamLowe/roberta-base-go_emotions"</span>, top_k<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1" aria-label="code-block-19-3"></a></span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1" aria-label="code-block-19-4"></a>sentences <span class="op">=</span> [<span class="st">"I am not having a great day"</span>, <span class="st">"This is a lovely and innocent sentence"</span>, <span class="st">"Maria loves Groningen"</span>]</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1" aria-label="code-block-19-4"></a>sentences <span class="op">=</span> [<span class="st">"I am not having a great day."</span>, <span class="st">"This is a lovely and innocent sentence."</span>, <span class="st">"Maria loves Groningen."</span>]</span>
 <span id="cb19-5"><a href="#cb19-5" tabindex="-1" aria-label="code-block-19-5"></a>model_outputs <span class="op">=</span> classifier(sentences)</span>
 <span id="cb19-6"><a href="#cb19-6" tabindex="-1" aria-label="code-block-19-6"></a></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1" aria-label="code-block-19-7"></a>pretty_print_outputs(sentences, model_outputs)</span></code></pre>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1" aria-label="code-block-19-7"></a>pretty_print_outputs(sentences, model_outputs)</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1" aria-label="code-block-19-8"></a></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1" aria-label="code-block-19-9"></a><span class="op">=====</span>	 I am <span class="kw">not</span> having a great day.</span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1" aria-label="code-block-19-10"></a>{<span class="st">'label'</span>: <span class="st">'disappointment'</span>, <span class="st">'score'</span>: <span class="fl">0.5044488906860352</span>}</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1" aria-label="code-block-19-11"></a>{<span class="st">'label'</span>: <span class="st">'sadness'</span>, <span class="st">'score'</span>: <span class="fl">0.3469431400299072</span>}</span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1" aria-label="code-block-19-12"></a>{<span class="st">'label'</span>: <span class="st">'annoyance'</span>, <span class="st">'score'</span>: <span class="fl">0.08485794812440872</span>}</span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1" aria-label="code-block-19-13"></a></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1" aria-label="code-block-19-14"></a><span class="op">=====</span>	 This <span class="kw">is</span> a lovely <span class="kw">and</span> innocent sentence.</span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1" aria-label="code-block-19-15"></a>{<span class="st">'label'</span>: <span class="st">'admiration'</span>, <span class="st">'score'</span>: <span class="fl">0.7667419910430908</span>}</span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1" aria-label="code-block-19-16"></a>{<span class="st">'label'</span>: <span class="st">'approval'</span>, <span class="st">'score'</span>: <span class="fl">0.4139412045478821</span>}</span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1" aria-label="code-block-19-17"></a>{<span class="st">'label'</span>: <span class="st">'love'</span>, <span class="st">'score'</span>: <span class="fl">0.1130351722240448</span>}</span>
+<span id="cb19-18"><a href="#cb19-18" tabindex="-1" aria-label="code-block-19-18"></a></span>
+<span id="cb19-19"><a href="#cb19-19" tabindex="-1" aria-label="code-block-19-19"></a><span class="op">=====</span>	 Maria loves Groningen.</span>
+<span id="cb19-20"><a href="#cb19-20" tabindex="-1" aria-label="code-block-19-20"></a>{<span class="st">'label'</span>: <span class="st">'love'</span>, <span class="st">'score'</span>: <span class="fl">0.9160982370376587</span>}</span>
+<span id="cb19-21"><a href="#cb19-21" tabindex="-1" aria-label="code-block-19-21"></a>{<span class="st">'label'</span>: <span class="st">'neutral'</span>, <span class="st">'score'</span>: <span class="fl">0.07024713605642319</span>}</span>
+<span id="cb19-22"><a href="#cb19-22" tabindex="-1" aria-label="code-block-19-22"></a>{<span class="st">'label'</span>: <span class="st">'approval'</span>, <span class="st">'score'</span>: <span class="fl">0.02595525234937668</span>}</span></code></pre>
 </div>
-<pre><code>=====	 I am not having a great day
-{'label': 'disappointment', 'score': 0.46669483184814453}
-{'label': 'sadness', 'score': 0.39849498867988586}
-{'label': 'annoyance', 'score': 0.06806594133377075}
-
-=====	 This is a lovely and innocent sentence
-{'label': 'admiration', 'score': 0.6457845568656921}
-{'label': 'approval', 'score': 0.5112180113792419}
-{'label': 'love', 'score': 0.09214121848344803}
-
-=====	 Maria loves Groningen
-{'label': 'love', 'score': 0.8922032117843628}
-{'label': 'neutral', 'score': 0.10132959485054016}
-{'label': 'approval', 'score': 0.02525361441075802}</code></pre>
-<p>This code outputs again a list of dictionaries with the
-<code>top-k</code> (<code>k=3</code>) emotions that each of the two
-sentences convey. In this case, the first sentence evokes (in order of
-likelihood) <em>disappointment</em>, <em>sadness</em> and
-<em>annoyance</em>; whereas the second sentence evokes <em>love</em>,
-<em>neutral</em> and <em>approval</em>. Note however that the likelihood
-of each prediction decreases dramatically below the top choice, so
-perhaps this specific classifier is only useful for the top emotion.</p>
+<p>For each sentence, this code outputs a list with the
+<code>top-k</code> (<code>k=3</code>) emotions to which the model has
+assigned the highest scores. Because it is trained on a multi-label
+dataset, multiple labels can have a high score.</p>
 <div id="callout6" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -1048,22 +1061,23 @@ perhaps this specific classifier is only useful for the top emotion.</p>
 <span class="callout-header">Callout</span>
 <div class="callout-inner">
 <div class="callout-content">
-<p>Fine-tuning BERT is very cheap, because we only need to train the
-<em>classifier</em> layer, a very small neural network, that can learn
-to choose between the classes (labels) for your custom classification
-problem, without needing a big amount of annotated data. This classifier
-is a one-layer neural layer that assigns a score that can be translated
-to the probability over a set of labels, given the input features
-provided by BERT, which already <em>encodes</em> the meaning of the
-entire sequence in its hidden states. Unfortunately fine-tuning is out
-of the scope of this course but you can learn more about fine-tuning
-BERT-like models in <a href="https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning" class="external-link">this
-HuggingFace tutorial</a></p>
+<p>In the process of fine-tuning, a generic language model like BERT is
+adapted to a specific task like text classification. This is faster than
+training a whole model, because we only need to train the
+<em>classifier</em> layer, a small neural network, that can learn to
+choose between the classes (labels) for your custom classification
+problem. This classifier is a single-layer neural network that assigns
+scores over a set of labels. It uses the input features provided by
+BERT, which already <em>encodes</em> the meaning of the entire sequence
+in its hidden states. You can learn more about fine-tuning BERT-like
+models in <a href="https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning" class="external-link">this
+HuggingFace tutorial</a>.</p>
 </div>
 </div>
 </div>
 <figure><img src="fig/bert4b.png" alt="BERT as an Emotion Classifier" class="figure mx-auto d-block"><div class="figcaption">BERT as an Emotion Classifier</div>
-</figure></section><section><h2 class="section-heading" id="model-evaluation">Model Evaluation<a class="anchor" aria-label="anchor" href="#model-evaluation"></a></h2>
+</figure></div>
+</section><section><h2 class="section-heading" id="model-evaluation">Model Evaluation<a class="anchor" aria-label="anchor" href="#model-evaluation"></a></h2>
 <hr class="half-width"><p>Model evaluation is a critical step in any machine learning project,
 and it is also the case for NLP. While it may be tempting to rely on the
 accuracy scores observed during training, or the model descriptions
@@ -1103,28 +1117,29 @@ predictions you get.</p>
 <p>Several metrics are commonly used to evaluate NLP models, each
 offering different insights into performance. Here we will describe the
 4 most used in suervised learning classifiers</p>
-<p>Let’s give the toy example of classifying photographs of cats and
-dogs. In this task, there are 2 classes: <code>cat</code> and
-<code>dog</code>, and we have a model that return the label
-<code>cat</code> or <code>dog</code> given an input photograph. If we
-want to evaluate how good is our model at recognizing <code>dog</code>s
-(our <em>positive class</em> in this example), there are 4 possibilities
-when comparing with the ground truth (your labeled data):</p>
+<p>Let’s look at the toy example of classifying sentiments conveyed in
+texts. In this task, there are three classes: <code>positive</code>,
+<code>neutral</code>, and <code>negative</code>. We have a model that
+return the label <code>positive</code>,<code>neutral</code> or
+<code>negative</code> given an input text. If we want to evaluate how
+good is our model at recognizing <code>positive</code>s, there are 4
+possibilities when comparing with the ground truth (your labelled
+data):</p>
 <ol style="list-style-type: decimal"><li>
-<strong>True Positives (TP):</strong> the number of <code>dog</code>
-photographs the model <em>correctly</em> labeled as
-<code>dog</code>.</li>
+<strong>True Positives (TP):</strong> the number of
+<code>positive</code> texts the model <em>correctly</em> labelled as
+<code>positive</code>.</li>
 <li>
 <strong>True Negatives (TN):</strong> the number of
-non-<code>dog</code> photographs <em>correctly</em> labeled as something
+non-<code>positive</code> texts <em>correctly</em> labelled as something
 else.</li>
 <li>
 <strong>False Positives (FP):</strong> the number of
-non-<code>dog</code> photographs the model <em>mistakenly</em> labeled
-as <code>dog</code>.</li>
+non-<code>positive</code> texts the model <em>mistakenly</em> labelled
+as <code>positive</code>.</li>
 <li>
 <strong>False Negatives (FN):</strong> the number of
-<code>dog</code> photographs <em>mistakenly</em> labeled as something
+<code>positive</code> texts <em>mistakenly</em> labelled as something
 else.</li>
 </ol><p>Based on this simple counts, we can derive four metrics that inform
 us at scale about the performance of our classifiers:</p>
@@ -1146,9 +1161,8 @@ recall, offering a single metric that balances both concerns.</li>
 </ul><p>Deciding which metric is the most relevant to your case depends on
 your specific task, but having a view at all of the metrics is always
 insightful.</p>
-<figure><img src="fig/bert_precisionRecall.png" alt="An example for a classifier of Cats and Dogs. Source: Wikipedia" class="figure mx-auto d-block"><div class="figcaption">An example for a classifier of Cats and Dogs.
-Source: Wikipedia</div>
-</figure><p><strong>It’s important to remember that a high accuracy score doesn’t
+<p><img src="fig/03-true-false-positive-negative.png" class="figure"><img src="fig/03-precision-recall.png" class="figure"></p>
+<p><strong>It’s important to remember that a high accuracy score doesn’t
 always indicate a good model</strong>. For example, if you’re
 classifying rare events that occur only 5% of the time, a naive model
 that always predicts “no event” would achieve 95% accuracy while being
@@ -1160,41 +1174,44 @@ with these (and many other) evaluation metrics. All we need to do is
 prepare an ordered list with the <code>true_labels</code> and a list
 with the corresponding <code>predicted_labels</code> for each example in
 our data.</p>
-<p>To illustrate the usage of evaluation, we will use a simpler
-sentiment model that predicts 5 classes: <code>Very positive</code>,
+</div>
+<div class="section level3">
+<h3 id="example-sentiment-analysis">Example: Sentiment Analysis<a class="anchor" aria-label="anchor" href="#example-sentiment-analysis"></a></h3>
+<p>To illustrate the usage of evaluation, we will use a sentiment model
+that predicts 5 classes: <code>very positive</code>,
 <code>positive</code>, <code>neutral</code>, <code>negative</code> and
 <code>very negative</code>. Here is an example of the model predictions
 for four toy examples:</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1" aria-label="code-block-21-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1" aria-label="code-block-21-2"></a></span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1" aria-label="code-block-21-3"></a><span class="co"># Load the classification pipeline with the specified model</span></span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1" aria-label="code-block-21-4"></a>pipe <span class="op">=</span> pipeline(<span class="st">"text-classification"</span>, model<span class="op">=</span><span class="st">"tabularisai/multilingual-sentiment-analysis"</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1" aria-label="code-block-21-5"></a></span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1" aria-label="code-block-21-6"></a><span class="co"># Classify a new sentence</span></span>
-<span id="cb21-7"><a href="#cb21-7" tabindex="-1" aria-label="code-block-21-7"></a>sentences <span class="op">=</span> [</span>
-<span id="cb21-8"><a href="#cb21-8" tabindex="-1" aria-label="code-block-21-8"></a>    <span class="st">"I love this product! It's amazing and works perfectly."</span>,</span>
-<span id="cb21-9"><a href="#cb21-9" tabindex="-1" aria-label="code-block-21-9"></a>    <span class="st">"The movie was a bit boring, I could predict the ending since minute 1."</span>,</span>
-<span id="cb21-10"><a href="#cb21-10" tabindex="-1" aria-label="code-block-21-10"></a>    <span class="st">"Mary Shelley wrote this book around 1816."</span>,</span>
-<span id="cb21-11"><a href="#cb21-11" tabindex="-1" aria-label="code-block-21-11"></a>    <span class="st">"Everything suuuucks!"</span></span>
-<span id="cb21-12"><a href="#cb21-12" tabindex="-1" aria-label="code-block-21-12"></a>]</span>
-<span id="cb21-13"><a href="#cb21-13" tabindex="-1" aria-label="code-block-21-13"></a>gold_labels <span class="op">=</span> [</span>
-<span id="cb21-14"><a href="#cb21-14" tabindex="-1" aria-label="code-block-21-14"></a>    <span class="st">"Very Positive"</span>,</span>
-<span id="cb21-15"><a href="#cb21-15" tabindex="-1" aria-label="code-block-21-15"></a>    <span class="st">"Negative"</span>,</span>
-<span id="cb21-16"><a href="#cb21-16" tabindex="-1" aria-label="code-block-21-16"></a>    <span class="st">"Neutral"</span>,</span>
-<span id="cb21-17"><a href="#cb21-17" tabindex="-1" aria-label="code-block-21-17"></a>    <span class="st">"Very Negative"</span></span>
-<span id="cb21-18"><a href="#cb21-18" tabindex="-1" aria-label="code-block-21-18"></a>]</span>
-<span id="cb21-19"><a href="#cb21-19" tabindex="-1" aria-label="code-block-21-19"></a></span>
-<span id="cb21-20"><a href="#cb21-20" tabindex="-1" aria-label="code-block-21-20"></a><span class="co"># The pipeline can also run on a batch of examples</span></span>
-<span id="cb21-21"><a href="#cb21-21" tabindex="-1" aria-label="code-block-21-21"></a>result <span class="op">=</span> pipe(sentences)</span>
-<span id="cb21-22"><a href="#cb21-22" tabindex="-1" aria-label="code-block-21-22"></a></span>
-<span id="cb21-23"><a href="#cb21-23" tabindex="-1" aria-label="code-block-21-23"></a><span class="co"># Print the result</span></span>
-<span id="cb21-24"><a href="#cb21-24" tabindex="-1" aria-label="code-block-21-24"></a>predicted_labels <span class="op">=</span> []</span>
-<span id="cb21-25"><a href="#cb21-25" tabindex="-1" aria-label="code-block-21-25"></a><span class="cf">for</span> res <span class="kw">in</span> result:</span>
-<span id="cb21-26"><a href="#cb21-26" tabindex="-1" aria-label="code-block-21-26"></a>    <span class="bu">print</span>(res)</span>
-<span id="cb21-27"><a href="#cb21-27" tabindex="-1" aria-label="code-block-21-27"></a>    predicted_labels.append(res[<span class="st">'label'</span>])</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1" aria-label="code-block-20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1" aria-label="code-block-20-3"></a><span class="co"># Load the classification pipeline with the specified model</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1" aria-label="code-block-20-4"></a>pipe <span class="op">=</span> pipeline(<span class="st">"text-classification"</span>, model<span class="op">=</span><span class="st">"tabularisai/multilingual-sentiment-analysis"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1" aria-label="code-block-20-5"></a></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1" aria-label="code-block-20-6"></a><span class="co"># Classify a new sentence</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1" aria-label="code-block-20-7"></a>sentences <span class="op">=</span> [</span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1" aria-label="code-block-20-8"></a>    <span class="st">"I love this product! It's amazing and works perfectly."</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1" aria-label="code-block-20-9"></a>    <span class="st">"The movie was a bit boring, I could predict the ending since minute 1."</span>,</span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1" aria-label="code-block-20-10"></a>    <span class="st">"Mary Shelley wrote this book around 1816."</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1" aria-label="code-block-20-11"></a>    <span class="st">"Everything suuuucks!"</span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1" aria-label="code-block-20-12"></a>]</span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1" aria-label="code-block-20-13"></a>gold_labels <span class="op">=</span> [</span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1" aria-label="code-block-20-14"></a>    <span class="st">"Very Positive"</span>,</span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1" aria-label="code-block-20-15"></a>    <span class="st">"Negative"</span>,</span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1" aria-label="code-block-20-16"></a>    <span class="st">"Neutral"</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" tabindex="-1" aria-label="code-block-20-17"></a>    <span class="st">"Very Negative"</span></span>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1" aria-label="code-block-20-18"></a>]</span>
+<span id="cb20-19"><a href="#cb20-19" tabindex="-1" aria-label="code-block-20-19"></a></span>
+<span id="cb20-20"><a href="#cb20-20" tabindex="-1" aria-label="code-block-20-20"></a><span class="co"># The pipeline can also run on a batch of examples</span></span>
+<span id="cb20-21"><a href="#cb20-21" tabindex="-1" aria-label="code-block-20-21"></a>result <span class="op">=</span> pipe(sentences)</span>
+<span id="cb20-22"><a href="#cb20-22" tabindex="-1" aria-label="code-block-20-22"></a></span>
+<span id="cb20-23"><a href="#cb20-23" tabindex="-1" aria-label="code-block-20-23"></a><span class="co"># Print the result</span></span>
+<span id="cb20-24"><a href="#cb20-24" tabindex="-1" aria-label="code-block-20-24"></a>predicted_labels <span class="op">=</span> []</span>
+<span id="cb20-25"><a href="#cb20-25" tabindex="-1" aria-label="code-block-20-25"></a><span class="cf">for</span> res <span class="kw">in</span> result:</span>
+<span id="cb20-26"><a href="#cb20-26" tabindex="-1" aria-label="code-block-20-26"></a>    <span class="bu">print</span>(res)</span>
+<span id="cb20-27"><a href="#cb20-27" tabindex="-1" aria-label="code-block-20-27"></a>    predicted_labels.append(res[<span class="st">'label'</span>])</span></code></pre>
 </div>
 <pre><code>{'label': 'Very Positive', 'score': 0.5586304068565369}
 {'label': 'Negative', 'score': 0.9448591470718384}
@@ -1211,24 +1228,22 @@ instances, but it is clearly not a scalable approach.</p>
 <span class="callout-header">Callout</span>
 <div class="callout-inner">
 <div class="callout-content">
-<p>Note that many models will provide a confidence <code>score</code>,
-with their predictions. It is very tempting to interpret these scores as
-a proxy to “how certain is the model of prediction X”. However, you
-should be very careful, this score is only a relative confidence measure
+<p>Note that many models assign scores to their predictions. It is very
+tempting to interpret these scores as a proxy for “how certain is the
+model of prediction X”. However, this score is only a relative measure
 with respect to the training data, and it does not always translate well
-to unseen data. Most of the times it is better to just ignore it,
-especially if it is a model that you didn’t train yourself.</p>
+to unseen data.</p>
 </div>
 </div>
 </div>
 <p>We can obtain an automated evaluation report, including the basic
 evaluation metrics, from <code>scikit-learn</code> by calling:</p>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1" aria-label="code-block-23-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1" aria-label="code-block-23-2"></a></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1" aria-label="code-block-23-3"></a><span class="bu">print</span>(classification_report(y_true<span class="op">=</span>gold_labels, y_pred<span class="op">=</span>predicted_labels))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1" aria-label="code-block-22-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1" aria-label="code-block-22-2"></a></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1" aria-label="code-block-22-3"></a><span class="bu">print</span>(classification_report(y_true<span class="op">=</span>gold_labels, y_pred<span class="op">=</span>predicted_labels))</span></code></pre>
 </div>
 <p>The output is a table showing a breakdown of metrics by class. The
 column <code>support</code> shows how many examples per class were
@@ -1264,28 +1279,28 @@ given <em>test set</em>. These examples are given in the
 <p>You can use the following helper functions, the first one helps you
 read the file and the second one normalizes the 5-class predictions into
 the 3-class annotations given in the test set:</p>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1" aria-label="code-block-25-1"></a><span class="kw">def</span> load_data(filename):</span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1" aria-label="code-block-25-2"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1" aria-label="code-block-25-3"></a>        lines <span class="op">=</span> f.readlines()[<span class="dv">1</span>:] <span class="co"># skip header</span></span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1" aria-label="code-block-25-4"></a>    sentences, labels <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>(line.strip().split(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> line <span class="kw">in</span> lines))</span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1" aria-label="code-block-25-5"></a>    <span class="cf">return</span> <span class="bu">list</span>(sentences), <span class="bu">list</span>(labels)</span>
-<span id="cb25-6"><a href="#cb25-6" tabindex="-1" aria-label="code-block-25-6"></a></span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1" aria-label="code-block-25-7"></a><span class="kw">def</span> get_normalized_labels(predictions):</span>
-<span id="cb25-8"><a href="#cb25-8" tabindex="-1" aria-label="code-block-25-8"></a>    <span class="co"># predicitons is a list with dicts such as {'label': 'positive', 'score': 0.95}</span></span>
-<span id="cb25-9"><a href="#cb25-9" tabindex="-1" aria-label="code-block-25-9"></a>    <span class="co"># We also need to normalize the labels to match the true labels (which are only 'positive' and 'negative')</span></span>
-<span id="cb25-10"><a href="#cb25-10" tabindex="-1" aria-label="code-block-25-10"></a>    normalized <span class="op">=</span> []</span>
-<span id="cb25-11"><a href="#cb25-11" tabindex="-1" aria-label="code-block-25-11"></a>    <span class="cf">for</span> pred <span class="kw">in</span> predictions:</span>
-<span id="cb25-12"><a href="#cb25-12" tabindex="-1" aria-label="code-block-25-12"></a>        label <span class="op">=</span> pred[<span class="st">'label'</span>].lower()</span>
-<span id="cb25-13"><a href="#cb25-13" tabindex="-1" aria-label="code-block-25-13"></a>        <span class="cf">if</span> <span class="st">'positive'</span> <span class="kw">in</span> label:</span>
-<span id="cb25-14"><a href="#cb25-14" tabindex="-1" aria-label="code-block-25-14"></a>            normalized.append(<span class="st">'positive'</span>)</span>
-<span id="cb25-15"><a href="#cb25-15" tabindex="-1" aria-label="code-block-25-15"></a>        <span class="cf">elif</span> <span class="st">'negative'</span> <span class="kw">in</span> label:</span>
-<span id="cb25-16"><a href="#cb25-16" tabindex="-1" aria-label="code-block-25-16"></a>            normalized.append(<span class="st">'negative'</span>)</span>
-<span id="cb25-17"><a href="#cb25-17" tabindex="-1" aria-label="code-block-25-17"></a>        <span class="cf">else</span>:</span>
-<span id="cb25-18"><a href="#cb25-18" tabindex="-1" aria-label="code-block-25-18"></a>            normalized.append(<span class="st">'neutral'</span>)</span>
-<span id="cb25-19"><a href="#cb25-19" tabindex="-1" aria-label="code-block-25-19"></a>    <span class="cf">return</span> normalized</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1" aria-label="code-block-24-1"></a><span class="kw">def</span> load_data(filename):</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1" aria-label="code-block-24-2"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1" aria-label="code-block-24-3"></a>        lines <span class="op">=</span> f.readlines()[<span class="dv">1</span>:] <span class="co"># skip header</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1" aria-label="code-block-24-4"></a>    sentences, labels <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>(line.strip().split(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> line <span class="kw">in</span> lines))</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1" aria-label="code-block-24-5"></a>    <span class="cf">return</span> <span class="bu">list</span>(sentences), <span class="bu">list</span>(labels)</span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1" aria-label="code-block-24-6"></a></span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1" aria-label="code-block-24-7"></a><span class="kw">def</span> get_normalized_labels(predictions):</span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1" aria-label="code-block-24-8"></a>    <span class="co"># predictions is a list with dicts such as {'label': 'positive', 'score': 0.95}</span></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1" aria-label="code-block-24-9"></a>    <span class="co"># We also need to normalize the labels to match the true labels (which are only 'positive' and 'negative')</span></span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1" aria-label="code-block-24-10"></a>    normalized <span class="op">=</span> []</span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1" aria-label="code-block-24-11"></a>    <span class="cf">for</span> pred <span class="kw">in</span> predictions:</span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1" aria-label="code-block-24-12"></a>        label <span class="op">=</span> pred[<span class="st">'label'</span>].lower()</span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1" aria-label="code-block-24-13"></a>        <span class="cf">if</span> <span class="st">'positive'</span> <span class="kw">in</span> label:</span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1" aria-label="code-block-24-14"></a>            normalized.append(<span class="st">'positive'</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" tabindex="-1" aria-label="code-block-24-15"></a>        <span class="cf">elif</span> <span class="st">'negative'</span> <span class="kw">in</span> label:</span>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1" aria-label="code-block-24-16"></a>            normalized.append(<span class="st">'negative'</span>)</span>
+<span id="cb24-17"><a href="#cb24-17" tabindex="-1" aria-label="code-block-24-17"></a>        <span class="cf">else</span>:</span>
+<span id="cb24-18"><a href="#cb24-18" tabindex="-1" aria-label="code-block-24-18"></a>            normalized.append(<span class="st">'neutral'</span>)</span>
+<span id="cb24-19"><a href="#cb24-19" tabindex="-1" aria-label="code-block-24-19"></a>    <span class="cf">return</span> normalized</span></code></pre>
 </div>
 </div>
 </div>
@@ -1297,22 +1312,22 @@ the 3-class annotations given in the test set:</p>
 </button>
 <div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb26">
+<div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1" aria-label="code-block-26-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report, precision_recall_fscore_support</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1" aria-label="code-block-26-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1" aria-label="code-block-26-3"></a></span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1" aria-label="code-block-26-4"></a>sentences, labels <span class="op">=</span> load_data(<span class="st">'data/sentiment_film_data.tsv'</span>)</span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1" aria-label="code-block-26-5"></a><span class="co"># The labels from our dataset</span></span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1" aria-label="code-block-26-6"></a>y_true <span class="op">=</span> labels</span>
-<span id="cb26-7"><a href="#cb26-7" tabindex="-1" aria-label="code-block-26-7"></a><span class="co"># Run the model to get predictions per sentence</span></span>
-<span id="cb26-8"><a href="#cb26-8" tabindex="-1" aria-label="code-block-26-8"></a>y_pred <span class="op">=</span> pipe(sentences)</span>
-<span id="cb26-9"><a href="#cb26-9" tabindex="-1" aria-label="code-block-26-9"></a><span class="co"># Normalize the labels to match the gold standard</span></span>
-<span id="cb26-10"><a href="#cb26-10" tabindex="-1" aria-label="code-block-26-10"></a>y_pred <span class="op">=</span> get_normalized_labels(y_pred)</span>
-<span id="cb26-11"><a href="#cb26-11" tabindex="-1" aria-label="code-block-26-11"></a></span>
-<span id="cb26-12"><a href="#cb26-12" tabindex="-1" aria-label="code-block-26-12"></a><span class="co"># Detailed report with all metrics</span></span>
-<span id="cb26-13"><a href="#cb26-13" tabindex="-1" aria-label="code-block-26-13"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1" aria-label="code-block-25-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report, precision_recall_fscore_support</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1" aria-label="code-block-25-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1" aria-label="code-block-25-3"></a></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1" aria-label="code-block-25-4"></a>sentences, labels <span class="op">=</span> load_data(<span class="st">'data/sentiment_film_data.tsv'</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1" aria-label="code-block-25-5"></a><span class="co"># The labels from our dataset</span></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1" aria-label="code-block-25-6"></a>y_true <span class="op">=</span> labels</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1" aria-label="code-block-25-7"></a><span class="co"># Run the model to get predictions per sentence</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1" aria-label="code-block-25-8"></a>y_pred <span class="op">=</span> pipe(sentences)</span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1" aria-label="code-block-25-9"></a><span class="co"># Normalize the labels to match the gold standard</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1" aria-label="code-block-25-10"></a>y_pred <span class="op">=</span> get_normalized_labels(y_pred)</span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1" aria-label="code-block-25-11"></a></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1" aria-label="code-block-25-12"></a><span class="co"># Detailed report with all metrics</span></span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1" aria-label="code-block-25-13"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span></code></pre>
 </div>
 <p>Here is the classification report:</p>
 <div class="codewrapper">
@@ -1345,16 +1360,18 @@ instances that fall into that particular combination of true and
 predicted labels. Perfect predictions would result in all counts
 appearing along the diagonal of the matrix, with zeros everywhere
 else.</p>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1" aria-label="code-block-28-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1" aria-label="code-block-28-2"></a></span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1" aria-label="code-block-28-3"></a><span class="kw">def</span> show_confusion_matrix(y_true, y_pred, labels<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1" aria-label="code-block-28-4"></a>    ConfusionMatrixDisplay.from_predictions(y_true, y_pred, display_labels<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1" aria-label="code-block-28-5"></a>    plt.show()</span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1" aria-label="code-block-28-6"></a></span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1" aria-label="code-block-28-7"></a>show_confusion_matrix(y_true, y_pred)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1" aria-label="code-block-27-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1" aria-label="code-block-27-2"></a></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1" aria-label="code-block-27-3"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1" aria-label="code-block-27-4"></a></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1" aria-label="code-block-27-5"></a><span class="kw">def</span> show_confusion_matrix(y_true, y_pred, labels<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1" aria-label="code-block-27-6"></a>    ConfusionMatrixDisplay.from_predictions(y_true, y_pred, display_labels<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1" aria-label="code-block-27-7"></a>    plt.show()</span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1" aria-label="code-block-27-8"></a></span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1" aria-label="code-block-27-9"></a>show_confusion_matrix(y_true, y_pred)</span></code></pre>
 </div>
 <p>This code shows the following matrix:</p>
 <figure><img src="fig/bert_sentiment_matrix.png" class="figure mx-auto d-block"></figure><p>Some of the insights from a confusion matrix include:</p>
@@ -1407,23 +1424,23 @@ pre-trained NER classifiers available in HuggingFace that you can use
 right away. We use once again the <code>pipeline()</code> wrapper to
 directly run the model for predictions , in this case with
 <code>task="ner"</code>. For example:</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" tabindex="-1" aria-label="code-block-29-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForTokenClassification</span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1" aria-label="code-block-29-2"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1" aria-label="code-block-29-3"></a></span>
-<span id="cb29-4"><a href="#cb29-4" tabindex="-1" aria-label="code-block-29-4"></a><span class="co"># We can also pass to the pipeline the initialized model &amp; tokenizer. </span></span>
-<span id="cb29-5"><a href="#cb29-5" tabindex="-1" aria-label="code-block-29-5"></a><span class="co"># This way we have access to both separately if we need them later</span></span>
-<span id="cb29-6"><a href="#cb29-6" tabindex="-1" aria-label="code-block-29-6"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
-<span id="cb29-7"><a href="#cb29-7" tabindex="-1" aria-label="code-block-29-7"></a>model <span class="op">=</span> AutoModelForTokenClassification.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
-<span id="cb29-8"><a href="#cb29-8" tabindex="-1" aria-label="code-block-29-8"></a></span>
-<span id="cb29-9"><a href="#cb29-9" tabindex="-1" aria-label="code-block-29-9"></a>ner_classifier <span class="op">=</span> pipeline(<span class="st">"token-classification"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer, aggregation_strategy<span class="op">=</span><span class="st">"first"</span>)</span>
-<span id="cb29-10"><a href="#cb29-10" tabindex="-1" aria-label="code-block-29-10"></a>example <span class="op">=</span> <span class="st">"My name is Wolfgang Schmid and I live in Berlin"</span></span>
-<span id="cb29-11"><a href="#cb29-11" tabindex="-1" aria-label="code-block-29-11"></a></span>
-<span id="cb29-12"><a href="#cb29-12" tabindex="-1" aria-label="code-block-29-12"></a>ner_results <span class="op">=</span> ner_classifier(example)</span>
-<span id="cb29-13"><a href="#cb29-13" tabindex="-1" aria-label="code-block-29-13"></a><span class="cf">for</span> nr <span class="kw">in</span> ner_results:</span>
-<span id="cb29-14"><a href="#cb29-14" tabindex="-1" aria-label="code-block-29-14"></a>    <span class="bu">print</span>(nr)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1" aria-label="code-block-28-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForTokenClassification</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1" aria-label="code-block-28-2"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1" aria-label="code-block-28-3"></a></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1" aria-label="code-block-28-4"></a><span class="co"># We can also pass to the pipeline the initialized model &amp; tokenizer. </span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1" aria-label="code-block-28-5"></a><span class="co"># This way we have access to both separately if we need them later</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1" aria-label="code-block-28-6"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1" aria-label="code-block-28-7"></a>model <span class="op">=</span> AutoModelForTokenClassification.from_pretrained(<span class="st">"dslim/bert-base-NER"</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1" aria-label="code-block-28-8"></a></span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1" aria-label="code-block-28-9"></a>ner_classifier <span class="op">=</span> pipeline(<span class="st">"token-classification"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer, aggregation_strategy<span class="op">=</span><span class="st">"first"</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1" aria-label="code-block-28-10"></a>example <span class="op">=</span> <span class="st">"My name is Wolfgang Schmid and I live in Berlin"</span></span>
+<span id="cb28-11"><a href="#cb28-11" tabindex="-1" aria-label="code-block-28-11"></a></span>
+<span id="cb28-12"><a href="#cb28-12" tabindex="-1" aria-label="code-block-28-12"></a>ner_results <span class="op">=</span> ner_classifier(example)</span>
+<span id="cb28-13"><a href="#cb28-13" tabindex="-1" aria-label="code-block-28-13"></a><span class="cf">for</span> nr <span class="kw">in</span> ner_results:</span>
+<span id="cb28-14"><a href="#cb28-14" tabindex="-1" aria-label="code-block-28-14"></a>    <span class="bu">print</span>(nr)</span></code></pre>
 </div>
 <p>The code now prints the following:</p>
 <pre><code>{'entity_group': 'PER', 'score': 0.9995944, 'word': 'Wolfgang Schmid', 'start': 11, 'end': 26}
@@ -1533,8 +1550,8 @@ when using this model for unknown predictions</p></li>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/03-transformers.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/03-transformers.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2025-12-01",
-  "datePublished": "2026-04-21"
+  "dateModified": "2026-04-22",
+  "datePublished": "2026-04-22"
 }
 
   </script><script>
