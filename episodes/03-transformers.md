@@ -434,7 +434,7 @@ Because it is trained on a multi-label dataset, multiple labels can have a high 
 
 In the process of fine-tuning, a generic language model like BERT is adapted to a specific task like text classification.
 This is faster than training a whole model, because we only need to train the _classifier_ layer, a small neural network, that can learn to choose between the classes (labels) for your custom classification problem.
-This classifier is a one-layer neural layer that assigns scores over a set of labels. It uses the input features provided by BERT, which already _encodes_ the meaning of the entire sequence in its hidden states. You can learn more about fine-tuning BERT-like models in [this HuggingFace tutorial](https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning).
+This classifier is a single-layer neural network that assigns scores over a set of labels. It uses the input features provided by BERT, which already _encodes_ the meaning of the entire sequence in its hidden states. You can learn more about fine-tuning BERT-like models in [this HuggingFace tutorial](https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning).
 :::
 
 ![BERT as an Emotion Classifier](fig/bert4b.png)
