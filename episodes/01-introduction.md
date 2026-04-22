@@ -199,7 +199,7 @@ however still several extra steps are needed to separate out punctuation appropr
 
 ::: callout
 ### Data Formatting
-Text comes from various sources and are available in different formats (e.g., Microsoft Word documents, PDF documents, ePub files, plain text files, Web pages etc...). The first step is to obtain a clean text representation that can be transferred into python UTF-8 strings that our scripts can manipulate.
+Texts come from various sources and are available in different formats (e.g., Microsoft Word documents, PDF documents, ePub files, plain text files, Web pages etc.). The first step is to obtain a clean text representation that can be transferred into Python UTF-8 strings that our scripts can manipulate.
 
 Data formatting operations might include:
 
