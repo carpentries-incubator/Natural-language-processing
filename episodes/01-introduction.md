@@ -301,11 +301,11 @@ We do not have to depend necessarily on the `Doc` and `Token` spaCy objects. Onc
 
 ```python
 # List of string tokens
-token_list = [token.text for token in doc if "\n" not in token.text]
-print(token_list[:50])
+tokens = [token.text for token in doc if "\n" not in token.text]
+print(tokens[:50])
 
 # Or a tokenized (each word separated by a single space) string of the whole text
-tokenized_text = " ".join(token_list)
+tokenized_text = " ".join(tokens)
 print(tokenized_text)
 ```
 :::
