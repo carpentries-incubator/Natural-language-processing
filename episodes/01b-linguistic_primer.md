@@ -30,7 +30,7 @@ There are several ways to describe the tasks that NLP solves. From the Machine L
 ![Supervised Learning](fig/intro_supervised.png){width="605"}
 
 
-Regardless of the chosen method, below we show one possible taxonomy of NLP tasks. The tasks are grouped together with some of their most prominent applications. This is definitely a non-exhaustive list, as in reality there are hundreds of them, but it is a good start:
+Regardless of the chosen method, we show one possible taxonomy of NLP tasks below. The tasks are grouped together with some of their most prominent applications. This is a non-exhaustive list, as in reality there are hundreds of them, but it is a good start:
 
 ![A taxonomy of NLP Tasks](fig/intro_taxonomy.png){width="630"}
 
