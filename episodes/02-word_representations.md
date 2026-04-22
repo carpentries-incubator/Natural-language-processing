@@ -322,16 +322,21 @@ w2v_model.most_similar(positive=['king', 'woman'], negative=['man'])
 
 The `gensim` package has implemented everything for us, which means that we can focus on obtaining clean data and then calling the `Word2Vec` object to train our own model with our own data.
 
-For this exercise, we will use the [LitBank](https://github.com/dbamman/litbank) corpus to train a Word2Vec model (if you haven't run the `invoke download-litbank` command from the setup instructions, please do so now). First, we will create a container for sentences represented as lists of tokens, which would give Gensim a convenient way to iterate over all examples. Here, the data loader will iterate over the files, storing a preprocessed version of each sentence:
+For this exercise, we will use the [LitBank](https://github.com/dbamman/litbank) corpus to train a Word2Vec model (if you haven't run the `invoke download-litbank` command from the setup instructions, please do so now). First, we will preprocess the sentences in all the books, storing each sentence on a single line into a file. This which would give Gensim a convenient way to iterate over all examples without having to preprocess them again at each training epoch:
 
 ```python
 from tqdm import tqdm
 
-sents = []
-for fpath in tqdm(fpaths):
-    doc = spacy_model(fpath.read_text())
-    for sent in doc.sents:
-        sents.append([tok.text.lower() for tok in sent if tok.is_alpha])
+processed_file = "data/litbank/processed.dat"
+overwrite_processed_file = False
+
+if (not processed_file.exists()) or overwrite_processed_file:
+    with open(processed_file, 'w') as processed:
+        for fpath in tqdm(fpaths):
+            doc = spacy_model(fpath.read_text())
+            for sent in doc.sents:
+                tokens = [tok.text.lower() for tok in sent if tok.is_alpha]
+                processed.write(' '.join(tokens) + "\n")
 ```
 
 Next, we will increase the verbosity of the default logger in order to monitor the training progress:
