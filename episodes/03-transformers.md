@@ -453,7 +453,7 @@ If you are using out-of-the-box models, evaluation is also mandatory, as you mus
 
 Several metrics are commonly used to evaluate NLP models, each offering different insights into performance. Here we will describe the 4 most used in suervised learning classifiers
 
-Let's give the toy example of classifying sentiments conveyed in texts.
+Let's look at the toy example of classifying sentiments conveyed in texts.
  In this task, there are three classes: `positive`, `neutral`, and `negative`. We have a model that return the label `positive`,`neutral` or `dog` given an input text. If we want to evaluate how good is our model at recognizing `positive`s, there are 4 possibilities when comparing with the ground truth (your labelled data): 
 
 1. **True Positives (TP):** the number of `positive` texts the model *correctly* labelled as `positive`.
