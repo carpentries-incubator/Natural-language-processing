@@ -10,7 +10,7 @@ title: Setup
 
 [Python](https://python.org) is a popular language for scientific computing, and a frequent choice for Natural Language Processing as well.
 
-To install Python, follow the [Beginner's Guide](https://wiki.python.org/moin/BeginnersGuide/Download) or head straight to the [download page](https://www.python.org/downloads/). 
+To install Python, follow the [Beginner's Guide](https://wiki.python.org/moin/BeginnersGuide/Download) or head straight to the [download page](https://www.python.org/downloads/).
 
 **Note:** We will support **Python 3.10 - 3.12** for this workshop.
 
@@ -34,7 +34,7 @@ Follow these steps to download all the workshop materials:
 
 4. Open a terminal (Mac/Linux) or Command Prompt (Windows) and navigate to the newly extracted directory "Natural-language-processing-main" in the terminal or command prompt.
 
-## 3. Create a Python Virtual Environment 
+## 3. Create a Python Virtual Environment
 
 [Pip](https://pip.pypa.io/en/stable/) is the package management system built into Python. We will use this to install all required packages for the workshop. Pip should be available in your system once you installed Python successfully. **Please note:** installing the packages can take some time, in particular on Windows.
 
@@ -123,7 +123,7 @@ If this command fails for whatever reason, download them separately as follows. 
 ### On Linux/macOs
 
 ```shell
-python3 -m gensim.downloader --download word2vec-google-news-300 
+python3 -m gensim.downloader --download word2vec-google-news-300
 ```
 
 :::
@@ -142,7 +142,7 @@ Then, download the [trained pipelines for English from Spacy](https://spacy.io/m
 
 ::: spoiler
 
-### On Linux/macOs
+### On Linux/MacOS
 
 ```shell
 python3 -m spacy download en_core_web_sm
@@ -176,7 +176,15 @@ ollama pull llama3.2:1b
 
 <img src="fig/ollama.png" alt="ollama" width="700"/>
 
-## 6. Start Jupyter Lab
+## 6. Download the LitBank corpus
+
+In the section about training `Word2Vec`, we will use the [LitBank](https://github.com/dbamman/litbank) repository, which contains preprocessed versions of 100 royalty-free books. This would produce richer representations than using a single source as it provides more diverse contexts in which words could be found. Use the following command to download the LitBank corpus under `data/litbank` (the directory will be created if it doesn't exist):
+
+```shell
+invoke download-litbank
+```
+
+## 7. Start Jupyter Lab
 
 We will teach using Python in [Jupyter Lab](http://jupyter.org/), a programming environment that runs in a web browser.
 
