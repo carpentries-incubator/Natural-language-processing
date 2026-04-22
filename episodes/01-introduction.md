@@ -301,11 +301,11 @@ We do not have to depend necessarily on the `Doc` and `Token` spaCy objects. Onc
 
 ```python
 # List of string tokens
-token_list = [token.text for token in doc if "\n" not in token.text]
-print(token_list[:50])
+tokens = [token.text for token in doc if "\n" not in token.text]
+print(tokens[:50])
 
 # Or a tokenized (each word separated by a single space) string of the whole text
-tokenized_text = " ".join(token_list)
+tokenized_text = " ".join(tokens)
 print(tokenized_text)
 ```
 :::
@@ -363,7 +363,7 @@ print(len(sentences))
 3317
 ```
 
-Note that in this case each sentence is a python object, and the property `.text` returns an untokenized string (in terms of words). But we can still access the list of word tokens inside each sentence object if we want:
+Note that in this case each sentence is a Python object, and the property `.text` returns an untokenized string (in terms of words). But we can still access the list of word tokens inside each sentence object if we want:
 
 ```python
 sents_sample = list(doc.sents)[:10]
@@ -391,7 +391,7 @@ lower_text[:10] # Beware that this is a list of strings now!
 
 
 ### Lemmatization 
-Another way to normalize words in a text is to transform them into their *dictionary form*. Consider how "eating", "ate", "eaten" are all variations of the root verb "eat". Each variation is sometimes known as an _inflection_ of the root word. Conversely, we say that the word "eat" is the _lemma_ for the words "eating", "eats", "eaten", "ate" etc. Lemmatization is therefore the process of rewriting each token or word in a given input text as its lemma. You can also use lemmatization for generating word embeddings. For example, you can have a single vector for `eat` instead of one vector per verb tense. 
+Another way to normalize words in a text is to transform them into their *dictionary form*. Consider how "eating", "ate", "eaten" are all variations of the root verb "eat". Each variation is known as an _inflection_ of the root word. Conversely, we say that the word "eat" is the _lemma_ for the words "eating", "eats", "eaten", "ate" etc. Lemmatization is therefore the process of rewriting each word in a given input text as its lemma. You can also use lemmatization for generating word embeddings. For example, you can have a single vector for `eat` instead of one vector per verb tense. 
 
 Lemmatization is not only a possible preprocessing step in NLP but also an NLP task on its own, with different algorithms for it. Therefore we also tend to use pre-trained models to perform lemmatization. Using spaCy we can access the lemmmatized version of each token with the `lemma_` property (notice the underscore!):
 
@@ -403,7 +403,7 @@ print(lemmas[:50])
 Note that the list of lemmas is now a list of strings.
 
 ### Named Entities
-The spaCy pipeline already runs by default more advanced task, such as Named Entity Recognition (NER), the task of identifying words or prhases that refer to unique real-world instances (normally proper nouns). You can access the entities with:
+The default spaCy pipeline already runs more advanced tasks, such as Named Entity Recognition (NER), the task of identifying words or phrases that refer to unique real-world instances (normally proper nouns). You can access the entities with:
 
 We can also see what named entities the model predicted based on the tokens:
 
