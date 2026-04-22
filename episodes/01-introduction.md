@@ -363,7 +363,7 @@ print(len(sentences))
 3317
 ```
 
-Note that in this case each sentence is a python object, and the property `.text` returns an untokenized string (in terms of words). But we can still access the list of word tokens inside each sentence object if we want:
+Note that in this case each sentence is a Python object, and the property `.text` returns an untokenized string (in terms of words). But we can still access the list of word tokens inside each sentence object if we want:
 
 ```python
 sents_sample = list(doc.sents)[:10]
