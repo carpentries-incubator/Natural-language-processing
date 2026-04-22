@@ -1,7 +1,7 @@
 ---
 title: "Introduction"
 teaching: 60
-exercises: 60
+exercises: 30
 ---
 
 ::: questions
@@ -63,11 +63,6 @@ print(len(english_words))
 
 The words are mostly well separated, however we do not get fully formed words (we have punctuation with the period after "trivial" and also special cases such as the abbreviation of "is not" into "isn't"). But at least we get a rough count of the number of words present in the sentence. 
 
-::: callout
-### A short history of word separation
-As any historian knows, word separation in written texts is a relatively new development. You can check this yourself next time you visit a city with ancient monuments. Word separation, as oddly as it might sound today, is an example of technology.
-:::
-
 Let's now look at the same example in Chinese:
 
 ``` python
@@ -102,6 +97,10 @@ print(len(chinese_words))  # Output: 7
 
 We can trust that the output is valid because we are using a verified library - `MicroTokenizer`, even though we don't speak Chinese. Another interesting aspect is that the Chinese sentence has more words than the English one, even though they convey the same meaning. This shows the complexity of dealing with more than one language at a time, as is the case in task such as **Machine Translation** (using computers to translate speech or text from one human language to another).
 
+::: callout
+### A short history of word separation
+As any historian would know, word separation in written texts is a relatively new development. You can check this yourself next time you visit a city with ancient monuments. Word separation, as oddly as it might sound today, is an example of technology.
+:::
 
 Natural Language Processing deals with the challenges of correctly processing and generating text in any language. This can be as simple as counting word frequencies to detect different writing styles, using statistical methods to classify texts into different categories, or using **deep neural networks** to generate human-like text by exploiting word co-occurrences in large amounts of texts.
 
@@ -225,13 +224,15 @@ And what if you need to extract text from MS Word docs or PDF files or Web pages
 
 ### The spaCy NLP Library
 
-A more sophisticated approach is to use specialized NLP libraries to handle these basic operations. One of the most popular NLP libraries is [spaCy](https://github.com/explosion/spaCy). It has a lot of advanced functionalities, but we will start by using it to segment the text into human-readable tokens. To start, we need to download the pre-trained model, in this case we only need the small English version:
+A more sophisticated approach to segment text files is by using specialized NLP libraries. One of the most popular is [spaCy](https://github.com/explosion/spaCy). SpaCy is a free open-source library that focuses on implementing NLP techniques to process text (in several languages, not just English) and extract insights form it in a functional and scalable fashion. Here we will start by using it to segment the text into human-readable tokens. To start, we need to download the pre-trained model, in this case we only need the small English version:
 
 ``` python
 ! python -m spacy download en_core_web_sm
 ```
 
-This is a model that spaCy already trained for us on a subset of web English data. Hence, the model already "knows" how to obtain clean tokens from English text. When the model processes a string, it does not only do the splitting for us but already provides more advanced linguistic properties of the tokens (such as part-of-speech tags, or named entities). You can check more languages and models in the [spacy documentation](https://spacy.io/models)
+This is a model that spaCy already trained for us on a subset of web English data. Hence, the model already "knows" how to obtain clean tokens from English text. When the model processes a string, it does not only do the splitting for us but already provides more advanced linguistic properties of the tokens (such as part-of-speech tags, or named entities). You can check more languages and models in the [spacy documentation](https://spacy.io/models).
+
+Now we will see how spaCy help us to process text and extract interesting properties from it.
 
 
 ### Tokenization 
@@ -296,28 +297,17 @@ Many older tokenizers are rule-based, meaning that they iterate over a number of
 The differences look subtle at the beginning, but if we carefully inspect the way spaCy splits the text, we can see the advantage of using a specialized tokenizer. 
 
 ::: callout
-
-We do not have to depend necessarily on the `Doc` and `Token` spaCy objects. Once we tokenized the text with the spaCy model, we can extract the list of words as a list of strings and continue our text analysis:
+We do not have to depend necessarily on the `Doc` and `Token` spaCy objects. Once we tokenized the text with a spaCy model, we can extract the list of words as a list of strings and continue our text analysis:
 
 ```python
+# List of string tokens
 token_list = [token.text for token in doc if "\n" not in token.text]
 print(token_list[:50])
-```
 
-We can even glue it back into a single string and work with a tokenized and "clean version" of our text:
-
-```python
+# Or a tokenized (each word separated by a single space) string of the whole text
 tokenized_text = " ".join(token_list)
 print(tokenized_text)
 ```
-
-and recover the list of tokens if we need them:
-
-```python
-token_list = tokenized_text.split(" ")
-print(token_list)
-```
-
 :::
 
 ### Text Properties
@@ -335,7 +325,7 @@ print(len(only_words))
 75062
 ```
 
-or keep only the verbs from our text:
+or keep only the verbs from our text, based on the Part-of-Speech tag that is predicted for each token:
 
 ``` python
 only_verbs = [token for token in doc if token.pos_ == "VERB"]  # Only verbs
@@ -383,6 +373,37 @@ for sent in sents_sample:
         print("\tToken:", token.text)
 ```
 
+### Lowercasing
+
+Removing uppercases to e.g. avoid treating "Dog" and "dog" as two different words could also be useful, for example to train word vector representations, where we want to merge both occurrences as they represent exactly the same concept. Lowercasing can be done with Python directly as:
+
+```python
+lower_text = text_flat.lower()
+lower_text[:100] # Beware that this is a python string operation
+```
+
+Beware that lowercasing the whole string as a first step might affect the tokenizer behavior since tokenization benefits from information provided by case-sensitive strings. We can therefore tokenize first using spaCy and then obtain the lowercase strings of each token using the `.lower_` property:
+
+```python
+lower_text = [token.lower_ for token in doc]
+lower_text[:10] # Beware that this is a list of strings now!
+```
+
+
+### Lemmatization 
+Another way to normalize words in a text is to transform them into their *dictionary form*. Consider how "eating", "ate", "eaten" are all variations of the root verb "eat". Each variation is sometimes known as an _inflection_ of the root word. Conversely, we say that the word "eat" is the _lemma_ for the words "eating", "eats", "eaten", "ate" etc. Lemmatization is therefore the process of rewriting each token or word in a given input text as its lemma. You can also use lemmatization for generating word embeddings. For example, you can have a single vector for `eat` instead of one vector per verb tense. 
+
+Lemmatization is not only a possible preprocessing step in NLP but also an NLP task on its own, with different algorithms for it. Therefore we also tend to use pre-trained models to perform lemmatization. Using spaCy we can access the lemmmatized version of each token with the `lemma_` property (notice the underscore!):
+
+```python
+lemmas = [token.lemma_ for token in doc]
+print(lemmas[:50])
+```
+
+Note that the list of lemmas is now a list of strings.
+
+### Named Entities
+The spaCy pipeline already runs by default more advanced task, such as Named Entity Recognition (NER), the task of identifying words or prhases that refer to unique real-world instances (normally proper nouns). You can access the entities with:
 
 We can also see what named entities the model predicted based on the tokens:
 
@@ -401,23 +422,7 @@ GPE England
 DATE yesterday
 ```
 
-### Lowercasing
-
-Removing uppercases to e.g. avoid treating "Dog" and "dog" as two different words is also a common step, for example to train word vector representations, we want to merge both occurrences as they represent exactly the same concept. Lowercasing can be done with Python directly as:
-
-```python
-lower_text = text_flat.lower()
-lower_text[:100] # Beware that this is a python string operation
-```
-
-Beware that lowercasing the whole string as a first step might affect the tokenizer behavior since tokenization benefits from information provided by case-sensitive strings. We can therefore tokenize first using spaCy and then obtain the lowercase strings of each token using the `.lower_` property:
-
-```python
-lower_text = [token.lower_ for token in doc]
-lower_text[:10] # Beware that this is a list of strings now!
-```
-
-In other tasks, such as Named Entity Recognition (NER), lowercasing before training can actually lower the performance of your model. This is because words that start with an uppercase (not preceded by a period) can represent proper nouns that map into Entities, for example:
+Note that this is a case where lowercasing your text can significantly lower the performance of your model. This is because words that start with an uppercase (not preceded by a period) usually represent proper nouns that map into Entities, for example:
 
 ```python
 import spacy
@@ -474,20 +479,6 @@ print(len(entity_types))
 
 :::
 ::::
-
-### Lemmatization 
-Although it has become less widely used in modern NLP approaches, normalizing words into their *dictionary form* can help to focus on relevant aspects of text. Consider how "eating", "ate", "eaten" are all variations of the root verb "eat". Each variation is sometimes known as an _inflection_ of the root word. Conversely, we say that the word "eat" is the _lemma_ for the words "eating", "eats", "eaten", "ate" etc. Lemmatization is therefore the process of rewriting each token or word in a given input text as its lemma.
-
-Lemmatization is not only a possible preprocessing step in NLP but also an NLP task on its own, with different algorithms for it. Therefore we also tend to use pre-trained models to perform lemmatization. Using spaCy we can access the lemmmatized version of each token with the `lemma_` property (notice the underscore!):
-
-```python
-lemmas = [token.lemma_ for token in doc]
-print(lemmas[:50])
-```
-
-Note that the list of lemmas is now a list of strings.
-
-Having a lemmatized text allows us to merge the different surface occurrences of the same concept into a single token. This can be very useful for count-based NLP methods such as topic modelling approaches which count the frequency of certain words to see how prevalent a given topic is within a document. If you condense "eat", "eating", "ate", "eaten" to the same token "eat" then you can count four occurrences of the same "topic" in a text, instead of treating these four tokens as distinct or unrelated topics just because they are spelled differently. You can also use lemmatization for generating word embeddings. For example, you can have a single vector for `eat` instead of one vector per verb tense. 
 
 
 ::: callout

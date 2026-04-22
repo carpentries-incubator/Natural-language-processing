@@ -1,18 +1,18 @@
 ---
 title: "A Primer on Linguistics"
-teaching: 60
-exercises: 60
+teaching: 30
+exercises: 30
 ---
 
 ::: questions
--   What makes text different from other data?
 -   How is language approached from a Machine Learning perspective?
+-   What makes text different from other data?
 -   What linguistic properties should we consider when dealing with texts? 
 :::
 
 ::: objectives
 -   Learn a taxonomy of NLP tasks
--   Understand basic linguistics concepts in NLP
+-   Identify basic linguistic concepts in NLP
 :::
 
 Natural language exhibits a set of properties that make it more challenging to process than other types of data such as tables, spreadsheets or time series. To address this, we can first visit the existing different ways of abstracting the problems when dealing with texts. This is what is called an NLP task: deciding on the important aspects that interest us in a the text and how to extract them. We will then revisit basic linguistic concepts that make text processing difficult in general. **Language is hard to process because it is compositional, ambiguous, discrete and sparse**. Let's visit each of these concepts and understand them.
