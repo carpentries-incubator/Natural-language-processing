@@ -391,7 +391,7 @@ lower_text[:10] # Beware that this is a list of strings now!
 
 
 ### Lemmatization 
-Another way to normalize words in a text is to transform them into their *dictionary form*. Consider how "eating", "ate", "eaten" are all variations of the root verb "eat". Each variation is sometimes known as an _inflection_ of the root word. Conversely, we say that the word "eat" is the _lemma_ for the words "eating", "eats", "eaten", "ate" etc. Lemmatization is therefore the process of rewriting each token or word in a given input text as its lemma. You can also use lemmatization for generating word embeddings. For example, you can have a single vector for `eat` instead of one vector per verb tense. 
+Another way to normalize words in a text is to transform them into their *dictionary form*. Consider how "eating", "ate", "eaten" are all variations of the root verb "eat". Each variation is known as an _inflection_ of the root word. Conversely, we say that the word "eat" is the _lemma_ for the words "eating", "eats", "eaten", "ate" etc. Lemmatization is therefore the process of rewriting each word in a given input text as its lemma. You can also use lemmatization for generating word embeddings. For example, you can have a single vector for `eat` instead of one vector per verb tense. 
 
 Lemmatization is not only a possible preprocessing step in NLP but also an NLP task on its own, with different algorithms for it. Therefore we also tend to use pre-trained models to perform lemmatization. Using spaCy we can access the lemmmatized version of each token with the `lemma_` property (notice the underscore!):
 
