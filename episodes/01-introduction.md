@@ -112,9 +112,9 @@ The term LLM now is often (and wrongly) used as a synonym of Artificial Intellig
 
 ![NLP is an interdisciplinary field, and LLMs are just a subset of it](fig/intro0_cs_nlp.png)
 
-LLM is a blanket term for an assembly of large neural networks that are trained on vast amounts of text data with the objective of optimizing for language modeling. Once they are trained, they are used to generate human-like text or fine-tunned to perform much more advanced tasks. Indeed, the surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answering elaborate questions, translating languages, solving complex problems, generating narratives that emulate reasoning, and many more. All of this with a single tool.
+LLM is a blanket term for an assembly of large neural networks that are trained on vast amounts of text data with the objective of optimising for language modelling. Generative models are optimised to output human-like text, but can also used to perform other tasks. Indeed, the surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answering elaborate questions, translating languages, solving complex problems, generating narratives that emulate reasoning, and many more. All of this with a single tool.
 
-It is important, however, to pay attention to what is happening behind the scenes in order to be able **trace sources of errors and biases** that get hidden in the complexity of these models. The purpose of this course is precisely to take a step back and understand that:
+It is important, however, to pay attention to what is happening behind the scenes in order to **trace sources of errors and biases** that get hidden in the complexity of these models. The purpose of this course is precisely to take a step back and understand that:
 
 -   There are a wide variety of tools available, beyond LLMs, that do not require so much computing power
 -   Sometimes a much simpler method than an LLM is available that can solve our problem at hand
