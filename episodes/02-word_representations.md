@@ -650,6 +650,57 @@ Is there a strict minimum? Not really. It’s important to keep in mind that ``v
 While Word2vec models typically perform better with large datasets containing millions of words, using a single page is sufficient for demonstration and learning purposes. This smaller dataset allows us to train the model quickly and understand how word2vec works without the need for extensive computational resources.
 :::
 
+## Topic Modelling
+
+### What is a Topic?
+
+Another perspective on exploring a document collection is topic modelling.
+This approach aims to discover which topics occur in these documents, bot.
+
+A proper linguistic definition of the abstract concept of _topic_ is difficult because "what is being talked about" in a sentence or a document is not fully represented through specific words, but is _latent_ through context and interpretation.
+
+In this context, however, a topic is typically represented as a weighted list of _words_ like this:
+
+| Topic 1 | Topic 2 | Topic ... |
+| ------- | ------- | --- |
+| cat     | boat    | ... |
+| dog     | car     | ... |
+| ...     | ...     | ... |
+
+A document, on the other hand, is represented as a weighted list of _topics_, for instance:
+
+| Document 1 | Document 2 | Document ... |
+| ---------- | ---------- | ------------ |
+| Topic 5    | Topic 8    | ... |
+| Topic 1    | Topic 3    | ... |
+| Topic 2    | Topic 5    | ... |
+
+::: callout
+
+### Unsupervised Learning and Self-Supervised Learning
+
+In machine learning terminology, Topic Modelling algorithms apply _Unsupervised Learning_ because they do not rely on any human annotations about the data.
+Instead, they form _clusters_ by grouping similar data together.
+Algorithms differ in how they measure similarity and how they form clusters.
+
+:::
+
+### Topic Modelling
+
+There are various implementations of topic modelling, such as LDA (_Latent Dirichlet Allocation_).
+It represents both topics and documents as probability distributions across words and topics respectively, based on word co-ocurrences in the training data.
+
+An approach that makes use of BERT (or other) language models is [BERTopic](https://maartengr.github.io/BERTopic/index.html).
+Install it like this:
+
+```python
+pip install bertopic
+```
+
+
+
+
+
 
 ::: keypoints
 -   We can run a preprocessing pipeline to obtain clear words that can be used as features
