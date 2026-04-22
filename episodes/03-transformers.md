@@ -521,7 +521,7 @@ for res in result:
 We can see that the model predicts correctly the 4 examples we gave. This is unsurprising as they are incredibly obvious examples. We can also print the results and inspect them because they are only 4 instances, but it is clearly not a scalable approach. 
 
 ::: callout
-Note that many models will provide a score, with their predictions. It is very tempting to interpret these scores as a proxy to "how certain is the model of prediction X". However, this score is only a relative measure with respect to the training data, and it does not always translate well to unseen data.
+Note that many models assign scores to their predictions. It is very tempting to interpret these scores as a proxy for "how certain is the model of prediction X". However, this score is only a relative measure with respect to the training data, and it does not always translate well to unseen data.
 :::
 
 We can obtain an automated evaluation report, including the basic evaluation metrics, from `scikit-learn` by calling:
