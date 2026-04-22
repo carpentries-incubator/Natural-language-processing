@@ -113,9 +113,9 @@ The term LLM now is often (and wrongly) used as a synonym of Artificial Intellig
 
 ![NLP is an interdisciplinary field, and LLMs are just a subset of it](fig/intro0_cs_nlp.png)
 
-LLM is a blanket term for an assembly of large neural networks that are trained on vast amounts of text data with the objective of optimizing for language modeling. Once they are trained, they are used to generate human-like text or fine-tunned to perform much more advanced tasks. Indeed, the surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answering elaborate questions, translating languages, solving complex problems, generating narratives that emulate reasoning, and many more. All of this with a single tool.
+LLM is a blanket term for an assembly of large neural networks that are trained on vast amounts of text data with the objective of optimizing for language modelling. Generative models are optimized to output human-like text, but can also used to perform other tasks. Indeed, the surprising and fascinating properties that emerge from training models at this scale allows us to solve different complex tasks such as answering elaborate questions, translating languages, solving complex problems, generating narratives that emulate reasoning, and many more. All of this with a single tool.
 
-It is important, however, to pay attention to what is happening behind the scenes in order to be able **trace sources of errors and biases** that get hidden in the complexity of these models. The purpose of this course is precisely to take a step back and understand that:
+It is important, however, to pay attention to what is happening behind the scenes in order to **trace sources of errors and biases** that get hidden in the complexity of these models. The purpose of this course is precisely to take a step back and understand that:
 
 -   There are a wide variety of tools available, beyond LLMs, that do not require so much computing power
 -   Sometimes a much simpler method than an LLM is available that can solve our problem at hand
@@ -516,7 +516,7 @@ print(content_words)
 ::: callout
 Sparsity is closely related to what is frequently called **domain-specific data**. The discourse context in which language is used varies importantly across disciplines (domains). Take for example law texts and medical texts which are typically filled with domain-specific jargon. We should expect the top part of the distribution to contain mostly the same words as they tend to be stop words. But once we remove the stop words, the top of the distribution will contain very different content words. 
 
-Also, the meaning of concepts described in each domain might significantly differ. For example the word "trial" refers to a procedure for examining evidence in court, but in the medical domain this could refer to a clinical "trial" which is a procedure to test the efficacy and safety of treatments on patients. For this reason there are specialized models and corpora that model language use in specific domains. The concept of fine-tuning a general purpose model with domain-specific data is also popular, even when using LLMs.
+Also, the meaning of concepts described in each domain might significantly differ. For example the word "trial" refers to a procedure for examining evidence in court, but in the medical domain this could refer to a clinical "trial" which is a procedure to test the efficacy and safety of treatments on patients. For this reason there are specialized models and corpora that model language use in specific domains.
 :::
 
 ### Discreteness
