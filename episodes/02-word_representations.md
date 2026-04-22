@@ -552,24 +552,45 @@ w2v_model.most_similar(positive=['king', 'woman'], negative=['man'])
 
 ## Train your own Word2Vec
 
-The `gensim` package has implemented everything for us, this means we have to focus mostly on obtaining clean data and then calling the `Word2Vec` object to train our own model with our own data. This can be done like follows:
+The `gensim` package has implemented everything for us, which means that we can focus on obtaining clean data and then calling the `Word2Vec` object to train our own model with our own data.
 
-``` python
-import spacy
-from gensim.models import Word2Vec 
+For this exercise, we will use the [LitBank](https://github.com/dbamman/litbank) corpus to train a Word2Vec model (if you haven't run the `invoke download-litbank` command from the setup instructions, please do so now). First, we will create a container for sentences represented as lists of tokens, which would give Gensim a convenient way to iterate over all examples. Here, the data loader will iterate over the files, storing a preprocessed version of each sentence:
 
-# Load and Tokenize the Text using spacy
-spacy_model = spacy.load("en_core_web_sm")
-with open("data/84_frankenstein_clean.txt") as f:
-    book_text = f.read()    
-book_doc = spacy_model(book_text)
-clean_tokens = [tok.text.lower() for tok in book_doc if tok.is_alpha and not tok.is_stop]
+```python
+from tqdm import tqdm
 
-# Call and Train the Word2Vec model
-model = Word2Vec([clean_tokens], sg=0 , vector_size=300, window=5, min_count=1, workers=4)
+sents = []
+for fpath in tqdm(fpaths):
+    doc = spacy_model(fpath.read_text())
+    for sent in doc.sents:
+        sents.append([tok.text.lower() for tok in sent if tok.is_alpha])
 ```
 
-With this line code we are configuring our whole Word2Vec training schema. We will be using CBOW (`sg=0` means CBOW, `sg=1` means Skip-gram). We are interested in having vectors with 300 dimensions `vector_size=300` and a context size of 5 surrounding words `window=5`. Because we already filtered our tokens, we include all words present in the filtered corpora, regardless of their frequency of occurrence `min_count=1`. The last parameters tells python to use 4 CPU cores for training.
+Next, we will increase the verbosity of the default logger in order to monitor the training progress:
+
+```python
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+```
+
+All that is left is to create a `Word2Vec` model and train it on our corpus:
+
+``` python
+from gensim.models import Word2Vec
+
+# Train a Word2Vec model
+model = Word2Vec(sentences=sents, sg=0, hs=1, vector_size=300, window=10, min_count=1, workers=4, epochs=50)
+```
+
+With this line of code, we are configuring our whole Word2Vec training schema with the following parameters:
+
+- Continuous bag of words (CBOW), indicated by `sg=0` (`sg=1` means Skip-gram).
+- Hierarchical softmax (`hs=1`), which is a trick to speed up training over large categorical datasets.
+- A vector dimensionality of 300 (`vector_size=300`).
+- A context size (words surrounding the current one) of `10` (`window=10`).
+- Since we have already filtered our tokens, we include all words present in the filtered corpora, regardless of their frequency of occurrence (`min_count=1`).
+- `4` CPU cores for training (`workers=4`).
+- `5` training epochs (`epochs=5`).
 
 See the Gensim [documentation](https://radimrehurek.com/gensim/models/word2vec.html) for more training options.
 
