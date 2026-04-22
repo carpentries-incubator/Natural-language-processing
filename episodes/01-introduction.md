@@ -203,16 +203,16 @@ Texts come from various sources and are available in different formats (e.g., Mi
 
 Data formatting operations might include:
 
-- Removal of special or noisy characters. For example:
-    - Random symbols: "The total cost is $120.00#" → remove #
-    - Incorrectly recognized letters or numbers: 1 misread as l, 0 as O, etc. Example: "l0ve" → should be "love"
-    - Control or formatting characters: \n, \t, \r appearing in the middle of sentences. Example: "Please\nsubmit\tyour form." → "Please submit your form."
-    - Non-displayable characters: �, �, or other placeholder symbols where OCR failed. Example: "Th� quick brown fox" → "The quick brown fox"
 - Remove HTML tags (e.g., if you are extracting text from Web pages)
 - Strip non-meaningful punctuation (e.g., "The quick brown fox jumps over the lazy dog and con-
 tinues to run across the field.)
 - Strip footnotes, headers, tables, images etc.
 - Remove URLs or phone numbers
+- Removal of special or noisy characters (from scanned texts, for example):
+    - Random symbols: "The total cost is $120.00#" → remove #
+    - Incorrectly recognized letters or numbers: 1 misread as l, 0 as O, etc. Example: "l0ve" → should be "love"
+    - Control or formatting characters: \n, \t, \r appearing in the middle of sentences. Example: "Please\nsubmit\tyour form." → "Please submit your form."
+    - Non-displayable characters: �, �, or other placeholder symbols where OCR failed. Example: "Th� quick brown fox" → "The quick brown fox"
 
 And what if you need to extract text from MS Word docs or PDF files or Web pages? There are various Python libraries for helping you extract and manipulate text from these kinds of sources.
 
