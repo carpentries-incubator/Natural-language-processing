@@ -7,6 +7,7 @@ title: 'Reference'
 ### Index of Terms
 
 - [Accuracy](#accuracy)
+- [Ambiguity](#ambiguity)
 - [Attention Mechanism](#attention-mechanism)
 - [Authorship Attribution](#authorship-attribution)
 - [Backpropagation](#backpropagation)
@@ -30,6 +31,7 @@ title: 'Reference'
 - [Distributional Semantics](#distributional-semantics)
 - [Document Clustering](#document-clustering)
 - [Domain-Specific Data](#domain-specific-data)
+- [Downstream Task](#downstream-task)
 - [ELMo](#elmo)
 - [Embedder LLM vs. Generative LLM](#embedder-vs-generative)
 - [Encoder](#encoder)
@@ -43,6 +45,7 @@ title: 'Reference'
 - [Hyperparameters](#hyperparameters)
 - [Information Retrieval (IR)](#information-retrieval)
 - [IOB Notation](#iob-notation)
+- [Knowledge Base](#knowledge-base)
 - [Language Identification](#language-identification)
 - [Language Modeling](#language-modeling)
 - [Large Language Model (LLM)](#llm)
@@ -116,7 +119,7 @@ title: 'Reference'
 ### NLP Fundamentals
 
 <a id="natural-language"></a>**Natural Language**
-: Human language as it is naturally spoken or written, as opposed to artificial languages such as programming languages. Natural languages are complex, ambiguous, and heavily context-dependent, which makes them challenging for computers to process.
+: Human language as it is naturally spoken or written, as opposed to artificial languages such as programming languages. Natural languages are complex, [ambiguous](#ambiguity), and heavily context-dependent, which makes them challenging for computers to process.
 
 <a id="nlp"></a>**Natural Language Processing (NLP)**
 : An area of research and application focused on making human language processable by computers so that they can perform useful tasks. It spans a range of techniques, from simple word counts to complex deep learning architectures.
@@ -133,6 +136,9 @@ title: 'Reference'
 <a id="corpus"></a>**Corpus / Corpora**
 : A corpus (plural: corpora) is a collection of text documents used for training or evaluating NLP models.
 
+<a id="knowledge-base"></a>**Knowledge Base**
+: A structured repository of entities, concepts, and the relations between them, organized so that machines can query and reason over it. In NLP, knowledge bases such as [Wikidata](https://www.wikidata.org/) or [WordNet](https://wordnet.princeton.edu/) provide structured world knowledge that grounds tasks such as [Entity Linking](#entity-linking) and [Question Answering](#question-answering).
+
 <a id="language-modeling"></a>**Language Modeling**
 : The task of predicting the most likely next token given a sequence of preceding and/or subsequent tokens. It is the pre-training objective behind the latest NLP models, including Word2Vec, BERT and modern LLMs.
 
@@ -147,17 +153,20 @@ title: 'Reference'
 <a id="compositionality"></a>**Compositionality**
 : Language is built from layers: characters form words, words form phrases, and phrases form sentences, with meaning emerging at each level.
 
+<a id="ambiguity"></a>**Ambiguity**
+: The property of a word, phrase, or sentence admitting more than one interpretation. Ambiguity is pervasive in natural language and one of the central challenges for NLP systems, which must determine the intended meaning from context alone. It arises at multiple linguistic levels: [Morphological](#morphological-ambiguity), [Syntactic](#syntactic-ambiguity), [Semantic](#semantic-ambiguity), and [Pragmatic](#pragmatic-ambiguity).
+
 <a id="morphological-ambiguity"></a>**Morphological Ambiguity**
-: Occurs when the same word form can be parsed in two or more ways. For example, "unlockable" can mean either "capable of being unlocked" or "impossible to lock," depending on where the morpheme boundary falls (*un-lockable* vs. *unlock-able*). Disambiguating this happens almost automatically in human speakers, but poses a challenge when processing text with computational approaches.
+: A form of [ambiguity](#ambiguity) occurring when the same word form can be parsed in two or more ways. For example, "unlockable" can mean either "capable of being unlocked" or "impossible to lock," depending on where the morpheme boundary falls (*un-lockable* vs. *unlock-able*). Disambiguating this happens almost automatically in human speakers, but poses a challenge when processing text with computational approaches.
 
 <a id="syntactic-ambiguity"></a>**Syntactic Ambiguity**
-: Occurs when a sentence can be parsed with more than one grammatical structure, each parse is a valid structure but entails a different meaning.
+: A form of [ambiguity](#ambiguity) occurring when a sentence can be parsed with more than one grammatical structure, each parse being a valid structure but entailing a different meaning.
 
 <a id="semantic-ambiguity"></a>**Semantic Ambiguity**
-: Occurs when syntactically identical sentences imply different meanings due to word sense (or contextual placement of an expression). "Drive the cat to the vet" uses "drive" very differently from "drive the car tomorrow", eventhough they have the same syntactic structure.
+: A form of [ambiguity](#ambiguity) occurring when syntactically identical sentences imply different meanings due to word sense (or contextual placement of an expression). "Drive the cat to the vet" uses "drive" very differently from "drive the car tomorrow", eventhough they have the same syntactic structure.
 
 <a id="pragmatic-ambiguity"></a>**Pragmatic Ambiguity**
-: Occurs when meaning depends on emphasis, tone, or context beyond the literal words. "I never said she stole my money" shifts meaning entirely depending on which word is stressed.
+: A form of [ambiguity](#ambiguity) occurring when meaning depends on emphasis, tone, or context beyond the literal words. "I never said she stole my money" shifts meaning entirely depending on which word is stressed.
 
 <a id="sparsity"></a>**Sparsity**
 : The phenomenon where a word or concept of interest appears very rarely in a large body of text. Even with millions of words, particular terms may comprise only a tiny fraction of the corpus, making statistical estimation difficult.
@@ -209,7 +218,7 @@ title: 'Reference'
 : The task of identifying semantic relationships between named entities in a text. For example, from "Apple is based in California," the extracted relation is (Apple, based\_in, California).
 
 <a id="entity-linking"></a>**Entity Linking**
-: The task of disambiguating named entities in text by connecting them to their corresponding entries in a knowledge base. For example, linking "Mary Shelley" to her Wikipedia page.
+: The task of disambiguating named entities in text by connecting them to their corresponding entries in a [knowledge base](#knowledge-base). For example, linking "Mary Shelley" to her Wikipedia page.
 
 <a id="srl"></a>**Semantic Role Labeling (SRL)**
 : The task of identifying "who did what to whom" in a sentence. For example, labeling agents, patients, and other participants of the event described by the text.
@@ -224,7 +233,7 @@ title: 'Reference'
 : The task of finding relevant documents or passages from a large collection of unstructured text in response to a user query. Web search engines are the most prominent application.
 
 <a id="text-generation"></a>**Text Generation**
-: The task of producing new text from a given input, typically token by token conditioned on a premise and the previously generated output. It encompasses tasks such as machine translation, summarization, and question answering. For example int machine translation the premise is a sentence in the source language which conditions how the sentence in the target language should start.
+: The task of producing new text from a given input, typically token by token conditioned on a premise and the previously generated output. It encompasses tasks such as [machine translation](#machine-translation), [summarization](#summarization), and [question answering](#question-answering). For example int machine translation the premise is a sentence in the source language which conditions how the sentence in the target language should start.
 
 <a id="summarization"></a>**Summarization**
 : A text generation task that produces a shorter version of a longer text. It can be extractive (selecting key sentences verbatim) or abstractive (generating new sentences that capture the main ideas).
@@ -277,7 +286,10 @@ title: 'Reference'
 : The process of continuing the training of a pre-trained model on a smaller, task-specific dataset. Fine-tuning adapts the general knowledge of the pre-trained model to the nuances of a specific domain or task, usually requiring much less data and compute than training from scratch.
 
 <a id="transfer-learning"></a>**Transfer Learning**
-: The practice of reusing knowledge from a model trained on one task to improve performance on a related but different task. Fine-tuning is the most common form of transfer learning in NLP.
+: The practice of reusing knowledge from a model trained on one task to improve performance on a related [downstream task](#downstream-task). Fine-tuning is the most common form of transfer learning in NLP.
+
+<a id="downstream-task"></a>**Downstream Task**
+: The specific NLP task a pre-trained model is adapted to solve after pre-training — for example, [sentiment analysis](#sentiment-analysis), [named entity recognition](#ner), or [machine translation](#machine-translation). The term contrasts with the upstream pre-training objective (e.g., [language modeling](#language-modeling)) and reflects the typical [transfer learning](#transfer-learning) workflow: pre-train on general data, then fine-tune on the downstream task of interest.
 
 <a id="distributional-semantics"></a>**Distributional Semantics**
 : An approach to meaning based on the principle that "words that appear in similar contexts have similar meanings." By studying word co-occurrence patterns in large text collections, we can infer that "pizza" and "hamburger" are semantically closer than "car" and "cat", without any hand-crafted definitions.
@@ -334,7 +346,7 @@ title: 'Reference'
 ### Transformer Architecture
 
 <a id="transformer"></a>**Transformer**
-: A deep neural network architecture introduced in "Attention Is All You Need" (Vaswani et al., 2017), originally designed for machine translation. It uses attention mechanisms rather than recurrence, enabling highly parallelizable training at scale. It is the foundational architecture behind BERT, GPT, and most modern LLMs.
+: A deep neural network architecture introduced in "Attention Is All You Need" (Vaswani et al., 2017), originally designed for [machine translation](#machine-translation). It uses attention mechanisms rather than recurrence, enabling highly parallelizable training at scale. It is the foundational architecture behind BERT, GPT, and most modern LLMs.
 
 <a id="encoder"></a>**Encoder**
 : The Transformer component that reads an input sequence and produces rich, context-aware representations of it. Encoder-only models like BERT are specialized for understanding and representing text.
@@ -367,7 +379,7 @@ title: 'Reference'
 : A contextualized word representation model (Peters et al., 2018) that produces different vectors for the same word depending on its context, using bidirectional LSTM networks. ELMo was a key precursor to BERT, introducing effective transfer learning to NLP.
 
 <a id="ulmfit"></a>**ULMFiT (Universal Language Model Fine-Tuning)**
-: A transfer learning method (Howard & Ruder, 2018) showing that a single language model pre-trained on general text can be fine-tuned for many downstream NLP tasks. It established the pre-train-then-fine-tune paradigm that BERT would later scale dramatically.
+: A transfer learning method (Howard & Ruder, 2018) showing that a single language model pre-trained on general text can be fine-tuned for many [downstream NLP tasks](#downstream-task). It established the pre-train-then-fine-tune paradigm that BERT would later scale dramatically.
 
 <a id="roberta"></a>**RoBERTa**
 : A BERT variant (Liu et al., 2019) trained with improved procedures: more data, longer training, and removal of the Next Sentence Prediction objective. RoBERTa consistently outperforms the original BERT on many benchmarks.
@@ -417,7 +429,7 @@ title: 'Reference'
 : The maximum number of tokens an LLM can process in a single interaction. BERT was limited to 512 tokens; some current LLMs can handle several million. A larger context window allows the model to reason over longer documents and conversation histories.
 
 <a id="base-model"></a>**Base Model**
-: A language model trained on raw text data with a next-token prediction objective, before any post-training. A base model is not yet suitable for direct conversation, it is merely the starting point that provides linguistic knowledge for further fine-tuning in more specific (downstream) tasks.
+: A language model trained on raw text data with a next-token prediction objective, before any post-training. A base model is not yet suitable for direct conversation, it is merely the starting point that provides linguistic knowledge for further fine-tuning in more specific [downstream tasks](#downstream-task).
 
 <a id="post-training"></a>**Post-training**
 : The set of fine-tuning steps applied after base model training to make an LLM useful as a conversational assistant. It includes Supervised Fine-Tuning (SFT), Reinforcement Learning from Human Feedback (RLHF), and safety training.
