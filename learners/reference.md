@@ -500,7 +500,6 @@ title: 'Reference'
 - Peters et al. (2018). *Deep Contextualized Word Representations* (ELMo). <https://aclanthology.org/N18-1202.pdf>
 - Howard & Ruder (2018). *Universal Language Model Fine-tuning for Text Classification* (ULMFiT). <https://aclanthology.org/P18-1031.pdf>
 - Lenci (2018). *Distributional Models of Word Meaning* (survey on distributional semantics). <https://arxiv.org/pdf/1905.01896>
-- Fan et al. (2018). *Hierarchical Neural Story Generation* (Top-K sampling). <https://arxiv.org/pdf/1805.04833>
 - Huang et al. (2024). *Survey on Hallucination in Large Language Models* (confabulation). <https://arxiv.org/abs/2406.04175>
 
 ### Tools & Libraries
