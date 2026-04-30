@@ -685,21 +685,231 @@ Algorithms differ in how they measure similarity and how they form clusters.
 
 :::
 
-### Topic Modelling
+### Model Training
 
 There are various implementations of topic modelling, such as LDA (_Latent Dirichlet Allocation_).
 It represents both topics and documents as probability distributions across words and topics respectively, based on word co-ocurrences in the training data.
 
-An approach that makes use of BERT (or other) language models is [BERTopic](https://maartengr.github.io/BERTopic/index.html).
-Install it like this:
+::: callout
+
+### Topic Model Implementations
+
+Topic modelling has been a relevant tool for text analysis for decades.
+Before modern (large) language models were available, algorithms like LSI (_Latent Semantic Indexing_) and LDA (_Latent Dirichlet Allocation_) have applied different statistical and probabilistic methods on word counts to generate word, document and topic representations from any document collection.
+The Gensim library provides implementations for both [LSI](https://radimrehurek.com/gensim/models/lsimodel.html) and [LDA](https://radimrehurek.com/gensim/models/ldamodel.html).
+Various flavours of these methods have implemented methods to consider, for instance, metadata or time sequences into the models.
+
+The newer generation of topic modelling uses language models like BERT to generate contextual word representations.
+Implementations include, apart from [BERTopic](https://maartengr.github.io/BERTopic/index.html), [Top2Vec](https://github.com/ddangelov/Top2Vec) and [TopicGPT](https://lmu-seminar-llms.github.io/TopicGPT/).
+As opposed to count-based models, the underlying language models generate word representations that encode more knowledge than the document collection at hand can provide.
+
+:::
+
+An approach that makes use of BERT (or other) language models is [BERTopic](https://maartengr.github.io/BERTopic/index.html) that has been installed as part of the [setup instructions](../learners/setup.md).
+
+We build our first topic model on the same data as above, hence we can reuse the preprocessed data:
 
 ```python
-pip install bertopic
+DATA_DIR = Path("data")
+PROCESSED_FILE = DATA_DIR / "processed/litbank.txt"
+
+sentences = [line.strip() for line in open(PROCESSED_FILE, 'r')]
+sentences[:5]
 ```
 
+Initialize and train the the topic model.
+This step will take a few minutes; it downloads a language model and will train the topic model:
 
+```python
+from bertopic import BERTopic
 
+N_SENTENCES = 1000
 
+topic_model = BERTopic()
+topics, probs = topic_model.fit_transform(sentences[:1000])
+
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7405.86it/s]
+BertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+```
+
+Now check the number of distinct topics the algorithm has identified:
+
+```python
+topic_model.get_topic_info()
+
+	Topic	Count	Name	Representation	Representative_Docs
+0	-1	21717	-1_light_face_carrie_room	[light, face, carrie, room, life, eyes, little...	[happened fine sense near view begun pay, true...
+1	0	792	0_mary_mistress_deborah_contrary	[mary, mistress, deborah, contrary, india, sai...	[said mary, said mary, mary mary mary]
+2	1	636	1_ship_boat_sea_captain	[ship, boat, sea, captain, hispaniola, island,...	[stockade narrative continued doctor ship aban...
+...
+906	905	10	905_wanted_wants_sure_thing	[wanted, wants, sure, thing, oh, , , , , ]	[wanted, wanted, wanted]
+```
+
+The number of topics should be approximately the same (906), but probably appear in a different order.
+For each topic, you see:
+
+1. `Count`: the number of topics in which this topic is prevalent
+2. `Name`: by default the topic index plus the four most representative words.
+3. `Representation`: a list of the topic's most representative words
+4. `Representative_Docs`: the topic's three most representative documents from the training data.
+
+The first topic (-1) is a special case: the algorithms gathers outliers that it could not fit into any of the other topics. It is the most frequent topic in most text collections, and its representative words are typically a list of unconnected words.
+
+The following command generates an interactive graph that visualizes the sizes and the relations between the topics:
+
+```python
+topic_model.visualize_topics()
+```
+
+![](fig/02-topics.png)
+
+During the model training, all instances from the data have been assigned to a topic distribution.
+But you can also apply the model on previously unseen texts and assign a topic distribution to them:
+
+```python
+topic, prob = topic_model.transform(["A text about gloves."])
+print(topic, prob)
+[3] [1.]
+```
+
+This example was assigned to topic 3, with a probability of 1.0.
+
+Topic modelling works on the words and their immediate context.
+However, you will notice that they do not always perfectly reflect all aspects of your collection, your research questions, or broader knowledge.
+Therefore, BERTopic allows you to manually refine the topics it has created.
+
+A common case is that multiple topics represent very similar underlying concepts with different words.
+You can merge such topics by specifying their topic indices:
+
+```python
+topic_model.merge_topics(sentences, [161, 29])
+```
+
+::: challenge
+
+### Explore Topics and Modelling Parameters
+
+1. Pick three topics and assign a concise, descriptive label to it
+2. Change the number and minimum size of topics (`BERTopic(nr_topics=..., min_topic_size=...)`) and observe how topics change
+3. Think of a way to evaluate the topic model systematically.
+:::
+::: solution
+
+Evaluation methods:
+TODO
+
+- Qualitative: define a research question; (how) do the topics help you to approach it?
+- Quantitative, intrinsic, e.g.: measure overlap by words or documents, distance between topics
+- Quantitative, extrinsic: apply model for downstream task, e.g. document classification, which can be evaluated empirically
+
+:::
+
+### Step by Step
+
+BERTopic follows a recipe of pre-defined steps.
+Each of them is variable and impacts the eventual outcomes. Therefore, it provides reasonable defaults that might or might not be optimal for your use case.
+
+#### 1. Document Embeddings
+
+For each document, a semantic vector representation is computed.
+The result is a vector of a few hundred to thousand dimensions.
+BERTopic makes use of existing models for that purpose so that the specifics depend on the chosen model.
+By default, it uses a [Sentence Transformers](https://sbert.net/) model called [`all-MiniLM-L6-v2`](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2). It generates vectors with 384 dimensions, and can handle English texts with a maximum length of 256 word pieces; where a word comprises one or multiple pieces.
+
+To adapt to other languages, longer texts, faster processing and different algorithms, BERTopic can use models through existing frameworks including [HuggingFace](https://huggingface.co/), spaCy, Gensim and most other popular NLP frameworks. Additionally, you can provide pre-computed embeddings per document.
+
+Alternative Sentence Transformer models that are available on the HuggingFace platform can be used through the `embedding_model` parameter upon initialization.
+This model, for instance, is recommended for multi-lingual corpora or languages for which no specific model is available:
+
+```python
+topic_model = BERTopic(embedding_model='paraphrase-multilingual-MiniLM-L12-v2')
+```
+
+The same parameter is used for models from other platforms.
+In that case, they need to be initialized separately and passed as objects like this:
+
+```python
+import spacy
+
+# only the embedding step is used, skip all others to save processing time:
+unused_components = ['tagger', 'parser', 'ner', 'attribute_ruler', 'lemmatizer']
+nlp = spacy.load("en_core_web_md", exclude=unused_components)
+
+topic_model = BERTopic(embedding_model=nlp)
+```
+
+#### 2. Reduce dimensionality
+
+The document embeddings computed in the previous step are quite large.
+To make the following computations less costly for time and resources, they are now projected to a lower dimensionality.
+
+The [UMAP](https://umap-learn.readthedocs.io/en/latest/) algorithm has been developed to project vectors to a lower dimensionality while preserving their mutual distance.
+For instance, the 384-dimensional vectors generated by the `all-MiniLM-L6-v2` model in the first step could be represented with 5 dimensions per documents.
+
+Again, BERTopic offers using alternative algorithms like PCA (_Principal Component Analysis_).
+Furthermore, this step can be skipped entirely; however, that will require much more time and resources in the following steps.
+
+By default, the UMAP model for transforming the document embeddings from step 1 to a lower dimensionality is computed on-the-fly.
+However, the `umap_model` argument allows the specification of another model that has been pre-computed:
+
+```python
+my_umap_model = ...
+topic_model = BERTopic(umap_model=my_umap_model)
+```
+
+Any object can be passed here, as long as it has a `.transform(X)` method that takes a vector `X` as input, and outputs a vector.
+
+#### 3. Clustering
+
+Based on the representations computed in the previous steps, the documents are grouped into clusters by mutual similarity.
+There is no optimal clustering, and different algorithms come to different results.
+By default, BERTopic uses [HDBScan](https://hdbscan.readthedocs.io/en/latest/index.html) (_Hierarchical Density-Based Spatial Clustering of Applications with Noise_).
+
+Again, you can customise that option and use all clustering algorithms provided by [scikit-learn](https://scikit-learn.org/stable/modules/clustering.html#clustering).
+Initialize the respective object according to its specifics, and pass it to the `hdbscan_model` parameter:
+
+```python
+from bertopic import BERTopic
+from sklearn.cluster import KMeans
+
+cluster_model = KMeans(n_clusters=50)
+topic_model = BERTopic(hdbscan_model=cluster_model)
+```
+
+#### 4. Topic representation
+
+Finally, the topics need to represented in a way that is readable for humans.
+Across most topic modelling algorithms, this has been done by displaying a list of the most representative per topic.
+BERTopic calculates the representativeness of the cluster words through a class-based adaption of the TF-IDF algorithm, called `c-TD-IDF`.
+
+A class corresponds to a single cluster here.
+TF-IDF means `Term Frequency - Inverse Document Frequency` and has been used in search and information retrieval applications for decades.
+It weighs the relevancy for a specific word for a document in the context of a document collection, based on two factors:
+
+1. How frequently does the term occur in a document? The more frequent a word, the _higher_ is the relevancy score of the word.
+2. In how many other documents does the term occur? The more documents contains a word, the _lower_ the relevancy score of the word.
+
+The class-based adaption interprets each cluster as one document.
+For each word, it computes the cluster-specific TF-IDF values with the same intuition:
+
+1. If a term occurs frequently in a cluster, it gets a _higher_ score.
+2. If a term occurs in many clusters, it gets a _lower_ score.
+
+This allows words to be representative in multiple clusters, for instance `bank` could have a high weight in a money-related topic as well as in a river-related topic.
+At the same time, words that occur universally should get a low score for all clusters for not being topic-specific.
+Nevertheless, words like `the` and `a` might occur so frequently that they still achieve a high score despite being semantically meaningless.
+Therefore, BERTopic removes such stop words by default through a pre-defined list in the word counting phase.
+Again, the stop word list is customisable as well as most other aspects of this phase.
+
+In our case, however, no action is needed here because stop words have already been removed when the data was preprocessed above.
+
+TODO: model parameters: nr_topics
 
 
 ::: keypoints
