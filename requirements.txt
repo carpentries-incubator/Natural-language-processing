@@ -11,3 +11,4 @@ langchain
 langchain-ollama
 pandas
 invoke
+bertopic
