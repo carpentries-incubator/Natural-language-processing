@@ -24,13 +24,13 @@
   <div class="container-fluid top-nav-container">
     <div class="col-md-8">
       <div class="large-logo">
-        <img id="incubator-logo" alt="Carpentries Incubator" src="assets/images/incubator-logo.svg"><span class="badge text-bg-danger">
-          <abbr title="This lesson is in the pre-alpha phase, which means that it is in early development, but has not yet been taught.">
+        <img id="incubator-logo" alt="Carpentries Incubator" src="assets/images/incubator-logo.svg"><span class="badge text-bg-warning">
+          <abbr title="This lesson is in the alpha phase, which means that it has been taught once and lesson authors are iterating on feedback.">
             <a href="https://docs.carpentries.org/resources/curriculum/lesson-life-cycle.html" class="external-link alert-link">
-              <i aria-hidden="true" class="icon" data-feather="alert-octagon" style="border-radius: 5px"></i>
-              Pre-Alpha
+              <i aria-hidden="true" class="icon" data-feather="alert-triangle" style="border-radius: 5px"></i>
+              Alpha
             </a>
-            <span class="visually-hidden">This lesson is in the pre-alpha phase, which means that it is in early development, but has not yet been taught.</span>
+            <span class="visually-hidden">This lesson is in the alpha phase, which means that it has been taught once and lesson authors are iterating on feedback.</span>
           </abbr>
         </span>
 
@@ -102,7 +102,8 @@
           <button class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             More <i data-feather="chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"></ul></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" href="reference.html">Reference</a></li>
+          </ul></li>
       </ul></div>
     <!--
     <form class="d-flex col-md-2 search-form">
@@ -275,7 +276,7 @@
                       <li>
                         <a href="profiles.html">Learner Profiles</a>
                       </li>
-
+                      <li><a href="reference.html">Reference</a></li>
                     </ul></div>
                 </div>
               </div>
@@ -387,7 +388,7 @@ environment</a> called <code>nlp_workshop</code>:</li>
   On Linux/macOs
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <pre class="shell"><code>python3 -m venv nlp_workshop</code></pre>
 </div>
@@ -402,7 +403,7 @@ environment</a> called <code>nlp_workshop</code>:</li>
   On Windows
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <pre class="shell"><code>py -m venv nlp_workshop</code></pre>
 </div>
@@ -418,7 +419,7 @@ environment</a> called <code>nlp_workshop</code>:</li>
   On Linux/macOs
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <pre class="shell"><code>source nlp_workshop/bin/activate</code></pre>
 </div>
@@ -433,7 +434,7 @@ environment</a> called <code>nlp_workshop</code>:</li>
   On Windows
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
 <pre class="shell"><code>nlp_workshop\Scripts\activate</code></pre>
 </div>
@@ -454,7 +455,7 @@ Then execute the following command:</p>
   On Linux/macOs
   </h3>
 </button>
-<div id="collapseSpoiler5" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler5" aria-labelledby="headingSpoiler5">
+<div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
 <div class="accordion-body">
 <pre class="shell"><code>python3 -m pip install -r requirements.txt</code></pre>
 </div>
@@ -469,7 +470,7 @@ Then execute the following command:</p>
   On Windows
   </h3>
 </button>
-<div id="collapseSpoiler6" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler6" aria-labelledby="headingSpoiler6">
+<div id="collapseSpoiler6" class="accordion-collapse collapse" aria-labelledby="headingSpoiler6" data-bs-parent="#accordionSpoiler6">
 <div class="accordion-body">
 <pre class="shell"><code>py -m pip install -r requirements.txt</code></pre>
 </div>
@@ -490,7 +491,7 @@ as follows. Download the Word2Vec model first:</p>
   On Linux/macOs
   </h3>
 </button>
-<div id="collapseSpoiler7" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler7" aria-labelledby="headingSpoiler7">
+<div id="collapseSpoiler7" class="accordion-collapse collapse" aria-labelledby="headingSpoiler7" data-bs-parent="#accordionSpoiler7">
 <div class="accordion-body">
 <pre class="shell"><code>python3 -m gensim.downloader --download word2vec-google-news-300 </code></pre>
 </div>
@@ -505,7 +506,7 @@ as follows. Download the Word2Vec model first:</p>
   On Windows
   </h3>
 </button>
-<div id="collapseSpoiler8" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler8" aria-labelledby="headingSpoiler8">
+<div id="collapseSpoiler8" class="accordion-collapse collapse" aria-labelledby="headingSpoiler8" data-bs-parent="#accordionSpoiler8">
 <div class="accordion-body">
 <pre class="shell"><code>py -m gensim.downloader --download word2vec-google-news-300</code></pre>
 </div>
@@ -522,7 +523,7 @@ pipelines for English from Spacy</a>:</p>
   On Linux/macOs
   </h3>
 </button>
-<div id="collapseSpoiler9" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler9" aria-labelledby="headingSpoiler9">
+<div id="collapseSpoiler9" class="accordion-collapse collapse" aria-labelledby="headingSpoiler9" data-bs-parent="#accordionSpoiler9">
 <div class="accordion-body">
 <pre class="shell"><code>python3 -m spacy download en_core_web_sm</code></pre>
 </div>
@@ -537,7 +538,7 @@ pipelines for English from Spacy</a>:</p>
   On Windows
   </h3>
 </button>
-<div id="collapseSpoiler10" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler10" aria-labelledby="headingSpoiler10">
+<div id="collapseSpoiler10" class="accordion-collapse collapse" aria-labelledby="headingSpoiler10" data-bs-parent="#accordionSpoiler10">
 <div class="accordion-body">
 <pre class="shell"><code>py -m spacy download en_core_web_sm</code></pre>
 </div>
@@ -621,8 +622,8 @@ command:</p>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/index.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/index.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2026-04-28",
-  "datePublished": "2026-04-28"
+  "dateModified": "2026-05-01",
+  "datePublished": "2026-05-01"
 }
 
   </script><script>
