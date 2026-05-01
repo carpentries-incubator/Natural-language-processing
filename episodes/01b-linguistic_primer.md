@@ -279,10 +279,6 @@ Contextual Fingerprints:
 
 As our mini experiment demonstrates, discreteness can be combatted with statistical co-occurrence: words with similar meaning will occur around similar concepts, giving us an idea of similarity that has nothing to do with syntactic or lexical form of words. This is the core idea behind most modern semantic representation models in NLP.
 
-## Multilinguality
-
-Might be nice a mini excercise on a different language? e.g. using spacy for Dutch. but then what would we show here???
-
 
 ::: callout
 ### Linguistic Resources
