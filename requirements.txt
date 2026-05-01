@@ -1,9 +1,11 @@
+beautifulsoup4
 jupyterlab
 MicroTokenizer
 spacy
 gensim
 matplotlib
 numpy==1.26.4
+requests
 scikit-learn
 torch
 transformers
