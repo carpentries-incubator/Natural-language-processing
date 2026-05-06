@@ -20,10 +20,10 @@ After following this lesson, learners will be able to:
 
 - Implement a basic NLP Pipeline.
 - Explain the motivation for vectorisation in modern NLP.
-- Train a custom Word2Vec model by using the [Gensim](https://radimrehurek.com/gensim/) library.
-- Apply a Word2Vec model to interpret and analyse the semantics of text (either a pre-trained model or a custom model).
-- Describe the kinds of semantic relationships captured by Word2Vec, and identify NLP tasks it is suitable for.
-- Explain, with examples, what the limitations are for the Word2Vec representation.
+- Describe the kinds of semantic relationships captured by Word2Vec.
+- Explain the limitations of the Word2Vec representation by way of example.
+- Train a custom Word2Vec model using the Gensim library.
+- Apply Topic Modelling to a text corpus using BERTopic.
 
 :::
 
@@ -388,14 +388,14 @@ All that is left is to create a Word2Vec model and train it on our corpus:
 from gensim.models import Word2Vec
 
 # Train a Word2Vec model
-model = Word2Vec(sentences=corpus, sg=0, hs=1, vector_size=50, window=10, min_count=1, workers=4, epochs=10)
+model = Word2Vec(sentences=corpus, sg=0, hs=1, vector_size=100, window=10, min_count=1, workers=4, epochs=10)
 ```
 
 With this line of code, we are configuring our entire Word2Vec training schema with the following parameters:
 
 - Continuous bag of words (CBOW), indicated by `sg=0` (`sg=1` means skip-gram).
 - Hierarchical softmax (`hs=1`), which is a trick to speed up training over large categorical datasets.
-- A vector dimensionality of `50` (`vector_size=50`).
+- A vector dimensionality of `100` (`vector_size=100`).
 - A context size (words surrounding the current one) of `10` (`window=10`).
 - Since we have already filtered our tokens, we include all words present in the filtered corpora, regardless of their frequency of occurrence (`min_count=1`).
 - `4` CPU cores for training (`workers=4`).
@@ -428,7 +428,7 @@ Write the code to follow the proposed pipeline and train the Word2Vec models. Th
 - Create two separate corpora: one containing books from the 18th century and another containing books from the 20th century.
 - Keep all alphanumerical tokens (including stop words).
 - Lemmatise words during the preprocessing step.
-- Train a Word2Vec model for each corpus (feed the clean tokens to the `Word2Vec` object) with `vector_size=50`.
+- Train a Word2Vec model for each corpus (feed the clean tokens to the `Word2Vec` object) with `vector_size=100`.
 - Save the trained models.
 
 ::: solution
@@ -522,8 +522,8 @@ corpus_20c = CorpusLoader(books_20c_processed)
 
 # Train the models (the parameters are the same as in the original example,
 # except for the respective corpora).
-model_18c = Word2Vec(sentences=corpus_18c, sg=0, hs=1, vector_size=50, window=10, min_count=1, workers=4, epochs=10)
-model_20c = Word2Vec(sentences=corpus_20c, sg=0, hs=1, vector_size=50, window=10, min_count=1, workers=4, epochs=10)
+model_18c = Word2Vec(sentences=corpus_18c, sg=0, hs=1, vector_size=100, window=10, min_count=1, workers=4, epochs=10)
+model_20c = Word2Vec(sentences=corpus_20c, sg=0, hs=1, vector_size=100, window=10, min_count=1, workers=4, epochs=10)
 
 # Save the models
 model_18c.save("word2vec_books_18c.model")
