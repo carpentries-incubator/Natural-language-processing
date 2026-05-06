@@ -335,17 +335,21 @@ For this exercise, we will use the [LitBank](https://github.com/dbamman/litbank)
 from tqdm import tqdm
 from pathlib import Path
 
-def preprocess_corpus(collection: list[str | Path], output_file: str | Path, overwrite: bool = False):
-    output_file = Path(output_file)
+# Load the SpaCy model and enable the necessary pipes.
+spacy_model = spacy.load("en_core_web_sm", disable=["tok2vec", "ner", "parser"])
+spacy_model.add_pipe("sentencizer")
+
+# Increase the allowed maximal length for the input text.
+spacy_model.max_length = 2000000
+
+def preprocess_corpus(collection: list[Path], output_file: Path):
     output_file.parent.mkdir(exist_ok=True, parents=True)
-    if (not output_file.exists()) or overwrite:
-        with open(output_file, 'w') as of:
-            for fpath in tqdm(collection):
-                fpath = Path(fpath)
-                doc = spacy_model(fpath.read_text())
-                for sent in doc.sents:
-                    tokens = [tok.text.lower() for tok in sent if tok.is_alpha and not tok.is_stop]
-                    of.write(' '.join(tokens) + "\n")
+    with open(output_file, 'w') as of:
+        for fpath in tqdm(collection):
+            doc = spacy_model(fpath.read_text())
+            for sent in doc.sents:
+                tokens = [tok.text.lower() for tok in sent if tok.is_alpha and not tok.is_stop]
+                of.write(' '.join(tokens) + "\n")
 
 # The destination file for all the preprocessed text.
 processed_file = Path("data/processed/litbank.txt")
@@ -353,11 +357,6 @@ processed_file = Path("data/processed/litbank.txt")
 # Make a list of all the files that need to be preprocessed.
 collection = list(Path("data/litbank").glob("*.txt"))
 preprocess_corpus(collection, processed_file)
-
-# If you need to recreate the processed file
-# (for instance, if you change the SpaCy pipeline),
-# just set the overwrite argument to True:
-# preprocess_corpus(collection, processed_file, True)
 ```
 
 Next, we will create a small reusable loader class to load sentences from the processed file:
