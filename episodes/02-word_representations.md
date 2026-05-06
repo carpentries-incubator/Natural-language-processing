@@ -392,13 +392,13 @@ model = Word2Vec(sentences=corpus, sg=0, hs=1, vector_size=50, window=10, min_co
 
 With this line of code, we are configuring our entire Word2Vec training schema with the following parameters:
 
-- Continuous bag of words (CBOW), indicated by `sg=0` (`sg=1` means Skip-gram).
+- Continuous bag of words (CBOW), indicated by `sg=0` (`sg=1` means skip-gram).
 - Hierarchical softmax (`hs=1`), which is a trick to speed up training over large categorical datasets.
-- A vector dimensionality of 300 (`vector_size=300`).
+- A vector dimensionality of `50` (`vector_size=50`).
 - A context size (words surrounding the current one) of `10` (`window=10`).
 - Since we have already filtered our tokens, we include all words present in the filtered corpora, regardless of their frequency of occurrence (`min_count=1`).
 - `4` CPU cores for training (`workers=4`).
-- `5` training epochs (`epochs=5`).
+- `10` training epochs (`epochs=10`).
 
 See the Gensim [documentation](https://radimrehurek.com/gensim/models/word2vec.html) for more training options.
 
