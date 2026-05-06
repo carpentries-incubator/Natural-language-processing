@@ -341,6 +341,7 @@ def preprocess_corpus(collection: list[str | Path], output_file: str | Path, ove
     if (not output_file.exists()) or overwrite:
         with open(output_file, 'w') as of:
             for fpath in tqdm(collection):
+                fpath = Path(fpath)
                 doc = spacy_model(fpath.read_text())
                 for sent in doc.sents:
                     tokens = [tok.text.lower() for tok in sent if tok.is_alpha and not tok.is_stop]
