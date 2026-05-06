@@ -332,6 +332,7 @@ The `gensim` package has implemented everything for us, which means that we can 
 For this exercise, we will use the [LitBank](https://github.com/dbamman/litbank) corpus to train a Word2Vec model (if you haven't run the `invoke download-litbank` command from the setup instructions, please do so now). First, we will preprocess the sentences in all the books, storing each sentence on a single line into a file. This would give Gensim a convenient way to iterate over all examples without having to preprocess them again at each training epoch.
 
 ```python
+import spacy
 from tqdm import tqdm
 from pathlib import Path
 
@@ -432,52 +433,111 @@ Write the code to follow the proposed pipeline and train the Word2Vec models. Th
 
 ::: solution
 
+First, import everything that we are going to need.
+
 ```python
 import spacy
+from pathlib import Path
+from tqdm import tqdm
 from gensim.models import Word2Vec
 from pprint import pp
+```
 
+Next, make separate collections for 18th- and 20th-century books:
+
+```python
 # LitBank: https://github.com/dbamman/litbank
+# Collect the files
 litbank_path = Path("data/litbank")
-books_18c = ["829_gullivers_travels_into_several_remote_nations_of_the_world.txt", ...] # Select books from the 18th century
-books_20c = ["1245_night_and_day.txt", ...] # Select books from the 20th century
 
-books_18c_processed = "data/processed/books_18c.txt"
-books_20c_processed = "data/processed/books_20c.txt"
+# Select books from the 18th century
+books_18c = [
+    "6053_evelina_or_the_history_of_a_young_ladys_entrance_into_the_world.txt",
+    "521_the_life_and_adventures_of_robinson_crusoe.txt",
+    "6593_history_of_tom_jones_a_foundling.txt",
+    "3268_the_mysteries_of_udolpho.txt",
+    "171_charlotte_temple.txt",
+    "829_gullivers_travels_into_several_remote_nations_of_the_world.txt",
+    "16357_mary_a_fiction.txt",
+]
 
-nlp = spacy.load("en_core_web_sm")
+# Select books from the 20th century
+books_20c = [
+    "1245_night_and_day.txt",
+    "2005_piccadilly_jim.txt",
+    "541_the_age_of_innocence.txt",
+    "8867_the_magnificent_ambersons.txt",
+    "543_main_street.txt",
+    "4300_ulysses.txt",
+    "9830_the_beautiful_and_damned.txt",
+]
 
-# Change the preprocessing function to accommodate the preprocessing changes.
-def preprocess_corpus(collection: list[str | Path], output_file: str | Path, overwrite: bool = False):
-    output_file = Path(output_file)
+books_18c_processed = Path("data/processed/books_18c.txt")
+books_20c_processed = Path("data/processed/books_20c.txt")
+```
+
+Load the `SpaCy` model with the necessary pipes and prepare two separate corpora:
+
+```python
+# Load and tokenize the texts using SpaCy.
+spacy_model = spacy.load("en_core_web_sm", disable=["tok2vec", "ner", "parser"])
+sentenciser = spacy_model.add_pipe("sentencizer")
+
+# Increase the allowed maximal length for the input text.
+spacy_model.max_length = 2000000
+```
+
+Now, we can preprocess the books:
+
+```python
+# The preprocessing function has been changed slightly.
+def preprocess_corpus(collection: list[Path], output_file: Path):
     output_file.parent.mkdir(exist_ok=True, parents=True)
-    if (not output_file.exists()) or overwrite:
-        with open(output_file, 'w') as of:
-            for fpath in tqdm(collection):
-                doc = spacy_model(fpath.read_text())
-                for sent in doc.sents:
-                    # Here, we use the lemma instead of the original word
-                    # (note that the trailing underscore is necessary).
-                    # Also, we remove the `tok.is_stop` condition.
-                    tokens = [tok.lemma_.lower() for tok in sent if tok.is_alpha]
-                    of.write(' '.join(tokens) + "\n")
+    with open(output_file, 'w') as of:
+        for fpath in tqdm(collection):
+            doc = spacy_model(fpath.read_text())
+            for sent in doc.sents:
+                # Here, we use the lemma instead of the original word
+                # (note that the trailing underscore is necessary).
+                # Also, we remove the `tok.is_stop` condition.
+                tokens = [tok.lemma_.lower() for tok in sent if tok.is_alpha]
+                of.write(' '.join(tokens) + "\n")
 
 # Preprocess the corpora
-preprocess_corpus([litbank_path / fname for fname in books_18c], books_18c_processed, True)
-preprocess_corpus([litbank_path / fname for fname in books_20c], books_20c_processed, True)
+preprocess_corpus([litbank_path / fname for fname in books_18c], books_18c_processed)
+preprocess_corpus([litbank_path / fname for fname in books_20c], books_20c_processed)
+```
+
+Finally, prepare the two corpora and train two separate models:
+
+```python
+class CorpusLoader:
+    def __init__(self, corpus: str | Path):
+        self.corpus = corpus
+
+    def __iter__(self):
+        with open(self.corpus, 'r') as corpus:
+            for line in corpus:
+                yield line.split()
 
 corpus_18c = CorpusLoader(books_18c_processed)
 corpus_20c = CorpusLoader(books_20c_processed)
 
-# Train the models
-model_18c = Word2Vec(sentences=corpus_18c, sg=0, vector_size=50, window=5, min_count=1, workers=4)
-model_20c = Word2Vec(sentences=corpus_20c, sg=0, vector_size=50, window=5, min_count=1, workers=4)
+# Train the models (the parameters are the same as in the original example,
+# except for the respective corpora).
+model_18c = Word2Vec(sentences=corpus_18c, sg=0, hs=1, vector_size=50, window=10, min_count=1, workers=4, epochs=10)
+model_20c = Word2Vec(sentences=corpus_20c, sg=0, hs=1, vector_size=50, window=10, min_count=1, workers=4, epochs=10)
 
 # Save the models
 model_18c.save("word2vec_books_18c.model")
 model_20c.save("word2vec_books_20c.model")
+```
 
-# Test the vectors
+Let's compare the top 10 most similar words to our test word:
+
+```python
+# Compare the top 10 similar words to our
+# test word ('house') for the two models.
 test_word = "house"
 
 print(f"==[ Top similarities to '{test_word}' ]==")
