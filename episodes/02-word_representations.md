@@ -27,6 +27,10 @@ After following this lesson, learners will be able to:
 
 :::
 
+## Setup
+
+Please run `invoke download-litbank` to download the data that we are going to use for this episode.
+
 ## Introduction
 
 In this episode, we will learn about the importance of preprocessing text in NLP, and how to apply common preprocessing operations to text files. We will also learn more about _NLP Pipelines_, learn about their basic components and how to construct such pipelines.
