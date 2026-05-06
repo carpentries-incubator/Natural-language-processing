@@ -497,11 +497,8 @@ def preprocess_corpus(collection: list[Path], output_file: Path):
         for fpath in tqdm(collection):
             doc = spacy_model(fpath.read_text())
             for sent in doc.sents:
-                # Here, we use the lemma instead of the original word
-                # (note that the trailing underscore is necessary).
-                # Also, we remove the `tok.is_stop` condition.
-                tokens = [tok.lemma_.lower() for tok in sent if tok.is_alpha]
-                of.write(' '.join(tokens) + "\n")
+                lemmas = [tok.lemma_.lower() for tok in sent if tok.is_alpha]
+                of.write(' '.join(lemmas) + "\n")
 
 # Preprocess the corpora
 preprocess_corpus([litbank_path / fname for fname in books_18c], books_18c_processed)
