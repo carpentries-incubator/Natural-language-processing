@@ -387,7 +387,7 @@ All that is left is to create a Word2Vec model and train it on our corpus:
 from gensim.models import Word2Vec
 
 # Train a Word2Vec model
-model = Word2Vec(sentences=sents, sg=0, hs=1, vector_size=300, window=10, min_count=1, workers=4, epochs=50)
+model = Word2Vec(sentences=corpus, sg=0, hs=1, vector_size=50, window=10, min_count=1, workers=4, epochs=10)
 ```
 
 With this line of code, we are configuring our entire Word2Vec training schema with the following parameters:
