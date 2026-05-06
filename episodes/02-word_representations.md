@@ -407,16 +407,16 @@ See the Gensim [documentation](https://radimrehurek.com/gensim/models/word2vec.h
 Once your model is trained, it is useful to save the checkpoint in order to be able to load it again instead of having to train it every time. You can save it with:
 
 ```python
-model.save("word2vec_mini_books.model")
+model.save("word2vec_litbank.model")
 ```
 
 To load the pre-trained vectors that you just created, you can use the following code:
 
 ```python
-model = Word2Vec.load("word2vec_mini_books.model")
+model = Word2Vec.load("word2vec_litbank.model")
 w2v = model.wv
 # Test:
-w2v.most_similar('monster')
+w2v.most_similar('home')
 ```
 
 :::: challenge
