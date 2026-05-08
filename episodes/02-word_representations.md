@@ -29,7 +29,7 @@ After following this lesson, learners will be able to:
 
 ## Setup
 
-Please run `invoke download-litbank` to download the data that we are going to use for this episode.
+If you haven't done it already during the workshop setup, please run `invoke download-litbank` to download the data that we are going to use for this episode.
 
 ## Introduction
 
@@ -431,9 +431,7 @@ Write the code to follow the proposed pipeline and train the Word2Vec models. Th
 - Train a Word2Vec model for each corpus (feed the clean tokens to the `Word2Vec` object) with `vector_size=100`.
 - Save the trained models.
 
-::: solution
-
-First, import everything that we are going to need.
+The first steps towards the solution are provided below to get you started quickly. First, import everything that we are going to need.
 
 ```python
 import spacy
@@ -486,6 +484,10 @@ sentenciser = spacy_model.add_pipe("sentencizer")
 # Increase the allowed maximal length for the input text.
 spacy_model.max_length = 2000000
 ```
+
+The rest of the solution is available below.
+
+::: solution
 
 Now, we can preprocess the books:
 
