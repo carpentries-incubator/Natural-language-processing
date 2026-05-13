@@ -669,7 +669,7 @@ For the sake of modelling, however, a topic is typically represented as a weight
 | dog     | car     | ... |
 | ...     | ...     | ... |
 
-A text, on the other hand, is represented as a weighted list of _topics_, for instance:
+A document, on the other hand, is represented as a weighted list of _topics_, for instance:
 
 | Document 1 | Document 2 | Document ... |
 | ---------- | ---------- | ------------ |
