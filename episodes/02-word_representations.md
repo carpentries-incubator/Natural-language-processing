@@ -612,7 +612,7 @@ Regardless, topic modelling algorithms have been applied in domains unrelated to
 
 There are various implementations of topic modelling.
 Before modern language models were available, models based on word co-occurrences were dominant, most prominently LDA (_Latent Dirichlet Allocation_).
-It represents both topics and documents as probability distributions across words and topics respectively, based on word frequencies and distributions in the training data.
+In LDA each topic is represented as a probability distribution over words and conversely, each document has a probability distribution of topics, based on observed words and sampling from distributions across the full corpus.
 
 ::: callout
 
@@ -623,7 +623,7 @@ Before modern (large) language models were available, algorithms like LSI (_Late
 The Gensim library provides implementations for both [LSI](https://radimrehurek.com/gensim/models/lsimodel.html) and [LDA](https://radimrehurek.com/gensim/models/ldamodel.html).
 Various flavours of these methods have implemented methods to consider, for instance, metadata or time sequences into the models.
 
-The newer generation of topic modelling uses language models like BERT to generate contextual word representations.
+The newer generation of topic modelling uses contextualized language models like BERT to generate contextual word representations.
 Implementations include, apart from [BERTopic](https://maartengr.github.io/BERTopic/index.html), [Top2Vec](https://github.com/ddangelov/Top2Vec) and [TopicGPT](https://lmu-seminar-llms.github.io/TopicGPT/).
 As opposed to count-based models, the underlying language models generate word representations that encode more knowledge than the document collection at hand can provide.
 
