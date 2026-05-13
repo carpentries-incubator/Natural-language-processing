@@ -434,7 +434,7 @@ use of the Web.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>These are some of the most popular NLP-based products that we use on
 a daily basis:</p>
@@ -1150,7 +1150,7 @@ GPE)</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Let’s describe the solution to obtain all the different entity
 categories. For that we should iterate the whole text and keep a python
@@ -1494,7 +1494,7 @@ uppercases).</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>This is why the previous statements were difficult:</p>
 <ul>
@@ -2715,6 +2715,539 @@ need for extensive computational resources.</p>
 </div>
 </div>
 </div>
+</div>
+</section><section><h2 class="section-heading" id="topic-modelling">Topic Modelling<a class="anchor" aria-label="anchor" href="#topic-modelling"></a>
+</h2>
+<hr class="half-width">
+<p>Another perspective on exploring a document collection is topic
+modelling. This approach aims to discover which topics occur in these
+documents, bot.</p>
+<div class="section level3">
+<h3 id="what-is-a-topic">What is a Topic?<a class="anchor" aria-label="anchor" href="#what-is-a-topic"></a>
+</h3>
+<p>A proper linguistic definition of the abstract concept of
+<em>topic</em> is difficult. The definition of “what is being talked
+about” in a sentence or a paragraph is not fully represented through
+specific words, but is subject to broader context and
+interpretation.</p>
+<p>For the sake of modelling, however, a topic is typically represented
+as a weighted list of <em>words</em> like this:</p>
+<table class="table">
+<thead><tr>
+<th>Topic 1</th>
+<th>Topic 2</th>
+<th>Topic …</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>cat</td>
+<td>boat</td>
+<td>…</td>
+</tr>
+<tr>
+<td>dog</td>
+<td>car</td>
+<td>…</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>A document, on the other hand, is represented as a weighted list of
+<em>topics</em>, for instance:</p>
+<table class="table">
+<thead><tr>
+<th>Document 1</th>
+<th>Document 2</th>
+<th>Document …</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Topic 5</td>
+<td>Topic 8</td>
+<td>…</td>
+</tr>
+<tr>
+<td>Topic 1</td>
+<td>Topic 3</td>
+<td>…</td>
+</tr>
+<tr>
+<td>Topic 2</td>
+<td>Topic 5</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>The term <code>document</code> is also under-specified in this
+context, but usually refers to a chunk of text, its size depending on
+the convenience of granularity (sentence, paragraph, book chapter,
+etc..) A topic model typically uses sentences or paragraphs to
+approximate topics. This is partly due to computational constraints:
+processing longer documents requires significantly more processing power
+and memory.</p>
+<p>Another benefit of smaller text units come from linguistic insights:
+topics tend to be most consistent on the level of sentences or
+paragraphs, while they vary throughout a longer text. While topic models
+do allow for texts to convey multiple topics, a model learns best if the
+topics are separated from each other as clearly as possible.</p>
+<div id="unsupervised-learning" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="unsupervised-learning" class="callout-inner">
+<h3 class="callout-title">Unsupervised Learning</h3>
+<div class="callout-content">
+<p>In machine learning terminology, topic modelling algorithms apply
+<em>unsupervised learning</em>: they do not rely on any human
+annotations about the data that could be used to <em>supervise</em> the
+modelling process. Instead, topic modelling forms <em>clusters</em> of
+data points by grouping similar documents together.</p>
+<p>Clustering algorithms widely differ in how they measure similarity
+and how they form clusters. Regardless, topic modelling algorithms have
+been applied in domains unrelated to linguistics, like <a href="https://link.springer.com/article/10.1007/s10661-025-14291-0" class="external-link">biological</a>
+and <a href="https://cnrs.hal.science/hal-04484617v1/file/Article_CMIP6_LDA-2.pdf" class="external-link">climate
+research</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="model-training">Model Training<a class="anchor" aria-label="anchor" href="#model-training"></a>
+</h3>
+<p>There are various implementations of topic modelling. Before modern
+language models were available, models based on word co-occurrences were
+dominant, most prominently LDA (<em>Latent Dirichlet Allocation</em>).
+In LDA each topic is represented as a probability distribution over
+words and conversely, each document has a probability distribution of
+topics, based on observed words and sampling from distributions across
+the full corpus.</p>
+<div id="topic-model-implementations" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="topic-model-implementations" class="callout-inner">
+<h3 class="callout-title">Topic Model Implementations</h3>
+<div class="callout-content">
+<p>Topic modelling has been a relevant tool for text analysis for
+decades. Before modern (large) language models were available,
+algorithms like LSI (<em>Latent Semantic Indexing</em>) and LDA
+(<em>Latent Dirichlet Allocation</em>) have applied different
+statistical and probabilistic methods on word counts to generate word,
+document and topic representations from any document collection. The
+Gensim library provides implementations for both <a href="https://radimrehurek.com/gensim/models/lsimodel.html" class="external-link">LSI</a> and
+<a href="https://radimrehurek.com/gensim/models/ldamodel.html" class="external-link">LDA</a>.
+Various flavours of these methods have implemented methods to consider,
+for instance, metadata or time sequences into the models.</p>
+<p>The newer generation of topic modelling uses contextualized language
+models like BERT to generate contextual word representations.
+Implementations include, apart from <a href="https://maartengr.github.io/BERTopic/index.html" class="external-link">BERTopic</a>, <a href="https://github.com/ddangelov/Top2Vec" class="external-link">Top2Vec</a> and <a href="https://lmu-seminar-llms.github.io/TopicGPT/" class="external-link">TopicGPT</a>. As
+opposed to count-based models, the underlying language models generate
+word representations that encode more knowledge than the document
+collection at hand can provide.</p>
+</div>
+</div>
+</div>
+<p><a href="https://maartengr.github.io/BERTopic/index.html" class="external-link">BERTopic</a>
+(installed during this lesson’s <a href="index.html#setup">setup</a>), on the
+other hand, makes use of language models like BERT, that have been
+trained independently of the document collection at hand. Language
+models can provide contextual knowledge that is not explicit in a
+specific document collection and therefore leads to better results in
+most cases.</p>
+<p>To build our first topic model on the same data as above, we reuse
+the preprocessed data:</p>
+<div class="codewrapper sourceCode" id="cb33">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" tabindex="-1" aria-label="code-block-33-1"></a>DATA_DIR <span class="op">=</span> Path(<span class="st">"data"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1" aria-label="code-block-33-2"></a>PROCESSED_FILE <span class="op">=</span> DATA_DIR <span class="op">/</span> <span class="st">"processed/litbank.txt"</span></span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1" aria-label="code-block-33-3"></a></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1" aria-label="code-block-33-4"></a>sentences <span class="op">=</span> [line.strip() <span class="cf">for</span> line <span class="kw">in</span> <span class="bu">open</span>(PROCESSED_FILE, <span class="st">'r'</span>)]</span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="train-a-topic-model">Train a Topic Model<a class="anchor" aria-label="anchor" href="#train-a-topic-model"></a>
+</h3>
+<p>The following commands initialize a <code>BERTopic</code> object and
+train it. Before the first training run, it downloads the language
+model; this and the training itself will take a few minutes.</p>
+<div class="codewrapper sourceCode" id="cb34">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" tabindex="-1" aria-label="code-block-34-1"></a><span class="im">from</span> bertopic <span class="im">import</span> BERTopic</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1" aria-label="code-block-34-2"></a></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1" aria-label="code-block-34-3"></a>topic_model <span class="op">=</span> BERTopic(nr_topics<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1" aria-label="code-block-34-4"></a>topics, probs <span class="op">=</span> topic_model.fit_transform(sentences) </span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Loading weights: 100%|██████████| 103/103 [00:00&lt;00:00, 7405.86it/s]
+BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  |
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  |
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.</code></pre>
+</div>
+<p>The <code>nr_topics=100</code> argument above is not strictly needed.
+We use it in this example to keep the output manageable, because without
+the default settings result in approximately 900 different topics on
+this dataset.</p>
+<p>Output the topics that the algorithm has identified:</p>
+<div class="codewrapper sourceCode" id="cb36">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" tabindex="-1" aria-label="code-block-36-1"></a>topic_model.get_topic_info()</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>	Topic	Count	Name	Representation	Representative_Docs
+0	-1	21788	-1_eyes_little_time_man	[eyes, little, time, man, like, face, life, ro...	[good man true seen better man, young man mome...
+1	0	2968	0_mary_gloria_edna_miss	[mary, gloria, edna, miss, madame, gostrey, ma...	[gloria, mary, said mary]
+2	1	2124	1_dorian_henry_colin_ralph	[dorian, henry, colin, ralph, lord, denham, ro...	[lord henry looked table, know answered lord h...
+3	2	2077	2_yes_oh_ah_eh	[yes, oh, ah, eh, glad, right, better, god, su...	[oh yes, oh yes, oh yes]
+4	3	1625	3_katharine_carrie_cassandra_said	[katharine, carrie, cassandra, said, william, ...	[think katharine, katharine, katharine]
+...	...	...	...	...	...
+95	94	16	94_isabella_prison_quadroon_sold	[isabella, prison, quadroon, sold, previous, u...	[immediately took daughter aside informed prev...
+96	95	12	95_foreman_workshop_ogre_motioning	[foreman, workshop, ogre, motioning, gait, bar...	[head foreman round stopped machine, foreman, ...
+97	96	12	96_ames_superiority_funniest_thorne	[ames, superiority, funniest, thorne, dora, sa...	[going asked ames, said ames, ames]
+98	97	11	97_clatter_bang_scatter_crash	[clatter, bang, scatter, crash, lads, dogs, fi...	[clatter clatter clatter bang, clatter clatter...
+99	98	11	98_entanglement_ensue_faithlessness_repugnant	[entanglement, ensue, faithlessness, repugnant...	[entanglement carrie anxious change sort, carr...</code></pre>
+</div>
+<p>Because the topic modelling algorithm has no information about the
+texts or topics to start with, it randomly assigns words to topics
+initially. Therefore, the results are not entirely deterministic, the
+exact ordering and representations of the topics can be slightly
+different for each run.</p>
+<p>For each topic, you see:</p>
+<ol style="list-style-type: decimal">
+<li>
+<code>Count</code>: the number of topics in which this topic is
+prevalent</li>
+<li>
+<code>Name</code>: by default the topic index plus the four most
+representative words.</li>
+<li>
+<code>Representation</code>: a list of the topic’s most
+representative words</li>
+<li>
+<code>Representative_Docs</code>: the topic’s three most
+representative documents from the training data.</li>
+</ol>
+<p>The first topic (<code>-1</code>) is a special case: the algorithms
+gathers outliers that it could not fit into any of the other topics. It
+is the most frequent topic in most text collections, and its
+representative words are typically a list of unconnected words.</p>
+</div>
+<div class="section level3">
+<h3 id="visualization-and-interpretation">Visualization and Interpretation<a class="anchor" aria-label="anchor" href="#visualization-and-interpretation"></a>
+</h3>
+<p>The following command generates an interactive graph that visualizes
+the sizes and the relations between the topics:</p>
+<div class="codewrapper sourceCode" id="cb38">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" tabindex="-1" aria-label="code-block-38-1"></a>topic_model.visualize_topics()</span></code></pre>
+</div>
+<figure><img src="fig/02-topics.png" class="figure mx-auto d-block"></figure><p>This command visualizes the hierarchical relations between
+topics:</p>
+<div class="codewrapper sourceCode" id="cb39">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" tabindex="-1" aria-label="code-block-39-1"></a>topic_model.visualize_hierarchy()</span></code></pre>
+</div>
+<figure><img src="fig/02-topics-hierarchy.png" class="figure mx-auto d-block"></figure><p>To find topics that are associated to a particular term, use the
+<code>.find_topics()</code> method:</p>
+<div class="codewrapper sourceCode" id="cb40">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" tabindex="-1" aria-label="code-block-40-1"></a>topics, probs <span class="op">=</span> topic_model.find_topics(<span class="st">"sea"</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1" aria-label="code-block-40-2"></a><span class="bu">print</span>(topics)</span></code></pre>
+</div>
+<p>Visualize the terms of the topics found:</p>
+<div class="codewrapper sourceCode" id="cb41">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1" aria-label="code-block-41-1"></a>topic_model.visualize_barchart(topics)</span></code></pre>
+</div>
+<figure><img src="fig/02-topics-sea.png" class="figure mx-auto d-block"></figure><p>During the model training, all texts in the data have been assigned
+to a topic distribution. You can also use the model to infer the topics
+of previously unseen texts based on the same model:</p>
+<div class="codewrapper sourceCode" id="cb42">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" tabindex="-1" aria-label="code-block-42-1"></a>topics, probs <span class="op">=</span> topic_model.transform([<span class="st">"A short text about scientific discoveries"</span>])</span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1" aria-label="code-block-42-2"></a><span class="bu">print</span>(topics, probs)</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[31] [0.47929027]</code></pre>
+</div>
+<p>This example was assigned to topic 31, with a probability of 0.479.
+Again, these numbers will be slightly different per run. The model can
+even assign multiple topics to a text, the <code>topics</code> and
+<code>probs</code> lists contain the according number of values.</p>
+<div id="explore-topics-and-modelling-parameters" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="explore-topics-and-modelling-parameters" class="callout-inner">
+<h3 class="callout-title">Explore Topics and Modelling Parameters</h3>
+<div class="callout-content">
+<ol style="list-style-type: decimal">
+<li>Pick three topics and assign a concise, descriptive label to it</li>
+<li>Change the number and minimum size of topics
+(<code>BERTopic(nr_topics=..., min_topic_size=...)</code>) and observe
+how topics change</li>
+<li>Think of a way to evaluate the topic model systematically.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
+</button>
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div class="accordion-body">
+<ol style="list-style-type: decimal">
+<li><p>There is no general ‘true’ label for a topic, but looking at the
+top word of a topic should give an idea of the concept(s) it refers to,
+for instance: <code>['mary', 'gloria', 'edna', 'miss', 'madame']</code>
+-&gt; ‘female names and titles’
+<code>['mean', 'oh', 'yes', 'ah', 'eh']</code> -&gt; ‘acknowledging
+reactions’’ <code>['know', 'tell', 'said', 'told']</code> -&gt;
+‘telling’</p></li>
+<li><p>TODO</p></li>
+<li><p>Evaluation methods:</p></li>
+</ol>
+<ul>
+<li>Quantitative, extrinsic: apply model for downstream task,
+e.g. document classification, which can be evaluated empirically</li>
+<li>Quantitative, intrinsic, e.g.: measure overlap by words or
+documents, distance between topics</li>
+<li>Qualitative: define a research question; (how well) do the topics
+help you to approach it?</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="step-by-step">Step by Step<a class="anchor" aria-label="anchor" href="#step-by-step"></a>
+</h3>
+<p>Under the hood, topic modelling means to create vector
+representations of topics. Topics are (even) harder to define than words
+because topics are not visible on the surface of a text – they are
+<em>latent</em>.</p>
+<p>BERTopic provides reasonable defaults that typically provide a
+starting point that may work fine in many situations. The individual
+components of BERTopic can be adapted, each of which has impact on the
+final results. For that purpose, a deeper understanding of their inner
+workings allows you to adapt them to specific datasets or research
+questions.</p>
+<div class="section level4">
+<h4 id="document-embeddings">1. Document Embeddings<a class="anchor" aria-label="anchor" href="#document-embeddings"></a>
+</h4>
+<p>In the first step, we need a vector representation of each document
+that reflects their content. BERTopic makes use of existing models for
+that purpose so that the specifics depend on the chosen model. By
+default, it uses a <a href="https://sbert.net/" class="external-link">Sentence
+Transformers</a> model called <a href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2" class="external-link"><code>all-MiniLM-L6-v2</code></a>,
+a model that has been trained to generate semantic representations for
+English texts with a maximum length of 256 word pieces; with a word
+comprising one or multiple pieces. This model outputs vectors with 384
+dimensions that represent an entire text sequence, like a sentence. The
+distance between document-vectors in the vector space reflect the
+semantic similarity of the respective texts.</p>
+<p>Alternative Sentence Transformer models that are available on the <a href="https://huggingface.co/" class="external-link">HuggingFace</a> platform can be used
+through the <code>embedding_model</code> parameter in the
+<code>BERTopic</code> object initialization. BERTopic can also use
+models provided by other popular NLP frameworks, including spaCy and
+Gensim. Additionally, you can provide pre-computed embeddings per
+document.</p>
+<p>By choosing a different language model you can adapt the BERTopic
+pipeline when other languages than English, longer texts, faster
+processing, higher accuracy, or different modelling algorithms are
+needed.</p>
+<p>For corpora in which multiple languages occur, or languages for which
+no specific model is available, the
+<code>paraphrase-multilingual-MiniLM-L12-v2</code> model is recommended.
+It is loaded automatically, if <code>language='multilingual'</code> is
+passed to the <code>BERTopic</code> object:</p>
+<div class="codewrapper sourceCode" id="cb44">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" tabindex="-1" aria-label="code-block-44-1"></a>topic_model <span class="op">=</span> BERTopic(language<span class="op">=</span><span class="st">'multilingual'</span>)</span></code></pre>
+</div>
+<p>Any other model available on the HuggingFace platform can be loaded
+via <code>embedding_model</code> – overriding the <code>language</code>
+argument:</p>
+<div class="codewrapper sourceCode" id="cb45">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" tabindex="-1" aria-label="code-block-45-1"></a>topic_model <span class="op">=</span> BERTopic(embedding_model<span class="op">=</span><span class="st">'paraphrase-multilingual-MiniLM-L12-v2'</span>)</span></code></pre>
+</div>
+<p>The same parameter is used for models from other platforms too, but
+those models need to be initialized separately and passed as objects
+like this:</p>
+<div class="codewrapper sourceCode" id="cb46">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" tabindex="-1" aria-label="code-block-46-1"></a><span class="im">import</span> spacy</span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1" aria-label="code-block-46-2"></a></span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1" aria-label="code-block-46-3"></a><span class="co"># skip unused processing steps to save time:</span></span>
+<span id="cb46-4"><a href="#cb46-4" tabindex="-1" aria-label="code-block-46-4"></a>unused_components <span class="op">=</span> [<span class="st">'tagger'</span>, <span class="st">'parser'</span>, <span class="st">'ner'</span>, <span class="st">'attribute_ruler'</span>, <span class="st">'lemmatizer'</span>]</span>
+<span id="cb46-5"><a href="#cb46-5" tabindex="-1" aria-label="code-block-46-5"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_md"</span>, exclude<span class="op">=</span>unused_components)</span>
+<span id="cb46-6"><a href="#cb46-6" tabindex="-1" aria-label="code-block-46-6"></a></span>
+<span id="cb46-7"><a href="#cb46-7" tabindex="-1" aria-label="code-block-46-7"></a>topic_model <span class="op">=</span> BERTopic(embedding_model<span class="op">=</span>nlp)</span></code></pre>
+</div>
+</div>
+<div class="section level4">
+<h4 id="reduce-dimensionality">2. Reduce dimensionality<a class="anchor" aria-label="anchor" href="#reduce-dimensionality"></a>
+</h4>
+<p>The document embeddings computed in the previous step are quite
+large. To make the subsequent computations less costly regarding time
+and resources, the <a href="https://umap-learn.readthedocs.io/en/latest/" class="external-link">UMAP</a> algorithm
+is applied to project vectors to a lower dimensionality while preserving
+their approximate mutual distance – this is the crucial property used in
+the next following steps. For instance, the 384-dimensional vectors
+generated by in the first step will be represented with five dimensions
+per documents.</p>
+<p>Again, BERTopic offers using alternative algorithms like PCA
+(<em>Principal Component Analysis</em>), but UMAP provides the
+state-of-the-art algorithm for this specific task. Furthermore, this
+step could be skipped entirely; however, that will require much more
+time and resources in the following steps.</p>
+<p>By default, the UMAP model for transforming the document embeddings
+from step 1 to a lower dimensionality is computed on-the-fly. The
+<code>umap_model</code> argument allows the specification of another
+model that has been pre-computed:</p>
+<div class="codewrapper sourceCode" id="cb47">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" tabindex="-1" aria-label="code-block-47-1"></a>my_umap_model <span class="op">=</span> ...</span>
+<span id="cb47-2"><a href="#cb47-2" tabindex="-1" aria-label="code-block-47-2"></a>topic_model <span class="op">=</span> BERTopic(umap_model<span class="op">=</span>my_umap_model)</span></code></pre>
+</div>
+<p>In principle, any object can be passed here, as long as it has a
+<code>.transform(X)</code> method that takes a vector <code>X</code> as
+input, and outputs a vector.</p>
+</div>
+<div class="section level4">
+<h4 id="clustering">3. Clustering<a class="anchor" aria-label="anchor" href="#clustering"></a>
+</h4>
+<p>Based on the representations computed in the previous steps, the
+documents are grouped into clusters by mutual distance – hence the
+importance of preserving that property when reducing the dimensionality
+in step 2.</p>
+<p>By default, BERTopic uses <a href="https://hdbscan.readthedocs.io/en/latest/index.html" class="external-link">HDBScan</a>
+(<em>Hierarchical Density-Based Spatial Clustering of Applications with
+Noise</em>).</p>
+<p>This option is customisable, too; any clustering algorithm provided
+by <a href="https://scikit-learn.org/stable/modules/clustering.html#clustering" class="external-link">scikit-learn</a>
+can be used. Initialize the respective object according to its
+specifics, and pass it to the <code>hdbscan_model</code> parameter:</p>
+<div class="codewrapper sourceCode" id="cb48">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" tabindex="-1" aria-label="code-block-48-1"></a><span class="im">from</span> bertopic <span class="im">import</span> BERTopic</span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1" aria-label="code-block-48-2"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1" aria-label="code-block-48-3"></a></span>
+<span id="cb48-4"><a href="#cb48-4" tabindex="-1" aria-label="code-block-48-4"></a>cluster_model <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb48-5"><a href="#cb48-5" tabindex="-1" aria-label="code-block-48-5"></a>topic_model <span class="op">=</span> BERTopic(hdbscan_model<span class="op">=</span>cluster_model)</span></code></pre>
+</div>
+<p>Again, however, the default is the best algorithm in most cases.</p>
+</div>
+<div class="section level4">
+<h4 id="topic-representation">4. Topic Representation<a class="anchor" aria-label="anchor" href="#topic-representation"></a>
+</h4>
+<p>Finally, a strong feat of topic modelling is that it extracts topics
+that are interpretable by humans, as opposed to numeric representations.
+This goal has been approached by displaying a list of the most
+representative per topic by most topic modelling algorithms, including
+BERTopic. For each topic, it calculates the most representative words
+through a class-based adaption of the TF-IDF algorithm, called
+<code>c-TD-IDF</code>.</p>
+<p>TF-IDF means
+<code>Term Frequency - Inverse Document Frequency</code>, a metric that
+has been used for decades. In search and information retrieval
+applications, TF-IDF estimates the relevancy of a term for a specific
+document in the context of a document collection, based on two
+factors:</p>
+<ol style="list-style-type: decimal">
+<li>How frequently does the term occur in the document at hand? The more
+frequent a word, the <em>higher</em> its TF-IDF score for the
+document.</li>
+<li>In how many <em>other</em> documents in the collection does the term
+occur? The more documents contain a word, the <em>lower</em> its TF-IDF
+score.</li>
+</ol>
+<p>The c-TF-IDF adaptation interprets each topic cluster as a class. For
+the score calculation, it views them as a single document and computes
+the cluster-specific TF-IDF values with the same factors as before:</p>
+<ol style="list-style-type: decimal">
+<li>If a term occurs frequently in the documents of a topic, it gets a
+<em>higher</em> score.</li>
+<li>If a term occurs in many topics, it gets a <em>lower</em>
+score.</li>
+</ol>
+<p>As a results, words that only occur in a single topic cluster are
+considered to be most representative for that topic. Neverthless, it
+allows for the inherent ambiguity of words as they can be relevant for
+different topics. The word <code>bank</code>, for instance, could have a
+high weight in a money-related topic as well as in a river-related topic
+if it occurs frequently enough in those clusters, but rarely in
+others.</p>
+<p>At the same time, words that occur universally get a low score for
+all clusters for not being topic-specific. Nevertheless, the calculation
+can suffer under extreme frequencies of words like <code>the</code> and
+<code>a</code> in English. Therefore, BERTopic removes such stop words
+by default through a pre-defined list of English stop words.</p>
+<p>In our case, however, no action is needed here because stop words
+have already been removed when the data was preprocessed above.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="model-tuning">Model Tuning<a class="anchor" aria-label="anchor" href="#model-tuning"></a>
+</h3>
+<p>BERTopic provides numerous parameters to tune its behaviour during
+all the previously mentioned steps. The most important of them are
+directly accessible through arguments when the <code>BERTopic</code>
+object is initialized.</p>
+<ol style="list-style-type: decimal">
+<li>Choose a different language model with <code>embedding_model</code>;
+see the <a href="#document-embeddings">Document Embeddings</a> section
+above and the <a href="https://huggingface.co/models?pipeline_tag=sentence-similarity" class="external-link">HuggingFace
+model hub</a> for suitable models that can be filtered by language,
+model size and other parameters.</li>
+<li>Control the clustering parameters with
+<ol style="list-style-type: decimal">
+<li>
+<code>nr_topics</code>: split topic clusters until it reaches
+exactly the specified number, or use <code>auto</code> to use the
+HDBSCAN algorithm to guess the optimal number of topic clusters.</li>
+<li>
+<code>min_cluster_size</code> or <code>min_topic_size</code>: A
+topic cluster must contain at least the given number of document;
+otherwise, it is merged with an adjacent cluster. This prevents the
+formation of topics based on very few data points. The default is
+<code>5</code>.</li>
+</ol>
+</li>
+</ol>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
