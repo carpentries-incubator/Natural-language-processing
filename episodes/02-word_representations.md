@@ -728,7 +728,6 @@ DATA_DIR = Path("data")
 PROCESSED_FILE = DATA_DIR / "processed/litbank.txt"
 
 sentences = [line.strip() for line in open(PROCESSED_FILE, 'r')]
-sentences[:5]
 ```
 
 ### Train a Topic Model
@@ -739,11 +738,8 @@ Before the first training run, it downloads the language model; this and the tra
 ```python
 from bertopic import BERTopic
 
-# TODO: determine good number based on full data
-N_SENTENCES = 100000
-
 topic_model = BERTopic(nr_topics=100)
-topics, probs = topic_model.fit_transform(sentences[:N_SENTENCES])
+topics, probs = topic_model.fit_transform(sentences) 
 
 Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7405.86it/s]
 BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
@@ -844,7 +840,7 @@ The model can even assign multiple topics to a text, the `topics` and `probs` li
 :::
 ::: solution
 
-1. There is no general 'true' label for a topic, but looking at the top word of a topic should give an idea of the concept(s) it refers to, for instalce:
+1. There is no general 'true' label for a topic, but looking at the top word of a topic should give an idea of the concept(s) it refers to, for instance:
 `['mary', 'gloria', 'edna', 'miss', 'madame']` -> 'female names and titles'
 `['mean', 'oh', 'yes', 'ah', 'eh']` -> 'acknowledging reactions''
 `['know', 'tell', 'said', 'told']` -> 'telling'
@@ -862,7 +858,7 @@ The model can even assign multiple topics to a text, the `topics` and `probs` li
 ### Step by Step
 
 Under the hood, topic modelling means to create vector representations of topics.
-This can be harder to interpret that, for instance, words, because topics are not directly visible on the surface of a text -- they are _latent_.
+Topics are (even) harder to define than words because topics are not visible on the surface of a text -- they are _latent_.
 
 BERTopic provides reasonable defaults that typically provide a starting point that may work fine in many situations.
 The individual components of BERTopic can be adapted, each of which has impact on the final results.
@@ -872,7 +868,7 @@ For that purpose, a deeper understanding of their inner workings allows you to a
 
 In the first step, we need a vector representation of each document that reflects their content.
 BERTopic makes use of existing models for that purpose so that the specifics depend on the chosen model.
-By default, it uses a [Sentence Transformers](https://sbert.net/) model called [`all-MiniLM-L6-v2`](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2), a model that has been trained to generate semantic representations for English texts with a maximum length of 256 word pieces; where each token comprises one or multiple pieces.
+By default, it uses a [Sentence Transformers](https://sbert.net/) model called [`all-MiniLM-L6-v2`](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2), a model that has been trained to generate semantic representations for English texts with a maximum length of 256 word pieces; with a word comprising one or multiple pieces.
 This model outputs vectors with 384 dimensions that represent an entire text sequence, like a sentence.
 The distance between document-vectors in the vector space reflect the semantic similarity of the respective texts.
 
@@ -983,9 +979,6 @@ The most important of them are directly accessible through arguments when the `B
     1. `nr_topics`: split topic clusters until it reaches exactly the specified number, or use `auto` to use the HDBSCAN algorithm to guess the optimal number of topic clusters.
     2. `min_cluster_size` or `min_topic_size`: A topic cluster must contain at least the given number of document; otherwise, it is merged with an adjacent cluster. This prevents the formation of topics based on very few data points. The default is `5`.
 
-TODO: more tuning
-
-TODO: final exercise: explore, improve model
 
 ::: keypoints
 -   We can run a preprocessing pipeline to obtain clear words that can be used as features
