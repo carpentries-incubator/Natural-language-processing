@@ -700,7 +700,7 @@ Regardless, topic modelling algorithms have been applied in domains unrelated to
 ### Model Training
 
 There are various implementations of topic modelling.
-Before modern language models were available, models based on word co-occurrences were dominant, most prominently as LDA (_Latent Dirichlet Allocation_).
+Before modern language models were available, models based on word co-occurrences were dominant, most prominently LDA (_Latent Dirichlet Allocation_).
 It represents both topics and documents as probability distributions across words and topics respectively, based on word frequencies and distributions in the training data.
 
 ::: callout
