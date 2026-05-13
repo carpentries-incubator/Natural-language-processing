@@ -651,7 +651,9 @@ from bertopic import BERTopic
 
 topic_model = BERTopic(nr_topics=100)
 topics, probs = topic_model.fit_transform(sentences) 
+```
 
+```output
 Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7405.86it/s]
 BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
 Key                     | Status     |  | 
@@ -669,7 +671,9 @@ Output the topics that the algorithm has identified:
 
 ```python
 topic_model.get_topic_info()
+```
 
+```output
 	Topic	Count	Name	Representation	Representative_Docs
 0	-1	21788	-1_eyes_little_time_man	[eyes, little, time, man, like, face, life, ro...	[good man true seen better man, young man mome...
 1	0	2968	0_mary_gloria_edna_miss	[mary, gloria, edna, miss, madame, gostrey, ma...	[gloria, mary, said mary]
@@ -684,8 +688,8 @@ topic_model.get_topic_info()
 99	98	11	98_entanglement_ensue_faithlessness_repugnant	[entanglement, ensue, faithlessness, repugnant...	[entanglement carrie anxious change sort, carr...
 ```
 
-Due to the random initialization, the topic modelling algorithm is not entirely deterministic.
-Therefore, the exact ordering and representations of the topics can be slightly different for each run.
+Because the topic modelling algorithm has no information about the texts or topics to start with, it randomly assigns words to topics initially.
+Therefore, the results are not entirely deterministic, the exact ordering and representations of the topics can be slightly different for each run.
 
 For each topic, you see:
 
@@ -734,6 +738,9 @@ You can also use the model to infer the topics of previously unseen texts based 
 ```python
 topics, probs = topic_model.transform(["A short text about scientific discoveries"])
 print(topics, probs)
+```
+
+```output
 [31] [0.47929027]
 ```
 
