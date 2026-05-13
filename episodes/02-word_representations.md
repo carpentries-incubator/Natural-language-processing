@@ -692,7 +692,7 @@ In machine learning terminology, topic modelling algorithms apply _unsupervised 
 they do not rely on any human annotations about the data that could be used to _supervise_ the modelling process.
 Instead, topic modelling forms _clusters_ of data points by grouping similar documents together.
 
-Algorithms widely differ in how they measure similarity and how they form clusters.
+Clustering algorithms widely differ in how they measure similarity and how they form clusters.
 Regardless, topic modelling algorithms have been applied in domains unrelated to linguistics, like [biological](https://link.springer.com/article/10.1007/s10661-025-14291-0) and [climate research](https://cnrs.hal.science/hal-04484617v1/file/Article_CMIP6_LDA-2.pdf).
 
 :::
