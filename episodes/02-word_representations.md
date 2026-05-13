@@ -677,7 +677,7 @@ A document, on the other hand, is represented as a weighted list of _topics_, fo
 | Topic 1    | Topic 3    | ... |
 | Topic 2    | Topic 5    | ... |
 
-The term `document` is equally under-specified in this context.
+The term `document` is also under-specified in this context, but usually refers to a chunk of text, its size depending on the convenience of granularity (sentence, paragraph, book chapter, etc..)
 A topic model typically uses sentences or paragraphs to approximate topics.
 This is partly due to computational constraints: processing longer documents requires significantly more processing power and memory.
 
