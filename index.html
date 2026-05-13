@@ -202,7 +202,8 @@
 <li><a href="#create-a-python-virtual-environment">3. Create a Python Virtual Environment</a></li>
 <li><a href="#install-the-required-python-packages">4. Install the required Python packages</a></li>
 <li><a href="#download-the-required-nlp-models">5. Download the required NLP models</a></li>
-<li><a href="#start-jupyter-lab">6. Start Jupyter Lab</a></li>
+<li><a href="#download-the-litbank-corpus">6. Download the LitBank corpus</a></li>
+<li><a href="#start-jupyter-lab">7. Start Jupyter Lab</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -493,7 +494,7 @@ as follows. Download the Word2Vec model first:</p>
 </button>
 <div id="collapseSpoiler7" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler7" aria-labelledby="headingSpoiler7">
 <div class="accordion-body">
-<pre class="shell"><code>python3 -m gensim.downloader --download word2vec-google-news-300 </code></pre>
+<pre class="shell"><code>python3 -m gensim.downloader --download word2vec-google-news-300</code></pre>
 </div>
 </div>
 </div>
@@ -520,7 +521,7 @@ pipelines for English from Spacy</a>:</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler9" aria-expanded="false" aria-controls="collapseSpoiler9">
   <h3 class="accordion-header" id="headingSpoiler9">
   <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
-  On Linux/macOs
+  On Linux/MacOS
   </h3>
 </button>
 <div id="collapseSpoiler9" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler9" aria-labelledby="headingSpoiler9">
@@ -558,7 +559,17 @@ download the model manually inside the Ollama graphic interface. Open
 Ollama and on the right side of the “Send a message” prompt you will see
 a dropdown. Type “llama3.2:1b” there and send any message so Ollama can
 download (pull) the model for you.</p>
-<figure><img src="fig/ollama.png" alt="ollama" width="700" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="start-jupyter-lab">6. Start Jupyter Lab<a class="anchor" aria-label="anchor" href="#start-jupyter-lab"></a></h2>
+<figure><img src="fig/ollama.png" alt="ollama" width="700" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="download-the-litbank-corpus">6. Download the LitBank corpus<a class="anchor" aria-label="anchor" href="#download-the-litbank-corpus"></a></h2>
+<hr class="half-width"><p>In the section about training <code>Word2Vec</code>, we will use the
+<a href="https://github.com/dbamman/litbank" class="external-link">LitBank</a> repository,
+which contains preprocessed versions of 100 royalty-free books. This
+would produce richer representations than using a single source as it
+provides more diverse contexts in which words could be found. Use the
+following command to download the LitBank corpus under
+<code>data/litbank</code> (the directory will be created if it doesn’t
+exist):</p>
+<pre class="shell"><code>invoke download-litbank</code></pre>
+</section><section><h2 class="section-heading" id="start-jupyter-lab">7. Start Jupyter Lab<a class="anchor" aria-label="anchor" href="#start-jupyter-lab"></a></h2>
 <hr class="half-width"><p>We will teach using Python in <a href="http://jupyter.org/" class="external-link">Jupyter
 Lab</a>, a programming environment that runs in a web browser.</p>
 <p>Jupyter Lab is compatible with Firefox, Chrome, Safari and
@@ -622,8 +633,8 @@ command:</p>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/index.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/index.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2026-05-12",
-  "datePublished": "2026-05-12"
+  "dateModified": "2026-05-13",
+  "datePublished": "2026-05-13"
 }
 
   </script><script>
