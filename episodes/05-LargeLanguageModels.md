@@ -3,6 +3,23 @@ title: "Using large language models"
 teaching: 60
 exercises: 60
 ---
+::: questions
+- What makes Large Language Models different from other Transformer-based models?
+- What should we consider when choosing between open-source and proprietary LLMs?
+- How can we run and interact with an LLM programmatically?
+- How can a generative model be used to solve classification tasks?
+- Can we trust the outputs of an LLM? What kind of systematic weaknesses do they have?
+::: 
+
+::: objectives
+- Explain how LLMs are different from vanilla Transformers
+- Understand the differences between open source and proprietary models
+- Choose an appropriate LLM model for specific tasks
+- Use the HuggingFace pipeline with SmolLMv2, an open source model
+- Use Ollama to run conversational models in our laptop
+- Run a classification task using a generative model
+- Discuss and locate hidden biases when using LLMs
+:::
 
 ## Background
 
@@ -550,10 +567,11 @@ Argentina has not won the FIFA World Cup since 1986, when they defeated West Ger
 ```
 
 ::: keypoints
--   We learned how are so called LLMs different from the first generation of Transformers
-- There are different kinds of LLMs and understanding their differences and limitations are a key aspect for choosing the best model for your case
--   We learned how to use HuggingFace pipeline with SmolLMv2, an open source model.
--   We learned how to use Ollama to run conversational models in our laptop
--   Classification tasks can be done using generative models if we define the prompt in a careful way
-- Hidden biases will always be present when using LLMs, we should be aware of those before we draw conclusions from the outputs.
+-   LLMs differ from vanilla transformers in three key ways: scale (parameters and context window sizes), post-training (SFT + RHLF), and generalization capabilities (given the amount of seen training data).
+-   The LLM landscape spans distinct model families: embedder models (encoder-only, optimized for similarity), base generative models, instruct-tuned assistants, reasoning models, and tool-augmented models, choosing the right type depends on the task.
+-   LLM's can be "open" in three independent dimensions: open weights, open training data, and open architecture. An LLM that only exposes a remote API is a proprietary model and we don't have much control over it's behavior.
+-   Open-source LLMs can be run locally with tools like Ollama and the HuggingFace transformers pipeline. This eliminates API costs, keeps sensitive data private, and makes experiments more reproducible without depending on remote services.
+-   Generative models can solve classification tasks through careful prompt design: label choices, output format, and system instructions directly shape what the model returns. Outputs should still be evaluated with standard metrics (precision, recall, F1) just like any other ML classifier.
+-   LLMs can produce confident and fluent content, but this does not imply the content will be factually correct. Guardrails partially mitigate this but do not eliminate it.
+-   LLMs carry systematic biases inherited from training data and post-training: gender stereotypes, anglosphere-centric factual accuracy, and underrepresentation of languages and cultures outside the western mainstream are structural failures. This should be always considered before reaching to conclusions without a careful analysis of results.
 :::

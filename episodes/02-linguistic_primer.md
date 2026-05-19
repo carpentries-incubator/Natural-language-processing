@@ -6,13 +6,15 @@ exercises: 30
 
 ::: questions
 -   How is language approached from a Machine Learning perspective?
--   What makes text different from other data?
+-   What does it mean to do Language Modeling?
 -   What linguistic properties should we consider when dealing with texts? 
 :::
 
 ::: objectives
--   Learn a taxonomy of NLP tasks
--   Identify basic linguistic concepts in NLP
+-   Identify the most relevant existing NLP tasks
+-   Describe what the Language Modeling task is
+-   Explain why automatic processing of language is difficult
+-   Demonstrate linguistic concepts by coding short examples with text data
 :::
 
 Natural language exhibits a set of properties that make it more challenging to process than other types of data such as tables, spreadsheets or time series. To address this, we can first visit the existing different ways of abstracting the problems when dealing with texts. This is what is called an NLP task: deciding on the important aspects that interest us in a the text and how to extract them. We will then revisit basic linguistic concepts that make text processing difficult in general. **Language is hard to process because it is compositional, ambiguous, discrete and sparse**. Let's visit each of these concepts and understand them.
@@ -302,9 +304,12 @@ What did we learn in this lesson?
 
 ::: keypoints
 
-- Deep learning has significantly advanced NLP, but the challenge remains in processing the discrete and ambiguous nature of language. 
-
-- The ultimate goal of NLP is to enable machines to understand and process language as humans do.
-
-- Key tasks include text classification, token classification, language modeling and text generation. 
+-   NLP tasks can be approached as supervised (learning from labeled examples), semi-supervised (learning from text tokens), or unsupervised (exploiting patterns in raw text).
+-   The main families of NLP tasks are text classification, token classification, language modeling, and text generation.
+-   Language is compositional: meaning is built layer by layer from words to sentences to discourse, and sometimes more than two layers are needed in order to describe the meaning of a piece of text.  
+-   Language is ambiguous at multiple levels and resolving this ambiguity requires contextual information that is challenging for machines to capture.
+-   Language is sparse: words of interest typically appear rarely in a corpus, dominated by high-frequency stopwords that carry little semantic
+  content.
+-   Language is discrete: word form does not reflect meaning: "car" and "cat" differ by one letter yet are unrelated, while "pizza" and "hamburger" look very different but are semantically similar.
+-   Domain-specific language shifts the distribution of meaningful words and can change the meaning of terms entirely (e.g., "trial" in law vs. "trial" in medicine).
 :::

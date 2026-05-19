@@ -6,12 +6,12 @@ exercises: 60
 
 ::: questions
 
-- Why do we need to preprocess text in NLP?
-- What are the most common preprocessing operations and what contexts should they be used in?
-- What properties do word embeddings have?
-- What is a Word2Vec model?
-- What insights can I get from word embeddings?
-- How do I train my own Word2Vec model?
+- What are the steps that matter for defining an NLP task?
+- How can words be represented as numbers that capture meaning?
+- What kinds of semantic relationships can word embeddings encode?
+- What are the limitations of static word representations like Word2Vec?
+- How cab we train our own Word2Vec model?
+- How can we automatically discover hidden topics in a collection of texts?
 
 :::
 
@@ -24,7 +24,6 @@ After following this lesson, learners will be able to:
 - Explain the limitations of the Word2Vec representation by way of example.
 - Train a custom Word2Vec model using the Gensim library.
 - Apply Topic Modelling to a text corpus using BERTopic.
-
 :::
 
 ## Setup
@@ -900,9 +899,12 @@ The most important of them are directly accessible through arguments when the `B
 
 ::: keypoints
 
-- We can run a preprocessing pipeline to obtain cleaner text with content words that can be used as features.
-- We learned how words are converted into vectors of numbers (which makes them interpretable for machines).
-- We can easily compute how words are similar to each other with the cosine similarity score.
-- We can train our own Word2Vec models by using `gensim`.
-
+-   An NLP pipeline is a chain of steps from raw text to a structured task output.
+-   Word embeddings represent words as dense numeric vectors. These are learned by training neural network(s) on a language modeling objective. Because similar words appear in similar contexts, semantically related words will have gemoetrically similar vectors.
+-   Word2Vec is a popular word embedding model. It encodes semantic relationships in vector arithmetic: analogies like "king − man + woman ≈ queen" emerge naturally from the geometry of vectors.
+-   Word2Vec has a key limitation: words unseen during training (out-of-vocabulary) cannot be represented, and each word receives one fixed vector regardless of context.
+-   Cosine similarity measures the angle between two vectors and is the standard metric for comparing word embeddings: it captures semantic relatedness independently of vector magnitude, and returns values between -1 (not similar at all) and 1 (completely similar).
+-   Topic modelling is an unsupervised method for discovering latent themes in a document collection, representing each topic as a weighted list of characteristic words and each document as a mixture of topics.
+-   BERTopic builds on language model embeddings by chaining document vectorization (each document gets a single vector that represents it), dimensionality reduction (UMAP),
+  clustering (HDBSCAN), and topic labeling (c-TF-IDF) — each component can be swapped to adapt to different languages, text lengths, or research goals.
 :::
