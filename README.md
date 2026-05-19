@@ -25,12 +25,14 @@ Check our [Contribution Guide](https://github.com/esciencecenter-digital-skills/
 - [Eva Viviani][eva_escience]
 - [Kody Moodley][kody_escience]
 - [Thijs Vroegh][thijs_escience]
+- [Alexander][alex_escience]
 
 [laura_escience]: https://www.esciencecenter.nl/team/dr-laura-ootes/
 [eva_escience]: https://www.esciencecenter.nl/team/eva-viviani/
 [angel_escience]: https://www.esciencecenter.nl/team/angel-daza/
 [kody_escience]: https://www.esciencecenter.nl/team/kody-moodley/
 [thijs_escience]: https://www.esciencecenter.nl/team/thijs-vroegh/
+[alex_escience]: https://www.esciencecenter.nl/team/alexander-hadjiivanov/
 
 ## Citation
 To cite this lesson, please consult with [CITATION.cff](https://github.com/esciencecenter-digital-skills/Natural-language-processing/blob/main/CITATION.cff). This also holds a list of contributors to the lesson.
@@ -48,5 +50,27 @@ Or if you prefer:
   version = {1.0.0},
   url = {https://carpentries-incubator.github.io/Natural-language-processing/},
   note = {Lesson on the fundamentals of Natural Language Processing in Python}
+}
+```
+```bibtex
+@inproceedings{daza-2026-hands-approach,
+    title = "A Hands-on Approach to {NLP} Fundamentals for External Domain Experts in the {LLM} Era",
+    author = "Daza, Angel",
+    editor = {A{\ss}enmacher, Matthias  and
+      Biester, Laura  and
+      Borg, Claudia  and
+      Kov{\'a}cs, Gy{\"o}rgy  and
+      Mieskes, Margot  and
+      Serrano, Sofia},
+    booktitle = "Proceedings of the Seventh Workshop on Teaching Natural Language Processing ({T}each{NLP} 2026)",
+    month = mar,
+    year = "2026",
+    address = "Rabat, Morocco",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.teachingnlp-1.7/",
+    doi = "10.18653/v1/2026.teachingnlp-1.7",
+    pages = "37--40",
+    ISBN = "979-8-89176-375-3",
+    abstract = "With the advent of Large Language Models (LLMs) researchers outside the Natural Language Processing (NLP) field are interested in learning how to process textual data for their own domain research goals. They are particularly motivated to start experimenting directly with LLMs, implicitly neglecting the large amount of accumulated knowledge that NLP has to offer them. In this text, we briefly share our new lesson materials that aim to show aspiring practitioners the strong connection between NLP fundamentals and LLMs, in the form of a two-day workshop. Our training material is mainly aimed at graduate students outside the NLP sphere who have basic technical knowledge and wish to start working with text, is fully open source and available online."
 }
 ```
