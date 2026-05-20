@@ -25,7 +25,7 @@ Check our [Contribution Guide](https://github.com/esciencecenter-digital-skills/
 - [Eva Viviani][eva_escience]
 - [Kody Moodley][kody_escience]
 - [Thijs Vroegh][thijs_escience]
-- [Alexander][alex_escience]
+- [Alexander Hadjiivanov][alex_escience]
 
 [laura_escience]: https://www.esciencecenter.nl/team/dr-laura-ootes/
 [eva_escience]: https://www.esciencecenter.nl/team/eva-viviani/

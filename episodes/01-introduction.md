@@ -508,7 +508,7 @@ What did we learn in this lesson?
 -   Linguistic data has unique properties that make it challenging to process computationally: it is unstructured, ambiguous, context-dependent, and varies significantly across the 7000+ human languages.
 -   Tokenization is the foundational step in NLP: splitting text into meaningful units (tokens) creates the structure that all downstream algorithms
   require.
--   LLMs are a subset of NLP, not a synonym for AI: understanding NLP fundamentals (tokenization, statistical models, evaluation, ...) can help to trace errors, detect biases, and use LLMs more critically and effectively.
+-   Language Modeling is a subset of NLP, not a synonym for AI: understanding NLP fundamentals (tokenization, statistical models, evaluation, ...) can help to trace errors, detect biases, and use LLMs more critically and effectively.
 -   Text pre-processing is a pipeline of decisions: character cleaning, tokenization, lowercasing, and lemmatizing are common steps that can be used to improve the performance of your task.
 -   Libraries like spaCy are very light and make it practical to extract linguistic features (tokens, lemmas, part-of-speech tags, named entities, and sentence boundaries) from text in different languages with minimal code.
 

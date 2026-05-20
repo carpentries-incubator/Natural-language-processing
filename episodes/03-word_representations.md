@@ -10,7 +10,7 @@ exercises: 60
 - How can words be represented as numbers that capture meaning?
 - What kinds of semantic relationships can word embeddings encode?
 - What are the limitations of static word representations like Word2Vec?
-- How cab we train our own Word2Vec model?
+- How can we train our own Word2Vec model?
 - How can we automatically discover hidden topics in a collection of texts?
 
 :::
