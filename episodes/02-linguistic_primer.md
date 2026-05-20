@@ -310,6 +310,6 @@ What did we learn in this lesson?
 -   Language is ambiguous at multiple levels and resolving this ambiguity requires contextual information that is challenging for machines to capture.
 -   Language is sparse: words of interest typically appear rarely in a corpus, dominated by high-frequency stopwords that carry little semantic
   content.
--   Language is discrete: word form does not reflect meaning: "car" and "cat" differ by one letter yet are unrelated, while "pizza" and "hamburger" look very different but are semantically similar.
+-   Language is discrete: word form does not reflect meaning: "car" and "cat" differ by one letter yet are unrelated, while "pizza" and "hamburger" look very different but are semantically more similar.
 -   Domain-specific language shifts the distribution of meaningful words and can change the meaning of terms entirely (e.g., "trial" in law vs. "trial" in medicine).
 :::
