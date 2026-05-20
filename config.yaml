@@ -17,7 +17,7 @@ title: 'Fundamentals of Natural Language Processing (NLP) in Python'
 created: 2024-04-24
 
 # Comma-separated list of keywords for the lesson
-keywords: 'software, data, lesson, The Carpentries, NLP, English, social sciences, pre-alpha' #
+keywords: 'software, data, lesson, The Carpentries, natural language processing, NLP, English, social sciences, alpha' #
 
 # Life cycle stage of the lesson
 # possible values: pre-alpha, alpha, beta, stable
@@ -60,10 +60,10 @@ contact: 'team@carpentries.org'
 # Order of episodes in your lesson
 episodes:
 - 01-introduction.md
-- 01b-linguistic_primer.md
-- 02-word_representations.md
-- 03-transformers.md
-- 04-LargeLanguageModels.md
+- 02-linguistic_primer.md
+- 03-word_representations.md
+- 04-transformers.md
+- 05-LargeLanguageModels.md
 
 
 # Information for Learners

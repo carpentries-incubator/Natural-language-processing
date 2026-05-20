@@ -16,6 +16,9 @@
     <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/01b-linguistic_primer.html</loc>
   </url>
   <url>
+    <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/02-linguistic_primer.html</loc>
+  </url>
+  <url>
     <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/02-preprocessing.html</loc>
   </url>
   <url>
@@ -34,7 +37,16 @@
     <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/03-transformers.html</loc>
   </url>
   <url>
+    <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/03-word_representations.html</loc>
+  </url>
+  <url>
     <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/04-LargeLanguageModels.html</loc>
+  </url>
+  <url>
+    <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/04-transformers.html</loc>
+  </url>
+  <url>
+    <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/05-LargeLanguageModels.html</loc>
   </url>
   <url>
     <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/404.html</loc>
@@ -82,6 +94,9 @@
     <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/01b-linguistic_primer.html</loc>
   </url>
   <url>
+    <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/02-linguistic_primer.html</loc>
+  </url>
+  <url>
     <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/02-preprocessing.html</loc>
   </url>
   <url>
@@ -100,7 +115,16 @@
     <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/03-transformers.html</loc>
   </url>
   <url>
+    <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/03-word_representations.html</loc>
+  </url>
+  <url>
     <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/04-LargeLanguageModels.html</loc>
+  </url>
+  <url>
+    <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/04-transformers.html</loc>
+  </url>
+  <url>
+    <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/05-LargeLanguageModels.html</loc>
   </url>
   <url>
     <loc>https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/404.html</loc>

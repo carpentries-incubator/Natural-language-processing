@@ -90,7 +90,7 @@
 </div>
     </div>
   </div>
-  <hr></header><nav class="navbar navbar-expand-xl bottom-nav incubator" aria-label="Main Navigation"><div class="container-fluid nav-container">
+</header><nav class="navbar navbar-expand-xl bottom-nav incubator" aria-label="Main Navigation"><div class="container-fluid nav-container">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navigation">
       <span class="navbar-toggler-icon"></span>
       <span class="menu-title">Menu</span>
@@ -208,8 +208,7 @@
             </div>
 <!--/div.col -->
 
-            <hr>
-</div>
+          </div>
 <!--/div.mobile-row -->
 
           <div class="accordion accordion-flush" id="accordion-chapters-toggle">
@@ -250,7 +249,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="01b-linguistic_primer.html">2. A Primer on Linguistics</a>
+        <a href="02-linguistic_primer.html">2. A Primer on Linguistics</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -262,7 +261,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="02-word_representations.html">3. From words to vectors</a>
+        <a href="03-word_representations.html">3. From words to vectors</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -274,7 +273,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="03-transformers.html">4. Transformers: BERT and Beyond</a>
+        <a href="04-transformers.html">4. Transformers: BERT and Beyond</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -286,7 +285,7 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="04-LargeLanguageModels.html">5. Using large language models</a>
+        <a href="05-LargeLanguageModels.html">5. Using large language models</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -352,7 +351,7 @@
         
 <section id="aio-01-introduction"><p>Content from <a href="01-introduction.html">Introduction</a></p>
 <hr>
-<p>Last updated on 2026-04-22 |
+<p>Last updated on 2026-05-20 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/01-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 90 minutes</p>
@@ -368,7 +367,7 @@
 <h3 class="card-title">Questions</h3>
 <ul>
 <li>What is Natural Language Processing?</li>
-<li>Why not just learn Large Language Models?</li>
+<li>Why should we learn NLP fundamentals?</li>
 <li>How is text different from other data?</li>
 <li>How can we extract structure from text?</li>
 </ul>
@@ -380,10 +379,14 @@
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Define Natural Language Processing</li>
-<li>Show the most relevant NLP tasks and applications</li>
-<li>Understand the importance of NLP fundamentals</li>
-<li>Learn how to manipulate linguistic data</li>
+<li>Explain what is Natural Language Processing</li>
+<li>Enumerate relevant NLP applications</li>
+<li>Describe the relationship between NLP and LLMs</li>
+<li>Explain why NLP fundamentals are important for text processing
+tasks</li>
+<li>Enumerate basic pre-processing operations when working with
+text</li>
+<li>Extract basic properties from text using the spaCy library</li>
 </ul>
 </div>
 </div>
@@ -1215,23 +1218,37 @@ Transformers</a></li>
 <div class="callout-inner">
 <div class="callout-content">
 <ul>
-<li><p>NLP is a subfield of Artificial Intelligence (AI) that, with the
-help of Linguistics, deals with approaches to process, understand and
-generate natural language</p></li>
-<li><p>Linguistic Data has special properties that we should consider
-when modeling our solutions</p></li>
-<li><p>The ultimate goal of NLP is to enable machines to understand and
-process language as humans do</p></li>
+<li>NLP is a subfield of Articifial Intelligence that, with help from
+Linguistics, deals with processing, understanding, and generating
+natural language data.</li>
+<li>Linguistic data has unique properties that make it challenging to
+process computationally: it is unstructured, ambiguous,
+context-dependent, and varies significantly across the 7000+ human
+languages.</li>
+<li>Tokenization is the foundational step in NLP: splitting text into
+meaningful units (tokens) creates the structure that all downstream
+algorithms require.</li>
+<li>Language Modeling is a subset of NLP, not a synonym for AI:
+understanding NLP fundamentals (tokenization, statistical models,
+evaluation, …) can help to trace errors, detect biases, and use LLMs
+more critically and effectively.</li>
+<li>Text pre-processing is a pipeline of decisions: character cleaning,
+tokenization, lowercasing, and lemmatizing are common steps that can be
+used to improve the performance of your task.</li>
+<li>Libraries like spaCy are very light and make it practical to extract
+linguistic features (tokens, lemmas, part-of-speech tags, named
+entities, and sentence boundaries) from text in different languages with
+minimal code.</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
-</section></section><section id="aio-01b-linguistic_primer"><p>Content from <a href="01b-linguistic_primer.html">A Primer on Linguistics</a></p>
+</section></section><section id="aio-02-linguistic_primer"><p>Content from <a href="02-linguistic_primer.html">A Primer on Linguistics</a></p>
 <hr>
-<p>Last updated on 2026-05-01 |
+<p>Last updated on 2026-05-20 |
 
-        <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/01b-linguistic_primer.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/02-linguistic_primer.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 60 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
@@ -1245,7 +1262,7 @@ process language as humans do</p></li>
 <h3 class="card-title">Questions</h3>
 <ul>
 <li>How is language approached from a Machine Learning perspective?</li>
-<li>What makes text different from other data?</li>
+<li>What does it mean to do Language Modeling?</li>
 <li>What linguistic properties should we consider when dealing with
 texts?</li>
 </ul>
@@ -1257,8 +1274,11 @@ texts?</li>
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Learn a taxonomy of NLP tasks</li>
-<li>Identify basic linguistic concepts in NLP</li>
+<li>Identify the most relevant existing NLP tasks</li>
+<li>Describe what the Language Modeling task is</li>
+<li>Explain why automatic processing of language is difficult</li>
+<li>Demonstrate linguistic concepts by coding short examples with text
+data</li>
 </ul>
 </div>
 </div>
@@ -1857,22 +1877,36 @@ train English large language models.</li>
 <div class="callout-inner">
 <div class="callout-content">
 <ul>
-<li><p>Deep learning has significantly advanced NLP, but the challenge
-remains in processing the discrete and ambiguous nature of
-language.</p></li>
-<li><p>The ultimate goal of NLP is to enable machines to understand and
-process language as humans do.</p></li>
-<li><p>Key tasks include text classification, token classification,
-language modeling and text generation.</p></li>
+<li>NLP tasks can be approached as supervised (learning from labeled
+examples), semi-supervised (learning from text tokens), or unsupervised
+(exploiting patterns in raw text).</li>
+<li>The main families of NLP tasks are text classification, token
+classification, language modeling, and text generation.</li>
+<li>Language is compositional: meaning is built layer by layer from
+words to sentences to discourse, and sometimes more than two layers are
+needed in order to describe the meaning of a piece of text.<br>
+</li>
+<li>Language is ambiguous at multiple levels and resolving this
+ambiguity requires contextual information that is challenging for
+machines to capture.</li>
+<li>Language is sparse: words of interest typically appear rarely in a
+corpus, dominated by high-frequency stopwords that carry little semantic
+content.</li>
+<li>Language is discrete: word form does not reflect meaning: “car” and
+“cat” differ by one letter yet are unrelated, while “pizza” and
+“hamburger” look very different but are semantically more similar.</li>
+<li>Domain-specific language shifts the distribution of meaningful words
+and can change the meaning of terms entirely (e.g., “trial” in law
+vs. “trial” in medicine).</li>
 </ul>
 </div>
 </div>
 </div>
-</section></section><section id="aio-02-word_representations"><p>Content from <a href="02-word_representations.html">From words to vectors</a></p>
+</section></section><section id="aio-03-word_representations"><p>Content from <a href="03-word_representations.html">From words to vectors</a></p>
 <hr>
-<p>Last updated on 2026-05-13 |
+<p>Last updated on 2026-05-20 |
 
-        <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/02-word_representations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/03-word_representations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 120 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
@@ -1885,13 +1919,15 @@ language modeling and text generation.</p></li>
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>Why do we need to preprocess text in NLP?</li>
-<li>What are the most common preprocessing operations and what contexts
-should they be used in?</li>
-<li>What properties do word embeddings have?</li>
-<li>What is a Word2Vec model?</li>
-<li>What insights can I get from word embeddings?</li>
-<li>How do I train my own Word2Vec model?</li>
+<li>What are the steps that matter for defining an NLP task?</li>
+<li>How can words be represented as numbers that capture meaning?</li>
+<li>What kinds of semantic relationships can word embeddings
+encode?</li>
+<li>What are the limitations of static word representations like
+Word2Vec?</li>
+<li>How can we train our own Word2Vec model?</li>
+<li>How can we automatically discover hidden topics in a collection of
+texts?</li>
 </ul>
 </div>
 </div>
@@ -3261,24 +3297,41 @@ formation of topics based on very few data points. The default is
 <div class="callout-inner">
 <div class="callout-content">
 <ul>
-<li>We can run a preprocessing pipeline to obtain cleaner text with
-content words that can be used as features.</li>
-<li>We learned how words are converted into vectors of numbers (which
-makes them interpretable for machines).</li>
-<li>We can easily compute how words are similar to each other with the
-cosine similarity score.</li>
-<li>We can train our own Word2Vec models by using
-<code>gensim</code>.</li>
+<li>An NLP pipeline is a chain of steps from raw text to a structured
+task output.</li>
+<li>Word embeddings represent words as dense numeric vectors. These are
+learned by training neural network(s) on a language modeling objective.
+Because similar words appear in similar contexts, semantically related
+words will have gemoetrically similar vectors.</li>
+<li>Word2Vec is a popular word embedding model. It encodes semantic
+relationships in vector arithmetic: analogies like “king − man + woman ≈
+queen” emerge naturally from the geometry of vectors.</li>
+<li>Word2Vec has a key limitation: words unseen during training
+(out-of-vocabulary) cannot be represented, and each word receives one
+fixed vector regardless of context.</li>
+<li>Cosine similarity measures the angle between two vectors and is the
+standard metric for comparing word embeddings: it captures semantic
+relatedness independently of vector magnitude, and returns values
+between -1 (not similar at all) and 1 (completely similar).</li>
+<li>Topic modelling is an unsupervised method for discovering latent
+themes in a document collection, representing each topic as a weighted
+list of characteristic words and each document as a mixture of
+topics.</li>
+<li>BERTopic builds on language model embeddings by chaining document
+vectorization (each document gets a single vector that represents it),
+dimensionality reduction (UMAP), clustering (HDBSCAN), and topic
+labeling (c-TF-IDF) — each component can be swapped to adapt to
+different languages, text lengths, or research goals.</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
-</section></section><section id="aio-03-transformers"><p>Content from <a href="03-transformers.html">Transformers: BERT and Beyond</a></p>
+</section></section><section id="aio-04-transformers"><p>Content from <a href="04-transformers.html">Transformers: BERT and Beyond</a></p>
 <hr>
-<p>Last updated on 2026-04-22 |
+<p>Last updated on 2026-05-20 |
 
-        <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/03-transformers.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/04-transformers.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 120 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
@@ -3305,13 +3358,13 @@ cosine similarity score.</li>
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Understand how a Transformer works and recognize their main
-components.</li>
-<li>Understand how to use pre-trained transformers (Use Case: BERT)</li>
-<li>Use BERT to predict words in context.</li>
-<li>Use BERT to classify texts.</li>
-<li>Learn to evaluate your NLP Classifier.</li>
-<li>Understand assumptions and basic evaluation for NLP outputs.</li>
+<li>Explain why contextualized vectors are an improvement</li>
+<li>Describe the Transformer architecture and its main components</li>
+<li>Explain what the BERT language model is</li>
+<li>Use the HuggingFace pipeline to run examples using BERT</li>
+<li>Use a pre-trained BERT model for text classification</li>
+<li>Apply basic evaluation metrics to assess the quality of any NLP
+model</li>
 </ul>
 </div>
 </div>
@@ -3362,7 +3415,7 @@ which of the possible meanings does the word have when you see it?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Two possible examples can be the words ‘fine’ and ‘run’</p>
 <p>Sentences for ‘fine’: - She has a fine watch (fine == high-quality) -
@@ -3492,7 +3545,7 @@ always possible to do this one-to-one for words?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Here is an example of a sentence in English and its translation into
 Spanish. We can look at the final mapping and observe that:</p>
@@ -3978,7 +4031,7 @@ to <code>bert-base-multilingual-cased</code>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>This is a free exercise, so anything works. But even by running the
 same cases with the multilingual models we see some interesting aspects.
@@ -4322,7 +4375,7 @@ the 3-class annotations given in the test set:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4510,15 +4563,56 @@ when using this model for unknown predictions</p></li>
 </div>
 </div>
 </div>
-</section></section><section id="aio-04-LargeLanguageModels"><p>Content from <a href="04-LargeLanguageModels.html">Using large language models</a></p>
+</section></section><section id="aio-05-LargeLanguageModels"><p>Content from <a href="05-LargeLanguageModels.html">Using large language models</a></p>
 <hr>
-<p>Last updated on 2025-12-01 |
+<p>Last updated on 2026-05-20 |
 
-        <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/04-LargeLanguageModels.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/05-LargeLanguageModels.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 120 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What makes Large Language Models different from other
+Transformer-based models?</li>
+<li>What should we consider when choosing between open-source and
+proprietary LLMs?</li>
+<li>How can we run and interact with an LLM programmatically?</li>
+<li>How can a generative model be used to solve classification
+tasks?</li>
+<li>Can we trust the outputs of an LLM? What kind of systematic
+weaknesses do they have?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Explain how LLMs are different from vanilla Transformers</li>
+<li>Understand the differences between open source and proprietary
+models</li>
+<li>Choose an appropriate LLM model for specific tasks</li>
+<li>Use the HuggingFace pipeline with SmolLMv2, an open source
+model</li>
+<li>Use Ollama to run conversational models in our laptop</li>
+<li>Run a classification task using a generative model</li>
+<li>Discuss and locate hidden biases when using LLMs</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
 <section><h2 class="section-heading" id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
 </h2>
 <hr class="half-width">
@@ -5176,7 +5270,7 @@ improve the results?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Here the code to do the same excercise as lesson 3 but with the
 generative approach:</p>
@@ -5452,19 +5546,35 @@ answer is valid or not. For example:</p>
 <div class="callout-inner">
 <div class="callout-content">
 <ul>
-<li>We learned how are so called LLMs different from the first
-generation of Transformers</li>
-<li>There are different kinds of LLMs and understanding their
-differences and limitations are a key aspect for choosing the best model
-for your case</li>
-<li>We learned how to use HuggingFace pipeline with SmolLMv2, an open
-source model.</li>
-<li>We learned how to use Ollama to run conversational models in our
-laptop</li>
-<li>Classification tasks can be done using generative models if we
-define the prompt in a careful way</li>
-<li>Hidden biases will always be present when using LLMs, we should be
-aware of those before we draw conclusions from the outputs.</li>
+<li>LLMs differ from vanilla transformers in three key ways: scale
+(parameters and context window sizes), post-training (SFT + RHLF), and
+generalization capabilities (given the amount of seen training
+data).</li>
+<li>The LLM landscape spans distinct model families: embedder models
+(encoder-only, optimized for similarity), base generative models,
+instruct-tuned assistants, reasoning models, and tool-augmented models,
+choosing the right type depends on the task.</li>
+<li>LLM’s can be “open” in three independent dimensions: open weights,
+open training data, and open architecture. An LLM that only exposes a
+remote API is a proprietary model and we don’t have much control over
+it’s behavior.</li>
+<li>Open LLMs can run locally with tools like Ollama and the HuggingFace
+transformers pipeline. This eliminates API costs, keeps sensitive data
+private, and makes experiments more reproducible without depending on
+remote services.</li>
+<li>Generative models can solve classification tasks through careful
+prompt design: label choices, output format, and system instructions
+directly shape what the model returns. Outputs should still be evaluated
+with standard metrics (precision, recall, F1).</li>
+<li>LLMs can produce confident and fluent content, but this does not
+imply the content will be factually correct. Guardrails partially
+mitigate this but do not eliminate it.</li>
+<li>LLMs carry systematic biases inherited from training data and
+post-training: gender stereotypes, anglosphere-centric factual accuracy,
+and underrepresentation of languages and cultures outside the western
+mainstream are structural failures. This should be always considered
+before reaching to conclusions without a careful analysis of
+results.</li>
 </ul>
 </div>
 </div>
@@ -5497,7 +5607,7 @@ aware of those before we draw conclusions from the outputs.</li>
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.1" class="external-link">sandpaper (0.20.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.0" class="external-link">varnish (1.1.0)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.2" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.1" class="external-link">varnish (1.1.1)</a></p>
 		</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -5514,14 +5624,14 @@ aware of those before we draw conclusions from the outputs.</li>
   "inLanguage": "en",
   "dct:conformsTo": "https://bioschemas.org/profiles/LearningResource/1.0-RELEASE",
   "description": "A Carpentries Lesson teaching foundational data and coding skills to researchers worldwide",
-  "keywords": "software, data, lesson, The Carpentries, NLP, English, social sciences, pre-alpha",
+  "keywords": "software, data, lesson, The Carpentries, natural language processing, NLP, English, social sciences, alpha",
   "name": "All in One View",
   "creativeWorkStatus": "active",
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/aio.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/aio.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2026-05-19",
-  "datePublished": "2026-05-19"
+  "dateModified": "2026-05-20",
+  "datePublished": "2026-05-20"
 }
 
   </script><script>

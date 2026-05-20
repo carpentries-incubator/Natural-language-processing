@@ -90,7 +90,7 @@
 </div>
     </div>
   </div>
-  <hr></header><nav class="navbar navbar-expand-xl bottom-nav incubator" aria-label="Main Navigation"><div class="container-fluid nav-container">
+</header><nav class="navbar navbar-expand-xl bottom-nav incubator" aria-label="Main Navigation"><div class="container-fluid nav-container">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navigation">
       <span class="navbar-toggler-icon"></span>
       <span class="menu-title">Menu</span>
@@ -207,8 +207,7 @@
             </div>
 <!--/div.col -->
 
-            <hr>
-</div>
+          </div>
 <!--/div.mobile-row -->
 
           <div class="accordion accordion-flush" id="accordion-chapters-toggle">
@@ -249,7 +248,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="01b-linguistic_primer.html">2. A Primer on Linguistics</a>
+        <a href="02-linguistic_primer.html">2. A Primer on Linguistics</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -261,7 +260,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="02-word_representations.html">3. From words to vectors</a>
+        <a href="03-word_representations.html">3. From words to vectors</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -273,7 +272,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="03-transformers.html">4. Transformers: BERT and Beyond</a>
+        <a href="04-transformers.html">4. Transformers: BERT and Beyond</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -285,7 +284,7 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="04-LargeLanguageModels.html">5. Using large language models</a>
+        <a href="05-LargeLanguageModels.html">5. Using large language models</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -351,35 +350,80 @@
 <section id="01-introduction"><h2 class="section-heading"><a href="01-introduction.html">Introduction</a></h2>
 <hr class="half-width">
 <ul>
-<li><p>NLP is a subfield of Artificial Intelligence (AI) that, with the
-help of Linguistics, deals with approaches to process, understand and
-generate natural language</p></li>
-<li><p>Linguistic Data has special properties that we should consider
-when modeling our solutions</p></li>
-<li><p>The ultimate goal of NLP is to enable machines to understand and
-process language as humans do</p></li>
-</ul></section><section id="01b-linguistic_primer"><h2 class="section-heading"><a href="01b-linguistic_primer.html">A Primer on Linguistics</a></h2>
+<li>NLP is a subfield of Articifial Intelligence that, with help from
+Linguistics, deals with processing, understanding, and generating
+natural language data.</li>
+<li>Linguistic data has unique properties that make it challenging to
+process computationally: it is unstructured, ambiguous,
+context-dependent, and varies significantly across the 7000+ human
+languages.</li>
+<li>Tokenization is the foundational step in NLP: splitting text into
+meaningful units (tokens) creates the structure that all downstream
+algorithms require.</li>
+<li>Language Modeling is a subset of NLP, not a synonym for AI:
+understanding NLP fundamentals (tokenization, statistical models,
+evaluation, …) can help to trace errors, detect biases, and use LLMs
+more critically and effectively.</li>
+<li>Text pre-processing is a pipeline of decisions: character cleaning,
+tokenization, lowercasing, and lemmatizing are common steps that can be
+used to improve the performance of your task.</li>
+<li>Libraries like spaCy are very light and make it practical to extract
+linguistic features (tokens, lemmas, part-of-speech tags, named
+entities, and sentence boundaries) from text in different languages with
+minimal code.</li>
+</ul></section><section id="02-linguistic_primer"><h2 class="section-heading"><a href="02-linguistic_primer.html">A Primer on Linguistics</a></h2>
 <hr class="half-width">
 <ul>
-<li><p>Deep learning has significantly advanced NLP, but the challenge
-remains in processing the discrete and ambiguous nature of
-language.</p></li>
-<li><p>The ultimate goal of NLP is to enable machines to understand and
-process language as humans do.</p></li>
-<li><p>Key tasks include text classification, token classification,
-language modeling and text generation.</p></li>
-</ul></section><section id="02-word_representations"><h2 class="section-heading"><a href="02-word_representations.html">From words to vectors</a></h2>
+<li>NLP tasks can be approached as supervised (learning from labeled
+examples), semi-supervised (learning from text tokens), or unsupervised
+(exploiting patterns in raw text).</li>
+<li>The main families of NLP tasks are text classification, token
+classification, language modeling, and text generation.</li>
+<li>Language is compositional: meaning is built layer by layer from
+words to sentences to discourse, and sometimes more than two layers are
+needed in order to describe the meaning of a piece of text.<br>
+</li>
+<li>Language is ambiguous at multiple levels and resolving this
+ambiguity requires contextual information that is challenging for
+machines to capture.</li>
+<li>Language is sparse: words of interest typically appear rarely in a
+corpus, dominated by high-frequency stopwords that carry little semantic
+content.</li>
+<li>Language is discrete: word form does not reflect meaning: “car” and
+“cat” differ by one letter yet are unrelated, while “pizza” and
+“hamburger” look very different but are semantically more similar.</li>
+<li>Domain-specific language shifts the distribution of meaningful words
+and can change the meaning of terms entirely (e.g., “trial” in law
+vs. “trial” in medicine).</li>
+</ul></section><section id="03-word_representations"><h2 class="section-heading"><a href="03-word_representations.html">From words to vectors</a></h2>
 <hr class="half-width">
 <ul>
-<li>We can run a preprocessing pipeline to obtain cleaner text with
-content words that can be used as features.</li>
-<li>We learned how words are converted into vectors of numbers (which
-makes them interpretable for machines).</li>
-<li>We can easily compute how words are similar to each other with the
-cosine similarity score.</li>
-<li>We can train our own Word2Vec models by using
-<code>gensim</code>.</li>
-</ul></section><section id="03-transformers"><h2 class="section-heading"><a href="03-transformers.html">Transformers: BERT and Beyond</a></h2>
+<li>An NLP pipeline is a chain of steps from raw text to a structured
+task output.</li>
+<li>Word embeddings represent words as dense numeric vectors. These are
+learned by training neural network(s) on a language modeling objective.
+Because similar words appear in similar contexts, semantically related
+words will have gemoetrically similar vectors.</li>
+<li>Word2Vec is a popular word embedding model. It encodes semantic
+relationships in vector arithmetic: analogies like “king − man + woman ≈
+queen” emerge naturally from the geometry of vectors.</li>
+<li>Word2Vec has a key limitation: words unseen during training
+(out-of-vocabulary) cannot be represented, and each word receives one
+fixed vector regardless of context.</li>
+<li>Cosine similarity measures the angle between two vectors and is the
+standard metric for comparing word embeddings: it captures semantic
+relatedness independently of vector magnitude, and returns values
+between -1 (not similar at all) and 1 (completely similar).</li>
+<li>Topic modelling is an unsupervised method for discovering latent
+themes in a document collection, representing each topic as a weighted
+list of characteristic words and each document as a mixture of
+topics.</li>
+<li>BERTopic builds on language model embeddings by chaining document
+vectorization (each document gets a single vector that represents it),
+dimensionality reduction (UMAP), clustering (HDBSCAN), and topic
+labeling (c-TF-IDF) — each component can be swapped to adapt to
+different languages, text lengths, or research goals.</li>
+</ul></section><section id="04-transformers"><h2 class="section-heading"><a href="04-transformers.html">Transformers: BERT and Beyond</a></h2>
 <hr class="half-width">
 <ul>
 <li><p>Static word representations, such as word2vec, still lack of
@@ -402,22 +446,38 @@ classification (named entity recognition).</p></li>
 <li><p>Evaluating the model performance using your own data <strong>for
 your own use case</strong> is crucial to understand possible drawbacks
 when using this model for unknown predictions</p></li>
-</ul></section><section id="04-LargeLanguageModels"><h2 class="section-heading"><a href="04-LargeLanguageModels.html">Using large language models</a></h2>
+</ul></section><section id="05-LargeLanguageModels"><h2 class="section-heading"><a href="05-LargeLanguageModels.html">Using large language models</a></h2>
 <hr class="half-width">
 <ul>
-<li>We learned how are so called LLMs different from the first
-generation of Transformers</li>
-<li>There are different kinds of LLMs and understanding their
-differences and limitations are a key aspect for choosing the best model
-for your case</li>
-<li>We learned how to use HuggingFace pipeline with SmolLMv2, an open
-source model.</li>
-<li>We learned how to use Ollama to run conversational models in our
-laptop</li>
-<li>Classification tasks can be done using generative models if we
-define the prompt in a careful way</li>
-<li>Hidden biases will always be present when using LLMs, we should be
-aware of those before we draw conclusions from the outputs.</li>
+<li>LLMs differ from vanilla transformers in three key ways: scale
+(parameters and context window sizes), post-training (SFT + RHLF), and
+generalization capabilities (given the amount of seen training
+data).</li>
+<li>The LLM landscape spans distinct model families: embedder models
+(encoder-only, optimized for similarity), base generative models,
+instruct-tuned assistants, reasoning models, and tool-augmented models,
+choosing the right type depends on the task.</li>
+<li>LLM’s can be “open” in three independent dimensions: open weights,
+open training data, and open architecture. An LLM that only exposes a
+remote API is a proprietary model and we don’t have much control over
+it’s behavior.</li>
+<li>Open LLMs can run locally with tools like Ollama and the HuggingFace
+transformers pipeline. This eliminates API costs, keeps sensitive data
+private, and makes experiments more reproducible without depending on
+remote services.</li>
+<li>Generative models can solve classification tasks through careful
+prompt design: label choices, output format, and system instructions
+directly shape what the model returns. Outputs should still be evaluated
+with standard metrics (precision, recall, F1).</li>
+<li>LLMs can produce confident and fluent content, but this does not
+imply the content will be factually correct. Guardrails partially
+mitigate this but do not eliminate it.</li>
+<li>LLMs carry systematic biases inherited from training data and
+post-training: gender stereotypes, anglosphere-centric factual accuracy,
+and underrepresentation of languages and cultures outside the western
+mainstream are structural failures. This should be always considered
+before reaching to conclusions without a careful analysis of
+results.</li>
 </ul></section>
 </div>
     </main>
@@ -445,7 +505,7 @@ aware of those before we draw conclusions from the outputs.</li>
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.1" class="external-link">sandpaper (0.20.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.0" class="external-link">varnish (1.1.0)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.2" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.1" class="external-link">varnish (1.1.1)</a></p>
 		</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -462,14 +522,14 @@ aware of those before we draw conclusions from the outputs.</li>
   "inLanguage": "en",
   "dct:conformsTo": "https://bioschemas.org/profiles/LearningResource/1.0-RELEASE",
   "description": "A Carpentries Lesson teaching foundational data and coding skills to researchers worldwide",
-  "keywords": "software, data, lesson, The Carpentries, NLP, English, social sciences, pre-alpha",
+  "keywords": "software, data, lesson, The Carpentries, natural language processing, NLP, English, social sciences, alpha",
   "name": "Key Points",
   "creativeWorkStatus": "active",
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/key-points.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/key-points.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2026-05-19",
-  "datePublished": "2026-05-19"
+  "dateModified": "2026-05-20",
+  "datePublished": "2026-05-20"
 }
 
   </script><script>
