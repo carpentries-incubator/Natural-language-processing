@@ -6,16 +6,18 @@ exercises: 30
 
 ::: questions
 -   What is Natural Language Processing?
--   Why not just learn Large Language Models?
+-   Why should we learn NLP fundamentals?
 -   How is text different from other data?
 -   How can we extract structure from text?
 :::
 
 ::: objectives
--   Define Natural Language Processing
--   Show the most relevant NLP tasks and applications
--   Understand the importance of NLP fundamentals
--   Learn how to manipulate linguistic data
+-   Explain what is Natural Language Processing
+-   Enumerate relevant NLP applications
+-   Describe the relationship between NLP and LLMs
+-   Explain why NLP fundamentals are important for text processing tasks
+-   Enumerate basic pre-processing operations when working with text
+-   Extract basic properties from text using the spaCy library
 :::
 
 ## What is NLP?
@@ -502,9 +504,12 @@ What did we learn in this lesson?
 
 
 ::: keypoints
-- NLP is a subfield of Artificial Intelligence (AI) that, with the help of Linguistics, deals with approaches to process, understand and generate natural language 
+-   NLP is a subfield of Articifial Intelligence that, with help from Linguistics, deals with processing, understanding, and generating natural language data.
+-   Linguistic data has unique properties that make it challenging to process computationally: it is unstructured, ambiguous, context-dependent, and varies significantly across the 7000+ human languages.
+-   Tokenization is the foundational step in NLP: splitting text into meaningful units (tokens) creates the structure that all downstream algorithms
+  require.
+-   Language Modeling is a subset of NLP, not a synonym for AI: understanding NLP fundamentals (tokenization, statistical models, evaluation, ...) can help to trace errors, detect biases, and use LLMs more critically and effectively.
+-   Text pre-processing is a pipeline of decisions: character cleaning, tokenization, lowercasing, and lemmatizing are common steps that can be used to improve the performance of your task.
+-   Libraries like spaCy are very light and make it practical to extract linguistic features (tokens, lemmas, part-of-speech tags, named entities, and sentence boundaries) from text in different languages with minimal code.
 
-- Linguistic Data has special properties that we should consider when modeling our solutions 
-
-- The ultimate goal of NLP is to enable machines to understand and process language as humans do 
 :::

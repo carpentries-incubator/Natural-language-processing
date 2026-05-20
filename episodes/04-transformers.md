@@ -12,12 +12,12 @@ exercises: 60
 ::: 
 
 ::: objectives
-- Understand how a Transformer works and recognize their main components.
-- Understand how to use pre-trained transformers (Use Case: BERT)
-- Use BERT to predict words in context.
-- Use BERT to classify texts.
-- Learn to evaluate your NLP Classifier.
-- Understand assumptions and basic evaluation for NLP outputs.
+- Explain why contextualized vectors are an improvement
+- Describe the Transformer architecture and its main components
+- Explain what the BERT language model is
+- Use the HuggingFace pipeline to run examples using BERT
+- Use a pre-trained BERT model for text classification
+- Apply basic evaluation metrics to assess the quality of any NLP model
 :::
 
 
