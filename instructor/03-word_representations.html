@@ -315,7 +315,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>From words to vectors</h1>
-        <p>Last updated on 2026-05-20 |
+        <p>Last updated on 2026-05-22 |
 
         <a href="https://github.com/esciencecenter-digital-skills/Natural-language-processing/edit/main/episodes/03-word_representations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -1265,8 +1265,10 @@ model; this and the training itself will take a few minutes.</p>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" tabindex="-1" aria-label="code-block-34-1"></a><span class="im">from</span> bertopic <span class="im">import</span> BERTopic</span>
 <span id="cb34-2"><a href="#cb34-2" tabindex="-1" aria-label="code-block-34-2"></a></span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1" aria-label="code-block-34-3"></a>topic_model <span class="op">=</span> BERTopic(nr_topics<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1" aria-label="code-block-34-4"></a>topics, probs <span class="op">=</span> topic_model.fit_transform(sentences) </span></code></pre>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1" aria-label="code-block-34-3"></a>N_SENTENCES<span class="op">=</span><span class="dv">100000</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1" aria-label="code-block-34-4"></a></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1" aria-label="code-block-34-5"></a>topic_model <span class="op">=</span> BERTopic(nr_topics<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1" aria-label="code-block-34-6"></a>topics, probs <span class="op">=</span> topic_model.fit_transform(sentences[:N_SENTENCES])</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1293,18 +1295,17 @@ this dataset.</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>	Topic	Count	Name	Representation	Representative_Docs
-0	-1	21788	-1_eyes_little_time_man	[eyes, little, time, man, like, face, life, ro...	[good man true seen better man, young man mome...
-1	0	2968	0_mary_gloria_edna_miss	[mary, gloria, edna, miss, madame, gostrey, ma...	[gloria, mary, said mary]
-2	1	2124	1_dorian_henry_colin_ralph	[dorian, henry, colin, ralph, lord, denham, ro...	[lord henry looked table, know answered lord h...
-3	2	2077	2_yes_oh_ah_eh	[yes, oh, ah, eh, glad, right, better, god, su...	[oh yes, oh yes, oh yes]
-4	3	1625	3_katharine_carrie_cassandra_said	[katharine, carrie, cassandra, said, william, ...	[think katharine, katharine, katharine]
-...	...	...	...	...	...
-95	94	16	94_isabella_prison_quadroon_sold	[isabella, prison, quadroon, sold, previous, u...	[immediately took daughter aside informed prev...
-96	95	12	95_foreman_workshop_ogre_motioning	[foreman, workshop, ogre, motioning, gait, bar...	[head foreman round stopped machine, foreman, ...
-97	96	12	96_ames_superiority_funniest_thorne	[ames, superiority, funniest, thorne, dora, sa...	[going asked ames, said ames, ames]
-98	97	11	97_clatter_bang_scatter_crash	[clatter, bang, scatter, crash, lads, dogs, fi...	[clatter clatter clatter bang, clatter clatter...
-99	98	11	98_entanglement_ensue_faithlessness_repugnant	[entanglement, ensue, faithlessness, repugnant...	[entanglement carrie anxious change sort, carr...</code></pre>
+<pre class="output" tabindex="0"><code>0 	-1 	34182 	-1_little_like_eyes_face 	[little, like, eyes, face, time, man, day, roo... 	[said thought day, rate little gentleman early...
+1 	0 	10433 	0_oh_yes_know_asked 	[oh, yes, know, asked, mean, sir, come, ah, te... 	[oh, oh, oh come]
+2 	1 	4930 	1_helen_gloria_miss_mary 	[helen, gloria, miss, mary, edna, jane, martha... 	[helen, helen, helen]
+3 	2 	2471 	2_hurstwood_drouet_rochester_boldwood 	[hurstwood, drouet, rochester, boldwood, bilha... 	[said hurstwood, said hurstwood, said hurstwood]
+4 	3 	2411 	3_heart_exclaimed_shook_cried 	[heart, exclaimed, shook, cried, tears, laugh,... 	[shook head, shook head, laughed shook head]
+... 	... 	... 	... 	... 	...
+95 	94 	11 	94_isle_grand_summer_drove 	[isle, grand, summer, drove, damsel, vacation,... 	[let mind wander stay grand isle tried discove...
+96 	95 	11 	95_clatter_bang_scatter_lads 	[clatter, bang, scatter, lads, crash, find, sh... 	[clatter clatter clatter bang, clatter clatter...
+97 	96 	11 	96_desert_desertion_deserting_tolerance 	[desert, desertion, deserting, tolerance, mise... 	[found safety desert, like desert, desert]
+98 	97 	10 	97_briggs_solicitor_letter_vested 	[briggs, solicitor, letter, vested, urgency, l... 	[briggs solicitor street london, briggs london...
+99 	98 	10 	98_proportion_likes_proportions_theirs 	[proportion, likes, proportions, theirs, large... 	[proportion shifting trouble likes, proportion...</code></pre>
 </div>
 <p>Because the topic modelling algorithm has no information about the
 texts or topics to start with, it randomly assigns words to topics
@@ -1350,14 +1351,14 @@ topics:</p>
 <div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" tabindex="-1" aria-label="code-block-40-1"></a>topics, probs <span class="op">=</span> topic_model.find_topics(<span class="st">"sea"</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1" aria-label="code-block-40-2"></a><span class="bu">print</span>(topics)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" tabindex="-1" aria-label="code-block-40-1"></a>sea_topics, probs <span class="op">=</span> topic_model.find_topics(<span class="st">"sea"</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1" aria-label="code-block-40-2"></a><span class="bu">print</span>(sea_topics)</span></code></pre>
 </div>
 <p>Visualize the terms of the topics found:</p>
 <div class="codewrapper sourceCode" id="cb41">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1" aria-label="code-block-41-1"></a>topic_model.visualize_barchart(topics)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1" aria-label="code-block-41-1"></a>topic_model.visualize_barchart(sea_topics)</span></code></pre>
 </div>
 <figure><img src="../fig/02-topics-sea.png" class="figure mx-auto d-block"></figure><p>During the model training, all texts in the data have been assigned
 to a topic distribution. You can also use the model to infer the topics
@@ -1365,18 +1366,19 @@ of previously unseen texts based on the same model:</p>
 <div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" tabindex="-1" aria-label="code-block-42-1"></a>topics, probs <span class="op">=</span> topic_model.transform([<span class="st">"A short text about scientific discoveries"</span>])</span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" tabindex="-1" aria-label="code-block-42-1"></a>topics, probs <span class="op">=</span> topic_model.transform([<span class="st">"a short text about water"</span>])</span>
 <span id="cb42-2"><a href="#cb42-2" tabindex="-1" aria-label="code-block-42-2"></a><span class="bu">print</span>(topics, probs)</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[31] [0.47929027]</code></pre>
+<pre class="output" tabindex="0"><code>[20] [1.]</code></pre>
 </div>
-<p>This example was assigned to topic 31, with a probability of 0.479.
-Again, these numbers will be slightly different per run. The model can
-even assign multiple topics to a text, the <code>topics</code> and
-<code>probs</code> lists contain the according number of values.</p>
+<p>This example was assigned to topic 20, with a score of 1.0. Again,
+these numbers can vary per run. For less trivial sentences, the model
+can assign multiple topics to a text. In that case, the
+<code>topics</code> and <code>probs</code> lists contain the according
+number of values.</p>
 <div id="explore-topics-and-modelling-parameters" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
@@ -1402,13 +1404,21 @@ how topics change</li>
 <div class="accordion-body">
 <ol style="list-style-type: decimal"><li><p>There is no general ‘true’ label for a topic, but looking at the
 top word of a topic should give an idea of the concept(s) it refers to,
-for instance: <code>['mary', 'gloria', 'edna', 'miss', 'madame']</code>
--&gt; ‘female names and titles’
-<code>['mean', 'oh', 'yes', 'ah', 'eh']</code> -&gt; ‘acknowledging
-reactions’’ <code>['know', 'tell', 'said', 'told']</code> -&gt;
-‘telling’</p></li>
-<li><p>TODO</p></li>
-<li><p>Evaluation methods:</p></li>
+for instance:
+<code>[helen, gloria, miss, mary, edna, jane, martha, ...</code> -&gt;
+‘female names and titles’
+<code>[hurstwood, drouet, rochester, boldwood, ...</code> -&gt; ‘family
+names’ <code>[heart, exclaimed, shook, cried, tears, laugh, ...</code>
+-&gt; ‘emotions’</p></li>
+<li>
+</li>
+</ol><ul><li>Omitting the number of topics (<code>nr_topics</code>) results in an
+‘optimal’ number, according to the clustering algorithm.</li>
+<li>Limiting the number of topics forces the algorithm to merge similar
+topics.</li>
+<li>Minimum topic sizes prevents the algorithm to form clusters of very
+few documents.</li>
+</ul><ol start="3" style="list-style-type: decimal"><li>Evaluation methods:</li>
 </ol><ul><li>Quantitative, extrinsic: apply model for downstream task,
 e.g. document classification, which can be evaluated empirically</li>
 <li>Quantitative, intrinsic, e.g.: measure overlap by words or
@@ -1704,8 +1714,8 @@ different languages, text lengths, or research goals.</li>
   "url": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/03-word_representations.html",
   "identifier": "https://esciencecenter-digital-skills.github.io/Natural-language-processing/instructor/03-word_representations.html",
   "dateCreated": "2024-04-24",
-  "dateModified": "2026-05-20",
-  "datePublished": "2026-05-20"
+  "dateModified": "2026-05-22",
+  "datePublished": "2026-05-22"
 }
 
   </script><script>
