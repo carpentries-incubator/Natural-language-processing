@@ -648,8 +648,10 @@ Before the first training run, it downloads the language model; this and the tra
 ```python
 from bertopic import BERTopic
 
+N_SENTENCES=100000
+
 topic_model = BERTopic(nr_topics=100)
-topics, probs = topic_model.fit_transform(sentences) 
+topics, probs = topic_model.fit_transform(sentences[:N_SENTENCES])
 ```
 
 ```output
@@ -673,18 +675,17 @@ topic_model.get_topic_info()
 ```
 
 ```output
-	Topic	Count	Name	Representation	Representative_Docs
-0	-1	21788	-1_eyes_little_time_man	[eyes, little, time, man, like, face, life, ro...	[good man true seen better man, young man mome...
-1	0	2968	0_mary_gloria_edna_miss	[mary, gloria, edna, miss, madame, gostrey, ma...	[gloria, mary, said mary]
-2	1	2124	1_dorian_henry_colin_ralph	[dorian, henry, colin, ralph, lord, denham, ro...	[lord henry looked table, know answered lord h...
-3	2	2077	2_yes_oh_ah_eh	[yes, oh, ah, eh, glad, right, better, god, su...	[oh yes, oh yes, oh yes]
-4	3	1625	3_katharine_carrie_cassandra_said	[katharine, carrie, cassandra, said, william, ...	[think katharine, katharine, katharine]
-...	...	...	...	...	...
-95	94	16	94_isabella_prison_quadroon_sold	[isabella, prison, quadroon, sold, previous, u...	[immediately took daughter aside informed prev...
-96	95	12	95_foreman_workshop_ogre_motioning	[foreman, workshop, ogre, motioning, gait, bar...	[head foreman round stopped machine, foreman, ...
-97	96	12	96_ames_superiority_funniest_thorne	[ames, superiority, funniest, thorne, dora, sa...	[going asked ames, said ames, ames]
-98	97	11	97_clatter_bang_scatter_crash	[clatter, bang, scatter, crash, lads, dogs, fi...	[clatter clatter clatter bang, clatter clatter...
-99	98	11	98_entanglement_ensue_faithlessness_repugnant	[entanglement, ensue, faithlessness, repugnant...	[entanglement carrie anxious change sort, carr...
+0 	-1 	34182 	-1_little_like_eyes_face 	[little, like, eyes, face, time, man, day, roo... 	[said thought day, rate little gentleman early...
+1 	0 	10433 	0_oh_yes_know_asked 	[oh, yes, know, asked, mean, sir, come, ah, te... 	[oh, oh, oh come]
+2 	1 	4930 	1_helen_gloria_miss_mary 	[helen, gloria, miss, mary, edna, jane, martha... 	[helen, helen, helen]
+3 	2 	2471 	2_hurstwood_drouet_rochester_boldwood 	[hurstwood, drouet, rochester, boldwood, bilha... 	[said hurstwood, said hurstwood, said hurstwood]
+4 	3 	2411 	3_heart_exclaimed_shook_cried 	[heart, exclaimed, shook, cried, tears, laugh,... 	[shook head, shook head, laughed shook head]
+... 	... 	... 	... 	... 	...
+95 	94 	11 	94_isle_grand_summer_drove 	[isle, grand, summer, drove, damsel, vacation,... 	[let mind wander stay grand isle tried discove...
+96 	95 	11 	95_clatter_bang_scatter_lads 	[clatter, bang, scatter, lads, crash, find, sh... 	[clatter clatter clatter bang, clatter clatter...
+97 	96 	11 	96_desert_desertion_deserting_tolerance 	[desert, desertion, deserting, tolerance, mise... 	[found safety desert, like desert, desert]
+98 	97 	10 	97_briggs_solicitor_letter_vested 	[briggs, solicitor, letter, vested, urgency, l... 	[briggs solicitor street london, briggs london...
+99 	98 	10 	98_proportion_likes_proportions_theirs 	[proportion, likes, proportions, theirs, large... 	[proportion shifting trouble likes, proportion...
 ```
 
 Because the topic modelling algorithm has no information about the texts or topics to start with, it randomly assigns words to topics initially.
@@ -720,13 +721,13 @@ topic_model.visualize_hierarchy()
 To find topics that are associated to a particular term, use the `.find_topics()` method:
 
 ```python
-topics, probs = topic_model.find_topics("sea")
-print(topics)
+sea_topics, probs = topic_model.find_topics("sea")
+print(sea_topics)
 ```
 
 Visualize the terms of the topics found:
 ```python
-topic_model.visualize_barchart(topics)
+topic_model.visualize_barchart(sea_topics)
 ```
 
 ![](fig/02-topics-sea.png)
@@ -735,17 +736,18 @@ During the model training, all texts in the data have been assigned to a topic d
 You can also use the model to infer the topics of previously unseen texts based on the same model:
 
 ```python
-topics, probs = topic_model.transform(["A short text about scientific discoveries"])
+topics, probs = topic_model.transform(["a short text about water"])
 print(topics, probs)
 ```
 
 ```output
-[31] [0.47929027]
+[20] [1.]
 ```
 
-This example was assigned to topic 31, with a probability of 0.479.
-Again, these numbers will be slightly different per run.
-The model can even assign multiple topics to a text, the `topics` and `probs` lists contain the according number of values.
+This example was assigned to topic 20, with a score of 1.0.
+Again, these numbers can vary per run.
+For less trivial sentences, the model can assign multiple topics to a text.
+In that case, the `topics` and `probs` lists contain the according number of values.
 
 ::: challenge
 
@@ -758,11 +760,15 @@ The model can even assign multiple topics to a text, the `topics` and `probs` li
 ::: solution
 
 1. There is no general 'true' label for a topic, but looking at the top word of a topic should give an idea of the concept(s) it refers to, for instance:
-`['mary', 'gloria', 'edna', 'miss', 'madame']` -> 'female names and titles'
-`['mean', 'oh', 'yes', 'ah', 'eh']` -> 'acknowledging reactions''
-`['know', 'tell', 'said', 'told']` -> 'telling'
+`[helen, gloria, miss, mary, edna, jane, martha, ...` -> 'female names and titles'
+`[hurstwood, drouet, rochester, boldwood, ...` -> 'family names'
+`[heart, exclaimed, shook, cried, tears, laugh, ...` -> 'emotions'
 
-2. TODO
+2.
+
+- Omitting the number of topics (`nr_topics`) results in an 'optimal' number, according to the clustering algorithm.
+- Limiting the number of topics forces the algorithm to merge similar topics.
+- Minimum topic sizes prevents the algorithm to form clusters of very few documents.
 
 3. Evaluation methods:
 
