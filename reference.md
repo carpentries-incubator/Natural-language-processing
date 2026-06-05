@@ -2,18 +2,48 @@
 title: 'Reference'
 ---
 
+## Table of Contents
+
+- [Glossary](#glossary)
+  - [Alphabetical Index](#alphabetical-index)
+  - [NLP Fundamentals](#nlp-fundamentals)
+  - [Linguistic Properties of Text](#linguistic-properties-of-text)
+  - [NLP Tasks](#nlp-tasks)
+  - [Machine Learning & Deep Learning](#machine-learning--deep-learning)
+  - [Pre-trained Models & Transfer Learning](#pre-trained-models--transfer-learning)
+  - [Text Preprocessing & NLP Pipelines](#text-preprocessing--nlp-pipelines)
+  - [Word Representations](#word-representations)
+  - [Transformer Architecture](#transformer-architecture)
+  - [Model Evaluation](#model-evaluation)
+  - [Large Language Models](#large-language-models)
+  - [Prompting & Generation Control](#prompting--generation-control)
+  - [LLM Behavior & Limitations](#llm-behavior--limitations)
+- [External References](#external-references)
+  - [Books](#books)
+  - [Key Papers](#key-papers)
+  - [Tools & Libraries](#tools--libraries)
+  - [Datasets & Linguistic Resources](#datasets--linguistic-resources)
+  - [To Know More...](#to-know-more)
+
+---
+
 ## Glossary
 
-### Index of Terms
+### Alphabetical Index
 
+#### A
 - [Accuracy](#accuracy)
 - [Ambiguity](#ambiguity)
 - [Attention Mechanism](#attention-mechanism)
 - [Authorship Attribution](#authorship-attribution)
+
+#### B
 - [Backpropagation](#backpropagation)
 - [Base Model](#base-model)
 - [BERT](#bert)
 - [Bias & Fairness](#bias-fairness)
+
+#### C
 - [Chunking](#chunking)
 - [Co-reference Resolution](#coreference-resolution)
 - [Compositionality](#compositionality)
@@ -24,6 +54,8 @@ title: 'Reference'
 - [Convolutional Neural Network (CNN)](#cnn)
 - [Corpus / Corpora](#corpus)
 - [Cosine Similarity](#cosine-similarity)
+
+#### D
 - [Data Formatting](#data-formatting)
 - [Decoder](#decoder)
 - [Deep Learning](#deep-learning)
@@ -32,39 +64,61 @@ title: 'Reference'
 - [Document Clustering](#document-clustering)
 - [Domain-Specific Data](#domain-specific-data)
 - [Downstream Task](#downstream-task)
+
+#### E
 - [ELMo](#elmo)
 - [Embedder LLM vs. Generative LLM](#embedder-vs-generative)
 - [Encoder](#encoder)
 - [Entity Linking](#entity-linking)
+
+#### F
 - [F1-score](#f1-score)
 - [FastText](#fasttext)
 - [Fine-tuning](#fine-tuning)
+
+#### G
 - [Greedy Decoding](#greedy-decoding)
 - [Guardrails](#guardrails)
+
+#### H
 - [Hallucination / Confabulation](#hallucination)
 - [Hyperparameters](#hyperparameters)
+
+#### I
 - [Information Retrieval (IR)](#information-retrieval)
 - [IOB Notation](#iob-notation)
+
+#### K
 - [Knowledge Base](#knowledge-base)
+
+#### L
 - [Language Identification](#language-identification)
 - [Language Modeling](#language-modeling)
 - [Large Language Model (LLM)](#llm)
 - [Lemma / Lemmatization / Inflection](#lemmatization)
 - [Long Short-Term Memory (LSTM)](#lstm)
 - [Lowercasing](#lowercasing)
+
+#### M
 - [Machine Translation (MT)](#machine-translation)
 - [Masked Language Model (MLM)](#mlm)
 - [Morphological Ambiguity](#morphological-ambiguity)
 - [Multi-layer Perceptron (MLP)](#mlp)
 - [Multi-turn Conversation](#multi-turn)
+
+#### N
 - [Named Entity Recognition (NER)](#ner)
 - [Natural Language](#natural-language)
 - [Natural Language Processing (NLP)](#nlp)
 - [Neural Network](#neural-network)
 - [NLP Pipeline](#nlp-pipeline)
 - [Non-determinism](#non-determinism)
+
+#### O
 - [Open-weights Model](#open-weights)
 - [Overfitting](#overfitting)
+
+#### P
 - [Parameters](#parameters)
 - [Paraphrasing](#paraphrasing)
 - [Part-of-Speech (POS) Tagging](#pos-tagging)
@@ -74,12 +128,18 @@ title: 'Reference'
 - [Pre-trained Model](#pretrained-model)
 - [Precision](#precision)
 - [Prompt Engineering](#prompt-engineering)
+
+#### Q
 - [Question Answering (QA)](#question-answering)
+
+#### R
 - [Recall](#recall)
 - [Recurrent Neural Network (RNN)](#rnn)
 - [Reinforcement Learning from Human Feedback (RLHF)](#rlhf)
 - [Relation Extraction](#relation-extraction)
 - [RoBERTa](#roberta)
+
+#### S
 - [Self-Attention](#self-attention)
 - [Semantic Ambiguity](#semantic-ambiguity)
 - [Semantic Role Labeling (SRL)](#srl)
@@ -94,6 +154,8 @@ title: 'Reference'
 - [Supervised Fine-Tuning (SFT)](#sft)
 - [Supervised Learning](#supervised-learning)
 - [System / User / Assistant Roles](#conversation-roles)
+
+#### T
 - [Temperature](#temperature)
 - [Text Classification](#text-classification)
 - [Text Generation](#text-generation)
@@ -107,9 +169,15 @@ title: 'Reference'
 - [Transfer Learning](#transfer-learning)
 - [Transformer](#transformer)
 - [True Positives / True Negatives / False Positives / False Negatives](#tp-tn-fp-fn)
+
+#### U
 - [ULMFiT](#ulmfit)
 - [Unsupervised Learning](#unsupervised-learning)
+
+#### V
 - [Vector Space](#vector-space)
+
+#### W
 - [Word Embedding](#word-embedding)
 - [Word Sense Disambiguation (WSD)](#wsd)
 - [Word2Vec](#word2vec)
@@ -491,16 +559,26 @@ title: 'Reference'
 
 ## External References
 
+### Books
+- Jurafsky, D. & Martin J. (2026). *Speech and Language Processing (3rd ed. draft)*. [Available online](https://web.stanford.edu/~jurafsky/slp3/)
+- Alammar, J., & Grootendorst, M. (2024). *Hands-on large language models*. O'Reilly Media.
+- Tunstall, L., von Werra, L., & Wolf, T. (2022). *Natural language processing with transformers*. O'Reilly Media.
+
+
+
 ### Key Papers
 
 - Mikolov et al. (2013). *Efficient Estimation of Word Representations in Vector Space* (Word2Vec). <https://arxiv.org/pdf/1301.3781>
+- Bahdanau, D., Cho, K., & Bengio, Y. (2015). Neural machine translation by jointly learning to align and translate. Proceedings of the International Conference on Learning Representations (ICLR). https://arxiv.org/abs/1409.0473
+- Goldberg, Y. (2016). A primer on neural network models for natural language processing. Journal of Artificial Intelligence Research, 57, 345–420. https://arxiv.org/pdf/1510.00726
 - Vaswani et al. (2017). *Attention Is All You Need* (Transformer architecture). <https://arxiv.org/pdf/1706.03762>
-- Devlin et al. (2019). *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*. <https://aclanthology.org/N19-1423.pdf>
-- Joulin et al. (2016). *Bag of Tricks for Efficient Text Classification* (FastText). <https://arxiv.org/pdf/1607.01759>
 - Peters et al. (2018). *Deep Contextualized Word Representations* (ELMo). <https://aclanthology.org/N18-1202.pdf>
 - Howard & Ruder (2018). *Universal Language Model Fine-tuning for Text Classification* (ULMFiT). <https://aclanthology.org/P18-1031.pdf>
-- Lenci (2018). *Distributional Models of Word Meaning* (survey on distributional semantics). <https://arxiv.org/pdf/1905.01896>
-- Huang et al. (2024). *Survey on Hallucination in Large Language Models* (confabulation). <https://arxiv.org/abs/2406.04175>
+- Devlin et al. (2019). *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*. (BERT) <https://aclanthology.org/N19-1423.pdf>
+- Boleda (2020). *Distributional Semantics
+and Linguistic Theory*. <https://arxiv.org/pdf/1905.01896>
+- Emily M. Bender & Alexander Koller. 2020. *Climbing towards NLU: On Meaning, Form, and Understanding in the Age of Data*. <https://aclanthology.org/2020.acl-main.463.pdf>
+- Emily M. Bender, et. al (2021). *On the Dangers of Stochastic Parrots: Can Language Models Be Too Big? 🦜*. <https://doi.org/10.1145/3442188.3445922/>
 
 ### Tools & Libraries
 
@@ -530,10 +608,12 @@ title: 'Reference'
 - [Wikidata](https://www.wikidata.org/) — A free, open knowledge base with structured data about entities, their properties, and relationships; used to enrich NLP applications.
 - [Dolma](https://github.com/allenai/dolma) — An open dataset of 3 trillion tokens from diverse sources (web, books, code, encyclopedic material) used to train English LLMs.
 
-### Further Reading
+### To Know More...
 
-- Ruder, S. (2020). *NLP Beyond English* — A blog post surveying challenges and opportunities for NLP in non-English and minority languages. <https://www.ruder.io/nlp-beyond-english/>
-- McCormick, C. (2016). *Word2Vec Tutorial: The Skip-Gram Model* — An intuitive walkthrough of how Word2Vec is trained. <https://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/>
-- HuggingFace. *Fine-tuning a pre-trained model* — Official tutorial for adapting BERT-like models to custom classification tasks. <https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning>
-- spaCy. *Models & Languages* — Overview of available pre-trained spaCy models across many languages. <https://spacy.io/models>
-- HuggingFace. *Text Generation Strategies* — Documentation on decoding strategies (greedy, sampling, beam search) in the Transformers library. <https://huggingface.co/docs/transformers/generation_strategies>
+- **Challenges and opportunities for NLP in non-English and minority languages**. Ruder, S. (2020). *NLP Beyond English*. Blogpost: <https://www.ruder.io/nlp-beyond-english/>
+- **How do children start to produce recognisable words**. Deb Roy - *The birth of a word*. Video Talk: <https://www.ted.com/talks/deb_roy_the_birth_of_a_word/>
+- **Chomsky's hierarchy of languages**. Wikipedia Article: <https://en.wikipedia.org/wiki/Chomsky_hierarchy/>
+- **On the limits of benchmarks as the only source of model evolution:** Raji, I. D., Denton, E., Bender, E. M., Hanna, A., & Paullada, A. (2021). AI and the everything in the whole wide world benchmark. Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks. https://openreview.net/forum?id=j6NxpQbREA1
+- **An intuitive walkthrough of how Word2Vec is trained:** McCormick, C. (2016). *Word2Vec Tutorial: The Skip-Gram Model*. <https://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/>
+- **Official tutorial for adapting BERT-like models to custom classification tasks:** HuggingFace. *Fine-tuning a pre-trained model*. <https://huggingface.co/docs/transformers/v4.57.1/en/training#fine-tuning>
+- **Documentation on decoding strategies (greedy, sampling, beam search) in the Transformers library:** HuggingFace. *Text Generation Strategies*. <https://huggingface.co/docs/transformers/generation_strategies>
