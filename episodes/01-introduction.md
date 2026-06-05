@@ -380,7 +380,7 @@ for sent in sents_sample:
 Removing uppercases to e.g. avoid treating "Dog" and "dog" as two different words could also be useful, for example to train word vector representations, where we want to merge both occurrences as they represent exactly the same concept. Lowercasing can be done with Python directly as:
 
 ```python
-lower_text = text_flat.lower()
+lower_text = text.lower()
 lower_text[:100] # Beware that this is a python string operation
 ```
 
